@@ -1,0 +1,937 @@
+<!DOCTYPE html>
+<html lang="pl" class="scroll-smooth dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panel Administracyjny - Kroniki Elary</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-primary: #0F172A; 
+            --bg-secondary: #1E293B; 
+            --bg-card: #293548; 
+            --bg-header: rgba(15, 23, 42, 0.92);
+            
+            --text-primary: #E2E8F0; 
+            --text-secondary: #94A3B8; 
+            --text-accent: #A78BFA; 
+            --text-accent-hover: #8B5CF6; 
+            
+            --border-accent: #8B5CF6; 
+            --border-card: rgba(167, 139, 250, 0.25); 
+            
+            --btn-primary-bg: #8B5CF6; 
+            --btn-primary-hover-bg: #7C3AED; 
+            --btn-danger-bg: #EF4444; 
+            --btn-danger-hover-bg: #DC2626; 
+            --btn-success-bg: #22C55E;
+            --btn-success-hover-bg: #16A34A;
+            --btn-discord-bg: #5865F2;
+            --btn-discord-hover-bg: #4752C4;
+
+            --svg-icon-fill: #E2E8F0;
+            --shadow-color: rgba(167, 139, 250, 0.25); 
+            --shadow-strong-color: rgba(167, 139, 250, 0.4);
+            --modal-backdrop: rgba(15, 23, 42, 0.85);
+
+            --rgb-accent: 167, 139, 250;
+        }
+        html.light { 
+            --bg-primary: #0F172A; 
+            --bg-secondary: #1E293B; 
+            --bg-card: #293548; 
+            --bg-header: rgba(15, 23, 42, 0.92);
+            --text-primary: #E2E8F0; 
+            --text-secondary: #94A3B8; 
+            --text-accent: #A78BFA; 
+            --text-accent-hover: #8B5CF6; 
+            --border-accent: #8B5CF6; 
+            --border-card: rgba(167, 139, 250, 0.25); 
+            --btn-primary-bg: #8B5CF6; 
+            --btn-primary-hover-bg: #7C3AED; 
+            --btn-danger-bg: #EF4444; 
+            --btn-danger-hover-bg: #DC2626; 
+            --btn-success-bg: #22C55E;
+            --btn-success-hover-bg: #16A34A;
+            --btn-discord-bg: #5865F2;
+            --btn-discord-hover-bg: #4752C4;
+            --svg-icon-fill: #E2E8F0;
+            --shadow-color: rgba(167, 139, 250, 0.25); 
+            --shadow-strong-color: rgba(167, 139, 250, 0.4);
+            --modal-backdrop: rgba(15, 23, 42, 0.85);
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+        h1, h2, h3 { font-family: 'Lora', serif; font-weight: 600; }
+        
+        header#navbar {
+            background-color: var(--bg-header);
+            backdrop-filter: blur(18px); 
+            transition: background-color 0.3s ease, box-shadow 0.3s ease;
+            box-shadow: 0 5px 15px -4px rgba(15,23,42,0.2); 
+        }
+        .nav-link {
+            position: relative; color: var(--text-secondary);
+            transition: color 0.2s ease, background-color 0.2s ease, transform 0.2s ease; 
+            padding: 0.65rem 1.1rem; border-radius: 0.6rem; font-weight: 500;
+        }
+        .nav-link:hover, .nav-link.active { 
+            color: var(--text-accent); 
+            background-color: rgba(var(--rgb-accent),0.12); 
+        }
+        .nav-link:hover { transform: translateY(-1px); }
+        .nav-link::after { 
+            content: ''; position: absolute; width: 0; height: 3px; 
+            bottom: 5px; left: 50%; transform: translateX(-50%);
+            background-color: var(--text-accent);
+            transition: width 0.35s cubic-bezier(0.25, 0.8, 0.25, 1);
+            border-radius: 1.5px;
+        }
+        .nav-link.active::after { width: 60%; }
+
+        .user-avatar {
+            width: 32px; height: 32px; border-radius: 50%; border: 2px solid var(--border-accent); cursor: pointer;
+            transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+        }
+        .user-avatar:hover { transform: scale(1.1); box-shadow: 0 0 10px var(--shadow-strong-color); }
+        
+        .dropdown-menu {
+            position: absolute; top: calc(100% + 0.5rem); right: 0; background-color: var(--bg-card);
+            border: 1px solid var(--border-card); border-radius: 0.5rem;
+            box-shadow: 0 10px 25px -5px var(--shadow-strong-color), 0 8px 10px -6px var(--shadow-color); 
+            z-index: 50; min-width: 220px; 
+            opacity: 0; visibility: hidden; transform: translateY(-10px);
+            transition: opacity 0.2s ease, transform 0.2s ease, visibility 0s linear 0.2s;
+        }
+        .dropdown-menu.open { opacity: 1; visibility: visible; transform: translateY(0); transition-delay: 0s; }
+        .dropdown-menu a, .dropdown-menu button {
+            display: block; width: 100%; text-align: left; padding: 0.75rem 1rem; font-size: 0.875rem;
+            color: var(--text-secondary); transition: background-color 0.15s ease, color 0.15s ease;
+        }
+        .dropdown-menu a:hover, .dropdown-menu button:hover { 
+            background-color: rgba(var(--rgb-accent),0.1); 
+            color: var(--text-accent); 
+        }
+        .dropdown-menu form { margin: 0; }
+
+        .form-input, .form-select, .form-textarea {
+            background-color: var(--bg-secondary);
+            border: 1px solid var(--border-card);
+            color: var(--text-primary);
+            border-radius: 0.375rem; 
+            padding: 0.75rem 1rem; 
+            width: 100%;
+            transition: border-color 0.2s ease, box-shadow 0.2s ease;
+        }
+        .form-input:focus, .form-select:focus, .form-textarea:focus {
+            outline: none;
+            border-color: var(--border-accent);
+            box-shadow: 0 0 0 3px rgba(var(--rgb-accent),0.3);
+        }
+        .form-label {
+            color: var(--text-secondary);
+            margin-bottom: 0.5rem; 
+            display: block;
+            font-weight: 500; 
+        }
+        .btn {
+            padding: 0.75rem 1.5rem; 
+            border-radius: 0.5rem; 
+            font-weight: 600; 
+            transition: background-color 0.25s ease, transform 0.25s ease, box-shadow 0.25s ease;
+            letter-spacing: 0.03em;
+        }
+        .btn-primary { background-color: var(--btn-primary-bg); color: white; }
+        .btn-primary:hover { background-color: var(--btn-primary-hover-bg); transform: translateY(-2px); box-shadow: 0 8px 15px -3px var(--shadow-strong-color); }
+        
+        .btn-secondary { 
+            background-color: var(--bg-card); 
+            border: 2px solid var(--border-accent); 
+            color: var(--text-accent); 
+            padding: calc(0.75rem - 2px) calc(1.5rem - 2px); 
+        }
+        .btn-secondary:hover { 
+            background-color: rgba(var(--rgb-accent),0.15); 
+            transform: translateY(-2px); 
+            box-shadow: 0 6px 12px -3px var(--shadow-color);
+        }
+        .btn-success { background-color: var(--btn-success-bg); color: white; }
+        .btn-success:hover { background-color: var(--btn-success-hover-bg); transform: translateY(-2px); box-shadow: 0 8px 15px -3px rgba(34,197,94,0.4); }
+        .btn-danger { background-color: var(--btn-danger-bg); color: white; }
+        .btn-danger:hover { background-color: var(--btn-danger-hover-bg); transform: translateY(-2px); box-shadow: 0 8px 15px -3px rgba(239,68,68,0.4); }
+        .btn-discord { background-color: var(--btn-discord-bg); color: white; }
+        .btn-discord:hover { background-color: var(--btn-discord-hover-bg); transform: translateY(-2px); box-shadow: 0 8px 15px -3px rgba(88,101,242,0.4); }
+
+
+        #adminMessage { 
+            margin-top: 1.5rem; 
+            padding: 1rem; 
+            border-radius: 0.5rem; 
+            text-align: center; 
+            font-weight: 500;
+            transition: opacity 0.3s ease, transform 0.3s ease;
+            opacity: 0;
+            transform: translateY(10px);
+        }
+        #adminMessage.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        #adminMessage.success { background-color: rgba(52, 211, 153, 0.15); color: #34D399; border: 1px solid rgba(52, 211, 153, 0.4); }
+        #adminMessage.error { background-color: rgba(239, 68, 68, 0.15); color: #EF4444; border: 1px solid rgba(239, 68, 68, 0.4); }
+        #adminMessage.info { background-color: rgba(59, 130, 246, 0.15); color: #3B82F6; border: 1px solid rgba(59, 130, 246, 0.4); }
+
+        #mobileMenu {
+            transition: transform 0.4s cubic-bezier(0.25, 0.8, 0.25, 1), opacity 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+            transform: translateY(-100%);
+            opacity: 0;
+            pointer-events: none; 
+        }
+        #mobileMenu.open {
+            transform: translateY(0);
+            opacity: 1;
+            pointer-events: auto;
+        }
+        .loading-spinner { 
+            border: 3px solid rgba(var(--rgb-accent), 0.3);
+            border-top-color: var(--text-accent);
+            border-radius: 50%;
+            width: 1.5rem; 
+            height: 1.5rem; 
+            animation: spin 0.8s linear infinite;
+            display: inline-block; 
+            vertical-align: middle;
+            margin-right: 0.5rem;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        /* Style dla tabeli przedmiotów sklepu */
+        .shop-item-table { width: 100%; border-collapse: collapse; margin-top: 1.5rem; }
+        .shop-item-table th, .shop-item-table td {
+            border: 1px solid var(--border-card); padding: 0.75rem 1rem; text-align: left; vertical-align: middle;
+        }
+        .shop-item-table th { background-color: rgba(var(--rgb-accent), 0.1); color: var(--text-accent); font-weight: 600; }
+        .shop-item-table td .form-input, .shop-item-table td .form-select { padding: 0.5rem; font-size: 0.875rem; }
+        .shop-item-table td .btn { padding: 0.4rem 0.8rem; font-size: 0.875rem; margin-left: 0.5rem; }
+        .shop-item-table .item-icon-preview { font-size: 1.5rem; width: 2rem; text-align: center; }
+
+        /* Zakładki */
+        .tab-button {
+            padding: 0.75rem 1.5rem;
+            cursor: pointer;
+            border-bottom: 3px solid transparent;
+            color: var(--text-secondary);
+            font-weight: 500;
+            transition: color 0.2s ease, border-color 0.2s ease;
+        }
+        .tab-button:hover {
+            color: var(--text-accent);
+        }
+        .tab-button.active {
+            color: var(--text-accent);
+            border-bottom-color: var(--text-accent);
+        }
+        .tab-content {
+            display: none;
+        }
+        .tab-content.active {
+            display: block;
+        }
+
+    </style>
+</head>
+<body class="min-h-screen flex flex-col">
+
+    <header id="navbar" class="sticky top-0 z-50 py-3 shadow-lg">
+        <div class="container mx-auto px-4 sm:px-6 flex justify-between items-center">
+            <a href="index.html" class="text-3xl font-bold">
+                <span class="text-accent">Kroniki</span> <span class="text-primary">Elary</span> <span class="text-sm text-red-400 font-normal">[Panel Admina]</span>
+            </a>
+            <nav class="hidden md:flex items-center space-x-1 lg:space-x-2">
+                <div id="auth-section-nav" class="ml-4 relative">
+                    </div>
+            </nav>
+            <div class="md:hidden flex items-center">
+                 <div id="auth-section-mobile-nav" class="mr-2 relative">
+                     </div>
+                <button id="mobileMenuButton" class="p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-[var(--bg-header)] focus:ring-[var(--text-accent)]" aria-expanded="false" aria-controls="mobileMenu" aria-label="Otwórz menu nawigacyjne">
+                    <svg class="w-6 h-6" fill="none" stroke="var(--svg-icon-fill)" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
+                </button>
+            </div>
+        </div>
+        <div id="mobileMenu" class="absolute top-full left-0 right-0 md:hidden shadow-lg" style="background-color: var(--bg-header);">
+            <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+                <button data-tab="contentManagement" class="tab-button block w-full text-left py-2.5 px-3 text-base font-medium">Zarządzanie Treścią</button>
+                <button data-tab="supportManagement" class="tab-button block w-full text-left py-2.5 px-3 text-base font-medium">Zarządzanie Wsparciem</button>
+                <button data-tab="shopManagement" class="tab-button block w-full text-left py-2.5 px-3 text-base font-medium">Zarządzanie Sklepem</button>
+                <a href="index.html" class="block py-2.5 px-3 nav-link text-base font-medium">Strona Główna Serwisu</a>
+            </div>
+        </div>
+    </header>
+
+    <main class="flex-grow container mx-auto px-4 sm:px-6 py-8">
+        <div id="admin-panel-container">
+            <div class="mb-6 border-b border-[var(--border-card)]">
+                <nav class="flex -mb-px space-x-1" aria-label="Tabs">
+                    <button data-tab="contentManagement" class="tab-button active">Zarządzanie Treścią</button>
+                    <button data-tab="supportManagement" class="tab-button">Zarządzanie Wsparciem</button>
+                    <button data-tab="shopManagement" class="tab-button">Zarządzanie Sklepem</button>
+                </nav>
+            </div>
+
+            <div id="admin-login-prompt" class="text-center py-12">
+                <h2 class="text-2xl font-semibold text-primary mb-4">Dostęp Wymaga Uwierzytelnienia</h2>
+                <p class="text-secondary mb-6">Musisz być zalogowany jako administrator, aby uzyskać dostęp do tego panelu.</p>
+                <a href="/auth/discord/login?redirect=/admin.html" class="btn-discord !text-white px-6 py-3 rounded-lg text-md inline-flex items-center">
+                    <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 24 24"><path d="M20.297 0H3.703C1.658 0 0 1.658 0 3.703V20.297C0 22.342 1.658 24 3.703 24H20.297C22.342 24 24 22.342 24 20.297V3.703C24 1.658 22.342 0 20.297 0ZM8.107 15.232C7.089 15.232 6.241 14.384 6.241 13.366C6.241 12.348 7.089 11.5 8.107 11.5C9.125 11.5 9.973 12.348 9.973 13.366C9.973 14.384 9.125 15.232 8.107 15.232ZM12.000 11.071C10.982 11.071 10.134 10.223 10.134 9.205C10.134 8.188 10.982 7.339 12.000 7.339C13.018 7.339 13.866 8.188 13.866 9.205C13.866 10.223 13.018 11.071 12.000 11.071ZM15.893 15.232C14.875 15.232 14.027 14.384 14.027 13.366C14.027 12.348 14.875 11.5 15.893 11.5C16.911 11.5 17.759 12.348 17.759 13.366C17.759 14.384 16.911 15.232 15.893 15.232Z"/></svg>
+                    Zaloguj przez Discord
+                </a>
+            </div>
+            
+            <div id="contentManagement" class="tab-content">
+                <h1 class="text-3xl font-bold text-primary mb-8 text-center">Panel Zarządzania Treścią Strony</h1>
+                <div class="bg-bg-card p-6 sm:p-8 rounded-xl shadow-xl">
+                    <div class="grid md:grid-cols-2 gap-6 mb-6">
+                        <div>
+                            <label for="contentKeySelect" class="form-label">Wybierz istniejący klucz treści:</label>
+                            <select id="contentKeySelect" class="form-select">
+                                <option value="">-- Wybierz klucz --</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label for="contentKeyInput" class="form-label">Lub wprowadź nowy/edytuj klucz:</label>
+                            <input type="text" id="contentKeyInput" class="form-input" placeholder="np. strona_glowna_tytul">
+                        </div>
+                    </div>
+                    <div class="mb-6">
+                        <button id="loadContentButton" class="btn btn-secondary w-full sm:w-auto">
+                            <span class="button-text">Załaduj Treść dla Klucza</span>
+                            <span class="loading-spinner hidden"></span>
+                        </button>
+                    </div>
+                    <div>
+                        <label for="contentValueTextarea" class="form-label">Wartość treści (może zawierać HTML):</label>
+                        <textarea id="contentValueTextarea" rows="15" class="form-textarea" placeholder="Wprowadź tutaj treść HTML..."></textarea>
+                    </div>
+                    <div class="mt-6 flex flex-col sm:flex-row justify-end space-y-3 sm:space-y-0 sm:space-x-4">
+                        <button id="saveContentButton" class="btn btn-primary w-full sm:w-auto">
+                            <span class="button-text">Zapisz Treść</span>
+                            <span class="loading-spinner hidden"></span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div id="supportManagement" class="tab-content">
+                 <h1 class="text-3xl font-bold text-primary mb-8 text-center">Panel Zarządzania Zgłoszeniami Wsparcia</h1>
+                 <p class="text-center text-secondary mb-6">Zarządzanie zgłoszeniami odbywa się na dedykowanej stronie.</p>
+                 <div class="text-center">
+                    <a href="admin-support.html" class="btn btn-primary">Przejdź do Zarządzania Wsparciem</a>
+                 </div>
+            </div>
+
+            <div id="shopManagement" class="tab-content">
+                <h1 class="text-3xl font-bold text-primary mb-8 text-center">Panel Zarządzania Sklepem Bota</h1>
+                <div class="bg-bg-card p-6 sm:p-8 rounded-xl shadow-xl">
+                    <h2 class="text-2xl font-semibold text-accent mb-6">Dodaj / Edytuj Przedmiot w Sklepie</h2>
+                    <form id="shopItemForm" class="space-y-6">
+                        <input type="hidden" id="editShopItemId">
+                        <div class="grid md:grid-cols-2 gap-6">
+                            <div>
+                                <label for="shopItemName" class="form-label">Nazwa przedmiotu:</label>
+                                <input type="text" id="shopItemName" name="name" class="form-input" required>
+                            </div>
+                            <div>
+                                <label for="shopItemPrice" class="form-label">Cena (Gwiezdne Dukaty ✨):</label>
+                                <input type="number" id="shopItemPrice" name="price" class="form-input" required min="0">
+                            </div>
+                        </div>
+                        <div>
+                            <label for="shopItemDescription" class="form-label">Opis przedmiotu:</label>
+                            <textarea id="shopItemDescription" name="description" rows="3" class="form-textarea" required></textarea>
+                        </div>
+                        <div class="grid md:grid-cols-2 gap-6">
+                            <div>
+                                <label for="shopItemIcon" class="form-label">Ikona (Emoji lub URL):</label>
+                                <input type="text" id="shopItemIcon" name="icon" class="form-input" placeholder="np. ✨ lub URL do obrazka">
+                            </div>
+                            <div>
+                                <label for="shopItemType" class="form-label">Typ przedmiotu:</label>
+                                <input type="text" id="shopItemType" name="type" class="form-input" placeholder="np. cosmetic_role, xp_boost">
+                            </div>
+                        </div>
+                         <div>
+                            <label for="shopItemStock" class="form-label">Ilość w magazynie (opcjonalnie, -1 dla nieskończonej):</label>
+                            <input type="number" id="shopItemStock" name="stock" class="form-input" placeholder="-1">
+                        </div>
+                        <div class="flex justify-end space-x-3">
+                            <button type="button" id="clearShopItemFormButton" class="btn btn-secondary">Wyczyść Formularz</button>
+                            <button type="submit" id="saveShopItemButton" class="btn btn-success">
+                                <span class="button-text">Zapisz Przedmiot</span>
+                                <span class="loading-spinner hidden"></span>
+                            </button>
+                        </div>
+                    </form>
+                    <hr class="my-8 border-[var(--border-card)]">
+                    <h2 class="text-2xl font-semibold text-accent mb-6">Lista Przedmiotów w Sklepie</h2>
+                    <div id="shopItemsListContainer" class="overflow-x-auto">
+                        <table class="shop-item-table">
+                            <thead>
+                                <tr>
+                                    <th class="w-1/12">ID</th>
+                                    <th class="w-1/12 text-center">Ikona</th>
+                                    <th class="w-3/12">Nazwa</th>
+                                    <th class="w-1/12 text-right">Cena</th>
+                                    <th class="w-3/12">Opis</th>
+                                    <th class="w-1/12">Typ</th>
+                                    <th class="w-1/12 text-center">Magazyn</th>
+                                    <th class="w-1/12">Akcje</th>
+                                </tr>
+                            </thead>
+                            <tbody id="shopItemsTableBody">
+                                <tr><td colspan="8" class="text-center py-4 text-secondary">Ładowanie przedmiotów... <span class="loading-spinner !ml-2 !mr-0"></span></td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div id="adminMessage" class="hidden mt-6"></div> </div>
+    </main>
+
+    <footer class="py-6 text-center text-sm text-text-secondary border-t border-[var(--border-card)] mt-auto">
+        &copy; <span id="currentYear"></span> Kroniki Elary - Panel Administracyjny
+    </footer>
+
+    <script>
+        // Funkcja do obsługi aktywnego linku w nawigacji (zakładek)
+        function setActiveTab(tabName) {
+            document.querySelectorAll('.tab-button').forEach(button => {
+                button.classList.remove('active');
+                if (button.dataset.tab === tabName) {
+                    button.classList.add('active');
+                }
+            });
+            document.querySelectorAll('.tab-content').forEach(content => {
+                content.classList.remove('active');
+                if (content.id === tabName) {
+                    content.classList.add('active');
+                }
+            });
+        }
+
+        // Funkcja do obsługi wyświetlania informacji o użytkowniku/logowania
+        async function updateAuthDisplay() {
+            const authSectionNav = document.getElementById('auth-section-nav');
+            const authSectionMobileNav = document.getElementById('auth-section-mobile-nav');
+            const adminPanelContainer = document.getElementById('admin-panel-container'); // Zmieniono na kontener zakładek
+            const adminLoginPrompt = document.getElementById('admin-login-prompt');
+            const ADMIN_DISCORD_ID = "1238814802357387285"; 
+            let localLoggedInUser = null;
+
+            function createLoginButton(isMobile = false) {
+                const loginButton = document.createElement('a');
+                loginButton.href = new URL('/auth/discord/login?redirect=/admin.html', window.location.href).href;
+                loginButton.id = isMobile ? 'discordLoginButtonMobileNav' : 'discordLoginButtonNav';
+                loginButton.className = 'btn-discord !text-white px-4 py-2.5 rounded-md text-sm flex items-center' + (isMobile ? ' w-full justify-center mt-2' : '');
+                loginButton.innerHTML = `<svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 24 24"><path d="M20.297 0H3.703C1.658 0 0 1.658 0 3.703V20.297C0 22.342 1.658 24 3.703 24H20.297C22.342 24 24 22.342 24 20.297V3.703C24 1.658 22.342 0 20.297 0ZM8.107 15.232C7.089 15.232 6.241 14.384 6.241 13.366C6.241 12.348 7.089 11.5 8.107 11.5C9.125 11.5 9.973 12.348 9.973 13.366C9.973 14.384 9.125 15.232 8.107 15.232ZM12.000 11.071C10.982 11.071 10.134 10.223 10.134 9.205C10.134 8.188 10.982 7.339 12.000 7.339C13.018 7.339 13.866 8.188 13.866 9.205C13.866 10.223 13.018 11.071 12.000 11.071ZM15.893 15.232C14.875 15.232 14.027 14.384 14.027 13.366C14.027 12.348 14.875 11.5 15.893 11.5C16.911 11.5 17.759 12.348 17.759 13.366C17.759 14.384 16.911 15.232 15.893 15.232Z"/></svg>Zaloguj przez Discord`;
+                return loginButton;
+            }
+
+            function createAvatarDropdown(user, isMobile = false) {
+                const containerId = isMobile ? 'userDropdownContainerMobile' : 'userDropdownContainerNav';
+                const dropdownId = isMobile ? 'userDropdownMobile' : 'userDropdownNav';
+
+                const container = document.createElement('div');
+                container.id = containerId;
+                container.className = 'relative';
+
+                const avatarImg = document.createElement('img');
+                avatarImg.src = user.avatar ? `https://cdn.discordapp.com/avatars/${user.id}/${user.avatar}.png?size=32` : 'https://placehold.co/32x32/A78BFA/FFFFFF?text=A';
+                avatarImg.alt = 'Awatar administratora';
+                avatarImg.className = 'user-avatar';
+                avatarImg.onerror = () => { avatarImg.src = 'https://placehold.co/32x32/A78BFA/FFFFFF?text=A'; };
+                avatarImg.onclick = (event) => {
+                    event.stopPropagation();
+                    document.getElementById(dropdownId).classList.toggle('open');
+                };
+                container.appendChild(avatarImg);
+
+                const dropdownMenu = document.createElement('div');
+                dropdownMenu.id = dropdownId;
+                dropdownMenu.className = 'dropdown-menu';
+                
+                const siteLink = document.createElement('a');
+                siteLink.href = new URL('index.html', window.location.href).href;
+                siteLink.textContent = 'Strona Główna Serwisu';
+                dropdownMenu.appendChild(siteLink);
+
+                const profileLink = document.createElement('a');
+                profileLink.href = new URL('profil.html', window.location.href).href;
+                profileLink.textContent = 'Mój Profil';
+                dropdownMenu.appendChild(profileLink);
+                
+                const logoutForm = document.createElement('form');
+                logoutForm.action = new URL('/auth/logout', window.location.href).href;
+                logoutForm.method = 'POST';
+                const logoutButton = document.createElement('button');
+                logoutButton.type = 'submit';
+                logoutButton.textContent = 'Wyloguj';
+                logoutForm.appendChild(logoutButton);
+                dropdownMenu.appendChild(logoutForm);
+
+                container.appendChild(dropdownMenu);
+                return container;
+            }
+
+            try {
+                const response = await fetch(new URL('/api/me', window.location.href).href);
+                if (response.ok) {
+                    localLoggedInUser = await response.json();
+                    if (localLoggedInUser.id === ADMIN_DISCORD_ID) {
+                        if (adminPanelContainer) adminPanelContainer.classList.remove('hidden');
+                        if (adminLoginPrompt) adminLoginPrompt.classList.add('hidden');
+                        if (authSectionNav) {
+                            authSectionNav.innerHTML = ''; 
+                            authSectionNav.appendChild(createAvatarDropdown(localLoggedInUser, false));
+                        }
+                        if (authSectionMobileNav) {
+                            authSectionMobileNav.innerHTML = ''; 
+                            authSectionMobileNav.appendChild(createAvatarDropdown(localLoggedInUser, true));
+                        }
+                        await fetchContentKeys(); 
+                        await fetchShopItems(); // Załaduj przedmioty sklepu
+                        setActiveTab('contentManagement'); // Domyślna zakładka
+                    } else {
+                        if (adminPanelContainer) adminPanelContainer.classList.add('hidden');
+                        if (adminLoginPrompt) {
+                             adminLoginPrompt.classList.remove('hidden');
+                             const p = adminLoginPrompt.querySelector('p');
+                             if (p) p.textContent = 'Brak uprawnień administratora.';
+                             const a = adminLoginPrompt.querySelector('a');
+                             if (a) a.remove(); 
+                        }
+                        if (authSectionNav) { authSectionNav.innerHTML = ''; authSectionNav.appendChild(createAvatarDropdown(localLoggedInUser, false));}
+                        if (authSectionMobileNav) { authSectionMobileNav.innerHTML = ''; authSectionMobileNav.appendChild(createAvatarDropdown(localLoggedInUser, true));}
+                    }
+                } else {
+                    localLoggedInUser = null;
+                    if (adminPanelContainer) adminPanelContainer.classList.add('hidden');
+                    if (adminLoginPrompt) adminLoginPrompt.classList.remove('hidden');
+                    if (authSectionNav) { authSectionNav.innerHTML = ''; authSectionNav.appendChild(createLoginButton(false));}
+                    if (authSectionMobileNav) { authSectionMobileNav.innerHTML = ''; authSectionMobileNav.appendChild(createLoginButton(true));}
+                }
+            } catch (error) {
+                console.error('Błąd inicjalizacji panelu admina:', error);
+                localLoggedInUser = null;
+                if (adminPanelContainer) adminPanelContainer.classList.add('hidden');
+                if (adminLoginPrompt) {
+                    adminLoginPrompt.classList.remove('hidden');
+                    const p = adminLoginPrompt.querySelector('p');
+                    if (p) p.textContent = 'Wystąpił błąd podczas weryfikacji statusu logowania.';
+                }
+                if (authSectionNav) { authSectionNav.innerHTML = ''; authSectionNav.appendChild(createLoginButton(false));}
+                if (authSectionMobileNav) { authSectionMobileNav.innerHTML = ''; authSectionMobileNav.appendChild(createLoginButton(true));}
+            }
+            return localLoggedInUser;
+        }
+        
+        function setupMobileMenu() {
+            const mobileMenuButton = document.getElementById('mobileMenuButton');
+            const mobileMenu = document.getElementById('mobileMenu');
+            
+            if (mobileMenuButton && mobileMenu) {
+                mobileMenuButton.addEventListener('click', () => {
+                    const isExpanded = mobileMenuButton.getAttribute('aria-expanded') === 'true' || false;
+                    mobileMenuButton.setAttribute('aria-expanded', !isExpanded);
+                    mobileMenu.classList.toggle('open');
+                });
+                // Zamykanie menu mobilnego po kliknięciu zakładki
+                mobileMenu.querySelectorAll('.tab-button').forEach(button => {
+                    button.addEventListener('click', () => {
+                         mobileMenuButton.setAttribute('aria-expanded', 'false');
+                         mobileMenu.classList.remove('open');
+                    });
+                });
+            }
+        }
+
+        function setupDropdownDismiss() {
+            window.addEventListener('click', function(e) {
+                const desktopDropdownContainer = document.getElementById('userDropdownContainerNav');
+                const mobileDropdownContainer = document.getElementById('userDropdownContainerMobile');
+                const desktopDropdown = document.getElementById('userDropdownNav');
+                const mobileDropdown = document.getElementById('userDropdownMobile');
+
+                if (desktopDropdownContainer && !desktopDropdownContainer.contains(e.target) && desktopDropdown) {
+                    desktopDropdown.classList.remove('open');
+                }
+                if (mobileDropdownContainer && !mobileDropdownContainer.contains(e.target) && mobileDropdown) {
+                     mobileDropdown.classList.remove('open');
+                }
+            });
+        }
+
+        // --- Admin Panel Specific Logic ---
+        const contentKeySelect = document.getElementById('contentKeySelect');
+        const contentKeyInput = document.getElementById('contentKeyInput');
+        const contentValueTextarea = document.getElementById('contentValueTextarea');
+        const loadContentButton = document.getElementById('loadContentButton');
+        const saveContentButton = document.getElementById('saveContentButton');
+        const adminMessage = document.getElementById('adminMessage');
+
+        // --- Shop Management Logic ---
+        const shopItemForm = document.getElementById('shopItemForm');
+        const editShopItemId = document.getElementById('editShopItemId');
+        const shopItemNameInput = document.getElementById('shopItemName');
+        const shopItemPriceInput = document.getElementById('shopItemPrice');
+        const shopItemDescriptionInput = document.getElementById('shopItemDescription');
+        const shopItemIconInput = document.getElementById('shopItemIcon');
+        const shopItemTypeInput = document.getElementById('shopItemType');
+        const shopItemStockInput = document.getElementById('shopItemStock');
+        const clearShopItemFormButton = document.getElementById('clearShopItemFormButton');
+        const saveShopItemButton = document.getElementById('saveShopItemButton');
+        const shopItemsTableBody = document.getElementById('shopItemsTableBody');
+
+
+        function displayAdminMessage(message, type = 'info', duration = 5000) {
+            if (!adminMessage) return;
+            adminMessage.textContent = message;
+            adminMessage.className = 'hidden'; 
+            adminMessage.classList.add('block', 'p-3', 'rounded-md', 'my-4', 'text-sm', 'visible'); 
+            if (type === 'success') {
+                adminMessage.classList.add('bg-green-500/15', 'text-green-400', 'border', 'border-green-500/40');
+            } else if (type === 'error') {
+                adminMessage.classList.add('bg-red-500/15', 'text-red-400', 'border', 'border-red-500/40');
+            } else { 
+                adminMessage.classList.add('bg-blue-500/15', 'text-blue-400', 'border', 'border-blue-500/40');
+            }
+            setTimeout(() => { 
+                adminMessage.classList.remove('visible');
+                adminMessage.classList.add('hidden');
+            }, duration);
+        }
+        
+        function toggleButtonLoadingState(button, isLoading) {
+            const textSpan = button.querySelector('.button-text');
+            const spinnerSpan = button.querySelector('.loading-spinner');
+            if (isLoading) {
+                button.disabled = true;
+                if(textSpan) textSpan.classList.add('hidden');
+                if(spinnerSpan) spinnerSpan.classList.remove('hidden');
+            } else {
+                button.disabled = false;
+                if(textSpan) textSpan.classList.remove('hidden');
+                if(spinnerSpan) spinnerSpan.classList.add('hidden');
+            }
+        }
+
+        async function fetchContentKeys() {
+            // Sprawdzenie uprawnień jest już w updateAuthDisplay, które wywołuje tę funkcję
+            if (!contentKeySelect) return;
+            try {
+                const response = await fetch(new URL('/api/admin/content-keys', window.location.href).href);
+                if (response.ok) {
+                    const keys = await response.json();
+                    contentKeySelect.innerHTML = '<option value="">-- Wybierz klucz --</option>'; 
+                    keys.forEach(keyObj => {
+                        const option = document.createElement('option');
+                        option.value = keyObj.key;
+                        option.textContent = keyObj.key;
+                        contentKeySelect.appendChild(option);
+                    });
+                } else {
+                    displayAdminMessage('Błąd ładowania listy kluczy treści.', 'error');
+                }
+            } catch (error) {
+                console.error('Błąd ładowania kluczy:', error);
+                displayAdminMessage('Błąd sieci podczas ładowania kluczy.', 'error');
+            }
+        }
+
+        if (contentKeySelect) {
+            contentKeySelect.addEventListener('change', function() {
+                if (this.value && contentKeyInput) {
+                    contentKeyInput.value = this.value;
+                    loadContent(); 
+                } else if (contentKeyInput) {
+                    contentKeyInput.value = '';
+                    if(contentValueTextarea) contentValueTextarea.value = '';
+                }
+            });
+        }
+
+        async function loadContent() {
+            if (!contentKeyInput || !contentValueTextarea || !loadContentButton) return;
+            const key = contentKeyInput.value.trim();
+            if (!key) {
+                displayAdminMessage('Wprowadź klucz treści do załadowania.', 'error');
+                return;
+            }
+            toggleButtonLoadingState(loadContentButton, true);
+            try {
+                const response = await fetch(new URL(`/api/admin/content/${key}`, window.location.href).href);
+                if (response.ok) {
+                    const content = await response.json();
+                    contentValueTextarea.value = content.value || '';
+                    displayAdminMessage(`Załadowano treść dla klucza: ${key}`, 'success');
+                } else if (response.status === 404) {
+                    contentValueTextarea.value = '';
+                    displayAdminMessage(`Nie znaleziono treści dla klucza: ${key}. Możesz utworzyć nową.`, 'info');
+                } 
+                else {
+                    const errorData = await response.json().catch(() => ({error: 'Nieznany błąd serwera'}));
+                    displayAdminMessage(`Błąd ładowania treści: ${errorData.error || response.status}`, 'error');
+                }
+            } catch (error) {
+                console.error('Błąd ładowania treści:', error);
+                displayAdminMessage('Błąd sieci podczas ładowania treści.', 'error');
+            } finally {
+                toggleButtonLoadingState(loadContentButton, false);
+            }
+        }
+
+        if (loadContentButton) {
+            loadContentButton.addEventListener('click', loadContent);
+        }
+
+        if (saveContentButton) {
+            saveContentButton.addEventListener('click', async () => {
+                if (!contentKeyInput || !contentValueTextarea) return;
+                const key = contentKeyInput.value.trim();
+                const value = contentValueTextarea.value;
+                if (!key) {
+                    displayAdminMessage('Klucz treści nie może być pusty.', 'error');
+                    return;
+                }
+                toggleButtonLoadingState(saveContentButton, true);
+                try {
+                    const response = await fetch(new URL(`/api/admin/content/${key}`, window.location.href).href, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ value: value })
+                    });
+                    if (response.ok) {
+                        displayAdminMessage(`Treść dla klucza '${key}' zapisana pomyślnie.`, 'success');
+                        await fetchContentKeys(); 
+                    } else {
+                         const errorData = await response.json().catch(() => ({error: 'Nieznany błąd serwera'}));
+                        displayAdminMessage(`Błąd zapisywania treści: ${errorData.error || response.status}`, 'error');
+                    }
+                } catch (error) {
+                    console.error('Błąd zapisywania treści:', error);
+                    displayAdminMessage('Błąd sieci podczas zapisywania treści.', 'error');
+                } finally {
+                    toggleButtonLoadingState(saveContentButton, false);
+                }
+            });
+        }
+
+        // --- Shop Management Functions ---
+        async function fetchShopItems() {
+            if (!shopItemsTableBody) return;
+            shopItemsTableBody.innerHTML = '<tr><td colspan="8" class="text-center py-4 text-secondary">Ładowanie przedmiotów... <span class="loading-spinner !ml-2 !mr-0"></span></td></tr>';
+            try {
+                // const response = await fetch(new URL('/api/admin/shop-items', window.location.href).href);
+                // if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+                // const items = await response.json();
+                
+                // --- Zastępcze dane sklepu dla panelu admina ---
+                 const items = [
+                    { id: 'role_kolor_1', name: '✨ Migocząca Aureola', description: 'Dodaj swojemu nickowi unikalny, migoczący kolor na tydzień!', price: 150, icon: '🎨', type: 'cosmetic_role', stock: -1 },
+                    { id: 'xp_boost_1', name: '📜 Zwój Mądrości', description: 'Podwójne XP na następne 100 wiadomości.', price: 250, icon: '🚀', type: 'xp_boost', stock: 10 },
+                    { id: 'custom_emote_slot_1', name: '🖼️ Ramka na Emotkę', description: 'Zaproponuj własną emotkę na serwer (po akceptacji administracji).', price: 500, icon: '💡', type: 'emote_slot', stock: 5 },
+                ];
+                // --- Koniec zastępczych danych ---
+
+                renderShopItemsTable(items);
+            } catch (error) {
+                console.error("Błąd ładowania przedmiotów sklepu:", error);
+                shopItemsTableBody.innerHTML = `<tr><td colspan="8" class="text-center py-4 text-red-400">Nie udało się załadować przedmiotów sklepu. ${error.message}</td></tr>`;
+            }
+        }
+
+        function renderShopItemsTable(items) {
+            if (!shopItemsTableBody) return;
+            if (!items || items.length === 0) {
+                shopItemsTableBody.innerHTML = '<tr><td colspan="8" class="text-center py-4 text-secondary">Brak przedmiotów w sklepie. Dodaj pierwszy!</td></tr>';
+                return;
+            }
+            shopItemsTableBody.innerHTML = items.map(item => `
+                <tr>
+                    <td>${item.id}</td>
+                    <td class="item-icon-preview">${item.icon || '-'}</td>
+                    <td>${item.name}</td>
+                    <td class="text-right">${item.price.toLocaleString('pl-PL')} ✨</td>
+                    <td class="text-sm">${item.description}</td>
+                    <td>${item.type || '-'}</td>
+                    <td class="text-center">${item.stock === -1 ? '∞' : (item.stock || 0)}</td>
+                    <td class="whitespace-nowrap">
+                        <button class="btn btn-secondary btn-action-sm edit-shop-item-btn" data-item-id="${item.id}">Edytuj</button>
+                        <button class="btn btn-danger btn-action-sm delete-shop-item-btn" data-item-id="${item.id}">Usuń</button>
+                    </td>
+                </tr>
+            `).join('');
+            addEventListenersToShopItemButtons();
+        }
+        
+        function populateShopItemForm(item) {
+            if (!shopItemForm) return;
+            editShopItemId.value = item.id;
+            shopItemNameInput.value = item.name;
+            shopItemPriceInput.value = item.price;
+            shopItemDescriptionInput.value = item.description;
+            shopItemIconInput.value = item.icon || '';
+            shopItemTypeInput.value = item.type || '';
+            shopItemStockInput.value = item.stock !== undefined ? item.stock : '';
+            if(saveShopItemButton) saveShopItemButton.querySelector('.button-text').textContent = 'Zaktualizuj Przedmiot';
+        }
+
+        if (clearShopItemFormButton) {
+            clearShopItemFormButton.addEventListener('click', () => {
+                if(shopItemForm) shopItemForm.reset();
+                if(editShopItemId) editShopItemId.value = '';
+                if(saveShopItemButton) saveShopItemButton.querySelector('.button-text').textContent = 'Zapisz Przedmiot';
+            });
+        }
+        
+        function addEventListenersToShopItemButtons() {
+            document.querySelectorAll('.edit-shop-item-btn').forEach(button => {
+                button.addEventListener('click', async (event) => {
+                    const itemId = event.target.dataset.itemId;
+                    // const response = await fetch(new URL(`/api/admin/shop-items/${itemId}`, window.location.href).href);
+                    // if (response.ok) {
+                    //     const item = await response.json();
+                    //     populateShopItemForm(item);
+                    // } else {
+                    //     displayAdminMessage('Błąd ładowania danych przedmiotu do edycji.', 'error');
+                    // }
+                    // Symulacja dla edycji
+                    const items = [ // Te same dane co w fetchShopItems
+                        { id: 'role_kolor_1', name: '✨ Migocząca Aureola', description: 'Dodaj swojemu nickowi unikalny, migoczący kolor na tydzień!', price: 150, icon: '🎨', type: 'cosmetic_role', stock: -1 },
+                        { id: 'xp_boost_1', name: '📜 Zwój Mądrości', description: 'Podwójne XP na następne 100 wiadomości.', price: 250, icon: '🚀', type: 'xp_boost', stock: 10 },
+                        { id: 'custom_emote_slot_1', name: '🖼️ Ramka na Emotkę', description: 'Zaproponuj własną emotkę na serwer (po akceptacji administracji).', price: 500, icon: '💡', type: 'emote_slot', stock: 5 },
+                    ];
+                    const item = items.find(i => i.id === itemId);
+                    if (item) {
+                        populateShopItemForm(item);
+                        shopItemNameInput.focus(); // Ustaw focus na pierwszym polu formularza
+                    } else {
+                        displayAdminMessage('Nie znaleziono przedmiotu do edycji.', 'error');
+                    }
+                });
+            });
+
+            document.querySelectorAll('.delete-shop-item-btn').forEach(button => {
+                button.addEventListener('click', async (event) => {
+                    const itemId = event.target.dataset.itemId;
+                    // if (confirm(`Czy na pewno chcesz usunąć przedmiot o ID: ${itemId}? Tej operacji nie można cofnąć.`)) {
+                        toggleButtonLoadingState(event.target, true);
+                        try {
+                            // const response = await fetch(new URL(`/api/admin/shop-items/${itemId}`, window.location.href).href, { method: 'DELETE' });
+                            // if (response.ok) {
+                            //     displayAdminMessage(`Przedmiot o ID: ${itemId} został usunięty.`, 'success');
+                            //     await fetchShopItems(); 
+                            // } else {
+                            //     const errorData = await response.json().catch(() => ({error: 'Nieznany błąd serwera'}));
+                            //     displayAdminMessage(`Błąd usuwania przedmiotu: ${errorData.error || response.status}`, 'error');
+                            // }
+                            // Symulacja usunięcia
+                            await new Promise(resolve => setTimeout(resolve, 500));
+                            displayAdminMessage(`Symulacja: Przedmiot o ID: ${itemId} został usunięty.`, 'success');
+                            await fetchShopItems(); // Odśwież listę
+                        } catch (error) {
+                            displayAdminMessage('Błąd sieci podczas usuwania przedmiotu.', 'error');
+                        } finally {
+                            toggleButtonLoadingState(event.target, false);
+                        }
+                    // }
+                });
+            });
+        }
+
+        if (shopItemForm) {
+            shopItemForm.addEventListener('submit', async (event) => {
+                event.preventDefault();
+                const itemId = editShopItemId.value;
+                const formData = {
+                    name: shopItemNameInput.value,
+                    price: parseInt(shopItemPriceInput.value, 10),
+                    description: shopItemDescriptionInput.value,
+                    icon: shopItemIconInput.value,
+                    type: shopItemTypeInput.value,
+                    stock: shopItemStockInput.value ? parseInt(shopItemStockInput.value, 10) : -1 // Domyślnie -1 (nieskończone)
+                };
+
+                if (isNaN(formData.price) || formData.price < 0) {
+                    displayAdminMessage('Cena musi być liczbą nieujemną.', 'error');
+                    return;
+                }
+
+                const url = itemId ? new URL(`/api/admin/shop-items/${itemId}`, window.location.href).href : new URL('/api/admin/shop-items', window.location.href).href;
+                const method = itemId ? 'PUT' : 'POST';
+
+                toggleButtonLoadingState(saveShopItemButton, true);
+                try {
+                    // const response = await fetch(url, {
+                    //     method: method,
+                    //     headers: { 'Content-Type': 'application/json' },
+                    //     body: JSON.stringify(formData)
+                    // });
+                    // if (response.ok) {
+                    //     displayAdminMessage(`Przedmiot "${formData.name}" został ${itemId ? 'zaktualizowany' : 'dodany'} pomyślnie.`, 'success');
+                    //     shopItemForm.reset();
+                    //     editShopItemId.value = '';
+                    //     saveShopItemButton.querySelector('.button-text').textContent = 'Zapisz Przedmiot';
+                    //     await fetchShopItems();
+                    // } else {
+                    //     const errorData = await response.json().catch(() => ({error: 'Nieznany błąd serwera'}));
+                    //     displayAdminMessage(`Błąd zapisu przedmiotu: ${errorData.error || response.status}`, 'error');
+                    // }
+                    // Symulacja zapisu
+                    await new Promise(resolve => setTimeout(resolve, 1000));
+                    displayAdminMessage(`Symulacja: Przedmiot "${formData.name}" został ${itemId ? 'zaktualizowany' : 'dodany'} pomyślnie.`, 'success');
+                    shopItemForm.reset();
+                    editShopItemId.value = '';
+                    saveShopItemButton.querySelector('.button-text').textContent = 'Zapisz Przedmiot';
+                    await fetchShopItems();
+
+                } catch (error) {
+                    displayAdminMessage('Błąd sieci podczas zapisu przedmiotu.', 'error');
+                } finally {
+                    toggleButtonLoadingState(saveShopItemButton, false);
+                }
+            });
+        }
+        
+        document.addEventListener('DOMContentLoaded', async function() {
+            document.getElementById('currentYear').textContent = new Date().getFullYear();
+            
+            if (!document.documentElement.classList.contains('light') && !document.documentElement.classList.contains('dark')) {
+                 document.documentElement.classList.add('dark'); 
+            }
+
+            await updateAuthDisplay(); 
+            setupMobileMenu();
+            setupDropdownDismiss();
+
+            // Obsługa zakładek
+            const tabButtons = document.querySelectorAll('.tab-button');
+            tabButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    setActiveTab(button.dataset.tab);
+                });
+            });
+            // Ustawienie domyślnej zakładki (jeśli użytkownik jest adminem)
+            // Ta logika jest już w updateAuthDisplay, które wywołuje setActiveTab
+        });
+    </script>
+</body>
+</html>

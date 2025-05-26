@@ -1,0 +1,1224 @@
+<!DOCTYPE html>
+<html lang="pl" class="scroll-smooth dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Twój osobisty profil w Kronikach Elary. Sprawdź status swoich zgłoszeń, statystyki aktywności i ekwipunek na serwerze.">
+    <meta name="keywords" content="kroniki elary, profil użytkownika, moje zgłoszenia, statystyki, ekwipunek, discord, sklep bota">
+    <meta name="author" content="Arcadius & Strażnicy Kronik Elary">
+    <title>Kroniki Elary - Mój Profil</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-primary: #0F172A; 
+            --bg-secondary: rgba(30, 41, 59, 0.8); 
+            --bg-card: #1E293B; 
+            --bg-header: rgba(15, 23, 42, 0.92); 
+            
+            --text-primary: #E2E8F0; 
+            --text-secondary: #94A3B8; 
+            --text-accent: #A78BFA; 
+            --text-accent-hover: #8B5CF6; 
+            
+            --border-accent: #8B5CF6; 
+            --border-card: rgba(167, 139, 250, 0.25); 
+            
+            --btn-primary-bg: #8B5CF6; 
+            --btn-primary-hover-bg: #7C3AED; 
+            --btn-discord-bg: #5865F2;
+            --btn-discord-hover-bg: #4752C4;
+            
+            --scrollbar-thumb-bg: #8B5CF6;
+            --scrollbar-thumb-hover-bg: #7C3AED;
+            
+            --svg-icon-fill: #E2E8F0;
+            --shadow-color: rgba(167, 139, 250, 0.25); 
+            --shadow-strong-color: rgba(167, 139, 250, 0.4);
+            --modal-backdrop: rgba(15, 23, 42, 0.85);
+
+            --rgb-accent: 167, 139, 250;
+            --rgb-purple-400: 167, 139, 250; 
+            --rgb-stone-400: 168, 162, 158; 
+            --rgb-amber-400: 251, 191, 36; 
+            --rgb-cyan-400: 34, 211, 238; 
+
+            --text-purple-400: #A78BFA;
+            --text-stone-400: #A8A29E;
+            --text-amber-400: #FBBF24;
+            --text-cyan-400: #22D3EE;
+        }
+
+        html.light { 
+            --bg-primary: #F9FAFB;
+            --bg-secondary: rgba(243, 244, 246, 0.9);
+            --bg-card: #FFFFFF;
+            --bg-header: rgba(255, 255, 255, 0.95);
+            --text-primary: #1F2937;
+            --text-secondary: #4B5563;
+            --text-accent: #7C3AED;
+            --text-accent-hover: #6D28D9;
+            --border-accent: #7C3AED;
+            --border-card: rgba(124, 58, 237, 0.1);
+            --btn-primary-bg: #7C3AED;
+            --btn-primary-hover-bg: #6D28D9;
+            --btn-discord-bg: #5865F2;
+            --btn-discord-hover-bg: #4752C4;
+            --scrollbar-thumb-bg: #A78BFA;
+            --scrollbar-thumb-hover-bg: #8B5CF6;
+            --svg-icon-fill: #374151;
+            --shadow-color: rgba(124, 58, 237, 0.08);
+            --shadow-strong-color: rgba(124, 58, 237, 0.15);
+            --modal-backdrop: rgba(249, 250, 251, 0.85);
+
+            --rgb-accent: 124, 58, 237;
+            --rgb-purple-400: 124, 58, 237;
+            --rgb-stone-400: 120, 113, 108;
+            --rgb-amber-400: 217, 119, 6;
+            --rgb-cyan-400: 8, 145, 178;
+            --text-purple-400: #7C3AED;
+            --text-stone-400: #78716C;
+            --text-amber-400: #D97706;
+            --text-cyan-400: #0891B2;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+            transition: background-color 0.3s ease, color 0.3s ease;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            line-height: 1.75; 
+        }
+
+        h1, h2, h3, h4, h5 {
+            font-family: 'Lora', serif;
+            font-weight: 600;
+            line-height: 1.35; 
+        }
+        h1 { letter-spacing: -0.025em; font-weight: 700; }
+        h2 { letter-spacing: -0.02em; font-weight: 700; }
+        h3 { font-weight: 600; }
+        
+        .hero-profile-bg {
+            background: linear-gradient(rgba(15, 23, 42, 0.92), rgba(15, 23, 42, 1)), url('https://placehold.co/1920x800/0a0f1e/a78bfa?text=Twój+Profil+w+Kronikach') center/cover no-repeat fixed;
+        }
+        .card-bg, .profile-section-card {
+            background-color: var(--bg-card);
+            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), background-color 0.3s ease; 
+            border: 1px solid var(--border-card); 
+            box-shadow: 0 7px 18px -4px var(--shadow-color); 
+            overflow: hidden;
+        }
+        .card-bg:hover, .profile-section-card:hover { 
+            transform: translateY(-10px) scale(1.035); 
+            box-shadow: 0 16px 32px -6px var(--shadow-strong-color); 
+        }
+        
+        .btn-primary, .btn-discord, .btn-secondary {
+            color: #FFFFFF; 
+            transition: background-color 0.25s ease, transform 0.25s ease, box-shadow 0.25s ease;
+            box-shadow: 0 5px 12px -3px var(--shadow-color);
+            font-weight: 600; 
+            letter-spacing: 0.03em;
+            padding-top: 0.85rem; 
+            padding-bottom: 0.85rem;
+            border-radius: 0.5rem;
+        }
+        .btn-primary { background-color: var(--btn-primary-bg); }
+        .btn-primary:hover {
+            background-color: var(--btn-primary-hover-bg);
+            transform: scale(1.06) translateY(-3px); 
+            box-shadow: 0 14px 24px -5px var(--shadow-strong-color);
+        }
+        .btn-discord { background-color: var(--btn-discord-bg); }
+        .btn-discord:hover {
+            background-color: var(--btn-discord-hover-bg);
+            transform: scale(1.06) translateY(-3px);
+            box-shadow: 0 10px 20px -5px rgba(88, 101, 242, 0.4);
+        }
+        .btn-secondary {
+            background-color: transparent;
+            border: 2px solid var(--border-accent);
+            color: var(--text-accent);
+            padding: calc(0.85rem - 2px) calc(1.5rem - 2px);
+        }
+        .btn-secondary:hover {
+            background-color: var(--border-accent);
+            color: white;
+            transform: scale(1.05) translateY(-1px);
+            box-shadow: 0 8px 15px -3px var(--shadow-color);
+        }
+        .text-accent {
+            color: var(--text-accent);
+        }
+        
+        .reveal {
+            opacity: 0;
+            transform: translateY(70px); 
+            transition: opacity 1s cubic-bezier(0.645, 0.045, 0.355, 1), transform 1s cubic-bezier(0.645, 0.045, 0.355, 1);
+        }
+        .reveal.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        ::-webkit-scrollbar { width: 13px; } 
+        ::-webkit-scrollbar-track { background: var(--bg-primary); }
+        ::-webkit-scrollbar-thumb { background: var(--scrollbar-thumb-bg); border-radius: 7px; border: 3.5px solid var(--bg-primary); }
+        ::-webkit-scrollbar-thumb:hover { background: var(--scrollbar-thumb-hover-bg); }
+        
+        header#navbar {
+            background-color: var(--bg-header);
+            backdrop-filter: blur(18px); 
+            transition: background-color 0.3s ease, box-shadow 0.3s ease;
+            box-shadow: 0 5px 15px -4px rgba(15,23,42,0.2); 
+        }
+
+        .nav-link {
+            position: relative;
+            color: var(--text-secondary);
+            transition: color 0.2s ease, background-color 0.2s ease, transform 0.2s ease; 
+            padding: 0.65rem 1.1rem; 
+            border-radius: 0.6rem; 
+            font-weight: 500;
+        }
+        .nav-link:hover {
+            transform: translateY(-1px); 
+        }
+        .nav-link::after { 
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 3px; 
+            bottom: 5px; 
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: var(--text-accent);
+            transition: width 0.35s cubic-bezier(0.25, 0.8, 0.25, 1);
+            border-radius: 1.5px;
+        }
+        .nav-link:hover, .nav-link.active {
+            color: var(--text-accent);
+            background-color: rgba(var(--rgb-accent), 0.12); 
+        }
+        .nav-link:hover::after, .nav-link.active::after {
+            width: 60%; 
+        }
+        
+        #mobileMenu {
+            transition: transform 0.4s cubic-bezier(0.25, 0.8, 0.25, 1), opacity 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+            transform: translateY(-100%);
+            opacity: 0;
+            pointer-events: none; 
+        }
+        #mobileMenu.open {
+            transform: translateY(0);
+            opacity: 1;
+            pointer-events: auto;
+        }
+        html.dark .text-shadow-custom { 
+             text-shadow: 1px 1px 4px rgba(0,0,0,0.6); 
+        }
+        .user-avatar-profile {
+            width: 128px; 
+            height: 128px;
+            border-radius: 50%;
+            margin-bottom: 1rem;
+            border: 4px solid var(--border-accent);
+            box-shadow: 0 0 20px rgba(var(--rgb-accent), 0.5); 
+            transition: transform 0.3s ease;
+        }
+        .user-avatar-profile:hover {
+            transform: scale(1.05);
+        }
+         .user-avatar { 
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            border: 2px solid var(--border-accent);
+            cursor: pointer;
+            transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+        }
+        .user-avatar:hover {
+            transform: scale(1.1);
+            box-shadow: 0 0 10px var(--shadow-strong-color);
+        }
+        .dropdown-menu {
+            position: absolute;
+            top: calc(100% + 0.5rem); 
+            right: 0;
+            background-color: var(--bg-card);
+            border: 1px solid var(--border-card);
+            border-radius: 0.5rem; 
+            box-shadow: 0 10px 25px -5px var(--shadow-strong-color), 0 8px 10px -6px var(--shadow-color);
+            z-index: 50;
+            min-width: 200px; 
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-10px);
+            transition: opacity 0.2s ease, transform 0.2s ease, visibility 0s linear 0.2s;
+        }
+        .dropdown-menu.open {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+            transition: opacity 0.2s ease, transform 0.2s ease;
+        }
+        .dropdown-menu a, .dropdown-menu button {
+            display: block;
+            width: 100%;
+            text-align: left;
+            padding: 0.75rem 1rem; 
+            font-size: 0.875rem; 
+            color: var(--text-secondary);
+            transition: background-color 0.15s ease, color 0.15s ease;
+        }
+        .dropdown-menu a:hover, .dropdown-menu button:hover {
+            background-color: rgba(var(--rgb-accent), 0.1);
+            color: var(--text-accent);
+        }
+        .dropdown-menu form { margin: 0; } 
+
+        .support-ticket {
+            border-left-width: 4px; 
+            transition: background-color 0.2s ease, border-color 0.2s ease;
+        }
+        .support-ticket:hover {
+            background-color: rgba(var(--rgb-accent), 0.05);
+        }
+        .status-otwarte { color: #FBBF24; border-color: #FBBF24 !important; } 
+        .status-w-trakcie { color: #60A5FA; border-color: #60A5FA !important; } 
+        .status-oczekuje-na-odpowiedź { color: #F472B6; border-color: #F472B6 !important; }
+        .status-rozwiązane { color: #34D399; border-color: #34D399 !important; } 
+        .status-zamknięte { color: #9CA3AF; border-color: #9CA3AF !important; } 
+
+        .stat-value {
+            font-size: 1.875rem; 
+            font-weight: 700; 
+            color: var(--text-accent);
+            transition: color 0.3s ease;
+        }
+        .profile-section-card .card-bg:hover .stat-value { 
+             color: var(--text-accent-hover);
+        }
+        .stat-label {
+            font-size: 1rem; 
+            font-weight: 500; 
+            color: var(--text-primary);
+        }
+        .modal-overlay {
+            position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+            background-color: var(--modal-backdrop);
+            backdrop-filter: blur(4px); display: flex;
+            align-items: center; justify-content: center;
+            z-index: 50; opacity: 0; visibility: hidden;
+            transition: opacity 0.3s ease, visibility 0s linear 0.3s;
+        }
+        .modal-overlay.open { opacity: 1; visibility: visible; transition: opacity 0.3s ease; }
+        .modal-content {
+            background-color: var(--bg-card); padding: 1.5rem;
+            border-radius: 0.75rem; box-shadow: 0 20px 25px -5px rgba(0,0,0,0.1), 0 10px 10px -5px rgba(0,0,0,0.04);
+            width: 90%; max-width: 700px; 
+            max-height: 90vh; 
+            display: flex; flex-direction: column; 
+        }
+        .modal-body {
+            overflow-y: auto; 
+            padding-right: 0.5rem; 
+        }
+        .modal-footer {
+            margin-top: auto; 
+            padding-top: 1rem;
+            border-top: 1px solid var(--border-card);
+        }
+        .reply-message {
+            padding: 0.75rem;
+            border-radius: 0.5rem;
+            margin-bottom: 0.75rem;
+        }
+        .reply-user { background-color: rgba(var(--rgb-accent), 0.1); border-left: 3px solid var(--text-accent); }
+        .reply-admin { background-color: rgba(var(--rgb-stone-400), 0.1); border-left: 3px solid var(--text-stone-400); } 
+        .reply-author { font-weight: 600; color: var(--text-primary); }
+        .reply-timestamp { font-size: 0.75rem; color: var(--text-secondary); margin-left: 0.5rem; }
+        .reply-text { margin-top: 0.25rem; color: var(--text-secondary); white-space: pre-wrap; }
+
+        .btn-default {
+            background-color: var(--bg-card); border: 1px solid var(--border-card); color: var(--text-primary);
+            padding: 0.5rem 1rem; border-radius: 0.375rem;
+        }
+        .btn-default:hover { background-color: rgba(var(--rgb-accent),0.1); }
+        .btn-action-sm {
+            padding: 0.375rem 0.75rem;
+            font-size: 0.875rem;
+        }
+        .form-input, .form-select, .form-textarea { 
+            background-color: var(--bg-secondary); 
+            border: 1px solid var(--border-card);
+            color: var(--text-primary);
+            border-radius: 0.375rem; 
+            padding: 0.75rem 1rem; 
+            width: 100%;
+            transition: border-color 0.2s ease, box-shadow 0.2s ease;
+        }
+        .form-input:focus, .form-select:focus, .form-textarea:focus {
+            outline: none;
+            border-color: var(--border-accent);
+            box-shadow: 0 0 0 3px rgba(var(--rgb-accent), 0.3);
+        }
+        .animated-gradient-text {
+            background: linear-gradient(45deg, var(--text-accent), var(--text-accent-hover), #c084fc, var(--text-accent));
+            background-size: 200% 200%;
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: gradient-flow 8s ease infinite;
+        }
+        @keyframes gradient-flow {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+         .loading-spinner { 
+            border: 3px solid rgba(var(--rgb-accent), 0.3);
+            border-top-color: var(--text-accent);
+            border-radius: 50%;
+            width: 1.5rem; 
+            height: 1.5rem; 
+            animation: spin 0.8s linear infinite;
+            margin: 0 auto; 
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        /* Inventory styles */
+        .inventory-item-card {
+            background-color: rgba(var(--rgb-accent), 0.05);
+            border: 1px solid var(--border-card);
+            border-radius: 0.5rem;
+            padding: 1rem;
+            text-align: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .inventory-item-card:hover {
+            transform: translateY(-5px) scale(1.03);
+            box-shadow: 0 8px 16px -4px var(--shadow-color);
+        }
+        .inventory-item-icon {
+            font-size: 2.5rem; /* Duża ikona */
+            margin-bottom: 0.5rem;
+            color: var(--text-accent);
+            /* Można dodać URL do obrazka przedmiotu, jeśli API go dostarcza */
+            /* background-image: url('item_icon_url_here'); background-size: cover; width: 50px; height: 50px; */
+        }
+        .inventory-item-name {
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 0.25rem;
+        }
+        .inventory-item-quantity {
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+        }
+        .inventory-item-description {
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+            margin-top: 0.5rem;
+            max-height: 3em; /* Ograniczenie wysokości opisu */
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+    <header id="navbar" class="fixed top-0 left-0 right-0 z-50 py-3">
+        <div class="container mx-auto px-4 sm:px-6 flex justify-between items-center">
+            <a href="index.html" class="text-3xl font-bold" aria-label="Strona główna Kronik Elary">
+                <span class="text-accent">Kroniki</span> <span class="text-primary">Elary</span>
+            </a>
+            <nav class="hidden md:flex items-center space-x-1 lg:space-x-2">
+                <a href="index.html" class="nav-link">Strona Główna</a>
+                <a href="prezentacja.html" class="nav-link">Prezentacja Serwera</a>
+                <a href="wikipedia.html" class="nav-link">Wikipedia Kronik</a> 
+                <a href="ranking-stats.html" class="nav-link">Rankingi</a>
+                <div id="auth-section-nav" class="ml-4 relative">
+                    </div>
+            </nav>
+            <div class="md:hidden flex items-center">
+                 <div id="auth-section-mobile-nav" class="mr-2 relative">
+                    </div>
+                <button id="mobileMenuButton" class="p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-[var(--bg-header)] focus:ring-[var(--text-accent)]" aria-expanded="false" aria-controls="mobileMenu" aria-label="Otwórz menu nawigacyjne">
+                    <svg class="w-6 h-6" fill="none" stroke="var(--svg-icon-fill)" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
+                </button>
+            </div>
+        </div>
+        <div id="mobileMenu" class="absolute top-full left-0 right-0 md:hidden shadow-lg" style="background-color: var(--bg-header);">
+            <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+                <a href="index.html" class="block py-2.5 px-3 nav-link text-base font-medium">Strona Główna</a>
+                <a href="prezentacja.html" class="block py-2.5 px-3 nav-link text-base font-medium">Prezentacja Serwera</a>
+                <a href="wikipedia.html" class="block py-2.5 px-3 nav-link text-base font-medium">Wikipedia Kronik</a>
+                <a href="ranking-stats.html" class="block py-2.5 px-3 nav-link text-base font-medium">Rankingi</a>
+                <a href="https://discord.gg/TWOJLINKZAPROSZENIOWY" target="_blank" rel="noopener noreferrer" class="block mt-2 py-2.5 px-3 text-base font-medium text-white bg-purple-600 hover:bg-purple-700 rounded-md text-center">Dołącz do Discorda</a>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <section class="hero-profile-bg min-h-[50vh] sm:min-h-[60vh] flex items-center justify-center text-center pt-24 sm:pt-20 reveal">
+            <div class="container mx-auto px-4 sm:px-6 py-12 sm:py-16">
+                <div id="profile-hero-content" class="text-white">
+                    <h1 class="text-4xl sm:text-5xl md:text-6xl font-bold mb-4 leading-tight text-shadow-custom">Mój Profil</h1>
+                     <p class="text-lg sm:text-xl text-slate-200 mb-8 max-w-2xl mx-auto text-shadow-custom">Ładowanie danych profilu...</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="profile-details" class="py-16 sm:py-24">
+            <div class="container mx-auto px-4 sm:px-6">
+                <div id="profile-content-area" class="hidden">
+                    <div class="grid md:grid-cols-3 gap-8">
+                        <div id="support-section" class="md:col-span-1 profile-section-card p-6 sm:p-8 rounded-2xl shadow-xl reveal">
+                            <h2 class="text-2xl sm:text-3xl font-semibold text-accent mb-6">Moje Zgłoszenia Wsparcia</h2>
+                            <div class="mb-6">
+                                <a href="support.html" class="btn-primary w-full text-center py-2.5 px-4 rounded-md">Utwórz Nowe Zgłoszenie</a>
+                            </div>
+                            <div id="supportTicketsList" class="space-y-4 max-h-[500px] overflow-y-auto">
+                                <div class="loading-spinner"></div>
+                                <p class="text-secondary text-center mt-2">Ładowanie zgłoszeń...</p>
+                            </div>
+                        </div>
+
+                        <div class="md:col-span-2 profile-section-card p-6 sm:p-8 rounded-2xl shadow-xl reveal">
+                            <h2 class="text-2xl sm:text-3xl font-semibold text-accent mb-6">Moje Statystyki w Kronikach</h2>
+                            <div id="serverStats" class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                                <div class="card-bg p-4 rounded-lg text-center">
+                                    <h4 class="stat-label">Poziom Opowieści</h4>
+                                    <p id="userLevel" class="stat-value"><span class="loading-spinner inline-block"></span></p>
+                                </div>
+                                <div class="card-bg p-4 rounded-lg text-center">
+                                    <h4 class="stat-label">Moc Opowieści (XP)</h4>
+                                    <p id="userXP" class="stat-value"><span class="loading-spinner inline-block"></span></p>
+                                </div>
+                                <div class="card-bg p-4 rounded-lg text-center">
+                                    <h4 class="stat-label">Gwiezdne Dukaty ✨</h4>
+                                    <p id="userCurrency" class="stat-value"><span class="loading-spinner inline-block"></span></p>
+                                </div>
+                                <div class="card-bg p-4 rounded-lg text-center">
+                                    <h4 class="stat-label">Wysłane Zwoje</h4>
+                                    <p id="userMessages" class="stat-value"><span class="loading-spinner inline-block"></span></p>
+                                </div>
+                                <div class="card-bg p-4 rounded-lg text-center">
+                                    <h4 class="stat-label">Dodane Pieczęcie</h4>
+                                    <p id="userReactions" class="stat-value"><span class="loading-spinner inline-block"></span></p>
+                                </div>
+                                <div class="card-bg p-4 rounded-lg text-center">
+                                    <h4 class="stat-label">Czas na Naradach</h4>
+                                    <p id="userVoiceTime" class="stat-value"><span class="loading-spinner inline-block"></span></p>
+                                </div>
+                                <div class="card-bg p-4 rounded-lg text-center sm:col-span-2 lg:col-span-3">
+                                    <h4 class="stat-label">Płomień Aktywności</h4>
+                                    <p id="userStreak" class="stat-value"><span class="loading-spinner inline-block"></span></p>
+                                    <p id="userStreakLastActive" class="text-sm text-secondary mt-1">Ładowanie...</p>
+                                </div>
+                                <div class="card-bg p-4 rounded-lg text-center sm:col-span-3">
+                                    <h4 class="stat-label">Zdobyte Role Specjalne</h4>
+                                    <ul id="userSpecialRoles" class="text-secondary text-sm list-none p-0 mt-1">
+                                        <li><span class="loading-spinner inline-block"></span></li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <p id="botStatsInfo" class="text-sm text-secondary mt-6 italic">Pobieranie statystyk z serwera Kronik Elary...</p>
+                        </div>
+                    </div>
+                    <div id="inventory-section" class="mt-8 profile-section-card p-6 sm:p-8 rounded-2xl shadow-xl reveal">
+                        <h2 class="text-2xl sm:text-3xl font-semibold text-accent mb-6">Mój Ekwipunek <span class="text-sm text-secondary">(z Bota)</span></h2>
+                        <div id="userInventoryList" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+                            <div class="loading-spinner col-span-full"></div>
+                            <p class="text-secondary col-span-full text-center mt-2">Ładowanie ekwipunku...</p>
+                        </div>
+                    </div>
+                </div>
+                <div id="profile-login-prompt" class="text-center reveal">
+                    <h2 class="text-3xl sm:text-4xl font-bold text-primary mb-6">Witaj, Wędrowcze!</h2>
+                    <p class="text-lg text-secondary mb-8 max-w-xl mx-auto">Aby zobaczyć swój profil, status zgłoszeń, statystyki i ekwipunek, musisz najpierw zalogować się za pomocą swojego konta Discord.</p>
+                    <a href="/auth/discord/login" class="btn-primary font-semibold py-3 px-8 rounded-lg text-lg">
+                        Zaloguj się przez Discord
+                    </a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <div id="ticketDetailsModal" class="modal-overlay">
+        <div class="modal-content">
+            <div class="flex justify-between items-center mb-4 border-b border-[var(--border-card)] pb-3">
+                <h2 class="text-2xl font-semibold text-accent" id="modalTicketTitle">Szczegóły Zgłoszenia #<span id="modalTicketId"></span></h2>
+                <button id="closeModalButton" class="text-secondary hover:text-accent" aria-label="Zamknij">
+                    <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                </button>
+            </div>
+            
+            <div class="modal-body space-y-3">
+                <p><strong class="text-primary">Typ zgłoszenia:</strong> <span id="modalReportType" class="text-secondary"></span></p>
+                <p><strong class="text-primary">Data zgłoszenia:</strong> <span id="modalCreatedAt" class="text-secondary"></span></p>
+                <p><strong class="text-primary">Status:</strong> <span id="modalStatus" class="text-secondary"></span></p>
+                
+                <div>
+                    <strong class="text-primary block mb-1">Opis pierwotnego zgłoszenia:</strong>
+                    <p id="modalDescription" class="text-secondary whitespace-pre-wrap p-3 bg-[rgba(0,0,0,0.1)] rounded-md"></p>
+                </div>
+
+                <div id="modalAttachmentSection" class="hidden">
+                    <strong class="text-primary">Załącznik:</strong> 
+                    <a id="modalAttachmentLink" href="#" target="_blank" class="text-accent hover:underline ml-1">Zobacz załącznik</a>
+                    <img id="modalAttachmentImage" src="#" alt="Podgląd załącznika" class="mt-2 max-w-full h-auto max-h-60 rounded hidden" onerror="this.style.display='none'"/>
+                </div>
+
+                <div class="mt-4 pt-3 border-t border-[var(--border-card)]">
+                    <h4 class="text-lg font-semibold text-primary mb-2">Historia Odpowiedzi:</h4>
+                    <div id="modalRepliesContainer" class="space-y-3 max-h-60 overflow-y-auto">
+                        <p class="text-sm text-secondary italic">Brak odpowiedzi lub ładowanie...</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal-footer mt-6">
+                <form id="replyForm" class="space-y-3">
+                    <div>
+                        <label for="replyText" class="block text-sm font-medium text-primary mb-1">Twoja odpowiedź:</label>
+                        <textarea id="replyText" name="replyText" rows="3" placeholder="Wpisz swoją odpowiedź..." class="form-textarea" required></textarea>
+                    </div>
+                    <div class="flex justify-end space-x-3">
+                        <button type="button" id="closeModalButton2" class="btn-default px-4 py-2 text-sm">Anuluj</button>
+                        <button type="submit" id="submitReplyButton" class="btn-primary px-4 py-2 text-sm">Wyślij Odpowiedź</button>
+                    </div>
+                    <p id="replyFormMessage" class="text-xs text-center mt-2 h-5"></p>                </form>
+            </div>
+        </div>
+    </div>
+
+
+    <footer class="py-12 text-center" style="background-color: var(--bg-header);">
+        <div class="container mx-auto px-4 sm:px-6">
+            <div class="flex justify-center space-x-6 mb-6">
+                <a href="#" class="text-secondary hover:text-accent transition-colors duration-200" aria-label="Placeholder Twitter">
+                    <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M22.46 6c-.77.35-1.6.58-2.46.67.9-.53 1.59-1.37 1.92-2.38-.84.5-1.78.86-2.79 1.07C18.28 4.42 17.03 4 15.64 4c-2.94 0-5.32 2.38-5.32 5.32 0 .42.05.83.14 1.22-4.42-.22-8.33-2.34-10.96-5.55-.46.79-.72 1.7-.72 2.67 0 1.84.94 3.47 2.37 4.42-.87-.03-1.69-.27-2.41-.66v.07c0 2.57 1.83 4.72 4.25 5.21-.44.12-.91.18-1.39.18-.34 0-.67-.03-1-.1 0 .67.65 1.37 1.77 1.84-.7.55-1.59.88-2.58.88-.39 0-.77-.02-1.14-.07.91.59 2 1.02 3.19 1.02 3.83 0 5.93-3.18 5.93-5.93 0-.09 0-.18-.01-.27.41-.3.76-.68 1.04-1.09z"/></svg>
+                </a>
+                 <a href="#" class="text-secondary hover:text-accent transition-colors duration-200" aria-label="Placeholder Instagram">
+                    <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 1.17.053 1.805.248 2.227.415.562.217.96.477 1.382.896.419.42.679.819.896 1.381.167.422.362 1.056.415 2.227.058 1.266.07 1.646.07 4.85s-.012 3.584-.07 4.85c-.053 1.17-.248 1.805-.415 2.227a3.48 3.48 0 01-.896 1.382c-.42.419-.82.679-1.382.896-.422.167-1.056.362-2.227.415-1.266.058-1.646.07-4.85.07s-3.584-.012-4.85-.07c-1.17-.053-1.805-.248-2.227-.415a3.492 3.492 0 01-1.381-.896 3.492 3.492 0 01-.896-1.381c-.167-.422-.362-1.056-.415-2.227-.058-1.266-.07-1.646-.07-4.85s.012-3.584.07-4.85c.053-1.17.248-1.805.415-2.227.218-.562.477-.96.896-1.381.419-.42.819-.679 1.381-.896.422-.167 1.056-.362 2.227-.415C8.416 2.175 8.796 2.163 12 2.163zm0 1.802c-3.143 0-3.505.012-4.725.068-1.09.05-1.647.235-1.98.378a1.69 1.69 0 00-.755.755c-.143.333-.328.89-.378 1.98C4.082 8.495 4.07 8.857 4.07 12s.012 3.505.068 4.725c.05 1.09.235 1.647.378 1.98.16.373.397.637.755.755.333.143.89.328 1.98.378 1.22.056 1.582.068 4.725.068s3.505-.012 4.725-.068c1.09-.05 1.647.235 1.98-.378.373-.16.637-.397.755-.755.143-.333.328.89.378-1.98.056-1.22.068-1.582.068-4.725s-.012-3.505-.068-4.725c-.05-1.09-.235-1.647-.378-1.98a1.69 1.69 0 00-.755-.755c-.333-.143-.89-.328-1.98-.378C15.505 3.977 15.143 3.965 12 3.965zm0 3.273a4.762 4.762 0 100 9.524 4.762 4.762 0 000-9.524zm0 7.722a3.06 3.06 0 110-6.12 3.06 3.06 0 010 6.12zm4.758-7.868a1.128 1.128 0 100-2.255 1.128 1.128 0 000 2.255z"/></svg>
+                </a>
+                 <a href="polityka-prywatnosci.html" class="text-secondary hover:text-accent transition-colors duration-200" aria-label="Polityka Prywatności">
+                    Polityka Prywatności
+                </a>
+            </div>
+            <p class="text-secondary text-sm">
+                &copy; <span id="currentYear"></span> Kroniki Elary. Wszelkie prawa zastrzeżone.
+            </p>
+            <p class="text-xs mt-2.5" style="color: var(--text-secondary-light, #94A3B8);">
+                Stworzone z pasji do anime i mangi przez Arcadiusa i jego Strażników.
+            </p>
+        </div>
+    </footer>
+
+    <script>
+        // Funkcja do obsługi aktywnego linku w nawigacji
+        function setActiveNavLink() {
+            const currentPage = window.location.pathname.split("/").pop() || "index.html";
+            const navLinks = document.querySelectorAll('header nav > a.nav-link, #mobileMenu > div > a.nav-link');
+            const wikipediaSubPages = ["lore-postaci.html", "systemy-botow.html", "rangi-i-role.html", "lore-aethelgard.html", "komendy.html"];
+
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                const linkPage = link.getAttribute('href').split("/").pop() || "index.html";
+                
+                if (linkPage === currentPage) {
+                    link.classList.add('active');
+                } else if (linkPage === 'wikipedia.html' && wikipediaSubPages.includes(currentPage)) {
+                    // To jest podstrona Wikipedii, więc Wikipedia powinna być aktywna
+                    // Ale sama podstrona nie (chyba że jest to główny link do niej)
+                }
+            });
+        }
+
+        // Funkcja do obsługi wyświetlania informacji o użytkowniku/logowania
+        async function updateAuthDisplay() {
+            const authSectionNav = document.getElementById('auth-section-nav');
+            const authSectionMobileNav = document.getElementById('auth-section-mobile-nav');
+            const profileHeroContent = document.getElementById('profile-hero-content');
+            const profileContentArea = document.getElementById('profile-content-area');
+            const profileLoginPrompt = document.getElementById('profile-login-prompt');
+            const ADMIN_DISCORD_ID = "1238814802357387285"; 
+            let localLoggedInUser = null;
+
+            function createLoginButton(isMobile = false) {
+                const loginButton = document.createElement('a');
+                loginButton.href = new URL('/auth/discord/login', window.location.href).href;
+                loginButton.id = isMobile ? 'discordLoginButtonMobileNav' : 'discordLoginButtonNav';
+                loginButton.className = 'btn-discord !text-white px-4 py-2.5 rounded-md text-sm flex items-center' + (isMobile ? ' w-full justify-center mt-2' : '');
+                loginButton.innerHTML = `
+                    <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20.297 0H3.703C1.658 0 0 1.658 0 3.703V20.297C0 22.342 1.658 24 3.703 24H20.297C22.342 24 24 22.342 24 20.297V3.703C24 1.658 22.342 0 20.297 0ZM8.107 15.232C7.089 15.232 6.241 14.384 6.241 13.366C6.241 12.348 7.089 11.5 8.107 11.5C9.125 11.5 9.973 12.348 9.973 13.366C9.973 14.384 9.125 15.232 8.107 15.232ZM12.000 11.071C10.982 11.071 10.134 10.223 10.134 9.205C10.134 8.188 10.982 7.339 12.000 7.339C13.018 7.339 13.866 8.188 13.866 9.205C13.866 10.223 13.018 11.071 12.000 11.071ZM15.893 15.232C14.875 15.232 14.027 14.384 14.027 13.366C14.027 12.348 14.875 11.5 15.893 11.5C16.911 11.5 17.759 12.348 17.759 13.366C17.759 14.384 16.911 15.232 15.893 15.232Z"/></svg>
+                    Zaloguj przez Discord
+                `;
+                return loginButton;
+            }
+
+            function createAvatarDropdown(user, isMobile = false) {
+                const containerId = isMobile ? 'userDropdownContainerMobile' : 'userDropdownContainerNav';
+                const dropdownId = isMobile ? 'userDropdownMobile' : 'userDropdownNav';
+
+                const container = document.createElement('div');
+                container.id = containerId;
+                container.className = 'relative';
+
+                const avatarImg = document.createElement('img');
+                avatarImg.src = user.avatar ? `https://cdn.discordapp.com/avatars/${user.id}/${user.avatar}.png?size=32` : 'https://placehold.co/32x32/A78BFA/FFFFFF?text=U';
+                avatarImg.alt = 'Awatar użytkownika';
+                avatarImg.className = 'user-avatar';
+                avatarImg.onerror = () => { avatarImg.src = 'https://placehold.co/32x32/A78BFA/FFFFFF?text=U'; };
+                avatarImg.onclick = (event) => {
+                    event.stopPropagation(); 
+                    const dropdown = document.getElementById(dropdownId);
+                    if (dropdown) dropdown.classList.toggle('open');
+                };
+                container.appendChild(avatarImg);
+
+                const dropdownMenu = document.createElement('div');
+                dropdownMenu.id = dropdownId;
+                dropdownMenu.className = 'dropdown-menu';
+                
+                const profileLink = document.createElement('a');
+                profileLink.href = 'profil.html';
+                profileLink.textContent = 'Mój Profil';
+                dropdownMenu.appendChild(profileLink);
+
+                const botShopLink = document.createElement('a'); // Nowy link
+                botShopLink.href = 'sklep-bota.html'; // Placeholder, strona do stworzenia
+                botShopLink.textContent = 'Sklep Bota';
+                dropdownMenu.appendChild(botShopLink);
+
+                const supportTicketsLink = document.createElement('a');
+                supportTicketsLink.href = 'support.html'; 
+                supportTicketsLink.textContent = 'Centrum Wsparcia';
+                dropdownMenu.appendChild(supportTicketsLink);
+
+                if (user.id === ADMIN_DISCORD_ID) {
+                    const adminLinkElement = document.createElement('a'); 
+                    adminLinkElement.href = new URL('/admin.html', window.location.href).href;
+                    adminLinkElement.textContent = 'Panel Admina';
+                    dropdownMenu.appendChild(adminLinkElement);
+                }
+                
+                const logoutForm = document.createElement('form');
+                logoutForm.action = new URL('/auth/logout', window.location.href).href;
+                logoutForm.method = 'POST';
+                const logoutButton = document.createElement('button');
+                logoutButton.type = 'submit';
+                logoutButton.textContent = 'Wyloguj';
+                logoutForm.appendChild(logoutButton);
+                dropdownMenu.appendChild(logoutForm);
+
+                container.appendChild(dropdownMenu);
+                return container;
+            }
+
+            try {
+                const response = await fetch(new URL('/api/me', window.location.href).href);
+                if (response.ok) {
+                    localLoggedInUser = await response.json();
+                    if (profileHeroContent) {
+                         profileHeroContent.innerHTML = `
+                            <img src="${localLoggedInUser.avatar ? `https://cdn.discordapp.com/avatars/${localLoggedInUser.id}/${localLoggedInUser.avatar}.png?size=128` : 'https://placehold.co/128x128/A78BFA/FFFFFF?text=U'}" alt="Awatar użytkownika ${localLoggedInUser.username}" class="user-avatar-profile mx-auto" onerror="this.onerror=null;this.src='https://placehold.co/128x128/0F172A/E2E8F0?text=U';">
+                            <h1 class="text-4xl sm:text-5xl font-bold text-white mb-2 leading-tight text-shadow-custom">Witaj, <span class="animated-gradient-text">${localLoggedInUser.username}</span>!</h1>
+                            <p class="text-lg text-slate-300 mb-8 text-shadow-custom">Oto Twoje centrum dowodzenia w Kronikach Elary.</p>
+                             <div class="space-x-0 sm:space-x-4 space-y-3 sm:space-y-0">
+                                <a href="index.html" class="btn-secondary font-semibold py-2.5 px-6 rounded-lg text-sm inline-block w-full sm:w-auto">Strona Główna</a>
+                                <a href="ranking-stats.html" class="btn-secondary font-semibold py-2.5 px-6 rounded-lg text-sm inline-block w-full sm:w-auto">Zobacz Rankingi</a>
+                            </div>
+                        `;
+                    }
+                    if (profileLoginPrompt) profileLoginPrompt.classList.add('hidden');
+                    if (profileContentArea) profileContentArea.classList.remove('hidden');
+                    fetchSupportTickets(localLoggedInUser.id); 
+                    fetchAndDisplayBotStats(localLoggedInUser.id); 
+                    fetchAndDisplayUserInventory(localLoggedInUser.id); // Dodano wywołanie funkcji ekwipunku
+
+                    if (authSectionNav) {
+                        authSectionNav.innerHTML = ''; 
+                        authSectionNav.appendChild(createAvatarDropdown(localLoggedInUser, false));
+                    }
+                    if (authSectionMobileNav) {
+                        authSectionMobileNav.innerHTML = ''; 
+                        authSectionMobileNav.appendChild(createAvatarDropdown(localLoggedInUser, true));
+                    }
+                } else {
+                    localLoggedInUser = null;
+                    if (profileHeroContent) {
+                        profileHeroContent.innerHTML = `
+                            <h1 class="text-4xl sm:text-5xl md:text-6xl font-bold text-white mb-4 leading-tight text-shadow-custom">Mój Profil</h1>
+                            <p class="text-lg sm:text-xl text-slate-200 mb-8 max-w-2xl mx-auto text-shadow-custom">Zaloguj się, aby zobaczyć swoje dane.</p>
+                            <a href="/auth/discord/login" class="btn-discord !text-white px-6 py-3 rounded-lg text-md inline-flex items-center">
+                                <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 24 24"><path d="M20.297 0H3.703C1.658 0 0 1.658 0 3.703V20.297C0 22.342 1.658 24 3.703 24H20.297C22.342 24 24 22.342 24 20.297V3.703C24 1.658 22.342 0 20.297 0ZM8.107 15.232C7.089 15.232 6.241 14.384 6.241 13.366C6.241 12.348 7.089 11.5 8.107 11.5C9.125 11.5 9.973 12.348 9.973 13.366C9.973 14.384 9.125 15.232 8.107 15.232ZM12.000 11.071C10.982 11.071 10.134 10.223 10.134 9.205C10.134 8.188 10.982 7.339 12.000 7.339C13.018 7.339 13.866 8.188 13.866 9.205C13.866 10.223 13.018 11.071 12.000 11.071ZM15.893 15.232C14.875 15.232 14.027 14.384 14.027 13.366C14.027 12.348 14.875 11.5 15.893 11.5C16.911 11.5 17.759 12.348 17.759 13.366C17.759 14.384 16.911 15.232 15.893 15.232Z"/></svg>
+                                Zaloguj przez Discord
+                            </a>`;
+                    }
+                    if (profileLoginPrompt) profileLoginPrompt.classList.remove('hidden'); 
+                    if (profileContentArea) profileContentArea.classList.add('hidden');
+                     if (authSectionNav) {
+                        authSectionNav.innerHTML = '';
+                        authSectionNav.appendChild(createLoginButton(false));
+                    }
+                    if (authSectionMobileNav) {
+                        authSectionMobileNav.innerHTML = '';
+                        authSectionMobileNav.appendChild(createLoginButton(true));
+                    }
+                }
+            } catch (error) {
+                console.error('Błąd aktualizacji UI logowania:', error);
+                localLoggedInUser = null;
+                if (profileHeroContent) {
+                    profileHeroContent.innerHTML = `
+                        <h1 class="text-4xl sm:text-5xl md:text-6xl font-bold text-white mb-4 leading-tight text-shadow-custom">Mój Profil</h1>
+                        <p class="text-lg sm:text-xl text-slate-200 mb-8 max-w-2xl mx-auto text-shadow-custom">Wystąpił błąd podczas ładowania profilu. Spróbuj ponownie później.</p>
+                         <a href="/auth/discord/login" class="btn-discord !text-white px-6 py-3 rounded-lg text-md inline-flex items-center">
+                            <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 24 24"><path d="M20.297 0H3.703C1.658 0 0 1.658 0 3.703V20.297C0 22.342 1.658 24 3.703 24H20.297C22.342 24 24 22.342 24 20.297V3.703C24 1.658 22.342 0 20.297 0ZM8.107 15.232C7.089 15.232 6.241 14.384 6.241 13.366C6.241 12.348 7.089 11.5 8.107 11.5C9.125 11.5 9.973 12.348 9.973 13.366C9.973 14.384 9.125 15.232 8.107 15.232ZM12.000 11.071C10.982 11.071 10.134 10.223 10.134 9.205C10.134 8.188 10.982 7.339 12.000 7.339C13.018 7.339 13.866 8.188 13.866 9.205C13.866 10.223 13.018 11.071 12.000 11.071ZM15.893 15.232C14.875 15.232 14.027 14.384 14.027 13.366C14.027 12.348 14.875 11.5 15.893 11.5C16.911 11.5 17.759 12.348 17.759 13.366C17.759 14.384 16.911 15.232 15.893 15.232Z"/></svg>
+                            Zaloguj przez Discord
+                        </a>`;
+                }
+                if (profileLoginPrompt) profileLoginPrompt.classList.remove('hidden');
+                if (profileContentArea) profileContentArea.classList.add('hidden');
+                 if (authSectionNav) {
+                    authSectionNav.innerHTML = '';
+                    authSectionNav.appendChild(createLoginButton(false));
+                }
+                if (authSectionMobileNav) {
+                    authSectionMobileNav.innerHTML = '';
+                    authSectionMobileNav.appendChild(createLoginButton(true));
+                }
+            }
+            return localLoggedInUser;
+        }
+        
+        function setupMobileMenu() {
+            const mobileMenuButton = document.getElementById('mobileMenuButton');
+            const mobileMenu = document.getElementById('mobileMenu');
+            
+            if (mobileMenuButton && mobileMenu) {
+                mobileMenuButton.addEventListener('click', () => {
+                    const isExpanded = mobileMenuButton.getAttribute('aria-expanded') === 'true' || false;
+                    mobileMenuButton.setAttribute('aria-expanded', !isExpanded);
+                    mobileMenu.classList.toggle('open');
+                });
+                mobileMenu.querySelectorAll('a.nav-link').forEach(link => { 
+                    link.addEventListener('click', () => {
+                        mobileMenuButton.setAttribute('aria-expanded', 'false');
+                        mobileMenu.classList.remove('open');
+                    });
+                });
+            }
+        }
+
+        function setupRevealAnimations() {
+            const revealObserver = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.05 }); 
+
+            document.querySelectorAll('.reveal').forEach(el => {
+                revealObserver.observe(el);
+            });
+        }
+
+        function setupDropdownDismiss() {
+            window.addEventListener('click', function(e) {
+                const desktopDropdownContainer = document.getElementById('userDropdownContainerNav');
+                const mobileDropdownContainer = document.getElementById('userDropdownContainerMobile');
+                const desktopDropdown = document.getElementById('userDropdownNav');
+                const mobileDropdown = document.getElementById('userDropdownMobile');
+
+                if (desktopDropdownContainer && !desktopDropdownContainer.contains(e.target) && desktopDropdown) {
+                    desktopDropdown.classList.remove('open');
+                }
+                if (mobileDropdownContainer && !mobileDropdownContainer.contains(e.target) && mobileDropdown) {
+                     mobileDropdown.classList.remove('open');
+                }
+            });
+        }
+
+        // --- Profile Page Specific Logic ---
+        const supportTicketsList = document.getElementById('supportTicketsList');
+        const userLevel = document.getElementById('userLevel');
+        const userXP = document.getElementById('userXP');
+        const userCurrency = document.getElementById('userCurrency');
+        const userMessages = document.getElementById('userMessages');
+        const userReactions = document.getElementById('userReactions');
+        const userVoiceTime = document.getElementById('userVoiceTime');
+        const userStreak = document.getElementById('userStreak');
+        const userStreakLastActive = document.getElementById('userStreakLastActive');
+        const userSpecialRoles = document.getElementById('userSpecialRoles'); 
+        const botStatsInfo = document.getElementById('botStatsInfo'); 
+        const userInventoryList = document.getElementById('userInventoryList'); // Kontener na ekwipunek
+
+        const ticketDetailsModal = document.getElementById('ticketDetailsModal');
+        const closeModalButton = document.getElementById('closeModalButton');
+        const closeModalButton2 = document.getElementById('closeModalButton2');
+        const modalTicketId = document.getElementById('modalTicketId');
+        const modalReportType = document.getElementById('modalReportType');
+        const modalCreatedAt = document.getElementById('modalCreatedAt');
+        const modalStatus = document.getElementById('modalStatus');
+        const modalDescription = document.getElementById('modalDescription');
+        const modalAttachmentSection = document.getElementById('modalAttachmentSection');
+        const modalAttachmentLink = document.getElementById('modalAttachmentLink');
+        const modalAttachmentImage = document.getElementById('modalAttachmentImage');
+        const modalRepliesContainer = document.getElementById('modalRepliesContainer');
+        const replyForm = document.getElementById('replyForm');
+        const replyText = document.getElementById('replyText');
+        const submitReplyButton = document.getElementById('submitReplyButton');
+        const replyFormMessage = document.getElementById('replyFormMessage');
+
+        let currentOpenTicketId = null;
+        let allTicketsData = [];
+
+        function formatVoiceTime(totalSeconds) {
+            if (isNaN(totalSeconds) || totalSeconds === null || totalSeconds < 0) return "Brak danych";
+            const hours = Math.floor(totalSeconds / 3600);
+            const minutes = Math.floor((totalSeconds % 3600) / 60);
+            const seconds = totalSeconds % 60;
+            let timeString = "";
+            if (hours > 0) timeString += `${hours}g `;
+            if (minutes > 0 || hours > 0) timeString += `${minutes}m `;
+            timeString += `${seconds}s`;
+            return timeString.trim() || "0s";
+        }
+
+        function formatStreakDate(isoDateString) {
+            if (!isoDateString) return "Brak danych";
+            try {
+                const date = new Date(isoDateString);
+                return date.toLocaleDateString('pl-PL', { day: '2-digit', month: '2-digit', year: 'numeric' });
+            } catch (e) { return "Nieprawidłowa data"; }
+        }
+
+        async function fetchAndDisplayBotStats(userId) {
+            if (!userId) return;
+            const elementsToUpdate = { userLevel, userXP, userCurrency, userMessages, userReactions, userVoiceTime, userStreak, userStreakLastActive, userSpecialRoles };
+            Object.values(elementsToUpdate).forEach(el => { if (el && el.classList.contains('stat-value')) el.innerHTML = '<span class="loading-spinner inline-block"></span>'; });
+            if (userSpecialRoles) userSpecialRoles.innerHTML = '<li><span class="loading-spinner inline-block"></span></li>'; 
+            if (botStatsInfo) botStatsInfo.textContent = 'Pobieranie statystyk z serwera Kronik Elary...';
+
+            try {
+                const response = await fetch(new URL(`/api/bot-stats/${userId}`, window.location.href).href);
+                if (response.ok) {
+                    const stats = await response.json();
+                    if (userLevel) userLevel.textContent = `${stats.level !== undefined ? stats.level : 0}`;
+                    if (userXP) userXP.textContent = `${stats.xp !== undefined ? stats.xp.toLocaleString('pl-PL') : 0}`;
+                    if (userCurrency) userCurrency.textContent = `${stats.currency !== undefined ? stats.currency.toLocaleString('pl-PL') : 0} ✨`;
+                    if (userMessages) userMessages.textContent = `${stats.message_count !== undefined ? stats.message_count.toLocaleString('pl-PL') : 0}`;
+                    if (userReactions) userReactions.textContent = `${stats.reaction_count !== undefined ? stats.reaction_count.toLocaleString('pl-PL') : 0}`;
+                    if (userVoiceTime) userVoiceTime.textContent = formatVoiceTime(stats.voice_time_seconds);
+                    if (userStreak) userStreak.textContent = `${stats.current_streak_days !== undefined ? stats.current_streak_days : 0} dni`;
+                    if (userStreakLastActive) userStreakLastActive.textContent = stats.streak_last_active_day_iso ? `(Ostatnia aktywność: ${formatStreakDate(stats.streak_last_active_day_iso)})` : "(Brak aktywności w ramach streaka)";
+                    
+                    if (userSpecialRoles) {
+                        userSpecialRoles.innerHTML = '<li>Brak specjalnych ról (funkcja w budowie)</li>';
+                    }
+                    
+                    if (botStatsInfo) botStatsInfo.textContent = 'Statystyki załadowane z Kronik Elary.';
+                } else {
+                    const errorData = await response.json().catch(() => ({ error: "Nieznany błąd pobierania statystyk bota."}));
+                    Object.values(elementsToUpdate).forEach(el => { if (el) el.textContent = 'Błąd'; });
+                    if (userSpecialRoles) userSpecialRoles.innerHTML = '<li>Błąd</li>';
+                    if (userStreakLastActive) userStreakLastActive.textContent = '';
+                    if (botStatsInfo) botStatsInfo.textContent = `Nie udało się załadować statystyk z serwera (${errorData.error || response.status}).`;
+                }
+            } catch (error) {
+                Object.values(elementsToUpdate).forEach(el => { if (el) el.textContent = 'Błąd sieci'; });
+                if (userSpecialRoles) userSpecialRoles.innerHTML = '<li>Błąd sieci</li>';
+                if (userStreakLastActive) userStreakLastActive.textContent = '';
+                if (botStatsInfo) botStatsInfo.textContent = 'Błąd sieci podczas łączenia z serwerem Kronik Elary.';
+            }
+        }
+
+        async function fetchSupportTickets(userId) {
+            if (!userId || !supportTicketsList) {
+                if(supportTicketsList) supportTicketsList.innerHTML = '<p class="text-secondary">Musisz być zalogowany, aby zobaczyć zgłoszenia.</p>';
+                return;
+            }
+            supportTicketsList.innerHTML = '<div class="loading-spinner"></div><p class="text-secondary text-center mt-2">Pobieranie Twoich zgłoszeń...</p>';
+            try {
+                const response = await fetch(new URL(`/api/support/my-tickets`, window.location.href).href);
+                if (response.ok) {
+                    const tickets = await response.json();
+                    allTicketsData = tickets; 
+                    if (tickets.length > 0) {
+                        supportTicketsList.innerHTML = tickets.map(ticket => {
+                            const ticketDate = new Date(ticket.createdAt).toLocaleDateString('pl-PL', {
+                                year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit'
+                            });
+                            const status = ticket.status || 'Otwarte';
+                            const statusNormalized = status.toLowerCase().replace(/\s+/g, '-').replace(/[^\w-]/g, '');
+                            
+                            let borderColorClass = 'border-gray-500'; 
+                            if (statusNormalized === 'otwarte') borderColorClass = 'border-amber-400';
+                            else if (statusNormalized === 'rozwiązane') borderColorClass = 'border-green-500';
+                            else if (statusNormalized === 'w-trakcie') borderColorClass = 'border-blue-400';
+                            else if (statusNormalized === 'oczekuje-na-odpowiedź') borderColorClass = 'border-pink-400';
+                            else if (statusNormalized === 'zamknięte') borderColorClass = 'border-gray-400';
+
+                            return `
+                            <div class="support-ticket p-4 rounded-md bg-bg-card ${borderColorClass} mb-3">
+                                <div class="flex justify-between items-center mb-1">
+                                    <h5 class="font-semibold text-primary">Zgłoszenie #${ticket.id} - ${ticket.reportType}</h5>
+                                    <span class="text-xs px-2 py-1 rounded-full status-${statusNormalized}">${status.toUpperCase()}</span>
+                                </div>
+                                <p class="text-xs text-secondary">Zgłoszono: ${ticketDate}</p>
+                                <p class="text-sm text-secondary mt-2 truncate">${ticket.description}</p>
+                                ${ticket.attachment ? '<p class="text-xs text-accent mt-1">Dołączono załącznik</p>' : ''}
+                                <button data-ticket-id="${ticket.id}" class="view-ticket-details-btn btn-secondary btn-action-sm mt-3 text-xs">Zobacz szczegóły / Odpowiedz</button>
+                            </div> `;
+                        }).join('');
+                        addEventListenersToTicketDetailButtons();
+                    } else {
+                        supportTicketsList.innerHTML = '<p class="text-secondary">Nie masz jeszcze żadnych zgłoszeń.</p>';
+                    }
+                } else {
+                    const errorData = await response.json().catch(() => ({ error: "Nie udało się załadować zgłoszeń."}));
+                    supportTicketsList.innerHTML = `<p class="text-red-400">Nie udało się załadować zgłoszeń (Błąd: ${errorData.error || response.status}).</p>`;
+                }
+            } catch (error) {
+                supportTicketsList.innerHTML = '<p class="text-red-400">Błąd sieci podczas ładowania zgłoszeń.</p>';
+            }
+        }
+
+        function addEventListenersToTicketDetailButtons() {
+            document.querySelectorAll('.view-ticket-details-btn').forEach(button => {
+                button.addEventListener('click', (event) => {
+                    const ticketId = event.target.dataset.ticketId;
+                    openTicketDetailsModal(ticketId);
+                });
+            });
+        }
+        
+        async function openTicketDetailsModal(ticketId) {
+            currentOpenTicketId = ticketId;
+            const loggedInUser = await updateAuthDisplay(); 
+            if (!ticketDetailsModal || !loggedInUser) return;
+
+            modalTicketId.textContent = ticketId;
+            modalReportType.textContent = 'Ładowanie...';
+            modalCreatedAt.textContent = 'Ładowanie...';
+            modalStatus.textContent = 'Ładowanie...';
+            modalDescription.textContent = 'Ładowanie...';
+            modalAttachmentSection.classList.add('hidden');
+            modalAttachmentImage.classList.add('hidden');
+            modalRepliesContainer.innerHTML = '<div class="loading-spinner"></div><p class="text-sm text-secondary italic text-center mt-2">Ładowanie odpowiedzi...</p>';
+            replyFormMessage.textContent = '';
+            replyText.value = '';
+            submitReplyButton.disabled = false;
+            submitReplyButton.textContent = 'Wyślij Odpowiedź';
+
+            ticketDetailsModal.classList.add('open');
+            document.body.style.overflow = 'hidden';
+
+            try {
+                const response = await fetch(new URL(`/api/support/ticket/${ticketId}`, window.location.href).href);
+                if (!response.ok) {
+                    const errorData = await response.json().catch(() => ({ error: "Błąd ładowania szczegółów zgłoszenia." }));
+                    modalDescription.textContent = `Błąd: ${errorData.error || response.status}`;
+                    modalRepliesContainer.innerHTML = '';
+                    return;
+                }
+                const ticket = await response.json();
+
+                modalReportType.textContent = ticket.reportType;
+                modalCreatedAt.textContent = new Date(ticket.createdAt).toLocaleString('pl-PL', { dateStyle: 'long', timeStyle: 'short' });
+                const statusNormalized = (ticket.status || 'Otwarte').toLowerCase().replace(/\s+/g, '-').replace(/[^\w-]/g, '');
+                modalStatus.innerHTML = `<span class="status-${statusNormalized}">${ticket.status}</span>`;
+                modalDescription.textContent = ticket.description;
+
+                if (ticket.attachment) {
+                    const attachmentUrl = `/uploads/${ticket.attachment}`;
+                    modalAttachmentLink.href = attachmentUrl;
+                    modalAttachmentLink.textContent = ticket.attachment;
+                    if (/\.(jpe?g|png|gif)$/i.test(ticket.attachment)) {
+                        modalAttachmentImage.src = attachmentUrl;
+                        modalAttachmentImage.classList.remove('hidden');
+                    } else {
+                        modalAttachmentImage.classList.add('hidden');
+                    }
+                    modalAttachmentSection.classList.remove('hidden');
+                }
+
+                if (ticket.replies && ticket.replies.length > 0) {
+                    modalRepliesContainer.innerHTML = ticket.replies.map(reply => {
+                        const replyDate = new Date(reply.createdAt).toLocaleString('pl-PL', { dateStyle: 'short', timeStyle: 'short' });
+                        const authorClass = reply.isAdminReply ? 'reply-admin' : 'reply-user';
+                        const authorName = reply.isAdminReply ? `Admin: ${reply.discordUsername || 'Support'}` : `Ty (${reply.discordUsername || 'Użytkownik'})`;
+                        return `
+                            <div class="reply-message ${authorClass}">
+                                <p class="reply-author">${authorName} <span class="reply-timestamp">${replyDate}</span></p>
+                                <p class="reply-text">${reply.replyText}</p>
+                            </div>
+                        `;
+                    }).join('');
+                } else {
+                    modalRepliesContainer.innerHTML = '<p class="text-sm text-secondary italic">Brak odpowiedzi do tego zgłoszenia.</p>';
+                }
+                
+                if (['Rozwiązane', 'Zamknięte'].includes(ticket.status)) {
+                    replyText.disabled = true;
+                    submitReplyButton.disabled = true;
+                    submitReplyButton.textContent = 'Zgłoszenie zamknięte';
+                    replyFormMessage.textContent = 'Nie można dodać odpowiedzi do rozwiązanego lub zamkniętego zgłoszenia.';
+                    replyFormMessage.className = 'text-xs text-center mt-2 text-amber-400';
+                } else {
+                    replyText.disabled = false;
+                    submitReplyButton.disabled = false;
+                    submitReplyButton.textContent = 'Wyślij Odpowiedź';
+                }
+
+            } catch (error) {
+                console.error('Błąd pobierania szczegółów zgłoszenia:', error);
+                modalDescription.textContent = 'Nie udało się załadować szczegółów zgłoszenia.';
+                modalRepliesContainer.innerHTML = '';
+            }
+        }
+        
+        if (closeModalButton) closeModalButton.addEventListener('click', () => {
+            ticketDetailsModal.classList.remove('open');
+            document.body.style.overflow = '';
+            currentOpenTicketId = null;
+        });
+        if (closeModalButton2) closeModalButton2.addEventListener('click', () => {
+            ticketDetailsModal.classList.remove('open');
+            document.body.style.overflow = '';
+            currentOpenTicketId = null;
+        });
+
+        if (ticketDetailsModal) {
+             ticketDetailsModal.addEventListener('click', (event) => {
+                if (event.target === ticketDetailsModal) {
+                   ticketDetailsModal.classList.remove('open');
+                   document.body.style.overflow = '';
+                   currentOpenTicketId = null;
+                }
+            });
+        }
+
+        if (replyForm) {
+            replyForm.addEventListener('submit', async (event) => {
+                event.preventDefault();
+                const currentUser = await updateAuthDisplay();
+                if (!currentOpenTicketId || !currentUser) return;
+
+                const replyContent = replyText.value.trim();
+                if (!replyContent) {
+                    replyFormMessage.textContent = 'Treść odpowiedzi nie może być pusta.';
+                    replyFormMessage.className = 'text-xs text-center mt-2 text-red-400';
+                    return;
+                }
+
+                submitReplyButton.disabled = true;
+                submitReplyButton.innerHTML = `
+                    <svg class="animate-spin -ml-1 mr-3 h-5 w-5 text-white inline" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                        <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                    </svg>
+                    Wysyłanie...`;
+                replyFormMessage.textContent = '';
+                replyFormMessage.className = 'text-xs text-center mt-2 h-5';
+
+                try {
+                    const response = await fetch(new URL(`/api/support/ticket/${currentOpenTicketId}/reply`, window.location.href).href, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ replyText: replyContent })
+                    });
+                    const result = await response.json();
+
+                    if (response.ok) {
+                        replyFormMessage.textContent = result.message || 'Odpowiedź została wysłana.';
+                        replyFormMessage.classList.add('text-green-400');
+                        replyText.value = ''; 
+                        await openTicketDetailsModal(currentOpenTicketId); 
+                        await fetchSupportTickets(currentUser.id);
+                    } else {
+                        replyFormMessage.textContent = result.error || 'Błąd wysyłania odpowiedzi.';
+                        replyFormMessage.classList.add('text-red-400');
+                    }
+                } catch (error) {
+                    console.error('Błąd wysyłania odpowiedzi:', error);
+                    replyFormMessage.textContent = 'Wystąpił błąd sieciowy.';
+                    replyFormMessage.classList.add('text-red-400');
+                } finally {
+                    const currentTicket = allTicketsData.find(t => t.id.toString() === currentOpenTicketId);
+                    if (currentTicket && !['Rozwiązane', 'Zamknięte'].includes(currentTicket.status)) {
+                       submitReplyButton.disabled = false;
+                       submitReplyButton.textContent = 'Wyślij Odpowiedź';
+                    } else if (!currentTicket) {
+                        submitReplyButton.disabled = false;
+                        submitReplyButton.textContent = 'Wyślij Odpowiedź';
+                    }
+                }
+            });
+        }
+
+        // Nowa funkcja do pobierania i wyświetlania ekwipunku
+        async function fetchAndDisplayUserInventory(userId) {
+            if (!userId || !userInventoryList) return;
+            userInventoryList.innerHTML = '<div class="loading-spinner col-span-full"></div><p class="text-secondary col-span-full text-center mt-2">Ładowanie ekwipunku...</p>';
+
+            try {
+                // Endpoint API dla ekwipunku - do dostosowania
+                const response = await fetch(new URL(`/api/bot-inventory/${userId}`, window.location.href).href);
+                if (response.ok) {
+                    const inventory = await response.json();
+                    renderInventoryItems(inventory, userInventoryList);
+                } else {
+                    const errorData = await response.json().catch(() => ({ error: "Nie udało się załadować ekwipunku."}));
+                    userInventoryList.innerHTML = `<p class="text-red-400 col-span-full text-center">Nie udało się załadować ekwipunku (Błąd: ${errorData.error || response.status}).</p>`;
+                }
+            } catch (error) {
+                console.error('Błąd pobierania ekwipunku:', error);
+                userInventoryList.innerHTML = '<p class="text-red-400 col-span-full text-center">Błąd sieci podczas ładowania ekwipunku.</p>';
+            }
+        }
+
+        // Funkcja do renderowania przedmiotów ekwipunku
+        function renderInventoryItems(items, containerElement) {
+            if (!items || items.length === 0) {
+                containerElement.innerHTML = '<p class="text-secondary col-span-full text-center">Twój ekwipunek jest pusty.</p>';
+                return;
+            }
+            containerElement.innerHTML = items.map(item => `
+                <div class="inventory-item-card">
+                    <div class="inventory-item-icon">
+                        ${item.icon_emoji || '💎'} </div>
+                    <h5 class="inventory-item-name">${item.name || 'Nieznany przedmiot'}</h5>
+                    ${item.quantity > 1 ? `<p class="inventory-item-quantity">Ilość: ${item.quantity}</p>` : ''}
+                    ${item.description ? `<p class="inventory-item-description">${item.description}</p>` : ''}
+                </div>
+            `).join('');
+        }
+        
+        document.addEventListener('DOMContentLoaded', async function() {
+            document.getElementById('currentYear').textContent = new Date().getFullYear();
+            
+            if (!document.documentElement.classList.contains('light') && !document.documentElement.classList.contains('dark')) {
+                 document.documentElement.classList.add('dark');
+            }
+
+            setActiveNavLink();
+            await updateAuthDisplay(); 
+            setupMobileMenu();
+            setupRevealAnimations();
+            setupDropdownDismiss();
+        });
+    </script>
+</body>
+</html>

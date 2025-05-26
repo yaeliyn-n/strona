@@ -1,0 +1,668 @@
+<!DOCTYPE html>
+<html lang="pl" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panel Wsparcia - Zarządzanie Zgłoszeniami - Kroniki Elary</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-primary: #0F172A; 
+            --bg-secondary: #1E293B; 
+            --bg-card: #293548; 
+            --bg-header: rgba(15, 23, 42, 0.92);
+            
+            --text-primary: #E2E8F0; 
+            --text-secondary: #94A3B8; 
+            --text-accent: #A78BFA; 
+            --text-accent-hover: #8B5CF6; 
+            
+            --border-accent: #8B5CF6; 
+            --border-card: rgba(167, 139, 250, 0.25); 
+            
+            --btn-primary-bg: #8B5CF6; 
+            --btn-primary-hover-bg: #7C3AED; 
+            --btn-danger-bg: #EF4444;
+            --btn-danger-hover-bg: #DC2626;
+            --btn-success-bg: #22C55E; /* green-500 */
+            --btn-success-hover-bg: #16A34A; /* green-600 */
+
+
+            --svg-icon-fill: #E2E8F0;
+            --shadow-color: rgba(167, 139, 250, 0.25); 
+            --shadow-strong-color: rgba(167, 139, 250, 0.4);
+            --modal-backdrop: rgba(15, 23, 42, 0.85);
+        }
+        html.light { /* Dark theme for admin panel */ }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+        h1, h2, h3 { font-family: 'Lora', serif; font-weight: 600; }
+
+        .nav-link {
+            position: relative; color: var(--text-secondary);
+            transition: color 0.2s ease, background-color 0.2s ease; padding: 0.5rem 1rem; border-radius: 0.5rem;
+        }
+        .nav-link:hover, .nav-link.active { color: var(--text-accent); background-color: rgba(167,139,250,0.1); }
+        
+        .user-avatar {
+            width: 32px; height: 32px; border-radius: 50%; border: 2px solid var(--border-accent); cursor: pointer;
+            transition: transform 0.2s ease-in-out;
+        }
+        .user-avatar:hover { transform: scale(1.1); }
+
+        .dropdown-menu {
+            position: absolute; top: calc(100% + 0.5rem); right: 0; background-color: var(--bg-card);
+            border: 1px solid var(--border-card); border-radius: 0.5rem;
+            box-shadow: 0 10px 25px -5px var(--shadow-strong-color); z-index: 50;
+            min-width: 200px; opacity: 0; visibility: hidden; transform: translateY(-10px);
+            transition: opacity 0.2s ease, transform 0.2s ease, visibility 0s linear 0.2s;
+        }
+        .dropdown-menu.open { opacity: 1; visibility: visible; transform: translateY(0); transition-delay: 0s; }
+        .dropdown-menu a, .dropdown-menu button {
+            display: block; width: 100%; text-align: left; padding: 0.75rem 1rem; font-size: 0.875rem;
+            color: var(--text-secondary); transition: background-color 0.15s ease, color 0.15s ease;
+        }
+        .dropdown-menu a:hover, .dropdown-menu button:hover { background-color: rgba(167,139,250,0.1); color: var(--text-accent); }
+        .dropdown-menu form { margin: 0; }
+
+        .form-input, .form-select, .form-textarea {
+            background-color: var(--bg-secondary); border: 1px solid var(--border-card);
+            color: var(--text-primary); border-radius: 0.375rem; padding: 0.75rem 1rem; width: 100%;
+            transition: border-color 0.2s ease;
+        }
+        .form-input:focus, .form-select:focus, .form-textarea:focus {
+            outline: none; border-color: var(--border-accent);
+            box-shadow: 0 0 0 2px rgba(167,139,250,0.3);
+        }
+        .form-label { color: var(--text-secondary); margin-bottom: 0.5rem; display: block; font-weight: 500; }
+
+        .btn {
+            padding: 0.65rem 1.25rem; border-radius: 0.375rem; font-weight: 500;
+            transition: background-color 0.2s ease, transform 0.2s ease;
+        }
+        .btn-primary { background-color: var(--btn-primary-bg); color: white; }
+        .btn-primary:hover { background-color: var(--btn-primary-hover-bg); transform: translateY(-1px); }
+        .btn-secondary { background-color: var(--bg-card) ; border: 1px solid var(--border-accent); color: var(--text-accent); }
+        .btn-secondary:hover { background-color: rgba(167,139,250,0.15); transform: translateY(-1px); }
+        .btn-success { background-color: var(--btn-success-bg); color: white; }
+        .btn-success:hover { background-color: var(--btn-success-hover-bg); transform: translateY(-1px); }
+        .btn-danger { background-color: var(--btn-danger-bg); color: white; }
+        .btn-danger:hover { background-color: var(--btn-danger-hover-bg); transform: translateY(-1px); }
+
+
+        #adminMessage { margin-top: 1rem; padding: 0.75rem; border-radius: 0.375rem; text-align: center; }
+        #adminMessage.success { background-color: rgba(52, 211, 153, 0.1); color: #34D399; border: 1px solid rgba(52, 211, 153, 0.3); }
+        #adminMessage.error { background-color: rgba(239, 68, 68, 0.1); color: #EF4444; border: 1px solid rgba(239, 68, 68, 0.3); }
+        
+        .ticket-table { width: 100%; border-collapse: collapse; }
+        .ticket-table th, .ticket-table td {
+            border: 1px solid var(--border-card); padding: 0.75rem 1rem; text-align: left;
+            vertical-align: middle;
+        }
+        .ticket-table th { background-color: rgba(var(--r,167), var(--g,139), var(--b,250), 0.1); color: var(--text-accent); font-weight: 600; }
+        .ticket-table td .form-select { padding: 0.5rem; font-size: 0.875rem; }
+        .ticket-table td .btn { padding: 0.4rem 0.8rem; font-size: 0.875rem; }
+
+        .modal-overlay {
+            position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+            background-color: var(--modal-backdrop); backdrop-filter: blur(4px);
+            display: flex; align-items: center; justify-content: center;
+            z-index: 60; opacity: 0; visibility: hidden;
+            transition: opacity 0.3s ease, visibility 0s linear 0.3s;
+        }
+        .modal-overlay.open { opacity: 1; visibility: visible; transition: opacity 0.3s ease; }
+        .modal-content {
+            background-color: var(--bg-card); padding: 1.5rem;
+            border-radius: 0.75rem; box-shadow: 0 20px 25px -5px rgba(0,0,0,0.1), 0 10px 10px -5px rgba(0,0,0,0.04);
+            width: 90%; max-width: 700px; max-height: 90vh; display: flex; flex-direction: column;
+        }
+        .modal-body { overflow-y: auto; padding-right: 0.5rem; }
+        .modal-footer { margin-top: auto; padding-top: 1rem; border-top: 1px solid var(--border-card); }
+
+        .reply-message { padding: 0.75rem; border-radius: 0.5rem; margin-bottom: 0.75rem; }
+        .reply-user { background-color: rgba(var(--r,167), var(--g,139), var(--b,250), 0.1); border-left: 3px solid var(--text-accent); }
+        .reply-admin { background-color: rgba(var(--r,107), var(--g,114), var(--b,128), 0.1); border-left: 3px solid var(--text-secondary); }
+        .reply-author { font-weight: 600; color: var(--text-primary); }
+        .reply-timestamp { font-size: 0.75rem; color: var(--text-secondary); margin-left: 0.5rem; }
+        .reply-text { margin-top: 0.25rem; color: var(--text-secondary); white-space: pre-wrap; }
+        
+        .status-otwarte { color: #FBBF24; } 
+        .status-w-trakcie { color: #60A5FA; } 
+        .status-oczekuje-na-odpowiedź { color: #F472B6; }
+        .status-rozwiązane { color: #34D399; } 
+        .status-zamknięte { color: #9CA3AF; } 
+    </style>
+</head>
+<body class="min-h-screen flex flex-col">
+
+    <header id="navbar" class="sticky top-0 z-50 py-3 shadow-lg">
+        <div class="container mx-auto px-4 sm:px-6 flex justify-between items-center">
+            <a href="index.html" class="text-3xl font-bold">
+                <span class="text-accent">Kroniki</span> <span class="text-primary">Elary</span> <span class="text-sm text-red-400 font-normal">[Panel Admina]</span>
+            </a>
+            <nav class="hidden md:flex items-center space-x-1 lg:space-x-2">
+                <a href="admin.html" class="nav-link">Zarządzanie Treścią</a>
+                <a href="admin-support.html" class="nav-link active">Zarządzanie Wsparciem</a>
+                <div id="auth-section-nav" class="ml-4 relative">
+                </div>
+            </nav>
+            <div class="md:hidden flex items-center">
+                 <div id="auth-section-mobile-nav" class="mr-2 relative">
+                </div>
+                <button id="mobileMenuButton" class="p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-[var(--bg-header)] focus:ring-[var(--text-accent)]" aria-expanded="false" aria-controls="mobileMenu" aria-label="Otwórz menu nawigacyjne">
+                    <svg class="w-6 h-6" fill="none" stroke="var(--svg-icon-fill)" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
+                </button>
+            </div>
+        </div>
+        <div id="mobileMenu" class="absolute top-full left-0 right-0 md:hidden shadow-lg" style="background-color: var(--bg-header);">
+            <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+                <a href="admin.html" class="block py-2.5 px-3 nav-link text-base font-medium">Zarządzanie Treścią</a>
+                <a href="admin-support.html" class="block py-2.5 px-3 nav-link text-base font-medium active">Zarządzanie Wsparciem</a>
+                <a href="index.html" class="block py-2.5 px-3 nav-link text-base font-medium">Strona Główna Serwisu</a>
+            </div>
+        </div>
+    </header>
+
+    <main class="flex-grow container mx-auto px-4 sm:px-6 py-8">
+        <div id="admin-panel-content" class="hidden">
+            <h1 class="text-4xl font-bold text-primary mb-8 text-center">Panel Zarządzania Zgłoszeniami Wsparcia</h1>
+
+            <div class="bg-bg-card p-6 sm:p-8 rounded-lg shadow-xl">
+                <div class="mb-6 flex flex-col sm:flex-row sm:items-center sm:justify-between">
+                    <h2 class="text-2xl font-semibold text-accent mb-4 sm:mb-0">Lista Zgłoszeń</h2>
+                    <div>
+                        <label for="statusFilter" class="form-label sr-only">Filtruj według statusu:</label>
+                        <select id="statusFilter" class="form-select sm:min-w-[200px]">
+                            <option value="all">Wszystkie Statusy</option>
+                            <option value="Otwarte">Otwarte</option>
+                            <option value="W trakcie">W trakcie</option>
+                            <option value="Oczekuje na odpowiedź">Oczekuje na odpowiedź</option>
+                            <option value="Rozwiązane">Rozwiązane</option>
+                            <option value="Zamknięte">Zamknięte</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div id="adminMessage" class="hidden"></div>
+
+                <div class="overflow-x-auto">
+                    <table class="ticket-table">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Użytkownik</th>
+                                <th>Typ</th>
+                                <th class="min-w-[200px]">Opis (początek)</th>
+                                <th>Status</th>
+                                <th>Data Zgłoszenia</th>
+                                <th>Akcje</th>
+                            </tr>
+                        </thead>
+                        <tbody id="ticketsTableBody">
+                            </tbody>
+                    </table>
+                </div>
+                <p id="noTicketsMessage" class="text-center text-secondary py-8 hidden">Brak zgłoszeń do wyświetlenia dla wybranego filtra.</p>
+            </div>
+        </div>
+        <div id="admin-login-prompt" class="text-center py-12">
+            <h2 class="text-2xl font-semibold text-primary mb-4">Dostęp Wymaga Uwierzytelnienia</h2>
+            <p class="text-secondary mb-6">Musisz być zalogowany jako administrator, aby uzyskać dostęp do tego panelu.</p>
+            <a href="/auth/discord/login?redirect=/admin-support.html" class="btn-discord !text-white px-6 py-3 rounded-lg text-md inline-flex items-center">
+                <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 24 24"><path d="M20.297 0H3.703C1.658 0 0 1.658 0 3.703V20.297C0 22.342 1.658 24 3.703 24H20.297C22.342 24 24 22.342 24 20.297V3.703C24 1.658 22.342 0 20.297 0ZM8.107 15.232C7.089 15.232 6.241 14.384 6.241 13.366C6.241 12.348 7.089 11.5 8.107 11.5C9.125 11.5 9.973 12.348 9.973 13.366C9.973 14.384 9.125 15.232 8.107 15.232ZM12.000 11.071C10.982 11.071 10.134 10.223 10.134 9.205C10.134 8.188 10.982 7.339 12.000 7.339C13.018 7.339 13.866 8.188 13.866 9.205C13.866 10.223 13.018 11.071 12.000 11.071ZM15.893 15.232C14.875 15.232 14.027 14.384 14.027 13.366C14.027 12.348 14.875 11.5 15.893 11.5C16.911 11.5 17.759 12.348 17.759 13.366C17.759 14.384 16.911 15.232 15.893 15.232Z"/></svg>
+                Zaloguj przez Discord
+            </a>
+        </div>
+    </main>
+
+    <div id="ticketDetailsModal" class="modal-overlay">
+        <div class="modal-content">
+            <div class="flex justify-between items-center mb-4 border-b border-[var(--border-card)] pb-3">
+                <h2 class="text-2xl font-semibold text-accent" id="modalTicketTitle">Szczegóły Zgłoszenia #<span id="modalTicketId"></span></h2>
+                <button id="closeModalButton" class="text-secondary hover:text-accent" aria-label="Zamknij">
+                    <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                </button>
+            </div>
+            
+            <div class="modal-body space-y-3">
+                <p><strong class="text-primary">Użytkownik:</strong> <span id="modalUser" class="text-secondary"></span> (ID: <span id="modalUserId" class="text-secondary"></span>)</p>
+                <p><strong class="text-primary">Typ zgłoszenia:</strong> <span id="modalReportType" class="text-secondary"></span></p>
+                <p><strong class="text-primary">Data zgłoszenia:</strong> <span id="modalCreatedAt" class="text-secondary"></span></p>
+                <p><strong class="text-primary">Status:</strong> <span id="modalStatus" class="text-secondary"></span></p>
+                
+                <div>
+                    <strong class="text-primary block mb-1">Opis pierwotnego zgłoszenia:</strong>
+                    <p id="modalDescription" class="text-secondary whitespace-pre-wrap p-3 bg-[rgba(0,0,0,0.1)] rounded-md"></p>
+                </div>
+
+                <div id="modalAttachmentSection" class="hidden">
+                    <strong class="text-primary">Załącznik:</strong> 
+                    <a id="modalAttachmentLink" href="#" target="_blank" class="text-accent hover:underline ml-1">Zobacz załącznik</a>
+                    <img id="modalAttachmentImage" src="#" alt="Podgląd załącznika" class="mt-2 max-w-full h-auto max-h-60 rounded hidden"/>
+                </div>
+
+                <div class="mt-4 pt-3 border-t border-[var(--border-card)]">
+                    <h4 class="text-lg font-semibold text-primary mb-2">Historia Odpowiedzi:</h4>
+                    <div id="modalRepliesContainer" class="space-y-3 max-h-60 overflow-y-auto">
+                        <p class="text-sm text-secondary italic">Brak odpowiedzi lub ładowanie...</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal-footer mt-6">
+                <form id="adminReplyForm" class="space-y-3">
+                    <div>
+                        <label for="adminReplyText" class="form-label">Twoja odpowiedź (jako Admin):</label>
+                        <textarea id="adminReplyText" name="replyText" rows="3" placeholder="Wpisz swoją odpowiedź..." class="form-textarea" required></textarea>
+                    </div>
+                    <div class="flex justify-end space-x-3">
+                        <button type="button" id="closeModalButton2" class="btn btn-secondary">Anuluj</button>
+                        <button type="submit" id="submitAdminReplyButton" class="btn btn-primary">Wyślij Odpowiedź</button>
+                    </div>
+                    <p id="adminReplyFormMessage" class="text-xs text-center mt-2"></p>
+                </form>
+            </div>
+        </div>
+    </div>
+
+
+    <footer class="py-6 text-center text-sm text-text-secondary border-t border-[var(--border-card)] mt-auto">
+        &copy; <span id="currentYear"></span> Kroniki Elary - Panel Administracyjny
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            document.getElementById('currentYear').textContent = new Date().getFullYear();
+            const ADMIN_DISCORD_ID = "1238814802357387285"; 
+
+            const authSectionNav = document.getElementById('auth-section-nav');
+            const authSectionMobileNav = document.getElementById('auth-section-mobile-nav');
+            const adminPanelContent = document.getElementById('admin-panel-content');
+            const adminLoginPrompt = document.getElementById('admin-login-prompt');
+            const ticketsTableBody = document.getElementById('ticketsTableBody');
+            const noTicketsMessage = document.getElementById('noTicketsMessage');
+            const statusFilter = document.getElementById('statusFilter');
+            const adminMessage = document.getElementById('adminMessage');
+
+            // Modal elements
+            const ticketDetailsModal = document.getElementById('ticketDetailsModal');
+            const closeModalButton = document.getElementById('closeModalButton');
+            const closeModalButton2 = document.getElementById('closeModalButton2');
+            const modalTicketId = document.getElementById('modalTicketId');
+            const modalUser = document.getElementById('modalUser');
+            const modalUserId = document.getElementById('modalUserId');
+            const modalReportType = document.getElementById('modalReportType');
+            const modalCreatedAt = document.getElementById('modalCreatedAt');
+            const modalStatus = document.getElementById('modalStatus');
+            const modalDescription = document.getElementById('modalDescription');
+            const modalAttachmentSection = document.getElementById('modalAttachmentSection');
+            const modalAttachmentLink = document.getElementById('modalAttachmentLink');
+            const modalAttachmentImage = document.getElementById('modalAttachmentImage');
+            const modalRepliesContainer = document.getElementById('modalRepliesContainer');
+            const adminReplyForm = document.getElementById('adminReplyForm');
+            const adminReplyText = document.getElementById('adminReplyText');
+            const submitAdminReplyButton = document.getElementById('submitAdminReplyButton');
+            const adminReplyFormMessage = document.getElementById('adminReplyFormMessage');
+
+            let loggedInUser = null;
+            let currentOpenTicketIdForReply = null;
+            let allFetchedTickets = []; // Przechowuje wszystkie pobrane tickety
+
+            function displayAdminMessage(message, type = 'info') {
+                adminMessage.textContent = message;
+                adminMessage.className = ''; 
+                adminMessage.classList.add('block', 'p-3', 'rounded-md', 'my-4', 'text-sm');
+                if (type === 'success') {
+                    adminMessage.classList.add('bg-green-500/10', 'text-green-400', 'border', 'border-green-500/30');
+                } else if (type === 'error') {
+                    adminMessage.classList.add('bg-red-500/10', 'text-red-400', 'border', 'border-red-500/30');
+                } else {
+                    adminMessage.classList.add('bg-blue-500/10', 'text-blue-400', 'border', 'border-blue-500/30');
+                }
+                adminMessage.classList.remove('hidden');
+                setTimeout(() => { adminMessage.classList.add('hidden'); }, 5000);
+            }
+
+            function createLoginButton(isMobile = false) {
+                const loginButton = document.createElement('a');
+                loginButton.href = '/auth/discord/login?redirect=/admin-support.html';
+                loginButton.id = isMobile ? 'discordLoginButtonMobileNav' : 'discordLoginButtonNav';
+                loginButton.className = 'btn-discord !text-white px-4 py-2.5 rounded-md text-sm flex items-center' + (isMobile ? ' w-full justify-center mt-2' : '');
+                loginButton.innerHTML = `<svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 24 24"><path d="M20.297 0H3.703C1.658 0 0 1.658 0 3.703V20.297C0 22.342 1.658 24 3.703 24H20.297C22.342 24 24 22.342 24 20.297V3.703C24 1.658 22.342 0 20.297 0ZM8.107 15.232C7.089 15.232 6.241 14.384 6.241 13.366C6.241 12.348 7.089 11.5 8.107 11.5C9.125 11.5 9.973 12.348 9.973 13.366C9.973 14.384 9.125 15.232 8.107 15.232ZM12.000 11.071C10.982 11.071 10.134 10.223 10.134 9.205C10.134 8.188 10.982 7.339 12.000 7.339C13.018 7.339 13.866 8.188 13.866 9.205C13.866 10.223 13.018 11.071 12.000 11.071ZM15.893 15.232C14.875 15.232 14.027 14.384 14.027 13.366C14.027 12.348 14.875 11.5 15.893 11.5C16.911 11.5 17.759 12.348 17.759 13.366C17.759 14.384 16.911 15.232 15.893 15.232Z"/></svg>Zaloguj przez Discord`;
+                return loginButton;
+            }
+
+            function createAvatarDropdown(user, isMobile = false) {
+                const containerId = isMobile ? 'userDropdownContainerMobile' : 'userDropdownContainerNav';
+                const dropdownId = isMobile ? 'userDropdownMobile' : 'userDropdownNav';
+
+                const container = document.createElement('div');
+                container.id = containerId;
+                container.className = 'relative';
+
+                const avatarImg = document.createElement('img');
+                avatarImg.src = user.avatar ? `https://cdn.discordapp.com/avatars/${user.id}/${user.avatar}.png?size=32` : 'https://placehold.co/32x32/A78BFA/FFFFFF?text=A';
+                avatarImg.alt = 'Awatar administratora';
+                avatarImg.className = 'user-avatar';
+                avatarImg.onclick = (event) => {
+                    event.stopPropagation();
+                    document.getElementById(dropdownId).classList.toggle('open');
+                };
+                container.appendChild(avatarImg);
+
+                const dropdownMenu = document.createElement('div');
+                dropdownMenu.id = dropdownId;
+                dropdownMenu.className = 'dropdown-menu';
+                
+                const siteLink = document.createElement('a');
+                siteLink.href = 'index.html';
+                siteLink.textContent = 'Strona Główna Serwisu';
+                dropdownMenu.appendChild(siteLink);
+
+                const logoutForm = document.createElement('form');
+                logoutForm.action = '/auth/logout';
+                logoutForm.method = 'POST';
+                const logoutButton = document.createElement('button');
+                logoutButton.type = 'submit';
+                logoutButton.textContent = 'Wyloguj';
+                logoutForm.appendChild(logoutButton);
+                dropdownMenu.appendChild(logoutForm);
+
+                container.appendChild(dropdownMenu);
+                return container;
+            }
+
+            async function initializeAdminPanel() {
+                try {
+                    const response = await fetch('/api/me');
+                    if (response.ok) {
+                        loggedInUser = await response.json();
+                        if (loggedInUser.id === ADMIN_DISCORD_ID) {
+                            adminPanelContent.classList.remove('hidden');
+                            adminLoginPrompt.classList.add('hidden');
+                            if (authSectionNav) {
+                                authSectionNav.innerHTML = ''; 
+                                authSectionNav.appendChild(createAvatarDropdown(loggedInUser, false));
+                            }
+                            if (authSectionMobileNav) {
+                                authSectionMobileNav.innerHTML = ''; 
+                                authSectionMobileNav.appendChild(createAvatarDropdown(loggedInUser, true));
+                            }
+                            await loadAllTickets();
+                        } else {
+                            adminPanelContent.classList.add('hidden');
+                            adminLoginPrompt.classList.remove('hidden');
+                            adminLoginPrompt.querySelector('p').textContent = 'Brak uprawnień administratora.';
+                            adminLoginPrompt.querySelector('a').remove(); 
+                        }
+                    } else {
+                        loggedInUser = null;
+                        adminPanelContent.classList.add('hidden');
+                        adminLoginPrompt.classList.remove('hidden');
+                        if (authSectionNav) authSectionNav.innerHTML = ''; 
+                        if (authSectionMobileNav) authSectionMobileNav.innerHTML = '';
+                    }
+                } catch (error) {
+                    console.error('Błąd inicjalizacji panelu admina:', error);
+                    adminPanelContent.classList.add('hidden');
+                    adminLoginPrompt.classList.remove('hidden');
+                    adminLoginPrompt.querySelector('p').textContent = 'Wystąpił błąd podczas weryfikacji statusu logowania.';
+                }
+            }
+            
+            async function loadAllTickets() {
+                if (!loggedInUser || loggedInUser.id !== ADMIN_DISCORD_ID) return;
+                try {
+                    const response = await fetch('/api/admin/support-tickets');
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! status: ${response.status}`);
+                    }
+                    allFetchedTickets = await response.json();
+                    renderTickets(allFetchedTickets);
+                } catch (error) {
+                    console.error("Błąd podczas ładowania zgłoszeń:", error);
+                    ticketsTableBody.innerHTML = `<tr><td colspan="7" class="text-center text-red-400 py-4">Nie udało się załadować zgłoszeń. ${error.message}</td></tr>`;
+                    noTicketsMessage.classList.remove('hidden');
+                    noTicketsMessage.textContent = "Błąd ładowania zgłoszeń.";
+                }
+            }
+
+            function renderTickets(ticketsToRender) {
+                ticketsTableBody.innerHTML = ''; // Wyczyść tabelę
+                const selectedStatusFilter = statusFilter.value;
+
+                const filteredTickets = ticketsToRender.filter(ticket => 
+                    selectedStatusFilter === 'all' || ticket.status === selectedStatusFilter
+                );
+
+                if (filteredTickets.length === 0) {
+                    noTicketsMessage.classList.remove('hidden');
+                    ticketsTableBody.innerHTML = `<tr><td colspan="7" class="text-center text-secondary py-4">Brak zgłoszeń spełniających kryteria.</td></tr>`;
+                    return;
+                }
+                noTicketsMessage.classList.add('hidden');
+
+                filteredTickets.forEach(ticket => {
+                    const row = ticketsTableBody.insertRow();
+                    row.insertCell().textContent = ticket.id;
+                    row.insertCell().textContent = `${ticket.discordUsername || 'N/A'} (ID: ${ticket.discordUserId || 'N/A'})`;
+                    row.insertCell().textContent = ticket.reportType;
+                    row.insertCell().textContent = ticket.description.substring(0, 50) + (ticket.description.length > 50 ? '...' : '');
+                    
+                    const statusCell = row.insertCell();
+                    const statusSelect = document.createElement('select');
+                    statusSelect.className = 'form-select status-select w-full';
+                    statusSelect.dataset.ticketId = ticket.id;
+                    ['Otwarte', 'W trakcie', 'Oczekuje na odpowiedź', 'Rozwiązane', 'Zamknięte'].forEach(s => {
+                        const option = document.createElement('option');
+                        option.value = s;
+                        option.textContent = s;
+                        if (s === ticket.status) option.selected = true;
+                        statusSelect.appendChild(option);
+                    });
+                    statusCell.appendChild(statusSelect);
+
+                    row.insertCell().textContent = new Date(ticket.createdAt).toLocaleString('pl-PL');
+                    
+                    const actionsCell = row.insertCell();
+                    actionsCell.className = "space-x-2 whitespace-nowrap";
+                    const viewButton = document.createElement('button');
+                    viewButton.className = 'btn btn-secondary view-details-btn';
+                    viewButton.textContent = 'Detale';
+                    viewButton.dataset.ticketId = ticket.id;
+                    actionsCell.appendChild(viewButton);
+
+                    const saveStatusButton = document.createElement('button');
+                    saveStatusButton.className = 'btn btn-success save-status-btn';
+                    saveStatusButton.textContent = 'Zapisz Status';
+                    saveStatusButton.dataset.ticketId = ticket.id;
+                    actionsCell.appendChild(saveStatusButton);
+                });
+                addEventListenersToTableButtons();
+            }
+
+            statusFilter.addEventListener('change', () => renderTickets(allFetchedTickets));
+
+            function addEventListenersToTableButtons() {
+                document.querySelectorAll('.save-status-btn').forEach(button => {
+                    button.addEventListener('click', async (event) => {
+                        const ticketId = event.target.dataset.ticketId;
+                        const selectElement = document.querySelector(`select[data-ticket-id="${ticketId}"]`);
+                        const newStatus = selectElement.value;
+                        
+                        event.target.disabled = true;
+                        event.target.textContent = 'Zapisywanie...';
+
+                        try {
+                            const response = await fetch(`/api/admin/support-tickets/${ticketId}/status`, {
+                                method: 'POST',
+                                headers: { 'Content-Type': 'application/json' },
+                                body: JSON.stringify({ status: newStatus })
+                            });
+                            if (response.ok) {
+                                displayAdminMessage(`Status zgłoszenia #${ticketId} zaktualizowany.`, 'success');
+                                await loadAllTickets(); // Odśwież listę, aby pokazać zaktualizowany status
+                            } else {
+                                const errorData = await response.json().catch(() => ({error: 'Nieznany błąd serwera'}));
+                                displayAdminMessage(`Błąd aktualizacji statusu: ${errorData.error}`, 'error');
+                            }
+                        } catch (error) {
+                            console.error('Błąd aktualizacji statusu:', error);
+                            displayAdminMessage('Wystąpił błąd sieciowy podczas aktualizacji statusu.', 'error');
+                        } finally {
+                            event.target.disabled = false;
+                            event.target.textContent = 'Zapisz Status';
+                        }
+                    });
+                });
+                document.querySelectorAll('.view-details-btn').forEach(button => {
+                    button.addEventListener('click', (event) => {
+                        const ticketId = event.target.dataset.ticketId;
+                        openTicketModal(ticketId);
+                    });
+                });
+            }
+
+            async function openTicketModal(ticketId) {
+                currentOpenTicketIdForReply = ticketId;
+                if (!ticketDetailsModal || !loggedInUser) return;
+
+                const ticket = allFetchedTickets.find(t => t.id.toString() === ticketId);
+                if (!ticket) {
+                    displayAdminMessage('Nie znaleziono zgłoszenia.', 'error');
+                    return;
+                }
+
+                modalTicketId.textContent = ticket.id;
+                modalUser.textContent = ticket.discordUsername || 'N/A';
+                modalUserId.textContent = ticket.discordUserId || 'N/A';
+                modalReportType.textContent = ticket.reportType;
+                modalCreatedAt.textContent = new Date(ticket.createdAt).toLocaleString('pl-PL');
+                const statusNormalized = (ticket.status || 'Otwarte').toLowerCase().replace(/\s+/g, '-').replace(/[^\w-]/g, '');
+                modalStatus.innerHTML = `<span class="status-${statusNormalized}">${ticket.status}</span>`;
+                modalDescription.textContent = ticket.description;
+
+                if (ticket.attachment) {
+                    const attachmentUrl = `/uploads/${ticket.attachment}`;
+                    modalAttachmentLink.href = attachmentUrl;
+                    modalAttachmentLink.textContent = ticket.attachment;
+                    if (/\.(jpe?g|png|gif)$/i.test(ticket.attachment)) {
+                        modalAttachmentImage.src = attachmentUrl;
+                        modalAttachmentImage.classList.remove('hidden');
+                    } else {
+                        modalAttachmentImage.classList.add('hidden');
+                    }
+                    modalAttachmentSection.classList.remove('hidden');
+                } else {
+                    modalAttachmentSection.classList.add('hidden');
+                }
+
+                modalRepliesContainer.innerHTML = ''; // Wyczyść poprzednie odpowiedzi
+                if (ticket.replies && ticket.replies.length > 0) {
+                     modalRepliesContainer.innerHTML = ticket.replies.map(reply => {
+                        const replyDate = new Date(reply.createdAt).toLocaleString('pl-PL', { dateStyle: 'short', timeStyle: 'short' });
+                        const authorClass = reply.isAdminReply ? 'reply-admin' : 'reply-user';
+                        const authorName = reply.isAdminReply ? `Admin: ${reply.discordUsername}` : `Użytkownik: ${reply.discordUsername}`;
+                        return `
+                            <div class="reply-message ${authorClass}">
+                                <p class="reply-author">${authorName} <span class="reply-timestamp">${replyDate}</span></p>
+                                <p class="reply-text">${reply.replyText}</p>
+                            </div>
+                        `;
+                    }).join('');
+                } else {
+                    modalRepliesContainer.innerHTML = '<p class="text-sm text-secondary italic">Brak odpowiedzi do tego zgłoszenia.</p>';
+                }
+                
+                adminReplyText.value = '';
+                adminReplyFormMessage.textContent = '';
+                adminReplyFormMessage.className = 'text-xs text-center mt-2';
+
+                ticketDetailsModal.classList.add('open');
+                document.body.style.overflow = 'hidden';
+            }
+            
+            if (closeModalButton) closeModalButton.addEventListener('click', () => {
+                ticketDetailsModal.classList.remove('open');
+                document.body.style.overflow = '';
+                currentOpenTicketIdForReply = null;
+            });
+            if (closeModalButton2) closeModalButton2.addEventListener('click', () => {
+                ticketDetailsModal.classList.remove('open');
+                document.body.style.overflow = '';
+                currentOpenTicketIdForReply = null;
+            });
+             if (ticketDetailsModal) {
+                 ticketDetailsModal.addEventListener('click', (event) => {
+                    if (event.target === ticketDetailsModal) { // Zamykanie po kliknięciu na tło
+                       ticketDetailsModal.classList.remove('open');
+                       document.body.style.overflow = '';
+                       currentOpenTicketIdForReply = null;
+                    }
+                });
+            }
+
+            if(adminReplyForm) {
+                adminReplyForm.addEventListener('submit', async (event) => {
+                    event.preventDefault();
+                    if (!currentOpenTicketIdForReply || !loggedInUser) return;
+
+                    const replyContent = adminReplyText.value.trim();
+                    if (!replyContent) {
+                        adminReplyFormMessage.textContent = 'Treść odpowiedzi nie może być pusta.';
+                        adminReplyFormMessage.className = 'text-xs text-center mt-2 text-red-400';
+                        return;
+                    }
+
+                    submitAdminReplyButton.disabled = true;
+                    submitAdminReplyButton.textContent = 'Wysyłanie...';
+                    adminReplyFormMessage.textContent = '';
+
+                    try {
+                        const response = await fetch(`/api/admin/support-tickets/${currentOpenTicketIdForReply}/reply`, {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify({ replyText: replyContent })
+                        });
+                        const result = await response.json();
+
+                        if (response.ok) {
+                            adminReplyFormMessage.textContent = result.message || 'Odpowiedź została wysłana.';
+                            adminReplyFormMessage.className = 'text-xs text-center mt-2 text-green-400';
+                            adminReplyText.value = ''; 
+                            await loadAllTickets(); // Odśwież listę zgłoszeń w tle
+                            // Odśwież modal, aby pokazać nową odpowiedź
+                            const updatedTicket = allFetchedTickets.find(t => t.id.toString() === currentOpenTicketIdForReply);
+                            if (updatedTicket) { // Sprawdź, czy ticket został znaleziony po odświeżeniu
+                                const ticketForModal = await fetch(`/api/support/ticket/${currentOpenTicketIdForReply}`).then(res => res.json());
+                                if(ticketForModal) {
+                                     openTicketModal(ticketForModal.id.toString()); // Przekaż ID jako string
+                                }
+                            }
+                        } else {
+                            adminReplyFormMessage.textContent = result.error || 'Błąd wysyłania odpowiedzi.';
+                            adminReplyFormMessage.className = 'text-xs text-center mt-2 text-red-400';
+                        }
+                    } catch (error) {
+                        console.error('Błąd wysyłania odpowiedzi admina:', error);
+                        adminReplyFormMessage.textContent = 'Wystąpił błąd sieciowy.';
+                        adminReplyFormMessage.className = 'text-xs text-center mt-2 text-red-400';
+                    } finally {
+                        submitAdminReplyButton.disabled = false;
+                        submitAdminReplyButton.textContent = 'Wyślij Odpowiedź';
+                    }
+                });
+            }
+            
+            initializeAdminPanel();
+        });
+    </script>
+</body>
+</html>

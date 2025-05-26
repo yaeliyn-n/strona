@@ -1,0 +1,671 @@
+<!DOCTYPE html>
+<html lang="pl" class="scroll-smooth dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Zdobądź Gwiezdne Kryształy w Kronikach Elary! Pakiety premium do zakupu, aby wzbogacić swoje doświadczenie na serwerze.">
+    <meta name="keywords" content="kroniki elary, sklep premium, gwiezdne kryształy, waluta premium, kup kryształy, discord">
+    <meta name="author" content="Arcadius & Strażnicy Kronik Elary">
+    <title>Kroniki Elary - Zdobądź Gwiezdne Kryształy 💠</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-primary: #0F172A; 
+            --bg-secondary: rgba(30, 41, 59, 0.8); 
+            --bg-card: #1E293B; 
+            --bg-header: rgba(15, 23, 42, 0.92); 
+            
+            --text-primary: #E2E8F0; 
+            --text-secondary: #94A3B8; 
+            --text-accent: #A78BFA; /* Lawendowy, Gwiezdne Dukaty */
+            --text-accent-hover: #8B5CF6; 
+            --text-premium: #22D3EE; /* Cyan, Gwiezdne Kryształy */
+            --text-premium-hover: #0BC5EA;
+            
+            --border-accent: #8B5CF6; 
+            --border-premium: #22D3EE;
+            --border-card: rgba(167, 139, 250, 0.25); 
+            
+            --btn-primary-bg: #8B5CF6; 
+            --btn-primary-hover-bg: #7C3AED; 
+            --btn-premium-bg: #22D3EE; 
+            --btn-premium-hover-bg: #0BC5EA;
+            --btn-discord-bg: #5865F2;
+            --btn-discord-hover-bg: #4752C4;
+            
+            --scrollbar-thumb-bg: #8B5CF6;
+            --scrollbar-thumb-hover-bg: #7C3AED;
+            
+            --svg-icon-fill: #E2E8F0;
+            --shadow-color: rgba(167, 139, 250, 0.25); 
+            --shadow-strong-color: rgba(167, 139, 250, 0.4);
+            --modal-backdrop: rgba(15, 23, 42, 0.85);
+
+            --rgb-accent: 167, 139, 250;
+            --rgb-premium: 34, 211, 238;
+        }
+
+        html.light { 
+            /* ... (definicje dla jasnego motywu, jeśli potrzebne) ... */
+            --text-accent: #7C3AED;
+            --text-accent-hover: #6D28D9;
+            --text-premium: #0891B2; 
+            --text-premium-hover: #067A95;
+            --border-accent: #7C3AED;
+            --border-premium: #0891B2;
+            --btn-primary-bg: #7C3AED;
+            --btn-primary-hover-bg: #6D28D9;
+            --btn-premium-bg: #0891B2;
+            --btn-premium-hover-bg: #067A95;
+        }
+
+        body { font-family: 'Inter', sans-serif; background-color: var(--bg-primary); color: var(--text-primary); transition: background-color 0.3s ease, color 0.3s ease; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; line-height: 1.75; }
+        h1, h2, h3, h4, h5 { font-family: 'Lora', serif; font-weight: 600; line-height: 1.35; }
+        h1 { letter-spacing: -0.025em; font-weight: 700; }
+        h2 { letter-spacing: -0.02em; font-weight: 700; }
+        
+        .hero-premium-bg { background: linear-gradient(rgba(15, 23, 42, 0.92), rgba(15, 23, 42, 1)), url('https://placehold.co/1920x700/0a0f1e/22d3ee?text=Zdobądź+Gwiezdne+Kryształy') center/cover no-repeat fixed; }
+        .card-bg, .premium-package-card { background-color: var(--bg-card); transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); border: 1px solid var(--border-card); box-shadow: 0 7px 18px -4px var(--shadow-color); overflow: hidden; border-radius: 0.75rem; }
+        .card-bg:hover, .premium-package-card:hover { transform: translateY(-10px) scale(1.035); box-shadow: 0 16px 32px -6px var(--shadow-strong-color); }
+        
+        .btn-primary, .btn-discord, .btn-secondary, .btn-premium { color: #FFFFFF; transition: background-color 0.25s ease, transform 0.25s ease, box-shadow 0.25s ease; box-shadow: 0 5px 12px -3px var(--shadow-color); font-weight: 600; letter-spacing: 0.03em; padding-top: 0.85rem; padding-bottom: 0.85rem; border-radius: 0.5rem; }
+        .btn-primary { background-color: var(--btn-primary-bg); }
+        .btn-primary:hover { background-color: var(--btn-primary-hover-bg); transform: scale(1.06) translateY(-3px); box-shadow: 0 14px 24px -5px var(--shadow-strong-color); }
+        .btn-premium { background-color: var(--btn-premium-bg); }
+        .btn-premium:hover { background-color: var(--btn-premium-hover-bg); transform: scale(1.06) translateY(-3px); box-shadow: 0 14px 24px -5px rgba(var(--rgb-premium), 0.4); }
+        .btn-discord { background-color: var(--btn-discord-bg); }
+        .btn-discord:hover { background-color: var(--btn-discord-hover-bg); transform: scale(1.06) translateY(-3px); box-shadow: 0 10px 20px -5px rgba(88, 101, 242, 0.4); }
+        .btn-secondary { background-color: transparent; border: 2px solid var(--border-accent); color: var(--text-accent); padding: calc(0.85rem - 2px) calc(1.5rem - 2px); }
+        .btn-secondary:hover { background-color: var(--border-accent); color: white; transform: scale(1.05) translateY(-1px); box-shadow: 0 8px 15px -3px var(--shadow-color); }
+        
+        .text-accent { color: var(--text-accent); }
+        .text-premium { color: var(--text-premium); }
+        
+        .reveal { opacity: 0; transform: translateY(70px); transition: opacity 1s cubic-bezier(0.645, 0.045, 0.355, 1), transform 1s cubic-bezier(0.645, 0.045, 0.355, 1); }
+        .reveal.visible { opacity: 1; transform: translateY(0); }
+        ::-webkit-scrollbar { width: 13px; } 
+        ::-webkit-scrollbar-track { background: var(--bg-primary); }
+        ::-webkit-scrollbar-thumb { background: var(--scrollbar-thumb-bg); border-radius: 7px; border: 3.5px solid var(--bg-primary); }
+        ::-webkit-scrollbar-thumb:hover { background: var(--scrollbar-thumb-hover-bg); }
+        
+        header#navbar { background-color: var(--bg-header); backdrop-filter: blur(18px); transition: background-color 0.3s ease, box-shadow 0.3s ease; box-shadow: 0 5px 15px -4px rgba(15,23,42,0.2); }
+        .nav-link { position: relative; color: var(--text-secondary); transition: color 0.2s ease, background-color 0.2s ease, transform 0.2s ease; padding: 0.65rem 1.1rem; border-radius: 0.6rem; font-weight: 500; }
+        .nav-link:hover { transform: translateY(-1px); }
+        .nav-link::after { content: ''; position: absolute; width: 0; height: 3px; bottom: 5px; left: 50%; transform: translateX(-50%); background-color: var(--text-accent); transition: width 0.35s cubic-bezier(0.25, 0.8, 0.25, 1); border-radius: 1.5px; }
+        .nav-link:hover, .nav-link.active { color: var(--text-accent); background-color: rgba(var(--rgb-accent), 0.12); }
+        .nav-link:hover::after, .nav-link.active::after { width: 60%; }
+        
+        #mobileMenu { transition: transform 0.4s cubic-bezier(0.25, 0.8, 0.25, 1), opacity 0.4s cubic-bezier(0.25, 0.8, 0.25, 1); transform: translateY(-100%); opacity: 0; pointer-events: none; }
+        #mobileMenu.open { transform: translateY(0); opacity: 1; pointer-events: auto; }
+        html.dark .text-shadow-custom { text-shadow: 1px 1px 4px rgba(0,0,0,0.6); }
+        .user-avatar { width: 32px; height: 32px; border-radius: 50%; border: 2px solid var(--border-accent); cursor: pointer; transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out; }
+        .user-avatar:hover { transform: scale(1.1); box-shadow: 0 0 10px var(--shadow-strong-color); }
+        .dropdown-menu { position: absolute; top: calc(100% + 0.5rem); right: 0; background-color: var(--bg-card); border: 1px solid var(--border-card); border-radius: 0.5rem; box-shadow: 0 10px 25px -5px var(--shadow-strong-color), 0 8px 10px -6px var(--shadow-color); z-index: 50; min-width: 200px; opacity: 0; visibility: hidden; transform: translateY(-10px); transition: opacity 0.2s ease, transform 0.2s ease, visibility 0s linear 0.2s; }
+        .dropdown-menu.open { opacity: 1; visibility: visible; transform: translateY(0); transition: opacity 0.2s ease, transform 0.2s ease; }
+        .dropdown-menu a, .dropdown-menu button { display: block; width: 100%; text-align: left; padding: 0.75rem 1rem; font-size: 0.875rem; color: var(--text-secondary); transition: background-color 0.15s ease, color 0.15s ease; }
+        .dropdown-menu a:hover, .dropdown-menu button:hover { background-color: rgba(var(--rgb-accent), 0.1); color: var(--text-accent); }
+        .dropdown-menu form { margin: 0; } 
+
+        .premium-package-card { display: flex; flex-direction: column; align-items: center; padding: 1.5rem; text-align: center; }
+        .premium-package-icon { font-size: 3rem; margin-bottom: 1rem; color: var(--text-premium); transition: transform 0.3s ease-in-out; }
+        .premium-package-card:hover .premium-package-icon { transform: scale(1.2) rotate(5deg); }
+        .premium-package-name { font-size: 1.25rem; font-weight: 600; color: var(--text-primary); margin-bottom: 0.5rem; }
+        .premium-package-description { font-size: 0.875rem; color: var(--text-secondary); margin-bottom: 1rem; min-height: 3.5em; }
+        .premium-package-price { font-size: 1.125rem; font-weight: 600; color: var(--text-premium); margin-bottom: 0.5rem; }
+        .premium-package-crystals { font-size: 1rem; font-weight: 500; color: var(--text-secondary); margin-bottom: 1.5rem; }
+        .btn-buy-premium { background-color: var(--btn-premium-bg); color: white; }
+        .btn-buy-premium:hover { background-color: var(--btn-premium-hover-bg); }
+
+        .modal-overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background-color: var(--modal-backdrop); backdrop-filter: blur(4px); align-items: center; justify-content: center; z-index: 50; opacity: 0; visibility: hidden; transition: opacity 0.3s ease, visibility 0s linear 0.3s; }
+        .modal-overlay.open { opacity: 1; visibility: visible; display: flex; }
+        .modal-content { background-color: var(--bg-card); padding: 1.5rem; border-radius: 0.75rem; box-shadow: 0 20px 25px -5px rgba(0,0,0,0.1), 0 10px 10px -5px rgba(0,0,0,0.04); width: 90%; max-width: 500px; max-height: 90vh; display: flex; flex-direction: column; }
+        .modal-body { overflow-y: auto; padding-right: 0.5rem; }
+        .modal-footer { margin-top: auto; padding-top: 1rem; border-top: 1px solid var(--border-card); }
+        #purchasePremiumModalMessage.success { color: #34D399; }
+        #purchasePremiumModalMessage.error { color: #F87171; }
+
+        .animated-gradient-text { background: linear-gradient(45deg, var(--text-premium), var(--text-premium-hover), #5eead4, var(--text-premium)); background-size: 200% 200%; -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; animation: gradient-flow-premium 8s ease infinite; }
+        @keyframes gradient-flow-premium { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
+        .loading-spinner { border: 3px solid rgba(var(--rgb-premium), 0.3); border-top-color: var(--text-premium); border-radius: 50%; width: 1.5rem; height: 1.5rem; animation: spin 0.8s linear infinite; margin: 0 auto; }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+    </style>
+</head>
+<body class="antialiased">
+
+    <header id="navbar" class="fixed top-0 left-0 right-0 z-50 py-3">
+        <div class="container mx-auto px-4 sm:px-6 flex justify-between items-center">
+            <a href="index.html" class="text-3xl font-bold" aria-label="Strona główna Kronik Elary">
+                <span class="text-accent">Kroniki</span> <span class="text-primary">Elary</span>
+            </a>
+            <nav class="hidden md:flex items-center space-x-1 lg:space-x-2">
+                <a href="index.html" class="nav-link">Strona Główna</a>
+                <a href="prezentacja.html" class="nav-link">Prezentacja Serwera</a>
+                <a href="wikipedia.html" class="nav-link">Wikipedia Kronik</a> 
+                <a href="ranking-stats.html" class="nav-link">Rankingi</a>
+                <div id="auth-section-nav" class="ml-4 relative"></div>
+            </nav>
+            <div class="md:hidden flex items-center">
+                 <div id="auth-section-mobile-nav" class="mr-2 relative"></div>
+                <button id="mobileMenuButton" class="p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-[var(--bg-header)] focus:ring-[var(--text-accent)]" aria-expanded="false" aria-controls="mobileMenu" aria-label="Otwórz menu nawigacyjne">
+                    <svg class="w-6 h-6" fill="none" stroke="var(--svg-icon-fill)" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
+                </button>
+            </div>
+        </div>
+        <div id="mobileMenu" class="absolute top-full left-0 right-0 md:hidden shadow-lg" style="background-color: var(--bg-header);">
+            <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+                <a href="index.html" class="block py-2.5 px-3 nav-link text-base font-medium">Strona Główna</a>
+                <a href="prezentacja.html" class="block py-2.5 px-3 nav-link text-base font-medium">Prezentacja Serwera</a>
+                <a href="wikipedia.html" class="block py-2.5 px-3 nav-link text-base font-medium">Wikipedia Kronik</a>
+                <a href="ranking-stats.html" class="block py-2.5 px-3 nav-link text-base font-medium">Rankingi</a>
+                <a href="https://discord.gg/TWOJLINKZAPROSZENIOWY" target="_blank" rel="noopener noreferrer" class="block mt-2 py-2.5 px-3 text-base font-medium text-white bg-purple-600 hover:bg-purple-700 rounded-md text-center">Dołącz do Discorda</a>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <section class="hero-premium-bg min-h-[50vh] sm:min-h-[60vh] flex items-center justify-center text-center pt-24 sm:pt-20 reveal">
+            <div class="container mx-auto px-4 sm:px-6 py-12 sm:py-16">
+                <h1 class="text-4xl sm:text-5xl md:text-6xl font-bold text-white mb-4 leading-tight text-shadow-custom">
+                    Zdobądź <span class="animated-gradient-text">Gwiezdne Kryształy</span> 💠
+                </h1>
+                <p class="text-lg sm:text-xl text-slate-200 mb-8 max-w-2xl mx-auto text-shadow-custom">
+                    Wzmocnij swoje doświadczenie w Kronikach Elary dzięki Gwiezdnym Kryształom! Użyj ich do zakupu ekskluzywnych przedmiotów i bonusów.
+                </p>
+                <div id="user-premium-currency-display" class="text-md sm:text-lg text-slate-100 font-semibold mb-8 space-y-1 sm:space-y-0 sm:space-x-6 flex flex-col sm:flex-row justify-center items-center hidden">
+                    <span class="inline-block">Twoje Gwiezdne Kryształy: <strong id="currentUserBalanceKrysztaly" class="font-bold text-cyan-400"><span class="loading-spinner inline-block !w-4 !h-4 !border-2"></span></strong> 💠</span>
+                </div>
+                 <a href="sklep-bota.html" class="btn-secondary font-semibold py-2.5 px-6 rounded-lg text-sm inline-block shadow-lg hover:shadow-xl transition-shadow">
+                    Powrót do Sklepu z Dukatami ✨
+                </a>
+            </div>
+        </section>
+
+        <section id="premium-packages-section" class="py-16 sm:py-24">
+            <div class="container mx-auto px-4 sm:px-6">
+                <div id="premium-login-prompt" class="hidden text-center mb-12 p-6 bg-amber-500/10 border border-amber-500/30 rounded-xl reveal">
+                    <h2 class="text-2xl font-semibold text-amber-300 mb-4">Witaj w Skarbcu Kryształów!</h2>
+                    <p class="text-amber-200 text-lg mb-6">Aby przeglądać pakiety i dokonywać "zakupów" (obecnie symulacja), <a href="/auth/discord/login" class="font-bold underline hover:text-amber-100">zaloguj się przez Discord</a>.</p>
+                </div>
+
+                <div id="premium-packages-container" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 reveal">
+                    <div class="loading-spinner col-span-full"></div>
+                    <p class="text-secondary col-span-full text-center mt-2">Ładowanie dostępnych pakietów Gwiezdnych Kryształów...</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <div id="purchasePremiumModal" class="modal-overlay hidden">
+        <div class="modal-content w-full max-w-md p-6 sm:p-8 rounded-2xl shadow-2xl">
+            <div class="flex justify-between items-center mb-4">
+                <h3 id="purchasePremiumModalTitle" class="text-xl sm:text-2xl font-semibold text-primary">Potwierdzenie "Zakupu" Pakietu</h3>
+                <button id="closePurchasePremiumModalButton" class="text-secondary hover:text-premium transition-colors" aria-label="Zamknij modal">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                </button>
+            </div>
+            <div id="purchasePremiumModalBody" class="text-secondary mb-6">
+                <p>Czy na pewno chcesz "zakupić" (symulacja) pakiet: <strong id="purchasePackageName" class="text-premium"></strong>?</p>
+                <p class="mt-1">Otrzymasz: <strong id="purchasePackageCrystals" class="text-cyan-400"></strong> 💠 Gwiezdnych Kryształów.</p>
+                <p class="mt-1">Cena (symulowana): <strong id="purchasePackagePrice" class="text-green-400"></strong> PLN.</p>
+                <p class="text-xs mt-2">Twoje obecne saldo Kryształów: <span id="purchasePremiumCurrentUserKrysztaly" class="font-semibold text-cyan-400"></span> 💠</p>
+                <p class="text-xs mt-3 italic text-amber-400">Uwaga: To jest symulacja zakupu. Żadne prawdziwe pieniądze nie zostaną pobrane. Kryształy zostaną dodane do Twojego konta w celach testowych.</p>
+            </div>
+            <div id="purchasePremiumModalMessage" class="text-sm text-center mb-4 h-5"></div>
+            <div class="flex justify-end space-x-3">
+                <button id="cancelPremiumPurchaseButton" type="button" class="btn-secondary px-4 py-2 text-sm">Anuluj</button>
+                <button id="confirmPremiumPurchaseButton" type="button" class="btn-premium px-4 py-2 text-sm">
+                    <span class="button-text">"Kupuję" Pakiet (Symulacja)</span>
+                    <span class="loading-spinner hidden"></span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <footer class="py-12 text-center" style="background-color: var(--bg-header);">
+        <div class="container mx-auto px-4 sm:px-6">
+            <div class="flex justify-center space-x-6 mb-6">
+                <a href="#" class="text-secondary hover:text-accent transition-colors duration-200" aria-label="Placeholder Twitter">
+                    <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M22.46 6c-.77.35-1.6.58-2.46.67.9-.53 1.59-1.37 1.92-2.38-.84.5-1.78.86-2.79 1.07C18.28 4.42 17.03 4 15.64 4c-2.94 0-5.32 2.38-5.32 5.32 0 .42.05.83.14 1.22-4.42-.22-8.33-2.34-10.96-5.55-.46.79-.72 1.7-.72 2.67 0 1.84.94 3.47 2.37 4.42-.87-.03-1.69-.27-2.41-.66v.07c0 2.57 1.83 4.72 4.25 5.21-.44.12-.91.18-1.39.18-.34 0-.67-.03-1-.1 0 .67.65 1.37 1.77 1.84-.7.55-1.59.88-2.58.88-.39 0-.77-.02-1.14-.07.91.59 2 1.02 3.19 1.02 3.83 0 5.93-3.18 5.93-5.93 0-.09 0-.18-.01-.27.41-.3.76-.68 1.04-1.09z"/></svg>
+                </a>
+                 <a href="#" class="text-secondary hover:text-accent transition-colors duration-200" aria-label="Placeholder Instagram">
+                    <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 1.17.053 1.805.248 2.227.415.562.217.96.477 1.382.896.419.42.679.819.896 1.381.167.422.362 1.056.415 2.227.058 1.266.07 1.646.07 4.85s-.012 3.584-.07 4.85c-.053 1.17-.248 1.805-.415 2.227a3.48 3.48 0 01-.896 1.382c-.42.419-.82.679-1.382.896-.422.167-1.056.362-2.227.415-1.266.058-1.646.07-4.85.07s-3.584-.012-4.85-.07c-1.17-.053-1.805-.248-2.227-.415a3.492 3.492 0 01-1.381-.896 3.492 3.492 0 01-.896-1.381c-.167-.422-.362-1.056-.415-2.227-.058-1.266-.07-1.646-.07-4.85s.012-3.584.07-4.85c.053-1.17.248-1.805.415-2.227.218-.562.477-.96.896-1.381.419-.42.819-.679 1.381-.896.422-.167 1.056-.362 2.227-.415C8.416 2.175 8.796 2.163 12 2.163zm0 1.802c-3.143 0-3.505.012-4.725.068-1.09.05-1.647.235-1.98.378a1.69 1.69 0 00-.755.755c-.143.333-.328.89-.378 1.98C4.082 8.495 4.07 8.857 4.07 12s.012 3.505.068 4.725c.05 1.09.235 1.647.378 1.98.16.373.397.637.755.755.333.143.89.328 1.98.378 1.22.056 1.582.068 4.725.068s3.505-.012 4.725-.068c1.09-.05 1.647.235 1.98-.378.373-.16.637-.397.755-.755.143-.333.328.89.378-1.98.056-1.22.068-1.582.068-4.725s-.012-3.505-.068-4.725c-.05-1.09-.235-1.647-.378-1.98a1.69 1.69 0 00-.755-.755c-.333-.143-.89-.328-1.98-.378C15.505 3.977 15.143 3.965 12 3.965zm0 3.273a4.762 4.762 0 100 9.524 4.762 4.762 0 000-9.524zm0 7.722a3.06 3.06 0 110-6.12 3.06 3.06 0 010 6.12zm4.758-7.868a1.128 1.128 0 100-2.255 1.128 1.128 0 000 2.255z"/></svg>
+                </a>
+                 <a href="polityka-prywatnosci.html" class="text-secondary hover:text-accent transition-colors duration-200" aria-label="Polityka Prywatności">
+                    Polityka Prywatności
+                </a>
+            </div>
+            <p class="text-secondary text-sm">
+                &copy; <span id="currentYear"></span> Kroniki Elary. Wszelkie prawa zastrzeżone.
+            </p>
+            <p class="text-xs mt-2.5" style="color: var(--text-secondary-light, #94A3B8);">
+                Stworzone z pasji do anime i mangi przez Arcadiusa i jego Strażników.
+            </p>
+        </div>
+    </footer>
+
+    <script>
+        // Funkcje pomocnicze (setActiveNavLink, updateAuthDisplay, setupMobileMenu, setupRevealAnimations, setupDropdownDismiss)
+        // powinny być takie same jak w sklep-bota.html, więc nie powtarzam ich tutaj dla zwięzłości.
+        // Należy je skopiować.
+
+        function setActiveNavLink() {
+            const currentPage = window.location.pathname.split("/").pop() || "index.html";
+            const navLinks = document.querySelectorAll('header nav > a.nav-link, #mobileMenu > div > a.nav-link');
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                const linkPage = link.getAttribute('href').split("/").pop() || "index.html";
+                 if (linkPage === currentPage) {
+                    link.classList.add('active');
+                }
+            });
+        }
+        
+        async function updateAuthDisplay() {
+            const authSectionNav = document.getElementById('auth-section-nav');
+            const authSectionMobileNav = document.getElementById('auth-section-mobile-nav');
+            const premiumLoginPrompt = document.getElementById('premium-login-prompt');
+            const premiumPackagesContainer = document.getElementById('premium-packages-container');
+            const userPremiumCurrencyDisplay = document.getElementById('user-premium-currency-display');
+            const ADMIN_DISCORD_ID = "1238814802357387285"; 
+            let localLoggedInUser = null;
+
+            function createLoginButton(isMobile = false) {
+                const loginButton = document.createElement('a');
+                loginButton.href = new URL('/auth/discord/login', window.location.origin).href;
+                loginButton.id = isMobile ? 'discordLoginButtonMobileNav' : 'discordLoginButtonNav';
+                loginButton.className = 'btn-discord !text-white px-4 py-2.5 rounded-md text-sm flex items-center' + (isMobile ? ' w-full justify-center mt-2' : '');
+                loginButton.innerHTML = `
+                    <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20.297 0H3.703C1.658 0 0 1.658 0 3.703V20.297C0 22.342 1.658 24 3.703 24H20.297C22.342 24 24 22.342 24 20.297V3.703C24 1.658 22.342 0 20.297 0ZM8.107 15.232C7.089 15.232 6.241 14.384 6.241 13.366C6.241 12.348 7.089 11.5 8.107 11.5C9.125 11.5 9.973 12.348 9.973 13.366C9.973 14.384 9.125 15.232 8.107 15.232ZM12.000 11.071C10.982 11.071 10.134 10.223 10.134 9.205C10.134 8.188 10.982 7.339 12.000 7.339C13.018 7.339 13.866 8.188 13.866 9.205C13.866 10.223 13.018 11.071 12.000 11.071ZM15.893 15.232C14.875 15.232 14.027 14.384 14.027 13.366C14.027 12.348 14.875 11.5 15.893 11.5C16.911 11.5 17.759 12.348 17.759 13.366C17.759 14.384 16.911 15.232 15.893 15.232Z"/></svg>
+                    Zaloguj przez Discord
+                `;
+                return loginButton;
+            }
+
+            function createAvatarDropdown(user, isMobile = false) {
+                const containerId = isMobile ? 'userDropdownContainerMobile' : 'userDropdownContainerNav';
+                const dropdownId = isMobile ? 'userDropdownMobile' : 'userDropdownNav';
+
+                const container = document.createElement('div');
+                container.id = containerId;
+                container.className = 'relative';
+
+                const avatarImg = document.createElement('img');
+                avatarImg.src = user.avatar ? `https://cdn.discordapp.com/avatars/${user.id}/${user.avatar}.png?size=32` : 'https://placehold.co/32x32/A78BFA/FFFFFF?text=U';
+                avatarImg.alt = 'Awatar użytkownika';
+                avatarImg.className = 'user-avatar';
+                avatarImg.onerror = () => { avatarImg.src = 'https://placehold.co/32x32/A78BFA/FFFFFF?text=U'; };
+                avatarImg.onclick = (event) => {
+                    event.stopPropagation(); 
+                    const dropdown = document.getElementById(dropdownId);
+                    if (dropdown) dropdown.classList.toggle('open');
+                };
+                container.appendChild(avatarImg);
+
+                const dropdownMenu = document.createElement('div');
+                dropdownMenu.id = dropdownId;
+                dropdownMenu.className = 'dropdown-menu';
+                
+                const profileLink = document.createElement('a');
+                profileLink.href = 'profil.html';
+                profileLink.textContent = 'Mój Profil';
+                dropdownMenu.appendChild(profileLink);
+
+                const botShopLink = document.createElement('a');
+                botShopLink.href = 'sklep-bota.html';
+                botShopLink.textContent = 'Sklep Bota (Dukaty)';
+                dropdownMenu.appendChild(botShopLink);
+                
+                const premiumShopLink = document.createElement('a'); // Nowy link
+                premiumShopLink.href = 'sklep-premium.html';
+                premiumShopLink.textContent = 'Sklep Premium (Kryształy)';
+                premiumShopLink.classList.add('active'); // Aktywny na tej stronie
+                dropdownMenu.appendChild(premiumShopLink);
+
+
+                const supportTicketsLink = document.createElement('a');
+                supportTicketsLink.href = 'support.html'; 
+                supportTicketsLink.textContent = 'Centrum Wsparcia';
+                dropdownMenu.appendChild(supportTicketsLink);
+
+                if (user.id === ADMIN_DISCORD_ID) {
+                    const adminLinkElement = document.createElement('a'); 
+                    adminLinkElement.href = new URL('/admin.html', window.location.origin).href;
+                    adminLinkElement.textContent = 'Panel Admina';
+                    dropdownMenu.appendChild(adminLinkElement);
+                }
+                
+                const logoutForm = document.createElement('form');
+                logoutForm.action = new URL('/auth/logout', window.location.origin).href;
+                logoutForm.method = 'POST';
+                const logoutButton = document.createElement('button');
+                logoutButton.type = 'submit';
+                logoutButton.textContent = 'Wyloguj';
+                logoutForm.appendChild(logoutButton);
+                dropdownMenu.appendChild(logoutForm);
+
+                container.appendChild(dropdownMenu);
+                return container;
+            }
+
+            try {
+                const response = await fetch(new URL('/api/me', window.location.origin).href);
+                if (response.ok) {
+                    localLoggedInUser = await response.json();
+                    if (premiumLoginPrompt) premiumLoginPrompt.classList.add('hidden');
+                    if (premiumPackagesContainer) premiumPackagesContainer.classList.remove('hidden');
+                    if (userPremiumCurrencyDisplay) userPremiumCurrencyDisplay.classList.remove('hidden');
+                    fetchAndDisplayPremiumPackages(localLoggedInUser.id); 
+                    await fetchUserPremiumCurrency(localLoggedInUser.id); 
+
+                    if (authSectionNav) {
+                        authSectionNav.innerHTML = ''; 
+                        authSectionNav.appendChild(createAvatarDropdown(localLoggedInUser, false));
+                    }
+                    if (authSectionMobileNav) {
+                        authSectionMobileNav.innerHTML = ''; 
+                        authSectionMobileNav.appendChild(createAvatarDropdown(localLoggedInUser, true));
+                    }
+                } else {
+                    localLoggedInUser = null;
+                    if (premiumLoginPrompt) premiumLoginPrompt.classList.remove('hidden');
+                    if (premiumPackagesContainer) premiumPackagesContainer.innerHTML = '<p class="text-secondary col-span-full text-center">Musisz się zalogować, aby zobaczyć pakiety Gwiezdnych Kryształów.</p>';
+                    if (userPremiumCurrencyDisplay) userPremiumCurrencyDisplay.classList.add('hidden');
+                     if (authSectionNav) {
+                        authSectionNav.innerHTML = '';
+                        authSectionNav.appendChild(createLoginButton(false));
+                    }
+                    if (authSectionMobileNav) {
+                        authSectionMobileNav.innerHTML = '';
+                        authSectionMobileNav.appendChild(createLoginButton(true));
+                    }
+                }
+            } catch (error) {
+                console.error('Błąd aktualizacji UI logowania:', error);
+                localLoggedInUser = null;
+                if (premiumLoginPrompt) premiumLoginPrompt.classList.remove('hidden');
+                if (premiumPackagesContainer) premiumPackagesContainer.innerHTML = '<p class="text-red-400 col-span-full text-center">Błąd ładowania. Spróbuj ponownie później.</p>';
+                if (userPremiumCurrencyDisplay) userPremiumCurrencyDisplay.classList.add('hidden');
+                 if (authSectionNav) {
+                    authSectionNav.innerHTML = '';
+                    authSectionNav.appendChild(createLoginButton(false));
+                }
+                if (authSectionMobileNav) {
+                    authSectionMobileNav.innerHTML = '';
+                    authSectionMobileNav.appendChild(createLoginButton(true));
+                }
+            }
+            return localLoggedInUser;
+        }
+
+        // --- Sklep Premium ---
+        const premiumPackagesContainer = document.getElementById('premium-packages-container');
+        const purchasePremiumModal = document.getElementById('purchasePremiumModal');
+        const closePurchasePremiumModalButton = document.getElementById('closePurchasePremiumModalButton');
+        const purchasePackageName = document.getElementById('purchasePackageName');
+        const purchasePackageCrystals = document.getElementById('purchasePackageCrystals');
+        const purchasePackagePrice = document.getElementById('purchasePackagePrice');
+        const purchasePremiumCurrentUserKrysztaly = document.getElementById('purchasePremiumCurrentUserKrysztaly');
+        const purchasePremiumModalMessage = document.getElementById('purchasePremiumModalMessage');
+        const cancelPremiumPurchaseButton = document.getElementById('cancelPremiumPurchaseButton');
+        const confirmPremiumPurchaseButton = document.getElementById('confirmPremiumPurchaseButton');
+        const currentUserBalanceKrysztalyEl = document.getElementById('currentUserBalanceKrysztaly');
+        
+        let currentPackageToPurchase = null;
+        let currentUserKrysztalyBalance = 0;
+
+        async function fetchUserPremiumCurrency(userId) {
+            if (!userId || !currentUserBalanceKrysztalyEl) {
+                 if(currentUserBalanceKrysztalyEl) currentUserBalanceKrysztalyEl.textContent = 'N/A';
+                 return;
+            }
+            currentUserBalanceKrysztalyEl.innerHTML = '<span class="loading-spinner inline-block !w-4 !h-4 !border-2"></span>';
+            try {
+                const response = await fetch(new URL(`/api/bot-stats/${userId}`, window.location.origin).href);
+                if (response.ok) {
+                    const stats = await response.json();
+                    currentUserKrysztalyBalance = stats.premium_currency !== undefined ? stats.premium_currency : 0;
+                    currentUserBalanceKrysztalyEl.textContent = currentUserKrysztalyBalance.toLocaleString('pl-PL');
+                } else {
+                    currentUserKrysztalyBalance = 0;
+                    currentUserBalanceKrysztalyEl.textContent = 'Błąd';
+                }
+            } catch (error) {
+                currentUserKrysztalyBalance = 0;
+                currentUserBalanceKrysztalyEl.textContent = 'Błąd sieci';
+                console.error("Błąd pobierania salda Gwiezdnych Kryształów:", error);
+            }
+        }
+        
+        async function fetchAndDisplayPremiumPackages(userId) {
+            if (!premiumPackagesContainer) return;
+            premiumPackagesContainer.innerHTML = '<div class="loading-spinner col-span-full"></div><p class="text-secondary col-span-full text-center mt-2">Ładowanie pakietów...</p>';
+
+            try {
+                const response = await fetch(new URL('/api/web/premium/packages', window.location.origin).href); 
+                if (!response.ok) {
+                    const errorText = await response.text();
+                    throw new Error(`HTTP error! status: ${response.status}, details: ${errorText}`);
+                }
+                const packages = await response.json();
+                
+                if (Object.keys(packages).length > 0) {
+                    premiumPackagesContainer.innerHTML = Object.entries(packages).map(([packageId, pkg]) => `
+                        <div class="premium-package-card">
+                            <div class="premium-package-icon">${pkg.emoji || '💠'}</div>
+                            <h4 class="premium-package-name">${pkg.nazwa}</h4>
+                            <p class="premium-package-description">${pkg.opis}</p>
+                            <p class="premium-package-crystals">Otrzymasz: <strong>${pkg.ilosc_krysztalow.toLocaleString('pl-PL')}</strong> 💠</p>
+                            <p class="premium-package-price">Cena: <strong>${pkg.cena_pln.toFixed(2)}</strong> PLN</p>
+                            <button class="btn btn-buy-premium text-sm py-2 px-4 mt-auto" data-package-id="${packageId}" data-package-name="${pkg.nazwa}" data-package-crystals="${pkg.ilosc_krysztalow}" data-package-price-pln="${pkg.cena_pln}">
+                                "Kup" Pakiet (Symulacja)
+                            </button>
+                        </div>
+                    `).join('');
+                    addEventListenersToBuyPremiumButtons(userId);
+                } else {
+                    premiumPackagesContainer.innerHTML = '<p class="text-secondary sm:col-span-full text-center">Brak dostępnych pakietów Gwiezdnych Kryształów.</p>';
+                }
+            } catch (error) {
+                console.error("Błąd ładowania pakietów premium:", error);
+                premiumPackagesContainer.innerHTML = `<p class="text-red-400 sm:col-span-full text-center">Nie udało się załadować pakietów. Szczegóły: ${error.message}</p>`;
+            }
+        }
+
+        function addEventListenersToBuyPremiumButtons(userId) {
+            document.querySelectorAll('.btn-buy-premium').forEach(button => {
+                button.addEventListener('click', async (event) => {
+                    const packageId = event.target.dataset.packageId;
+                    const packageName = event.target.dataset.packageName;
+                    const packageCrystals = parseInt(event.target.dataset.packageCrystals, 10);
+                    const packagePricePln = parseFloat(event.target.dataset.packagePricePln);
+                    
+                    currentPackageToPurchase = { id: packageId, name: packageName, crystals: packageCrystals, pricePln: packagePricePln };
+                    
+                    await fetchUserPremiumCurrency(userId); 
+
+                    if (purchasePackageName) purchasePackageName.textContent = packageName;
+                    if (purchasePackageCrystals) purchasePackageCrystals.textContent = packageCrystals.toLocaleString('pl-PL');
+                    if (purchasePackagePrice) purchasePackagePrice.textContent = packagePricePln.toFixed(2);
+                    if (purchasePremiumCurrentUserKrysztaly) purchasePremiumCurrentUserKrysztaly.textContent = currentUserKrysztalyBalance.toLocaleString('pl-PL');
+                    
+                    if(purchasePremiumModalMessage) {
+                        purchasePremiumModalMessage.textContent = '';
+                        purchasePremiumModalMessage.className = 'text-sm text-center mb-4 h-5';
+                    }
+                    if (confirmPremiumPurchaseButton) {
+                        confirmPremiumPurchaseButton.disabled = false;
+                        const buttonTextEl = confirmPremiumPurchaseButton.querySelector('.button-text');
+                        const spinnerEl = confirmPremiumPurchaseButton.querySelector('.loading-spinner');
+                        if(buttonTextEl) buttonTextEl.textContent = '"Kupuję" Pakiet (Symulacja)';
+                        if(spinnerEl) spinnerEl.classList.add('hidden');
+                    }
+
+                    if (purchasePremiumModal) {
+                         purchasePremiumModal.classList.remove('hidden');
+                         purchasePremiumModal.classList.add('flex');
+                    }
+                });
+            });
+        }
+        
+        if (closePurchasePremiumModalButton) {
+            closePurchasePremiumModalButton.addEventListener('click', () => {
+                if (purchasePremiumModal) {
+                    purchasePremiumModal.classList.add('hidden');
+                    purchasePremiumModal.classList.remove('flex');
+                }
+                currentPackageToPurchase = null;
+            });
+        }
+        if (cancelPremiumPurchaseButton) {
+            cancelPremiumPurchaseButton.addEventListener('click', () => {
+                if (purchasePremiumModal) {
+                    purchasePremiumModal.classList.add('hidden');
+                    purchasePremiumModal.classList.remove('flex');
+                }
+                currentPackageToPurchase = null;
+            });
+        }
+        if (purchasePremiumModal) {
+            purchasePremiumModal.addEventListener('click', (event) => {
+                if (event.target === purchasePremiumModal) {
+                    purchasePremiumModal.classList.add('hidden');
+                    purchasePremiumModal.classList.remove('flex');
+                    currentPackageToPurchase = null;
+                }
+            });
+        }
+
+        if (confirmPremiumPurchaseButton) {
+            confirmPremiumPurchaseButton.addEventListener('click', async () => {
+                if (!currentPackageToPurchase) return;
+
+                const { id: packageId, name: packageName } = currentPackageToPurchase;
+                const loggedInUser = await updateAuthDisplay(); 
+
+                if (!loggedInUser) {
+                    if(purchasePremiumModalMessage) {
+                        purchasePremiumModalMessage.textContent = 'Musisz być zalogowany, aby dokonać zakupu.';
+                        purchasePremiumModalMessage.className = 'text-sm text-center mb-4 h-5 error';
+                    }
+                    return;
+                }
+                
+                const buttonText = confirmPremiumPurchaseButton.querySelector('.button-text');
+                const spinner = confirmPremiumPurchaseButton.querySelector('.loading-spinner');
+                confirmPremiumPurchaseButton.disabled = true;
+                if(buttonText) buttonText.textContent = 'Przetwarzanie...';
+                if(spinner && spinner.classList) spinner.classList.remove('hidden');
+
+                if(purchasePremiumModalMessage) purchasePremiumModalMessage.textContent = '';
+
+                try {
+                    // Symulacja zakupu - wołamy endpoint API bota
+                    const response = await fetch(new URL(`/api/web/premium/purchase_crystals/${packageId}`, window.location.origin).href, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        // Serwer (proxyToBotApi) automatycznie doda discord_user_id z sesji
+                    });
+                    const result = await response.json();
+                    
+                    if (response.ok && result.success) {
+                        if(purchasePremiumModalMessage) {
+                            purchasePremiumModalMessage.textContent = result.message || `Pomyślnie "zakupiono": ${packageName}!`;
+                            purchasePremiumModalMessage.className = 'text-sm text-center mb-4 h-5 success';
+                        }
+                        await fetchUserPremiumCurrency(loggedInUser.id); 
+                        setTimeout(() => {
+                            if (purchasePremiumModal) {
+                                purchasePremiumModal.classList.add('hidden');
+                                purchasePremiumModal.classList.remove('flex');
+                            }
+                            currentPackageToPurchase = null;
+                        }, 2500);
+                    } else {
+                        if(purchasePremiumModalMessage) {
+                            purchasePremiumModalMessage.textContent = result.error || 'Nie udało się "zakupić" pakietu.';
+                            purchasePremiumModalMessage.className = 'text-sm text-center mb-4 h-5 error';
+                        }
+                    }
+                } catch (error) {
+                    console.error('Błąd podczas "zakupu" pakietu:', error);
+                    if(purchasePremiumModalMessage) {
+                        purchasePremiumModalMessage.textContent = 'Wystąpił błąd sieciowy podczas próby "zakupu".';
+                        purchasePremiumModalMessage.className = 'text-sm text-center mb-4 h-5 error';
+                    }
+                } finally {
+                    confirmPremiumPurchaseButton.disabled = false;
+                    if(buttonText) buttonText.textContent = '"Kupuję" Pakiet (Symulacja)';
+                    if(spinner && spinner.classList) spinner.classList.add('hidden');
+                }
+            });
+        }
+        
+        function setupMobileMenu() {
+            const mobileMenuButton = document.getElementById('mobileMenuButton');
+            const mobileMenu = document.getElementById('mobileMenu');
+            
+            if (mobileMenuButton && mobileMenu) {
+                mobileMenuButton.addEventListener('click', () => {
+                    const isExpanded = mobileMenuButton.getAttribute('aria-expanded') === 'true' || false;
+                    mobileMenuButton.setAttribute('aria-expanded', String(!isExpanded));
+                    mobileMenu.classList.toggle('open');
+                });
+                mobileMenu.querySelectorAll('a').forEach(link => { 
+                    link.addEventListener('click', () => {
+                        mobileMenuButton.setAttribute('aria-expanded', 'false');
+                        mobileMenu.classList.remove('open');
+                    });
+                });
+            }
+        }
+
+        function setupRevealAnimations() {
+            const revealObserver = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.05 }); 
+
+            document.querySelectorAll('.reveal').forEach(el => {
+                revealObserver.observe(el);
+            });
+        }
+
+        function setupDropdownDismiss() {
+            window.addEventListener('click', function(e) {
+                const desktopDropdownContainer = document.getElementById('userDropdownContainerNav');
+                const mobileDropdownContainer = document.getElementById('userDropdownContainerMobile');
+                const desktopDropdown = document.getElementById('userDropdownNav');
+                const mobileDropdown = document.getElementById('userDropdownMobile');
+
+                if (desktopDropdownContainer && !desktopDropdownContainer.contains(e.target) && desktopDropdown) {
+                    desktopDropdown.classList.remove('open');
+                }
+                if (mobileDropdownContainer && !mobileDropdownContainer.contains(e.target) && mobileDropdown) {
+                     mobileDropdown.classList.remove('open');
+                }
+            });
+        }
+
+
+        document.addEventListener('DOMContentLoaded', async function() {
+            document.getElementById('currentYear').textContent = new Date().getFullYear();
+            
+            if (!document.documentElement.classList.contains('light') && !document.documentElement.classList.contains('dark')) {
+                 document.documentElement.classList.add('dark');
+            }
+
+            setActiveNavLink();
+            await updateAuthDisplay(); 
+            setupMobileMenu();
+            setupRevealAnimations();
+            setupDropdownDismiss();
+        });
+    </script>
+</body>
+</html>

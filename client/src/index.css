@@ -1,0 +1,263 @@
+/* Importuj dyrektywy Tailwind */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Twoje zmienne CSS i globalne style */
+:root {
+    --bg-primary: #0F172A; 
+    --bg-secondary: rgba(30, 41, 59, 0.8); 
+    --bg-card: #1E293B; 
+    --bg-header: rgba(15, 23, 42, 0.92); 
+    --text-primary: #E2E8F0; 
+    --text-secondary: #94A3B8; 
+    --text-accent: #A78BFA;
+    --text-accent-hover: #8B5CF6; 
+    --text-premium: #22D3EE;
+    --text-premium-hover: #0BC5EA;
+    --text-amber-400: #FBBF24;
+    --text-cyan-400: #22D3EE;
+    --border-accent: #8B5CF6; 
+    --border-premium: #22D3EE;
+    --border-card: rgba(167, 139, 250, 0.25); 
+    --btn-primary-bg: #8B5CF6; 
+    --btn-primary-hover-bg: #7C3AED; 
+    --btn-premium-bg: #22D3EE; 
+    --btn-premium-hover-bg: #0BC5EA;
+    --btn-discord-bg: #5865F2;
+    --btn-discord-hover-bg: #4752C4;
+    --modal-backdrop: rgba(15, 23, 42, 0.85);
+    --rgb-accent: 167, 139, 250;
+    --rgb-premium: 34, 211, 238;
+    --scrollbar-thumb-bg: #8B5CF6;
+    --scrollbar-thumb-hover-bg: #7C3AED;
+    --svg-icon-fill: #E2E8F0;
+    --shadow-color: rgba(167, 139, 250, 0.25); 
+    --shadow-strong-color: rgba(167, 139, 250, 0.4);
+    /* Dodatkowe zmienne używane w innych plikach HTML, dla spójności */
+    --rgb-purple-400: 167, 139, 250; 
+    --rgb-stone-400: 168, 162, 158; 
+    --rgb-amber-400: 251, 191, 36; 
+    --rgb-cyan-400: 34, 211, 238; 
+    --text-purple-400: #A78BFA;
+    --text-stone-400: #A8A29E;
+}
+
+html.light { 
+    --bg-primary: #F9FAFB;
+    --bg-secondary: rgba(243, 244, 246, 0.9);
+    --bg-card: #FFFFFF;
+    --bg-header: rgba(255, 255, 255, 0.95);
+    --text-primary: #1F2937;
+    --text-secondary: #4B5563;
+    --text-accent: #7C3AED;
+    --text-accent-hover: #6D28D9;
+    --text-premium: #0891B2; 
+    --text-premium-hover: #067A95;
+    --text-amber-400: #D97706;
+    --text-cyan-400: #0891B2;
+    --border-accent: #7C3AED;
+    --border-premium: #0891B2;
+    --border-card: rgba(124, 58, 237, 0.1);
+    --btn-primary-bg: #7C3AED;
+    --btn-primary-hover-bg: #6D28D9;
+    --btn-premium-bg: #0891B2;
+    --btn-premium-hover-bg: #067A95;
+    --btn-discord-bg: #5865F2;
+    --btn-discord-hover-bg: #4752C4;
+    --modal-backdrop: rgba(249, 250, 251, 0.85);
+    --rgb-accent: 124, 58, 237;
+    --rgb-premium: 8, 145, 178;
+    --scrollbar-thumb-bg: #A78BFA;
+    --scrollbar-thumb-hover-bg: #8B5CF6;
+    --svg-icon-fill: #374151;
+    --shadow-color: rgba(124, 58, 237, 0.08);
+    --shadow-strong-color: rgba(124, 58, 237, 0.15);
+    --rgb-purple-400: 124, 58, 237;
+    --rgb-stone-400: 120, 113, 108;
+    --rgb-amber-400: 217, 119, 6;
+    --rgb-cyan-400: 8, 145, 178;
+    --text-purple-400: #7C3AED;
+    --text-stone-400: #78716C;
+}
+
+body { 
+    font-family: 'Inter', sans-serif; 
+    background-color: var(--bg-primary); 
+    color: var(--text-primary); 
+    line-height: 1.75; 
+    margin: 0;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+h1, h2, h3, h4, h5 { 
+    font-family: 'Lora', serif; 
+    font-weight: 600; 
+    line-height: 1.35; 
+}
+h1 { letter-spacing: -0.025em; font-weight: 700; }
+h2 { letter-spacing: -0.02em; font-weight: 700; }
+
+.btn { 
+    transition: background-color 0.2s ease, transform 0.2s ease; 
+    padding: 0.5rem 1rem; 
+    border-radius: 0.375rem; /* rounded-md */
+    font-weight: 500;
+}
+.btn-primary { background-color: var(--btn-primary-bg); color: white; } 
+.btn-primary:hover { background-color: var(--btn-primary-hover-bg); transform: translateY(-1px); }
+.btn-premium { background-color: var(--btn-premium-bg); color: white; } 
+.btn-premium:hover { background-color: var(--btn-premium-hover-bg); transform: translateY(-1px); }
+.btn-discord { background-color: var(--btn-discord-bg); color: white; } 
+.btn-discord:hover { background-color: var(--btn-discord-hover-bg); transform: translateY(-1px); }
+.btn-secondary { 
+    background-color: transparent; 
+    border: 2px solid var(--border-accent); 
+    color: var(--text-accent); 
+    padding-top: calc(0.5rem - 2px); /* Dostosowanie paddingu dla borderu */
+    padding-bottom: calc(0.5rem - 2px);
+}
+.btn-secondary:hover { background-color: var(--border-accent); color: white; transform: translateY(-1px); }
+
+.price-dukaty { color: var(--text-amber-400); } 
+.price-krysztaly { color: var(--text-premium); }
+
+.loading-spinner { 
+    border: 3px solid rgba(var(--rgb-accent), 0.3); 
+    border-top-color: var(--text-accent); 
+    border-radius: 50%; 
+    animation: spin 0.8s linear infinite; 
+    margin: 0 auto; 
+}
+@keyframes spin { 
+    0% { transform: rotate(0deg); } 
+    100% { transform: rotate(360deg); } 
+}
+
+.animated-gradient-text { 
+    background: linear-gradient(45deg, var(--text-accent), var(--text-accent-hover), #c084fc, var(--text-accent)); 
+    background-size: 200% 200%; 
+    -webkit-background-clip: text; 
+    background-clip: text; 
+    -webkit-text-fill-color: transparent; 
+    animation: gradient-flow 8s ease infinite; 
+}
+@keyframes gradient-flow { 
+    0% { background-position: 0% 50%; } 
+    50% { background-position: 100% 50%; } 
+    100% { background-position: 0% 50%; } 
+}
+
+.hero-shop-bg { 
+    background: linear-gradient(rgba(15, 23, 42, 0.92), rgba(15, 23, 42, 1)), url('https://placehold.co/1920x700/0a0f1e/8B5CF6?text=Skarbiec+Kronik') center/cover no-repeat fixed; 
+}
+
+.user-avatar { 
+    width: 32px; 
+    height: 32px; 
+    border-radius: 50%; 
+    border: 2px solid var(--border-accent); 
+    cursor: pointer; 
+    transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out; 
+} 
+.user-avatar:hover { 
+    transform: scale(1.1); 
+    box-shadow: 0 0 10px var(--shadow-strong-color); 
+}
+
+.dropdown-menu { 
+    position: absolute; 
+    top: calc(100% + 0.5rem); 
+    right: 0; 
+    background-color: var(--bg-card); 
+    border: 1px solid var(--border-card); 
+    border-radius: 0.5rem; 
+    box-shadow: 0 10px 25px -5px var(--shadow-strong-color), 0 8px 10px -6px var(--shadow-color); 
+    z-index: 50; 
+    min-width: 220px; 
+    opacity: 0; 
+    visibility: hidden; 
+    transform: translateY(-10px); 
+    transition: opacity 0.2s ease, transform 0.2s ease, visibility 0s linear 0.2s; 
+} 
+.dropdown-menu.open { 
+    opacity: 1; 
+    visibility: visible; 
+    transform: translateY(0); 
+    transition: opacity 0.2s ease, transform 0.2s ease; 
+}
+.dropdown-menu a, .dropdown-menu button { 
+    display: block; 
+    width: 100%; 
+    text-align: left; 
+    padding: 0.75rem 1rem; 
+    font-size: 0.875rem; 
+    color: var(--text-secondary); 
+    transition: background-color 0.15s ease, color 0.15s ease; 
+} 
+.dropdown-menu a:hover, .dropdown-menu button:hover { 
+    background-color: rgba(var(--rgb-accent), 0.1); 
+    color: var(--text-accent); 
+} 
+.dropdown-menu form { margin: 0; } 
+
+.nav-link { 
+    color: var(--text-secondary); 
+    padding: 0.5rem 1rem; 
+    border-radius: 0.375rem; 
+    transition: background-color 0.2s ease, color 0.2s ease; 
+    font-weight: 500; 
+}
+.nav-link:hover { 
+    background-color: rgba(var(--rgb-accent), 0.1); 
+    color: var(--text-accent); 
+}
+
+/* Dodatkowe style dla spójności z innymi stronami */
+html.dark .text-shadow-custom { 
+    text-shadow: 1px 1px 4px rgba(0,0,0,0.6); 
+}
+
+/* Pasek przewijania */
+::-webkit-scrollbar { width: 13px; } 
+::-webkit-scrollbar-track { background: var(--bg-primary); }
+::-webkit-scrollbar-thumb { background: var(--scrollbar-thumb-bg); border-radius: 7px; border: 3.5px solid var(--bg-primary); }
+::-webkit-scrollbar-thumb:hover { background: var(--scrollbar-thumb-hover-bg); }
+
+/* Klasy dla kart przedmiotów (jeśli potrzebne poza komponentem) */
+.shop-item-card {
+    /* Style już zdefiniowane w komponencie przez Tailwind, ale można tu dodać globalne nadpisania/rozszerzenia */
+}
+.shop-item-icon {
+    /* Style już zdefiniowane w komponencie przez Tailwind */
+}
+.shop-item-name {
+    /* Style już zdefiniowane w komponencie przez Tailwind */
+}
+.shop-item-description {
+    /* Style już zdefiniowane w komponencie przez Tailwind */
+}
+.shop-item-price {
+    /* Style już zdefiniowane w komponencie przez Tailwind */
+}
+.buy-buttons-container {
+    /* Style już zdefiniowane w komponencie przez Tailwind */
+}
+.btn-buy {
+    /* Style już zdefiniowane w komponencie przez Tailwind */
+}
+
+/* Style dla modala (jeśli potrzebne poza komponentem) */
+.modal-overlay {
+    /* Style już zdefiniowane w komponencie przez Tailwind */
+}
+.modal-content {
+    /* Style już zdefiniowane w komponencie przez Tailwind */
+}
+.modal-body {
+    /* Style już zdefiniowane w komponencie przez Tailwind */
+}
+.modal-footer {
+    /* Style już zdefiniowane w komponencie przez Tailwind */
+}
