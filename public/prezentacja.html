@@ -3,61 +3,53 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Kroniki Elary - serwer Discord dla miłośników anime, mangi i kultury japońskiej. Odkryj naszą fabułę, postacie, mapę serwera, wydarzenia i dołącz do magicznej społeczności!">
-    <meta name="keywords" content="anime, manga, discord, społeczność, japonia, kultura japońska, kroniki elary, serwer discord, light novel, webtoon, gry, fanart, cosplay, mapa serwera">
+    <meta name="description" content="Odkryj świat Kronik Elary - serwera Discord dla fanów anime, mangi i kultury japońskiej. Poznaj naszą społeczność, systemy i unikalne uniwersum.">
+    <meta name="keywords" content="prezentacja serwera, kroniki elary, discord, anime, manga, społeczność, lore, systemy rpg, boty discord">
     <meta name="author" content="Arcadius & Strażnicy Kronik Elary">
-    <title>Kroniki Elary: Kompletna Prezentacja Serwera, Fabuły i Postaci</title>
+    <title>Prezentacja Serwera - Kroniki Elary</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg-primary: #0F172A; 
-            --bg-secondary: rgba(30, 41, 59, 0.8); 
-            --bg-card: #1E293B; 
-            --bg-header: rgba(15, 23, 42, 0.92); 
-            
-            --text-primary: #E2E8F0; 
-            --text-secondary: #94A3B8; 
-            --text-accent: #A78BFA; 
-            --text-accent-hover: #8B5CF6; 
-            
-            --border-accent: #8B5CF6; 
-            --border-card: rgba(167, 139, 250, 0.25); 
-            
-            --btn-primary-bg: #8B5CF6; 
-            --btn-primary-hover-bg: #7C3AED; 
+            --bg-primary: #0F172A; /* Głęboki granat nocnego nieba */
+            --bg-secondary: #1E293B; /* Ciemniejszy odcień granatu dla kontrastu */
+            --bg-card: #111827; /* Bardzo ciemny granat, prawie czarny, dla kart */
+            --bg-header: rgba(15, 23, 42, 0.92); /* Lekko przezroczysty granat */
+            --text-primary: #E2E8F0; /* Jasnoszary, prawie biały */
+            --text-secondary: #94A3B8; /* Jaśniejszy szary dla drugorzędnego tekstu */
+            --text-accent: #A78BFA; /* Lawendowy fiolet */
+            --text-accent-hover: #8B5CF6; /* Intensywniejszy fiolet */
+            --border-accent: #8B5CF6;
+            --border-card: rgba(167, 139, 250, 0.15); /* Subtelna fioletowa ramka */
+            --btn-primary-bg: #8B5CF6;
+            --btn-primary-hover-bg: #7C3AED;
             --btn-discord-bg: #5865F2;
             --btn-discord-hover-bg: #4752C4;
-            
             --scrollbar-thumb-bg: #8B5CF6;
             --scrollbar-thumb-hover-bg: #7C3AED;
-            
             --svg-icon-fill: #E2E8F0;
-            --shadow-color: rgba(167, 139, 250, 0.25); 
-            --shadow-strong-color: rgba(167, 139, 250, 0.4); 
-
+            --shadow-color: rgba(167, 139, 250, 0.15); /* Subtelny fioletowy cień */
+            --shadow-strong-color: rgba(167, 139, 250, 0.3); /* Mocniejszy fioletowy cień */
+            --modal-backdrop: rgba(15, 23, 42, 0.85);
             --rgb-accent: 167, 139, 250;
             --rgb-purple-400: 167, 139, 250; 
             --rgb-stone-400: 168, 162, 158; 
-            --rgb-amber-400: 251, 191, 36;
-            --rgb-cyan-400: 34, 211, 238;
-
-            --text-purple-400: #A78BFA; /* Używane dla Elary */
-            --text-stone-400: #A8A29E; /* Używane dla Kaelena */
-            --text-amber-400: #FBBF24; /* Używane dla Lyry */
-            --text-cyan-400: #22D3EE; /* Używane dla Runy */
-            --modal-backdrop: rgba(15, 23, 42, 0.85);
+            --rgb-amber-400: 251, 191, 36; 
+            --rgb-cyan-400: 34, 211, 238; 
+            --text-purple-400: #A78BFA;
+            --text-stone-400: #A8A29E;
+            --text-amber-400: #FBBF24;
+            --text-cyan-400: #22D3EE;
         }
-
-        html.light { 
-            --bg-primary: #F9FAFB;
-            --bg-secondary: rgba(243, 244, 246, 0.9);
-            --bg-card: #FFFFFF;
+        html.light {
+            --bg-primary: #F9FAFB; /* Bardzo jasny szary */
+            --bg-secondary: #F3F4F6; /* Jasny szary */
+            --bg-card: #FFFFFF; /* Biały */
             --bg-header: rgba(255, 255, 255, 0.95);
-            --text-primary: #1F2937;
-            --text-secondary: #4B5563;
-            --text-accent: #7C3AED;
-            --text-accent-hover: #6D28D9;
+            --text-primary: #1F2937; /* Ciemnoszary */
+            --text-secondary: #4B5563; /* Szary */
+            --text-accent: #7C3AED; /* Fiolet */
+            --text-accent-hover: #6D28D9; /* Ciemniejszy fiolet */
             --border-accent: #7C3AED;
             --border-card: rgba(124, 58, 237, 0.1);
             --btn-primary-bg: #7C3AED;
@@ -69,7 +61,7 @@
             --svg-icon-fill: #374151;
             --shadow-color: rgba(124, 58, 237, 0.08);
             --shadow-strong-color: rgba(124, 58, 237, 0.15);
-
+            --modal-backdrop: rgba(249, 250, 251, 0.85);
             --rgb-accent: 124, 58, 237;
             --rgb-purple-400: 124, 58, 237;
             --rgb-stone-400: 120, 113, 108;
@@ -79,399 +71,51 @@
             --text-stone-400: #78716C;
             --text-amber-400: #D97706;
             --text-cyan-400: #0891B2;
-            --modal-backdrop: rgba(249, 250, 251, 0.85);
         }
-
-        body {
-            font-family: 'Inter', sans-serif;
-            background-color: var(--bg-primary);
-            color: var(--text-primary);
-            transition: background-color 0.3s ease, color 0.3s ease;
-            -webkit-font-smoothing: antialiased;
-            -moz-osx-font-smoothing: grayscale;
-            line-height: 1.75; 
-        }
-
-        h1, h2, h3, h4, h5 {
-            font-family: 'Lora', serif;
-            font-weight: 600;
-            line-height: 1.35; 
-        }
-        h1 { letter-spacing: -0.025em; font-weight: 700; }
-        h2 { letter-spacing: -0.02em; font-weight: 700; }
-        h3 { font-weight: 600; }
-        h4 { font-weight: 500; font-size: 1.125rem; } 
-        h5 { font-weight: 500; font-size: 1.05em; }
-
-
-        .hero-bg {
-            background: linear-gradient(rgba(15, 23, 42, 0.9), rgba(15, 23, 42, 1)), url('https://placehold.co/1920x1080/0a0f1e/a78bfa?text=Mistyczne+Tło+Kronik+Elary') center/cover no-repeat fixed;
-        }
-        .section-bg {
-            background-color: var(--bg-secondary);
-        }
-        .card-bg, .accordion-item, .event-card, .profile-card-expanded, .edykt-card, .map-region-card {
-            background-color: var(--bg-card);
-            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), background-color 0.3s ease; 
-            border: 1px solid var(--border-card); 
-            box-shadow: 0 7px 18px -4px var(--shadow-color); 
-            overflow: hidden;
-        }
-        .card-bg:hover, .accordion-item:hover, .event-card:hover, .profile-card-expanded:hover, .edykt-card:hover, .map-region-card:hover {
-            transform: translateY(-10px) scale(1.035); 
-            box-shadow: 0 16px 32px -6px var(--shadow-strong-color); 
-        }
-        
-        .btn-primary, .btn-discord, .btn-secondary {
-            color: #FFFFFF; 
-            transition: background-color 0.25s ease, transform 0.25s ease, box-shadow 0.25s ease;
-            box-shadow: 0 5px 12px -3px var(--shadow-color);
-            font-weight: 600; 
-            letter-spacing: 0.03em;
-            padding-top: 0.85rem; 
-            padding-bottom: 0.85rem;
-            border-radius: 0.5rem;
-        }
-        .btn-primary { background-color: var(--btn-primary-bg); }
-        .btn-primary:hover {
-            background-color: var(--btn-primary-hover-bg);
-            transform: scale(1.06) translateY(-3px); 
-            box-shadow: 0 14px 24px -5px var(--shadow-strong-color);
-        }
-        .btn-discord { background-color: var(--btn-discord-bg); }
-        .btn-discord:hover {
-            background-color: var(--btn-discord-hover-bg);
-            transform: scale(1.06) translateY(-3px);
-            box-shadow: 0 10px 20px -5px rgba(88, 101, 242, 0.4);
-        }
-        .btn-secondary {
-            background-color: transparent;
-            border: 2px solid var(--border-accent);
-            color: var(--text-accent);
-            padding: calc(0.85rem - 2px) calc(1.5rem - 2px);
-        }
-        .btn-secondary:hover {
-            background-color: var(--border-accent);
-            color: white;
-            transform: scale(1.05) translateY(-1px);
-            box-shadow: 0 8px 15px -3px var(--shadow-color);
-        }
-        .text-accent {
-            color: var(--text-accent);
-        }
-        
-        .reveal {
-            opacity: 0;
-            transform: translateY(70px); 
-            transition: opacity 1s cubic-bezier(0.645, 0.045, 0.355, 1), transform 1s cubic-bezier(0.645, 0.045, 0.355, 1);
-        }
-        .reveal.visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
-        ::-webkit-scrollbar { width: 13px; } 
-        ::-webkit-scrollbar-track { background: var(--bg-primary); }
-        ::-webkit-scrollbar-thumb { background: var(--scrollbar-thumb-bg); border-radius: 7px; border: 3.5px solid var(--bg-primary); }
+        body { font-family: 'Inter', sans-serif; background-color: var(--bg-primary); color: var(--text-primary); transition: background-color 0.3s ease, color 0.3s ease; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; line-height: 1.75; }
+        h1, h2, h3, h4, h5 { font-family: 'Lora', serif; font-weight: 600; line-height: 1.35; }
+        h1 { letter-spacing: -0.025em; font-weight: 700; } h2 { letter-spacing: -0.02em; font-weight: 700; } h3 { font-weight: 600; }
+        .hero-prezentacja-bg { background: linear-gradient(rgba(15, 23, 42, 0.88), rgba(15, 23, 42, 0.98)), url('https://placehold.co/1920x700/0a0f1e/a78bfa?text=Prezentacja+Kronik+Elary') center/cover no-repeat; }
+        .section-bg { background-color: var(--bg-secondary); }
+        .card-bg { background-color: var(--bg-card); transition: transform 0.3s cubic-bezier(0.25, 0.1, 0.25, 1), box-shadow 0.3s cubic-bezier(0.25, 0.1, 0.25, 1), background-color 0.3s ease; border: 1px solid var(--border-card); box-shadow: 0 6px 12px -3px var(--shadow-color); overflow: hidden; }
+        .card-bg:hover { transform: translateY(-8px) scale(1.02); box-shadow: 0 12px 24px -4px var(--shadow-strong-color); }
+        .btn-primary, .btn-discord, .btn-secondary { color: #FFFFFF; transition: background-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease; box-shadow: 0 4px 8px -2px var(--shadow-color); font-weight: 600; letter-spacing: 0.03em; padding-top: 0.8rem; padding-bottom: 0.8rem; border-radius: 0.375rem; } /* Zmniejszone zaokrąglenie */
+        .btn-primary { background-color: var(--btn-primary-bg); } .btn-primary:hover { background-color: var(--btn-primary-hover-bg); transform: scale(1.04) translateY(-2px); box-shadow: 0 10px 18px -4px var(--shadow-strong-color); }
+        .btn-discord { background-color: var(--btn-discord-bg); } .btn-discord:hover { background-color: var(--btn-discord-hover-bg); transform: scale(1.04) translateY(-2px); box-shadow: 0 10px 18px -4px rgba(88, 101, 242, 0.35); }
+        .btn-secondary { background-color: transparent; border: 2px solid var(--border-accent); color: var(--text-accent); padding: calc(0.8rem - 2px) calc(1.5rem - 2px); }
+        .btn-secondary:hover { background-color: var(--border-accent); color: white; transform: scale(1.04) translateY(-2px); box-shadow: 0 6px 12px -2px var(--shadow-color); }
+        .text-accent { color: var(--text-accent); }
+        .reveal { opacity: 0; transform: translateY(50px); transition: opacity 0.8s cubic-bezier(0.645, 0.045, 0.355, 1), transform 0.8s cubic-bezier(0.645, 0.045, 0.355, 1); }
+        .reveal.visible { opacity: 1; transform: translateY(0); }
+        ::-webkit-scrollbar { width: 12px; } ::-webkit-scrollbar-track { background: var(--bg-primary); }
+        ::-webkit-scrollbar-thumb { background: var(--scrollbar-thumb-bg); border-radius: 6px; border: 3px solid var(--bg-primary); }
         ::-webkit-scrollbar-thumb:hover { background: var(--scrollbar-thumb-hover-bg); }
-        
-        header#navbar {
-            background-color: var(--bg-header);
-            backdrop-filter: blur(18px); 
-            transition: background-color 0.3s ease, box-shadow 0.3s ease;
-            box-shadow: 0 5px 15px -4px rgba(15,23,42,0.2); 
-        }
-
-        .nav-link {
-            position: relative;
-            color: var(--text-secondary);
-            transition: color 0.2s ease, background-color 0.2s ease, transform 0.2s ease; 
-            padding: 0.65rem 1.1rem; 
-            border-radius: 0.6rem; 
-            font-weight: 500;
-        }
-        .nav-link:hover {
-            transform: translateY(-1px); 
-        }
-        .nav-link::after { 
-            content: '';
-            position: absolute;
-            width: 0;
-            height: 3px; 
-            bottom: 5px; 
-            left: 50%;
-            transform: translateX(-50%);
-            background-color: var(--text-accent);
-            transition: width 0.35s cubic-bezier(0.25, 0.8, 0.25, 1);
-            border-radius: 1.5px;
-        }
-        .nav-link:hover, .nav-link.active {
-            color: var(--text-accent);
-            background-color: rgba(var(--rgb-accent), 0.12); 
-        }
-        .nav-link:hover::after, .nav-link.active::after {
-            width: 60%; 
-        }
-
-        .accordion-header { 
-            cursor: pointer; 
-            padding: 1.6rem; 
-            transition: background-color 0.2s ease;
-            border-radius: 0.85rem; 
-        }
-        .accordion-item.open .accordion-header { 
-             background-color: rgba(var(--rgb-accent), 0.08);
-        }
-        .accordion-header:hover {
-            background-color: rgba(var(--rgb-accent), 0.12);
-        }
-        .accordion-content { max-height: 0; overflow: hidden; transition: max-height 0.5s cubic-bezier(0.25, 0.8, 0.25, 1), padding 0.5s cubic-bezier(0.25, 0.8, 0.25, 1); padding: 0 1.6rem; } 
-        .accordion-content.open { max-height: 800px; padding: 0.75rem 1.6rem 1.6rem; } 
-        .accordion-item svg.accordion-icon { transition: transform 0.4s cubic-bezier(0.25, 0.8, 0.25, 1); }
-        .accordion-item.open svg.accordion-icon { transform: rotate(180deg); } /* Dodano obrót ikony */
-
-
-        .parallax-bg {
-            background-attachment: fixed;
-            background-position: center;
-            background-repeat: no-repeat;
-            background-size: cover;
-        }
-        
-        #mobileMenu {
-            transition: transform 0.4s cubic-bezier(0.25, 0.8, 0.25, 1), opacity 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
-            transform: translateY(-100%);
-            opacity: 0;
-            pointer-events: none; 
-        }
-        #mobileMenu.open {
-            transform: translateY(0);
-            opacity: 1;
-            pointer-events: auto;
-        }
-        html.dark .text-shadow-custom { 
-             text-shadow: 1px 1px 4px rgba(0,0,0,0.6); 
-        }
-        
-        .tag-accent { background-color: rgba(var(--rgb-accent), 0.15); color: var(--text-accent); }
-        .tag-purple-400 { background-color: rgba(var(--rgb-purple-400), 0.15); color: var(--text-purple-400, var(--text-accent)); }
-        .tag-stone-400 { background-color: rgba(var(--rgb-stone-400), 0.15); color: var(--text-stone-400, var(--text-secondary)); }
-
-        .modal {
-            background-color: var(--modal-backdrop); 
-            backdrop-filter: blur(8px);
-        }
-        .modal-content {
-            background-color: var(--bg-card);
-            max-height: 90vh;
-        }
-        
-        .map-channel-list {
-            list-style-type: none; 
-            padding-left: 0;
-        }
-        .map-channel-list li {
-            padding: 0.3rem 0;
-            border-bottom: 1px dashed rgba(var(--rgb-accent), 0.1);
-        }
-        .map-channel-list li:last-child {
-            border-bottom: none;
-        }
-         .map-channel-list code {
-            font-size: 0.85em; 
-            padding: 0.2em 0.4em;
-            background-color: rgba(var(--rgb-accent), 0.1); /* Subtelne tło dla kodu */
-            border: 1px solid rgba(var(--rgb-accent), 0.2);
-            color: var(--text-accent);
-        }
-         .user-avatar {
-            width: 32px;
-            height: 32px;
-            border-radius: 50%;
-            border: 2px solid var(--border-accent);
-            cursor: pointer;
-            transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
-        }
-        .user-avatar:hover {
-            transform: scale(1.1);
-            box-shadow: 0 0 10px var(--shadow-strong-color);
-        }
-        .dropdown-menu {
-            position: absolute;
-            top: calc(100% + 0.5rem); 
-            right: 0;
-            background-color: var(--bg-card);
-            border: 1px solid var(--border-card);
-            border-radius: 0.5rem; 
-            box-shadow: 0 10px 25px -5px var(--shadow-strong-color), 0 8px 10px -6px var(--shadow-color);
-            z-index: 50;
-            min-width: 200px;
-            opacity: 0;
-            visibility: hidden;
-            transform: translateY(-10px);
-            transition: opacity 0.2s ease, transform 0.2s ease, visibility 0s linear 0.2s;
-        }
-        .dropdown-menu.open {
-            opacity: 1;
-            visibility: visible;
-            transform: translateY(0);
-            transition: opacity 0.2s ease, transform 0.2s ease;
-        }
-        .dropdown-menu a, .dropdown-menu button {
-            display: block;
-            width: 100%;
-            text-align: left;
-            padding: 0.75rem 1rem; 
-            font-size: 0.875rem; 
-            color: var(--text-secondary);
-            transition: background-color 0.15s ease, color 0.15s ease;
-        }
-        .dropdown-menu a:hover, .dropdown-menu button:hover {
-            background-color: rgba(var(--rgb-accent), 0.1);
-            color: var(--text-accent);
-        }
+        header#navbar { background-color: var(--bg-header); backdrop-filter: blur(16px); transition: background-color 0.3s ease, box-shadow 0.3s ease; box-shadow: 0 4px 10px -3px rgba(15,23,42,0.15); }
+        .nav-link { position: relative; color: var(--text-secondary); transition: color 0.2s ease, background-color 0.2s ease, transform 0.2s ease; padding: 0.6rem 1rem; border-radius: 0.375rem; font-weight: 500; }
+        .nav-link:hover { transform: translateY(-1px); }
+        .nav-link::after { content: ''; position: absolute; width: 0; height: 2px; bottom: 4px; left: 50%; transform: translateX(-50%); background-color: var(--text-accent); transition: width 0.3s cubic-bezier(0.25, 0.8, 0.25, 1); border-radius: 1px; }
+        .nav-link:hover, .nav-link.active { color: var(--text-accent); background-color: rgba(var(--rgb-accent), 0.1); }
+        .nav-link:hover::after, .nav-link.active::after { width: 50%; }
+        #mobileMenu { transition: transform 0.3s cubic-bezier(0.25, 0.8, 0.25, 1), opacity 0.3s cubic-bezier(0.25, 0.8, 0.25, 1); transform: translateY(-100%); opacity: 0; pointer-events: none; }
+        #mobileMenu.open { transform: translateY(0); opacity: 1; pointer-events: auto; }
+        html.dark .text-shadow-custom { text-shadow: 1px 1px 3px rgba(0,0,0,0.5); }
+        .user-avatar { width: 32px; height: 32px; border-radius: 50%; border: 2px solid var(--border-accent); cursor: pointer; transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out; }
+        .user-avatar:hover { transform: scale(1.1); box-shadow: 0 0 8px var(--shadow-strong-color); }
+        .dropdown-menu { position: absolute; top: calc(100% + 0.5rem); right: 0; background-color: var(--bg-card); border: 1px solid var(--border-card); border-radius: 0.375rem; box-shadow: 0 8px 20px -4px var(--shadow-strong-color), 0 6px 8px -5px var(--shadow-color); z-index: 50; min-width: 220px; opacity: 0; visibility: hidden; transform: translateY(-8px); transition: opacity 0.15s ease, transform 0.15s ease, visibility 0s linear 0.15s; }
+        .dropdown-menu.open { opacity: 1; visibility: visible; transform: translateY(0); transition: opacity 0.15s ease, transform 0.15s ease; }
+        .dropdown-menu a, .dropdown-menu button { display: block; width: 100%; text-align: left; padding: 0.7rem 1rem; font-size: 0.875rem; color: var(--text-secondary); transition: background-color 0.1s ease, color 0.1s ease; }
+        .dropdown-menu a:hover, .dropdown-menu button:hover { background-color: rgba(var(--rgb-accent), 0.08); color: var(--text-accent); }
         .dropdown-menu form { margin: 0; } 
-
-        /* Floating Nav Styles */
-        #floating-nav-container {
-            position: fixed;
-            top: 50%;
-            left: 1rem; 
-            transform: translateY(-50%);
-            z-index: 40;
-            display: flex; 
-            align-items: flex-start; 
-        }
-
-        #floating-nav {
-            width: 220px; 
-            max-height: 80vh; 
-            overflow-y: auto; 
-            background-color: var(--bg-card);
-            padding: 0.75rem; 
-            border-radius: 0.5rem; 
-            box-shadow: 0 10px 15px -3px var(--shadow-color), 0 4px 6px -4px var(--shadow-color); 
-            transition: width 0.3s ease-in-out, padding 0.3s ease-in-out, transform 0.3s ease-in-out;
-            transform-origin: left;
-        }
-        #floating-nav.minimized {
-            width: 52px; 
-            padding: 0.75rem 0.5rem; 
-            overflow: hidden; 
-        }
-        #floating-nav a {
-            display: flex;
-            align-items: center;
-            padding: 0.6rem 0.8rem;
-            font-size: 0.875rem; 
-            border-radius: 0.375rem; 
-            transition: background-color 0.2s ease, color 0.2s ease;
-            white-space: nowrap; 
-            overflow: hidden; 
-            color: var(--text-secondary);
-        }
-        #floating-nav a .floating-nav-text {
-            margin-left: 0.5rem; 
-            transition: opacity 0.2s ease 0.1s, width 0.2s ease 0.1s; 
-        }
-        #floating-nav.minimized a .floating-nav-text {
-            opacity: 0;
-            width: 0; 
-            pointer-events: none; 
-        }
-        #floating-nav a svg {
-            width: 1rem; 
-            height: 1rem; 
-            flex-shrink: 0; 
-            transition: margin-right 0.3s ease; 
-        }
-         #floating-nav.minimized a svg {
-            margin-right: 0; 
-        }
-        #floating-nav a.active-float-nav, #floating-nav a:hover {
-            background-color: rgba(var(--rgb-accent), 0.15);
-            color: var(--text-accent);
-        }
-
-        #toggleFloatingNavBtn {
-            background-color: var(--bg-card);
-            color: var(--text-accent);
-            border: 1px solid var(--border-card);
-            border-radius: 0.375rem; 
-            width: 38px; 
-            height: 38px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            z-index: 45; 
-            box-shadow: 0 4px 8px rgba(0,0,0,0.3);
-            transition: background-color 0.2s ease, transform 0.2s ease, color 0.2s ease;
-            margin-left: 0.5rem; 
-            position: relative; 
-            align-self: flex-start; 
-            margin-top: 0.75rem; 
-        }
-        #toggleFloatingNavBtn:hover {
-            background-color: var(--text-accent-hover);
-            color: var(--text-primary);
-            transform: scale(1.1);
-        }
-         #toggleFloatingNavBtn svg {
-            transition: transform 0.3s ease;
-            width: 18px; 
-            height: 18px;
-        }
-        #floating-nav.minimized + #toggleFloatingNavBtn svg { 
-            transform: rotate(180deg);
-        }
-        .animated-gradient-text {
-            background: linear-gradient(45deg, var(--text-accent), var(--text-accent-hover), #c084fc, var(--text-accent));
-            background-size: 200% 200%;
-            -webkit-background-clip: text;
-            background-clip: text;
-            -webkit-text-fill-color: transparent;
-            animation: gradient-flow 8s ease infinite;
-        }
-        @keyframes gradient-flow {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
-        }
-
+        .modal { background-color: var(--modal-backdrop); backdrop-filter: blur(6px); }
+        .modal-content { background-color: var(--bg-card); max-height: 90vh; }
+        .feature-icon-large { font-size: 3rem; margin-bottom: 0.75rem; color: var(--text-accent); transition: transform 0.25s ease; }
+        .card-bg:hover .feature-icon-large { transform: scale(1.08); }
+        .admin-card img { border-width: 2px; } /* Subtelniejsza ramka dla awatarów adminów */
+        .timeline-item .timeline-content { background-color: var(--bg-card); padding: 1.5rem; border-radius: 0.5rem; border-left: 4px solid var(--border-accent); }
+        .timeline-item .timeline-icon { background-color: var(--text-accent); color: var(--bg-card); }
     </style>
 </head>
 <body class="antialiased">
-
-    <div id="floating-nav-container" class="hidden md:flex">
-        <aside id="floating-nav" class="space-y-1">
-            <a href="#hero-prezentacja" class="floating-nav-link">
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16"><path d="M8.5 12.996V4.73L12.75 7.06V2.5L3.25 7.06V11.5L8.5 8.764V12.996L12.75 10.66V15.23L3.25 10.66V6.19L8.5 3.426V7.66L3.25 10.09V14.66L8.5 11.927V16L15.5 11.5V2L8.5 6.5V1.004L1.5 5.5V15.5L8.5 11.004V12.996Z"/></svg> <span class="floating-nav-text">Początek</span>
-            </a>
-            <a href="#o-nas" class="floating-nav-link">
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16"><path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8 15A7 7 0 1 0 8 1a7 7 0 0 0 0 14zM8 11.5a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2a.5.5 0 0 1 .5-.5zm0-3.5A.5.5 0 0 1 8 4.5v4a.5.5 0 0 1-1 0v-4A.5.5 0 0 1 8 8z"/></svg> <span class="floating-nav-text">O Serwerze</span>
-            </a>
-            <a href="#historia" class="floating-nav-link">
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16"><path d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5zM2 3.5c0-.276.244-.5.545-.5h10.91c.3.05.545.224.545.5v1c0 .276-.244.5-.546.5H2.545C2.245 5 2 4.776 2 4.5v-1zM14.5 7a.5.5 0 0 0-.5-.5H2a.5.5 0 0 0 0 1h12a.5.5 0 0 0 .5-.5zm-1.5 3a.5.5 0 0 0-.5-.5H2a.5.5 0 0 0 0 1h11a.5.5 0 0 0 .5-.5zm-2.5 3a.5.5 0 0 0-.5-.5H2a.5.5 0 0 0 0 1h9a.5.5 0 0 0 .5-.5z"/></svg> <span class="floating-nav-text">Historia</span>
-            </a>
-            <a href="#straznicy-karty" class="floating-nav-link">
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16"><path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0zm4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4zm-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664h10z"/></svg> <span class="floating-nav-text">Strażnicy</span>
-            </a>
-            <a href="#mapa-serwera" class="floating-nav-link">
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M16 .5a.5.5 0 0 0-.598-.49L10.5.99l-4.902-1.47A.5.5 0 0 0 5 0v.54L.598.049A.5.5 0 0 0 0 .5v14.951c0 .339.276.61.61.61L5.5 16l4.902-1.471A.5.5 0 0 0 11 14.001v-.54l4.402 1.47a.5.5 0 0 0 .598-.002l.001-.001.001-.001.001-.001a.5.5 0 0 0 .002-.598L11.5 14.001l4.902-1.47A.5.5 0 0 0 16 12.001V.5zM5 14.09V1.11l.5-.15 5 1.5v12.98l-5 1.5-.5-.15zM15 11.91l-.5.15-5-1.5V1.11l5-1.5.5.15v12.98z"/></svg> <span class="floating-nav-text">Mapa Serwera</span>
-            </a>
-            <a href="#baza-wiedzy" class="floating-nav-link">
-                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16"><path d="M1 2.828c.885-.37 2.154-.769 3.388-.893 1.33-.134 2.458.063 3.112.752v9.746c-.935-.53-2.12-.603-3.213-.493-1.18.12-2.37.461-3.287.811V2.828zm7.5-.141c.654-.689 1.782-.886 3.112-.752 1.234.124 2.503.523 3.388.893v9.923c-.918-.35-2.107-.692-3.287-.81-1.094-.111-2.278-.039-3.213.492V2.687zM8 1.783C7.015.936 5.587.81 4.287.94c-1.514.153-3.042.672-3.994 1.105A.5.5 0 0 0 0 2.5v11a.5.5 0 0 0 .707.455c.882-.4 2.303-.881 3.68-1.02 1.409-.142 2.59.087 3.223.877a.5.5 0 0 0 .78 0c.633-.79 1.814-1.019 3.222-.877 1.378.139 2.8.62 3.681 1.02A.5.5 0 0 0 16 13.5v-11a.5.5 0 0 0-.293-.455c-.952-.433-2.48-.952-3.994-1.105C10.413.809 8.985.936 8 1.783z"/></svg> <span class="floating-nav-text">Baza Wiedzy</span>
-            </a>
-            <a href="#dolacz" class="floating-nav-link">
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16"><path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0zm4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4zm-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664h10zM13.5 5a.5.5 0 0 1 .5.5V7h1.5a.5.5 0 0 1 0 1H14v1.5a.5.5 0 0 1-1 0V8h-1.5a.5.5 0 0 1 0-1H13V5.5a.5.5 0 0 1 .5-.5z"/></svg> <span class="floating-nav-text">Dołącz</span>
-            </a>
-        </aside>
-        <button id="toggleFloatingNavBtn" class="hidden md:flex" aria-label="Zminimalizuj/Rozwiń nawigację boczną">
-            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" class="bi bi-chevron-left" viewBox="0 0 16 16">
-                <path fill-rule="evenodd" d="M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z"/>
-            </svg>
-        </button>
-    </div>
 
     <header id="navbar" class="fixed top-0 left-0 right-0 z-50 py-3">
         <div class="container mx-auto px-4 sm:px-6 flex justify-between items-center">
@@ -501,343 +145,232 @@
                 <a href="wikipedia.html" class="block py-2.5 px-3 nav-link text-base font-medium">Wikipedia Kronik</a>
                 <a href="ranking-stats.html" class="block py-2.5 px-3 nav-link text-base font-medium">Rankingi</a>
                 <a href="https://discord.gg/TWOJLINKZAPROSZENIOWY" target="_blank" rel="noopener noreferrer" class="block mt-2 py-2.5 px-3 text-base font-medium text-white bg-purple-600 hover:bg-purple-700 rounded-md text-center">Dołącz do Discorda</a>
-            </div>
+                 </div>
         </div>
     </header>
 
-    <section id="hero-prezentacja" class="hero-bg min-h-screen flex items-center justify-center text-center pt-24 sm:pt-20 reveal">
-        <div class="container mx-auto px-4 sm:px-6 py-16">
-            <h1 class="text-4xl sm:text-5xl md:text-6xl font-bold text-white mb-4 leading-tight text-shadow-custom">
-                <span class="animated-gradient-text">Kroniki Elary:</span>
-            </h1>
-            <h2 class="text-3xl sm:text-4xl md:text-5xl font-semibold text-white mb-6 leading-tight text-shadow-custom">
-                Kompletna Prezentacja Serwera, Fabuły i Postaci
-            </h2>
-            <p class="text-lg sm:text-xl md:text-2xl text-slate-200 mb-10 max-w-3xl mx-auto text-shadow-custom">
-                Witajcie, wędrowcy między światami, poszukiwacze zapomnianych melodii i strażnicy nieopowiedzianych historii. Jam jest Arcadius, Tkacz Przeznaczeń Kronik, istota zrodzona z echa pierwszych opowieści, obserwator niezliczonych rzeczywistości, które niczym gwiezdne konstelacje, tworzą gobelin multiwersum. Przez eony przemierzałem ścieżki snów i jawy, gromadząc szepty przeszłości i wizje przyszłości. W moich podróżach dostrzegłem pustkę – potrzebę stworzenia azylu, gdzie najcenniejsze z narracji, te które Wy nazywacie anime i mangą, mogłyby znaleźć bezpieczną przystań, być pielęgnowane, analizowane i przekazywane dalej, niczym najcenniejsze artefakty.
-            </p>
-            <a href="https://discord.gg/TWOJLINKZAPROSZENIOWY" target="_blank" rel="noopener noreferrer" class="btn-primary font-semibold py-3.5 sm:py-4 px-10 sm:px-12 text-md sm:text-lg inline-block shadow-xl">
-                DOŁĄCZ DO KRONIK ELARY!
-            </a>
-            <p class="mt-12 text-sm text-slate-300 italic max-w-xl mx-auto text-shadow-custom">
-                "...Tak zrodziła się w moim umyśle idea 'Kronik Elary' – cyfrowego sanktuarium, latarni morskiej dla dusz pragnących odnaleźć magię w słowach i obrazach." <br class="hidden sm:inline">- Arcadius, Tkacz Przeznaczeń Kronik
-            </p>
-        </div>
-    </section>
+    <main>
+        <section class="hero-prezentacja-bg pt-32 pb-20 sm:pt-40 sm:pb-28 text-center reveal">
+            <div class="container mx-auto px-4 sm:px-6">
+                <h1 class="text-4xl sm:text-5xl md:text-6xl font-bold text-white mb-6 leading-tight text-shadow-custom">
+                    Odkryj Świat <span class="text-accent">Kronik Elary</span>
+                </h1>
+                <p class="text-lg md:text-xl text-slate-200 mb-10 max-w-3xl mx-auto text-shadow-custom">
+                    Poznaj naszą wizję, społeczność i unikalne uniwersum, które czeka na Ciebie na naszym serwerze Discord.
+                </p>
+            </div>
+        </section>
 
-    <section id="o-nas" class="py-16 sm:py-24 section-bg reveal">
-        <div class="container mx-auto px-4 sm:px-6">
-            <h2 class="text-4xl sm:text-5xl font-bold text-center mb-14 sm:mb-20"><span class="text-primary">Witajcie w </span><span class="text-accent">Kronikach Elary! – O Serwerze</span></h2>
-            <div class="grid md:grid-cols-2 gap-10 md:gap-16 items-center">
-                <div class="reveal">
-                    <img src="https://placehold.co/600x450/1E293B/a78bfa?text=Wizja+Kronik+Elary" alt="Wizja Kronik Elary - dynamiczny kolaż postaci i scen anime" class="rounded-xl shadow-2xl w-full aspect-[4/3] object-cover" loading="lazy" onerror="this.onerror=null;this.src='https://placehold.co/600x450/0F172A/94A3B8?text=Błąd+ładowania+obrazu';">
-                </div>
-                <div class="reveal">
-                    <h3 class="text-2xl sm:text-3xl font-semibold text-primary mb-5">Misja i Wizja:</h3>
-                    <p class="text-secondary mb-6 leading-relaxed text-md sm:text-lg">
-                        "Kroniki Elary" to serwer Discord zrodzony z głębokiej miłości do anime, mangi, light novel, webtoonów i całej bogatej kultury japońskiej. Naszą nadrzędną misją jest stworzenie i pielęgnowanie przyjaznej, otwartej, inkluzywnej i zaangażowanej społeczności. Pragniemy, aby każdy – od nowicjusza stawiającego pierwsze kroki w świecie japońskiej animacji, po doświadczonego weterana znającego na pamięć klasyki gatunku – znalazł tu swoje miejsce. Miejsca, gdzie można swobodnie dzielić się swoją pasją, odkrywać nowe, fascynujące tytuły, dyskutować bez obaw o ocenę i tworzyć niezapomniane wspomnienia.
-                    </p>
-                    <p class="text-secondary mb-8 leading-relaxed text-md sm:text-lg">
-                         Wizją "Kronik Elary" jest bycie czymś więcej niż tylko platformą do rozmów. Chcemy, aby nasz serwer był interaktywną przygodą, w której fabuła, postacie i sam świat Kronik ewoluują wraz z jego członkami. Każdy Kronikarz ma realny wpływ na kształtowanie naszej wspólnej historii.
-                    </p>
-                    <h3 class="text-2xl sm:text-3xl font-semibold text-primary mb-5">Atmosfera:</h3>
-                    <p class="text-secondary leading-relaxed text-md sm:text-lg">
-                        Dążymy do stworzenia atmosfery przesiąkniętej magią, ciepłem i wzajemnym szacunkiem. Inspiracją jest dla nas postać Elary – jej zaraźliwy entuzjazm, wrodzona dobroduszność i urocza niezdarność nadają ton naszym interakcjom. Chcemy, aby każdy czuł się tu swobodnie i bezpiecznie, mógł wyrażać swoje opinie bez obaw o krytykę (o ile czyni to z poszanowaniem innych) i zawsze znajdował wsparcie w innych Kronikarzach. Humor, kreatywność, chęć wspólnej zabawy i wzajemna pomoc są filarami naszej społeczności.
+        <section id="o-nas" class="py-16 sm:py-20 section-bg reveal">
+            <div class="container mx-auto px-4 sm:px-6">
+                <div class="text-center mb-14 sm:mb-18">
+                    <h2 class="text-3xl sm:text-4xl font-bold text-primary mb-4">Kim Jesteśmy?</h2>
+                    <p class="text-lg text-secondary max-w-3xl mx-auto">
+                        Kroniki Elary to nie tylko serwer Discord – to przede wszystkim <span class="text-accent font-semibold">tętniąca życiem społeczność</span> pasjonatów anime, mangi, gier i szeroko pojętej kultury japońskiej. Naszym celem jest stworzenie przyjaznego i angażującego miejsca, gdzie każdy może znaleźć coś dla siebie, podzielić się swoimi zainteresowaniami i poznać nowych przyjaciół.
                     </p>
                 </div>
+                <div class="grid md:grid-cols-2 gap-10 lg:gap-14 items-center">
+                    <div class="reveal">
+                        <img src="https://placehold.co/600x450/111827/a78bfa?text=Społeczność+Elary+Razem" alt="Społeczność Kronik Elary" class="rounded-lg shadow-xl w-full" onerror="this.onerror=null;this.src='https://placehold.co/600x450/0F172A/94A3B8?text=Obraz+Społeczności';">
+                    </div>
+                    <div class="reveal">
+                        <h3 class="text-2xl font-semibold text-primary mb-5">Nasza Filozofia i Misja</h3>
+                        <p class="text-secondary mb-4">
+                            Wierzymy w siłę wspólnoty i kreatywności. Stawiamy na otwartą komunikację, wzajemny szacunek i wspieranie pasji naszych użytkowników. Chcemy, aby Kroniki Elary były miejscem, do którego chętnie wracasz, czujesz się zrozumiany i możesz rozwijać swoje zainteresowania.
+                        </p>
+                        <p class="text-secondary mb-5">
+                            Naszą misją jest budowanie mostów między ludźmi poprzez wspólną miłość do kultury Wschodu, tworzenie przestrzeni dla autentycznych interakcji i niezapomnianych wspomnień.
+                        </p>
+                        <ul class="space-y-3.5 text-secondary">
+                            <li class="flex items-start">
+                                <svg class="w-6 h-6 text-accent mr-3 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg>
+                                <span><strong class="text-primary">Przyjazna i Inkluzywna Atmosfera:</strong> Dbamy o to, by każdy czuł się u nas swobodnie, bezpiecznie i akceptowany.</span>
+                            </li>
+                            <li class="flex items-start">
+                                <svg class="w-6 h-6 text-accent mr-3 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg>
+                                <span><strong class="text-primary">Różnorodność Tematyczna i Aktywności:</strong> Od dyskusji o najnowszych seriach, przez wspólne granie, po kreatywne projekty i warsztaty.</span>
+                            </li>
+                            <li class="flex items-start">
+                                <svg class="w-6 h-6 text-accent mr-3 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg>
+                                <span><strong class="text-primary">Unikalne, Rozwijające się Uniwersum:</strong> Odkryj świat Aethelgardu, nasze autorskie lore i systemy fabularne, które ewoluują wraz ze społecznością.</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
             </div>
-            <div class="mt-16 sm:mt-24 reveal">
-                <h3 class="text-3xl sm:text-4xl font-semibold text-primary mb-12 text-center">Dla Kogo Są <span class="text-accent">Kroniki?</span></h3>
-                <ul class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 text-secondary max-w-5xl mx-auto">
-                    <li class="card-bg p-6 sm:p-8 rounded-xl shadow-lg flex items-start space-x-4 transition-all duration-300 hover:!shadow-[0_14px_28px_-5px_var(--shadow-strong-color)] hover:!scale-[1.04]">
-                        <span class="text-accent text-3xl sm:text-4xl mt-1">💖</span>
-                        <span class="text-primary text-md sm:text-lg">Kocha anime i mangę we wszystkich ich odmianach, niezależnie od ulubionych gatunków czy stopnia "wtajemniczenia".</span>
-                    </li>
-                    <li class="card-bg p-6 sm:p-8 rounded-xl shadow-lg flex items-start space-x-4 transition-all duration-300 hover:!shadow-[0_14px_28px_-5px_var(--shadow-strong-color)] hover:!scale-[1.04]">
-                        <span class="text-accent text-3xl sm:text-4xl mt-1">💬</span>
-                        <span class="text-primary text-md sm:text-lg">Pragnie dyskutować o nowościach sezonowych, analizować ponadczasowe klasyki, snuć teorie fabularne i zagłębiać się w psychologię postaci.</span>
-                    </li>
-                    <li class="card-bg p-6 sm:p-8 rounded-xl shadow-lg flex items-start space-x-4 transition-all duration-300 hover:!shadow-[0_14px_28px_-5px_var(--shadow-strong-color)] hover:!scale-[1.04]">
-                        <span class="text-accent text-3xl sm:text-4xl mt-1">🔍</span>
-                        <span class="text-primary text-md sm:text-lg">Poszukuje rekomendacji wartościowych tytułów i sam chętnie dzieli się swoimi odkryciami.</span>
-                    </li>
-                    <li class="card-bg p-6 sm:p-8 rounded-xl shadow-lg flex items-start space-x-4 transition-all duration-300 hover:!shadow-[0_14px_28px_-5px_var(--shadow-strong-color)] hover:!scale-[1.04]">
-                        <span class="text-accent text-3xl sm:text-4xl mt-1">🎨</span>
-                        <span class="text-primary text-md sm:text-lg">Czuje w sobie twórczą iskrę – rysuje, pisze fanfiction, tworzy AMV, wciela się w postacie poprzez cosplay – i pragnie podzielić się swoją pasją z innymi.</span>
-                    </li>
-                    <li class="card-bg p-6 sm:p-8 rounded-xl shadow-lg flex items-start space-x-4 transition-all duration-300 hover:!shadow-[0_14px_28px_-5px_var(--shadow-strong-color)] hover:!scale-[1.04]">
-                        <span class="text-accent text-3xl sm:text-4xl mt-1">🤝</span>
-                        <span class="text-primary text-md sm:text-lg">Ceni sobie przyjazne, nietoksyczne i wspierające środowisko, wolne od osądów i niepotrzebnych konfliktów.</span>
-                    </li>
-                    <li class="card-bg p-6 sm:p-8 rounded-xl shadow-lg flex items-start space-x-4 transition-all duration-300 hover:!shadow-[0_14px_28px_-5px_var(--shadow-strong-color)] hover:!scale-[1.04]">
-                        <span class="text-accent text-3xl sm:text-4xl mt-1">🌠</span>
-                        <span class="text-primary text-md sm:text-lg">Pragnie być częścią czegoś więcej niż zwykłego serwera – chce aktywnie współtworzyć żywą, rozwijającą się opowieść i społeczność.</span>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </section>
+        </section>
 
-    <section id="historia" class="py-16 sm:py-24 reveal parallax-bg" style="background-image: url('https://placehold.co/1920x1200/0F172A/475569?text=Gwiezdny+Pył+Aethelgard+-+Pejzaż+Mglisty');">
-        <div class="container mx-auto px-4 sm:px-6 bg-bg-secondary/90 backdrop-blur-lg py-12 sm:py-16 rounded-2xl shadow-2xl">
-            <h2 class="text-4xl sm:text-5xl font-bold text-center mb-14 sm:mb-20 text-primary">Z Kart Historii: Jak Powstały Kroniki – <span class="text-accent">Opowieść Elary</span></h2>
-            <div class="grid md:grid-cols-5 gap-10 md:gap-16 items-center">
-                <div class="md:col-span-3 reveal order-2 md:order-1">
-                    <blockquote class="text-secondary mb-8 leading-relaxed text-md sm:text-lg italic border-l-4 border-accent pl-6 py-2">
-                        "Och, witajcie, drodzy Kronikarze! Zawsze marzyłam, żeby opowiedzieć Wam, jak to wszystko się zaczęło... Wyobraźcie sobie Aethelgard, moją kochaną ojczyznę! To kraina, gdzie gwiazdy szepczą sekrety, a księżyc uśmiecha się jak wielki, srebrny kot. Powietrze pachnie tam kwitnącymi Luno-kwiatami, a biblioteki... och, biblioteki Aethelgardu przechowują nie tylko zwoje, ale i sny zaklęte w kryształach!
-                        <br><br>
-                        Ja, Elara, zawsze byłam ciekawska. Może nawet trochę za bardzo, jak mawiał Mistrz Lioris, mój nauczyciel od Pradawnych Narracji. Pewnego dnia, podczas badania bardzo starego i nieco niestabilnego portalu międzywymiarowego (przysięgam, szukałam tylko zaginionego przepisu na Gwiezdne Ciasteczka!), coś poszło... hm... nie do końca zgodnie z planem! Był wielki błysk, poczułam jakby mnie ktoś wrzucił do wirówki pełnej brokatu, a potem... potem obudziłam się tutaj, w tym dziwnym, ale fascynującym cyfrowym świecie!
-                        <br><br>
-                        Na początku byłam trochę zagubiona, jak kotek na nowej planecie. Ale potem zaczęłam odkrywać Wasze "kroniki" – te niezwykłe, ruchome obrazki zwane anime i te rysunkowe opowieści w księgach, czyli mangi! Ich różnorodność, głębia emocji, te wszystkie fantastyczne światy i niezwykli bohaterowie... moje elfie serce zabiło mocniej! Zapragnęłam stworzyć miejsce, gdzie mogłabym gromadzić te wszystkie skarby, dzielić się nimi i rozmawiać o nich z innymi, którzy też je kochają.
-                        <br><br>
-                        I wtedy, jakby odpowiadając na moje najskrytsze marzenie, poczułam obecność kogoś niezwykłego... To był Arcadius, Tkacz Przeznaczeń! On... on jakby wiedział, co mi w duszy gra! Szepnął mi do ucha (no, może nie dosłownie, bardziej tak magicznie, wiecie!) o idei "Kronik Elary" – sanktuarium dla opowieści. I to on podsunął mi myśl, że nie dam rady sama udźwignąć tak wielkiego zadania. Powiedział, że potrzebuję Strażników, wiernych towarzyszy, którzy pomogą mi w tej misji.
-                        <br><br>
-                        I tak, niczym bohaterowie z moich ulubionych sag, zaczęli się pojawiać! Najpierw przybył Kaelen. Och, jaki on jest mądry! Od razu zaczął porządkować moje chaotyczne notatki i tworzyć systemy. Potem, jak kolorowy fajerwerk, wpadła Lyra! Jej energia i pomysły na zabawy od razu rozświetliły Kroniki. A na końcu pojawiła się Runa, która swoją techno-magią sprawiła, że wszystkie te Wasze "boty" i "kanały" zaczęły działać jak dobrze naoliwiona, magiczna maszyna!
-                        <br><br>
-                        I tak, drodzy Kronikarze, pod dyskretnym, mądrym okiem Arcadiusa, rozpoczęliśmy naszą wspólną przygodę. Każdy z Was, dołączając do nas, dopisuje kolejny, piękny rozdział do tej niekończącej się opowieści. Dziękuję, że tu jesteście!"
-                    </blockquote>
-                </div>
-                <div class="md:col-span-2 reveal order-1 md:order-2">
-                    <img src="https://placehold.co/500x700/1E293B/A78BFA?text=Elara+opowiada+historię" alt="Elara, elfka, opowiadająca historię powstania Kronik" class="rounded-2xl shadow-2xl w-full aspect-[3/4] object-cover" loading="lazy" onerror="this.onerror=null;this.src='https://placehold.co/500x700/0F172A/94A3B8?text=Błąd+ładowania+obrazu';">
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section id="straznicy-karty" class="py-16 sm:py-24 section-bg reveal">
-        <div class="container mx-auto px-4 sm:px-6">
-            <h2 class="text-4xl sm:text-5xl font-bold text-center mb-14 sm:mb-20 text-primary">Strażnicy i Architekci Kronik: <span class="text-accent">Oni Czuwają</span></h2>
-            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6 sm:gap-8">
-                <div class="card-bg p-6 rounded-2xl shadow-xl reveal text-center transition-all duration-300 hover:!shadow-[0_14px_28px_-5px_var(--shadow-strong-color)] hover:!scale-[1.05]">
-                    <img src="https://placehold.co/180x180/8B5CF6/FFFFFF?text=A" alt="Awatar postaci Arcadius" class="w-28 h-28 sm:w-32 sm:h-32 rounded-full mx-auto mb-5 border-4 shadow-lg border-accent" loading="lazy" onerror="this.onerror=null;this.src='https://placehold.co/180x180/0F172A/E2E8F0?text=A';">
-                    <h3 class="text-xl sm:text-2xl font-semibold text-primary mb-1.5">Arcadius</h3>
-                    <p class="text-sm sm:text-md font-medium mb-2.5 text-accent">Tkacz Przeznaczeń Kronik</p>
-                    <p class="text-secondary text-xs sm:text-sm"><span class="font-semibold text-primary">Rola:</span> Założyciel, Wizjoner.</p>
-                </div>
-                <div class="card-bg p-6 rounded-2xl shadow-xl reveal text-center transition-all duration-300 hover:!shadow-[0_14px_28px_-5px_var(--shadow-strong-color)] hover:!scale-[1.05]">
-                    <img src="https://placehold.co/180x180/A78BFA/FFFFFF?text=E" alt="Awatar postaci Elara" class="w-28 h-28 sm:w-32 sm:h-32 rounded-full mx-auto mb-5 border-4 shadow-lg" style="border-color: var(--text-purple-400);" loading="lazy" onerror="this.onerror=null;this.src='https://placehold.co/180x180/0F172A/E2E8F0?text=E';">
-                    <h3 class="text-xl sm:text-2xl font-semibold text-primary mb-1.5">Elara</h3>
-                    <p class="text-sm sm:text-md font-medium mb-2.5" style="color: var(--text-purple-400);">Elfka Gwiezdnego Pyłu</p>
-                    <p class="text-secondary text-xs sm:text-sm"><span class="font-semibold text-primary">Rola:</span> Strażniczka Kronik, Serce Społeczności.</p>
-                </div>
-                <div class="card-bg p-6 rounded-2xl shadow-xl reveal text-center transition-all duration-300 hover:!shadow-[0_14px_28px_-5px_var(--shadow-strong-color)] hover:!scale-[1.05]">
-                    <img src="https://placehold.co/180x180/A8A29E/FFFFFF?text=K" alt="Awatar postaci Kaelen" class="w-28 h-28 sm:w-32 sm:h-32 rounded-full mx-auto mb-5 border-4 shadow-lg" style="border-color: var(--text-stone-400);" loading="lazy" onerror="this.onerror=null;this.src='https://placehold.co/180x180/0F172A/E2E8F0?text=K';">
-                    <h3 class="text-xl sm:text-2xl font-semibold text-primary mb-1.5">Kaelen</h3>
-                    <p class="text-sm sm:text-md font-medium mb-2.5" style="color: var(--text-stone-400);">Archiwista Edyktów</p>
-                    <p class="text-secondary text-xs sm:text-sm"><span class="font-semibold text-primary">Rola:</span> Strażnik Porządku, Moderator.</p>
-                </div>
-                <div class="card-bg p-6 rounded-2xl shadow-xl reveal text-center transition-all duration-300 hover:!shadow-[0_14px_28px_-5px_var(--shadow-strong-color)] hover:!scale-[1.05]">
-                    <img src="https://placehold.co/180x180/FBBF24/0F172A?text=L" alt="Awatar postaci Lyra" class="w-28 h-28 sm:w-32 sm:h-32 rounded-full mx-auto mb-5 border-4 shadow-lg" style="border-color: var(--text-amber-400);" loading="lazy" onerror="this.onerror=null;this.src='https://placehold.co/180x180/0F172A/E2E8F0?text=L';">
-                    <h3 class="text-xl sm:text-2xl font-semibold text-primary mb-1.5">Lyra</h3>
-                    <p class="text-sm sm:text-md font-medium mb-2.5" style="color: var(--text-amber-400);">Świąteczny Świetlik</p>
-                    <p class="text-secondary text-xs sm:text-sm"><span class="font-semibold text-primary">Rola:</span> Mistrzyni Ceremonii, Animatorka.</p>
-                </div>
-                <div class="card-bg p-6 rounded-2xl shadow-xl reveal text-center transition-all duration-300 hover:!shadow-[0_14px_28px_-5px_var(--shadow-strong-color)] hover:!scale-[1.05]">
-                    <img src="https://placehold.co/180x180/22D3EE/0F172A?text=R" alt="Awatar postaci Runa" class="w-28 h-28 sm:w-32 sm:h-32 rounded-full mx-auto mb-5 border-4 shadow-lg" style="border-color: var(--text-cyan-400);" loading="lazy" onerror="this.onerror=null;this.src='https://placehold.co/180x180/0F172A/E2E8F0?text=R';">
-                    <h3 class="text-xl sm:text-2xl font-semibold text-primary mb-1.5">Runa</h3>
-                    <p class="text-sm sm:text-md font-medium mb-2.5" style="color: var(--text-cyan-400);">Techno-Zaklinaczka</p>
-                    <p class="text-secondary text-xs sm:text-sm"><span class="font-semibold text-primary">Rola:</span> Mistrzyni Cyfrowych Splotów, Tech-Support.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-    
-    <section id="mapa-serwera" class="py-16 sm:py-24 reveal">
-        <div class="container mx-auto px-4 sm:px-6">
-            <h2 class="text-4xl sm:text-5xl font-bold text-center mb-14 sm:mb-20 text-primary">Mapa Królestwa Kronik – <span class="text-accent">Odkryj Nasze Ziemie!</span></h2>
-            <p class="text-center text-secondary text-lg mb-16 max-w-3xl mx-auto">
-                Witaj w sercu Kronik Elary! Nasz serwer Discord to rozległe królestwo pełne magicznych miejsc, gdzie każda opowieść znajduje swój dom. Oto mapa, która pomoże Ci odnaleźć się w naszych cyfrowych włościach:
-            </p>
-            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-                <div class="map-region-card p-6 sm:p-8 rounded-2xl shadow-xl reveal">
-                    <div class="flex items-center mb-5">
-                        <span class="text-4xl mr-4">📜</span>
-                        <h3 class="text-2xl sm:text-3xl font-semibold text-primary">Wielka Biblioteka Opowieści</h3>
+        <section id="aethelgard-intro" class="py-16 sm:py-20 reveal">
+            <div class="container mx-auto px-4 sm:px-6">
+                <div class="grid md:grid-cols-2 gap-10 lg:gap-14 items-center">
+                    <div class="reveal md:order-2">
+                         <img src="https://placehold.co/600x480/111827/8B5CF6?text=Mapa+Aethelgardu" alt="Mapa Aethelgardu" class="rounded-lg shadow-xl w-full" onerror="this.onerror=null;this.src='https://placehold.co/600x480/0F172A/94A3B8?text=Mapa+Świata';">
                     </div>
-                    <p class="text-secondary text-md mb-4">Serce Naszych Kronik, gdzie dyskutujemy o wszystkim, co związane z anime i mangą.</p>
-                    <ul class="map-channel-list text-secondary space-y-1">
-                        <li><code class="bg-slate-700 px-1.5 py-0.5 rounded">#📺-komnata-ruchomych-obrazów</code> (Dyskusje o Anime)</li>
-                        <li><code class="bg-slate-700 px-1.5 py-0.5 rounded">#📖-czytelnia-zwojów-mangi</code> (Manga, Manhwa, Light Novel)</li>
-                        <li><code class="bg-slate-700 px-1.5 py-0.5 rounded">#📰-wieści-ze-światów</code> (Newsy i Zapowiedzi)</li>
-                        <li><code class="bg-slate-700 px-1.5 py-0.5 rounded">#🔍-zwój-rekomendacji-kaelena</code> (Recenzje i Polecenia)</li>
-                        <li><code class="bg-slate-700 px-1.5 py-0.5 rounded">#🌸-sezonowe-kwiaty-elary</code> (Dyskusje Sezonowe)</li>
-                        <li><code class="bg-slate-700 px-1.5 py-0.5 rounded">#⏳-kroniki-pradawnych-mistrzów</code> (Klasyka Gatunku)</li>
-                        <li><code class="bg-slate-700 px-1.5 py-0.5 rounded">#🤫-tajemna-komnata-spoilerów</code> (Bezpieczne Spoilery)</li>
-                    </ul>
-                </div>
-                <div class="map-region-card p-6 sm:p-8 rounded-2xl shadow-xl reveal">
-                    <div class="flex items-center mb-5">
-                        <span class="text-4xl mr-4">🎨</span>
-                        <h3 class="text-2xl sm:text-3xl font-semibold text-primary">Plac Twórców Elfich Snów</h3>
-                    </div>
-                    <p class="text-secondary text-md mb-4">Miejsce, gdzie Twoja kreatywność rozkwita. Podziel się swoją pasją!</p>
-                    <ul class="map-channel-list text-secondary space-y-1">
-                        <li><code class="bg-slate-700 px-1.5 py-0.5 rounded">#🎨-galeria-elfich-snów</code> (Fanarty, Rysunki, Cosplay)</li>
-                        <li><span class="text-sm italic">(Wkrótce)</span> <code class="bg-slate-700 px-1.5 py-0.5 rounded">#🖋️-warsztaty-pisarskie</code></li>
-                        <li><span class="text-sm italic">(Wkrótce)</span> <code class="bg-slate-700 px-1.5 py-0.5 rounded">#🖌️-szkice-i-porady</code></li>
-                    </ul>
-                </div>
-                <div class="map-region-card p-6 sm:p-8 rounded-2xl shadow-xl reveal">
-                    <div class="flex items-center mb-5">
-                        <span class="text-4xl mr-4">🎉</span>
-                        <h3 class="text-2xl sm:text-3xl font-semibold text-primary">Arena Festiwali i Igraszek Lyry</h3>
-                    </div>
-                    <p class="text-secondary text-md mb-4">Gwarancja dobrej zabawy i niezapomnianych chwil. Lyra dba o to, by nigdy nie było nudno!</p>
-                    <ul class="map-channel-list text-secondary space-y-1">
-                        <li><code class="bg-slate-700 px-1.5 py-0.5 rounded">#🎁-skarbiec-wydarzeń</code> (Ogłoszenia Eventów)</li>
-                        <li>Kanały głosowe dla wspólnego oglądania anime/filmów.</li>
-                        <li>Kanały dedykowane quizom i konkursom.</li>
-                        <li>Miejsce na spontaniczne gry i zabawy integracyjne.</li>
-                    </ul>
-                </div>
-                <div class="map-region-card p-6 sm:p-8 rounded-2xl shadow-xl reveal">
-                    <div class="flex items-center mb-5">
-                        <span class="text-4xl mr-4">💬</span>
-                        <h3 class="text-2xl sm:text-3xl font-semibold text-primary">Gospoda "Pod Gwiezdnym Pyłem"</h3>
-                    </div>
-                    <p class="text-secondary text-md mb-4">Centralne miejsce spotkań naszej społeczności. Porozmawiaj, poznaj nowych ludzi, podziel się pasjami.</p>
-                    <ul class="map-channel-list text-secondary space-y-1">
-                        <li><code class="bg-slate-700 px-1.5 py-0.5 rounded">#💬-gospoda-ogólna</code> (Luźne Rozmowy)</li>
-                        <li><code class="bg-slate-700 px-1.5 py-0.5 rounded">#🌟-kroniki-podróżników</code> (Przedstaw się)</li>
-                        <li><code class="bg-slate-700 px-1.5 py-0.5 rounded">#😂-beczka-śmiechu-lyry</code> (Memy)</li>
-                        <li><code class="bg-slate-700 px-1.5 py-0.5 rounded">#🎵-melodie-aethelgardu</code> (Muzyka)</li>
-                        <li><code class="bg-slate-700 px-1.5 py-0.5 rounded">#🎮-arena-taktyków</code> (Gry - jeśli społeczność zechce)</li>
-                    </ul>
-                </div>
-                <div class="map-region-card p-6 sm:p-8 rounded-2xl shadow-xl reveal">
-                    <div class="flex items-center mb-5">
-                        <span class="text-4xl mr-4">🤖</span>
-                        <h3 class="text-2xl sm:text-3xl font-semibold text-primary">Wieża Techno-Zaklinaczki Runy</h3>
-                    </div>
-                    <p class="text-secondary text-md mb-4">Centrum dowodzenia naszymi magicznymi pomocnikami i wsparcia technicznego.</p>
-                    <ul class="map-channel-list text-secondary space-y-1">
-                        <li><code class="bg-slate-700 px-1.5 py-0.5 rounded">#🤖-komendy-dla-golemów</code> (Lista komend botów)</li>
-                        <li>Opis działania botów: Elara-bot, Kaelen-bot, Lyra-bot, Runa-bot.</li>
-                        <li>Kanał do zgłaszania problemów technicznych (np. `#runa-pomocy`).</li>
-                    </ul>
-                </div>
-                <div class="map-region-card p-6 sm:p-8 rounded-2xl shadow-xl reveal">
-                    <div class="flex items-center mb-5">
-                        <span class="text-4xl mr-4">🏆</span>
-                        <h3 class="text-2xl sm:text-3xl font-semibold text-primary">Komnaty Rozwoju Kronikarza</h3>
-                    </div>
-                    <p class="text-secondary text-md mb-4">Twoja ścieżka do stania się legendą w Kronikach Elary.</p>
-                    <ul class="map-channel-list text-secondary space-y-1">
-                        <li>System Poziomów i Rang (od 🌱 Kiełkującej Opowieści do 🌌 Mistrza Wiecznych Opowieści).</li>
-                        <li><code class="bg-slate-700 px-1.5 py-0.5 rounded">#✨-mapa-kronik</code> (Wybór ról zainteresowań).</li>
-                        <li>Informacje o zdobywaniu unikalnych ról za osiągnięcia.</li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section id="baza-wiedzy" class="py-16 sm:py-24 section-bg reveal">
-        <div class="container mx-auto px-4 sm:px-6">
-            <h2 class="text-4xl sm:text-5xl font-bold text-center mb-14 sm:mb-20 text-primary">Baza Wiedzy <span class="text-accent">Kronik Elary</span></h2>
-            <div class="grid md:grid-cols-2 gap-x-10 gap-y-5">
-                <div>
-                    <h3 class="text-2xl font-semibold text-primary mb-6">Ogólne</h3>
-                    <div class="space-y-5">
-                        <div class="accordion-item rounded-2xl shadow-lg reveal">
-                            <div class="accordion-header flex justify-between items-center" role="button" aria-expanded="false" aria-controls="accordion-content-b0">
-                                <h4 class="text-lg sm:text-xl font-semibold text-primary">Jakie są główne zasady serwera?</h4>
-                                <svg class="w-6 h-6 transform text-accent accordion-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
-                            </div>
-                            <div id="accordion-content-b0" class="accordion-content">
-                                <p class="text-md text-secondary leading-relaxed">Nasze Kluczowe Edykty Wspólnoty to: Wzajemny Szacunek, Mądrość Spoilerowa, Czystość Opowieści i Legalność Źródeł, oraz Radość Wspólnego Tworzenia. Pełny regulamin znajdziesz na kanale <code class='bg-[var(--bg-card)] text-accent px-1.5 py-1 rounded text-xs'>#📜-edykty-królestwa</code> na Discordzie.</p>
-                            </div>
-                        </div>
-                        <div class="accordion-item rounded-2xl shadow-lg reveal">
-                            <div class="accordion-header flex justify-between items-center" role="button" aria-expanded="false" aria-controls="accordion-content-b1">
-                                <h4 class="text-lg sm:text-xl font-semibold text-primary">Kim są Strażnicy Kronik?</h4>
-                                <svg class="w-6 h-6 transform text-accent accordion-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
-                            </div>
-                            <div id="accordion-content-b1" class="accordion-content">
-                                <p class="text-md text-secondary leading-relaxed">Strażnicy to kluczowe postacie i administratorzy serwera: Arcadius (Założyciel), Elara (Serce Społeczności), Kaelen (Strażnik Porządku), Lyra (Mistrzyni Ceremonii) i Runa (Techno-Zaklinaczka). Każdy z nich pełni unikalną rolę w dbaniu o rozwój i atmosferę Kronik.</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div>
-                    <h3 class="text-2xl font-semibold text-primary mb-6">Funkcje Serwera</h3>
-                    <div class="space-y-5">
-                        <div class="accordion-item rounded-2xl shadow-lg reveal">
-                            <div class="accordion-header flex justify-between items-center" role="button" aria-expanded="false" aria-controls="accordion-content-b2">
-                                <h4 class="text-lg sm:text-xl font-semibold text-primary">Jak zdobywać role i awansować?</h4>
-                                <svg class="w-6 h-6 transform text-accent accordion-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
-                            </div>
-                            <div id="accordion-content-b2" class="accordion-content">
-                                <p class="text-md text-secondary leading-relaxed">Twoja aktywność i zaangażowanie są nagradzane! Biorąc udział w dyskusjach, wydarzeniach i dzieląc się twórczością, zdobywasz punkty doświadczenia (XP). Pozwalają one awansować w hierarchii Kronikarzy, od 'Kiełkującej Opowieści' po 'Mistrza Wiecznych Opowieści', odblokowując specjalne role i korzyści.</p>
-                            </div>
-                        </div>
-                        <div class="accordion-item rounded-2xl shadow-lg reveal">
-                            <div class="accordion-header flex justify-between items-center" role="button" aria-expanded="false" aria-controls="accordion-content-b3">
-                                <h4 class="text-lg sm:text-xl font-semibold text-primary">Jak mogę zgłosił sugestię?</h4>
-                                <svg class="w-6 h-6 transform text-accent accordion-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
-                            </div>
-                            <div id="accordion-content-b3" class="accordion-content">
-                                <p class="text-md text-secondary leading-relaxed">Posiadamy dedykowany kanał na Discordzie (<code class='bg-[var(--bg-card)] text-accent px-1.5 py-1 rounded text-xs'>#💡-skrzynka-pomysłów-dla-elary</code>), gdzie możesz zgłaszać swoje pomysły. Użyj komendy <code class='bg-[var(--bg-card)] text-accent px-1.5 py-1 rounded text-xs'>/sugestia [Twój pomysł]</code>. Społeczność może głosować na sugestie, a Strażnicy regularnie je przeglądają.</p>
-                            </div>
-                        </div>
-                         <div class="accordion-item rounded-2xl shadow-lg reveal">
-                            <div class="accordion-header flex justify-between items-center" role="button" aria-expanded="false" aria-controls="accordion-content-b4">
-                                <h4 class="text-lg sm:text-xl font-semibold text-primary">Jak działają boty na serwerze?</h4>
-                                <svg class="w-6 h-6 transform text-accent accordion-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
-                            </div>
-                            <div id="accordion-content-b4" class="accordion-content">
-                                <p class="text-md text-secondary leading-relaxed">Nasz Główny Bot Kronik, stworzony przez Runę, posiada wiele modułów inspirowanych Strażnikami. Pełni funkcje moderacyjne, zarządza systemem XP i walutą, dostarcza muzykę i rozrywkę. Szczegółowe informacje i komendy znajdziesz na kanale <code class='bg-[var(--bg-card)] text-accent px-1.5 py-1 rounded text-xs'>#🤖-komendy-dla-golemów</code> oraz w odpowiedniej sekcji naszej <a href="wikipedia.html" class="text-accent hover:underline">Wikipedii</a>.</p>
-                            </div>
-                        </div>
+                    <div class="reveal md:order-1">
+                        <h2 class="text-3xl sm:text-4xl font-bold text-primary mb-5">Witaj w <span class="text-accent">Aethelgardzie</span></h2>
+                        <p class="text-secondary mb-4">
+                            Aethelgard to kraina pełna magii, starożytnych tajemnic i niezliczonych przygód. Od majestatycznych szczytów Smoczych Gór, przez mistyczne lasy Szeptunów, po tętniące życiem miasta-państwa Gildii Kupieckich – każdy zakątek tego świata kryje własne opowieści.
+                        </p>
+                        <p class="text-secondary mb-5">
+                            Na naszym serwerze możesz nie tylko poznawać historię Aethelgardu, ale także aktywnie ją współtworzyć poprzez udział w sesjach roleplay, wydarzeniach fabularnych i własnych inicjatywach. Czy staniesz po stronie pradawnych zakonów strzegących równowagi, czy może dołączysz do śmiałków poszukujących zaginionych artefaktów? Wybór należy do Ciebie.
+                        </p>
+                        <a href="lore-aethelgard.html" class="btn-primary inline-block mt-2">Odkryj Pełne Lore Aethelgardu</a>
                     </div>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
 
-    <section id="dolacz" class="py-20 sm:py-28 text-center reveal parallax-bg" style="background-image: url('https://placehold.co/1920x1000/0F172A/E2E8F0?text=Brama+do+Kronik+Elary+-+Świetliste+Zaproszenie');">
-        <div class="container mx-auto px-4 sm:px-6 bg-bg-primary/90 backdrop-blur-xl py-12 sm:py-16 rounded-3xl shadow-2xl">
-            <h2 class="text-4xl sm:text-5xl md:text-6xl font-bold text-primary mb-8">Dołącz do Kręgu <span class="animated-gradient-text">Kronikarzy!</span></h2>
-            <p class="text-lg sm:text-xl text-secondary mb-14 max-w-2xl mx-auto">Twoja przygoda w świecie anime i mangi zaczyna się tutaj. Wystarczy kilka prostych kroków, aby stać się częścią naszej magicznej społeczności.</p>
-            
-            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8 mb-14 text-left">
-                <div class="bg-card/85 backdrop-blur-sm p-6 sm:p-8 rounded-2xl shadow-xl reveal transition-all duration-300 hover:!shadow-[0_14px_28px_-5px_var(--shadow-strong-color)] hover:!scale-[1.05]" style="transition-delay: 0s">
-                    <div class="text-5xl font-bold text-accent mb-4">1.</div>
-                    <h3 class="text-lg sm:text-xl font-semibold text-primary mb-2.5">Kliknij Magiczne Zaproszenie</h3>
-                    <p class="text-md text-secondary leading-relaxed">Użyj przycisku poniżej, aby przenieść się do wrót Kronik.</p>
+        <section id="co-oferujemy" class="py-16 sm:py-20 section-bg reveal">
+            <div class="container mx-auto px-4 sm:px-6">
+                <div class="text-center mb-14 sm:mb-18">
+                    <h2 class="text-3xl sm:text-4xl font-bold text-primary mb-4">Co Oferujemy Naszym <span class="text-accent">Kronikarzom?</span></h2>
                 </div>
-                <div class="bg-card/85 backdrop-blur-sm p-6 sm:p-8 rounded-2xl shadow-xl reveal transition-all duration-300 hover:!shadow-[0_14px_28px_-5px_var(--shadow-strong-color)] hover:!scale-[1.05]" style="transition-delay: 0.1s">
-                    <div class="text-5xl font-bold text-accent mb-4">2.</div>
-                    <h3 class="text-lg sm:text-xl font-semibold text-primary mb-2.5">Przekrocz Przedwieczną Bramę</h3>
-                    <p class="text-md text-secondary leading-relaxed">Zaakceptuj zaproszenie w aplikacji Discord. Elara i Strażnicy czekają!</p>
-                </div>
-                <div class="bg-card/85 backdrop-blur-sm p-6 sm:p-8 rounded-2xl shadow-xl reveal transition-all duration-300 hover:!shadow-[0_14px_28px_-5px_var(--shadow-strong-color)] hover:!scale-[1.05]" style="transition-delay: 0.2s">
-                    <div class="text-5xl font-bold text-accent mb-4">3.</div>
-                    <h3 class="text-lg sm:text-xl font-semibold text-primary mb-2.5">Zapoznaj się ze Zwojami Mądrości</h3>
-                    <p class="text-md text-secondary leading-relaxed">Przeczytaj regulamin w kanale <code class='bg-[var(--bg-card)] text-accent px-1.5 py-1 rounded text-sm'>#📜-edykty-królestwa</code> (dostępny na serwerze Discord).</p>
-                </div>
-                <div class="bg-card/85 backdrop-blur-sm p-6 sm:p-8 rounded-2xl shadow-xl reveal transition-all duration-300 hover:!shadow-[0_14px_28px_-5px_var(--shadow-strong-color)] hover:!scale-[1.05]" style="transition-delay: 0.3s">
-                    <div class="text-5xl font-bold text-accent mb-4">4.</div>
-                    <h3 class="text-lg sm:text-xl font-semibold text-primary mb-2.5">Przedstaw Się i Wybierz Ścieżki</h3>
-                    <p class="text-md text-secondary leading-relaxed">Opowiedz o sobie w <code class='bg-[var(--bg-card)] text-accent px-1.5 py-1 rounded text-sm'>#🌟-kroniki-podróżników</code> i wybierz role.</p>
+                <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <div class="card-bg p-7 rounded-lg text-center reveal">
+                        <div class="feature-icon-large mb-5">📚</div>
+                        <h3 class="text-2xl font-semibold text-primary mb-3">Bogate Uniwersum Fabularne</h3>
+                        <p class="text-secondary text-sm">Odkryj Aethelgard, jego historię, postacie i tajemnice. Weź udział w wydarzeniach fabularnych i kształtuj losy tego świata. <a href="lore-aethelgard.html" class="text-accent hover:underline font-medium">Dowiedz się więcej o Aethelgardzie</a>.</p>
+                    </div>
+                    <div class="card-bg p-7 rounded-lg text-center reveal" style="transition-delay: 0.1s;">
+                        <div class="feature-icon-large mb-5">🤖</div>
+                        <h3 class="text-2xl font-semibold text-primary mb-3">Autorskie Boty i Systemy</h3>
+                        <p class="text-secondary text-sm">Nasze boty, takie jak Lyra czy Runa, oferują unikalne gry, system ekonomii, rankingi aktywności i wiele innych funkcji. <a href="systemy-botow.html" class="text-accent hover:underline font-medium">Poznaj nasze boty</a>.</p>
+                    </div>
+                    <div class="card-bg p-7 rounded-lg text-center reveal" style="transition-delay: 0.2s;">
+                        <div class="feature-icon-large mb-5">🎉</div>
+                        <h3 class="text-2xl font-semibold text-primary mb-3">Regularne Wydarzenia</h3>
+                        <p class="text-secondary text-sm">Konkursy, turnieje, wspólne oglądanie anime, sesje Q&A, wieczory gier i wiele więcej! Zawsze znajdziesz coś ciekawego do roboty.</p>
+                    </div>
+                    <div class="card-bg p-7 rounded-lg text-center reveal" style="transition-delay: 0.3s;">
+                        <div class="feature-icon-large mb-5">💬</div>
+                        <h3 class="text-2xl font-semibold text-primary mb-3">Aktywne Kanały Dyskusyjne</h3>
+                        <p class="text-secondary text-sm">Dziesiątki kanałów tematycznych poświęconych anime, mandze, grom, muzyce, sztuce i luźnym rozmowom. Na pewno znajdziesz swoje miejsce.</p>
+                    </div>
+                    <div class="card-bg p-7 rounded-lg text-center reveal" style="transition-delay: 0.4s;">
+                        <div class="feature-icon-large mb-5">🎨</div>
+                        <h3 class="text-2xl font-semibold text-primary mb-3">Przestrzeń dla Twórców</h3>
+                        <p class="text-secondary text-sm">Podziel się swoimi fanartami, opowiadaniami, cosplayem lub inną twórczością. Wspieramy kreatywność naszej społeczności.</p>
+                    </div>
+                    <div class="card-bg p-7 rounded-lg text-center reveal" style="transition-delay: 0.5s;">
+                        <div class="feature-icon-large mb-5">🛡️</div>
+                        <h3 class="text-2xl font-semibold text-primary mb-3">Profesjonalna Administracja</h3>
+                        <p class="text-secondary text-sm">Nasi Strażnicy dbają o porządek, bezpieczeństwo i dobrą atmosferę na serwerze. Zawsze służą pomocą i radą. <a href="lore-postaci.html" class="text-accent hover:underline font-medium">Poznaj Strażników</a>.</p>
+                    </div>
                 </div>
             </div>
+        </section>
 
-            <a href="https://discord.gg/TWOJLINKZAPROSZENIOWY" target="_blank" rel="noopener noreferrer" class="btn-primary font-semibold py-4 px-12 rounded-xl text-lg sm:text-xl inline-block shadow-2xl">
-                DOŁĄCZ DO KRONIK ELARY!
-            </a>
-        </div>
-    </section>
+        <section id="poznaj-straznikow" class="py-16 sm:py-20 reveal">
+            <div class="container mx-auto px-4 sm:px-6">
+                <h2 class="text-3xl sm:text-4xl font-bold text-center mb-14 sm:mb-18 text-primary">Poznaj <span class="text-accent">Strażników Kronik</span></h2>
+                <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6">
+                    <div class="admin-card card-bg p-6 rounded-lg text-center reveal">
+                        <img src="https://placehold.co/150x150/8B5CF6/FFFFFF?text=A" alt="Arcadius" class="w-24 h-24 rounded-full mx-auto mb-4 border-accent shadow-lg" onerror="this.onerror=null;this.src='https://placehold.co/150x150/0F172A/E2E8F0?text=A';">
+                        <h4 class="text-lg font-semibold text-primary">Arcadius</h4>
+                        <p class="text-sm text-accent mb-2">Tkacz Przeznaczeń</p>
+                        <p class="text-xs text-secondary">Założyciel, główny wizjoner i architekt świata Aethelgard. Dba o spójność lore i rozwój fabularny serwera.</p>
+                    </div>
+                    <div class="admin-card card-bg p-6 rounded-lg text-center reveal" style="transition-delay: 0.05s;">
+                        <img src="https://placehold.co/150x150/A78BFA/FFFFFF?text=E" alt="Elara" class="w-24 h-24 rounded-full mx-auto mb-4" style="border-color: var(--text-purple-400);" onerror="this.onerror=null;this.src='https://placehold.co/150x150/0F172A/E2E8F0?text=E';">
+                        <h4 class="text-lg font-semibold text-primary">Elara</h4>
+                        <p class="text-sm mb-2" style="color: var(--text-purple-400);">Elfka Gwiezdnego Pyłu</p>
+                        <p class="text-xs text-secondary">Odpowiedzialna za integrację społeczności, organizację mniejszych eventów i dbanie o przyjazną atmosferę.</p>
+                    </div>
+                    <div class="admin-card card-bg p-6 rounded-lg text-center reveal" style="transition-delay: 0.1s;">
+                        <img src="https://placehold.co/150x150/A8A29E/FFFFFF?text=K" alt="Kaelen" class="w-24 h-24 rounded-full mx-auto mb-4" style="border-color: var(--text-stone-400);" onerror="this.onerror=null;this.src='https://placehold.co/150x150/0F172A/E2E8F0?text=K';">
+                        <h4 class="text-lg font-semibold text-primary">Kaelen</h4>
+                        <p class="text-sm mb-2" style="color: var(--text-stone-400);">Archiwista Edyktów</p>
+                        <p class="text-xs text-secondary">Strażnik regulaminu, moderator dyskusji i główny arbiter w sprawach spornych. Dba o porządek.</p>
+                    </div>
+                    <div class="admin-card card-bg p-6 rounded-lg text-center reveal" style="transition-delay: 0.15s;">
+                        <img src="https://placehold.co/150x150/FBBF24/0F172A?text=L" alt="Lyra" class="w-24 h-24 rounded-full mx-auto mb-4" style="border-color: var(--text-amber-400);" onerror="this.onerror=null;this.src='https://placehold.co/150x150/0F172A/E2E8F0?text=L';">
+                        <h4 class="text-lg font-semibold text-primary">Lyra</h4>
+                        <p class="text-sm mb-2" style="color: var(--text-amber-400);">Świąteczny Świetlik</p>
+                        <p class="text-xs text-secondary">Główna organizatorka eventów, konkursów i zabaw. Dba o to, by na serwerze nigdy nie było nudno.</p>
+                    </div>
+                    <div class="admin-card card-bg p-6 rounded-lg text-center reveal" style="transition-delay: 0.2s;">
+                        <img src="https://placehold.co/150x150/22D3EE/0F172A?text=R" alt="Runa" class="w-24 h-24 rounded-full mx-auto mb-4" style="border-color: var(--text-cyan-400);" onerror="this.onerror=null;this.src='https://placehold.co/150x150/0F172A/E2E8F0?text=R';">
+                        <h4 class="text-lg font-semibold text-primary">Runa</h4>
+                        <p class="text-sm mb-2" style="color: var(--text-cyan-400);">Techno-Zaklinaczka</p>
+                        <p class="text-xs text-secondary">Odpowiedzialna za rozwój i utrzymanie botów serwerowych, wsparcie techniczne oraz innowacyjne rozwiązania.</p>
+                    </div>
+                </div>
+                 <div class="text-center mt-12 sm:mt-16">
+                    <a href="lore-postaci.html" class="btn-secondary font-semibold py-3 px-6 text-md">Zobacz Pełne Profile Strażników</a>
+                </div>
+            </div>
+        </section>
+        
+        <section id="jak-zaczac" class="py-16 sm:py-20 section-bg reveal">
+            <div class="container mx-auto px-4 sm:px-6">
+                <div class="text-center mb-14 sm:mb-18">
+                    <h2 class="text-3xl sm:text-4xl font-bold text-primary mb-4">Jak Rozpocząć Przygodę w <span class="text-accent">Kronikach Elary?</span></h2>
+                </div>
+                <div class="max-w-3xl mx-auto">
+                    <ol class="space-y-6 relative">
+                        <li class="reveal timeline-item">
+                            <div class="md:flex items-start">
+                                <div class="timeline-icon flex-shrink-0 w-10 h-10 rounded-full flex items-center justify-center font-bold text-lg mr-6 mb-4 md:mb-0">1</div>
+                                <div class="timeline-content flex-grow">
+                                    <h3 class="text-xl font-semibold text-primary mb-1">Dołącz do Naszego Serwera Discord</h3>
+                                    <p class="text-secondary text-sm">Kliknij w <a href="https://discord.gg/TWOJLINKZAPROSZENIOWY" target="_blank" rel="noopener noreferrer" class="text-accent hover:underline font-semibold">ten link zaproszeniowy</a>, aby stać się częścią naszej społeczności. To pierwszy krok do magicznego świata!</p>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="reveal timeline-item" style="transition-delay: 0.1s;">
+                             <div class="md:flex items-start">
+                                <div class="timeline-icon flex-shrink-0 w-10 h-10 rounded-full flex items-center justify-center font-bold text-lg mr-6 mb-4 md:mb-0">2</div>
+                                <div class="timeline-content flex-grow">
+                                    <h3 class="text-xl font-semibold text-primary mb-1">Zapoznaj się z Regulaminem</h3>
+                                    <p class="text-secondary text-sm">Po dołączeniu, odwiedź kanał <code class="bg-bg-primary px-1.5 py-0.5 rounded text-xs text-text-secondary">#📜-edykty-królestwa</code>, aby poznać zasady panujące w Kronikach. Przestrzeganie ich gwarantuje dobrą zabawę dla wszystkich.</p>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="reveal timeline-item" style="transition-delay: 0.2s;">
+                            <div class="md:flex items-start">
+                                <div class="timeline-icon flex-shrink-0 w-10 h-10 rounded-full flex items-center justify-center font-bold text-lg mr-6 mb-4 md:mb-0">3</div>
+                                <div class="timeline-content flex-grow">
+                                    <h3 class="text-xl font-semibold text-primary mb-1">Wybierz Role i Przedstaw Się</h3>
+                                    <p class="text-secondary text-sm">Na kanale <code class="bg-bg-primary px-1.5 py-0.5 rounded text-xs text-text-secondary">#💎-komnata-ról</code> możesz wybrać role odpowiadające Twoim zainteresowaniom. Następnie, przywitaj się ze społecznością na <code class="bg-bg-primary px-1.5 py-0.5 rounded text-xs text-text-secondary">#⛩️-brama-powitalna</code>!</p>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="reveal timeline-item" style="transition-delay: 0.3s;">
+                             <div class="md:flex items-start">
+                                <div class="timeline-icon flex-shrink-0 w-10 h-10 rounded-full flex items-center justify-center font-bold text-lg mr-6 mb-4 md:mb-0">4</div>
+                                <div class="timeline-content flex-grow">
+                                    <h3 class="text-xl font-semibold text-primary mb-1">Odkrywaj Kanały i Bierz Udział</h3>
+                                    <p class="text-secondary text-sm">Przeglądaj dostępne kanały tematyczne, dołączaj do dyskusji, bierz udział w wydarzeniach i poznawaj nowych ludzi. Nie bój się zadawać pytań!</p>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="reveal timeline-item" style="transition-delay: 0.4s;">
+                            <div class="md:flex items-start">
+                                <div class="timeline-icon flex-shrink-0 w-10 h-10 rounded-full flex items-center justify-center font-bold text-lg mr-6 mb-4 md:mb-0">5</div>
+                                <div class="timeline-content flex-grow">
+                                    <h3 class="text-xl font-semibold text-primary mb-1">Zanurz się w Świecie Aethelgardu (Opcjonalnie)</h3>
+                                    <p class="text-secondary text-sm">Jeśli interesuje Cię roleplay, odwiedź <a href="lore-aethelgard.html" class="text-accent hover:underline font-semibold">naszą Wikipedię Kronik</a>, stwórz postać i dołącz do fabularnych przygód!</p>
+                                </div>
+                            </div>
+                        </li>
+                    </ol>
+                </div>
+            </div>
+        </section>
 
-    <section class="py-16 sm:py-24 section-bg text-center reveal">
-        <div class="container mx-auto px-4 sm:px-6">
-            <h2 class="text-4xl sm:text-5xl font-bold text-primary mb-6">Twoja Opowieść <span class="text-accent">Czeka...</span></h2>
-            <p class="text-lg sm:text-xl text-secondary mb-8 max-w-3xl mx-auto italic leading-relaxed">
-                "Drogi Wędrowcze, 'Kroniki Elary' to nie tylko zbiór istniejących historii, ale także miejsce, gdzie rodzą się nowe. Twoje myśli, Twoja twórczość, Twoje interakcje – wszystko to staje się częścią naszej wspólnej, niekończącej się opowieści. Arcadius, Elara i wszyscy Strażnicy zapraszają Cię do współtworzenia tego magicznego świata."
-            </p>
-            <p class="text-2xl sm:text-3xl font-semibold text-primary">Czekamy na Ciebie w Kronikach!</p>
-        </div>
-    </section>
+        <section id="dolacz" class="py-16 sm:py-20 reveal">
+            <div class="container mx-auto px-4 sm:px-6 text-center">
+                <h2 class="text-3xl sm:text-4xl font-bold text-primary mb-6">Dołącz do <span class="text-accent">Kronik Elary</span> Już Dziś!</h2>
+                <p class="text-lg text-secondary mb-10 max-w-xl mx-auto">
+                    Nie czekaj! Zanurz się w magicznym świecie anime, mangi i przygód. Czekamy na Ciebie na naszym serwerze Discord.
+                </p>
+                <a href="https://discord.gg/TWOJLINKZAPROSZENIOWY" target="_blank" rel="noopener noreferrer" class="btn-discord font-semibold py-3.5 px-8 text-lg inline-flex items-center shadow-xl">
+                    <svg class="w-6 h-6 mr-3" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20.297 0H3.703C1.658 0 0 1.658 0 3.703V20.297C0 22.342 1.658 24 3.703 24H20.297C22.342 24 24 22.342 24 20.297V3.703C24 1.658 22.342 0 20.297 0ZM8.107 15.232C7.089 15.232 6.241 14.384 6.241 13.366C6.241 12.348 7.089 11.5 8.107 11.5C9.125 11.5 9.973 12.348 9.973 13.366C9.973 14.384 9.125 15.232 8.107 15.232ZM12.000 11.071C10.982 11.071 10.134 10.223 10.134 9.205C10.134 8.188 10.982 7.339 12.000 7.339C13.018 7.339 13.866 8.188 13.866 9.205C13.866 10.223 13.018 11.071 12.000 11.071ZM15.893 15.232C14.875 15.232 14.027 14.384 14.027 13.366C14.027 12.348 14.875 11.5 15.893 11.5C16.911 11.5 17.759 12.348 17.759 13.366C17.759 14.384 16.911 15.232 15.893 15.232Z"/></svg>
+                    Wejdź do Królestwa Kronik
+                </a>
+            </div>
+        </section>
+    </main>
 
     <footer class="py-12 text-center" style="background-color: var(--bg-header);">
         <div class="container mx-auto px-4 sm:px-6">
@@ -846,14 +379,14 @@
                     <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M22.46 6c-.77.35-1.6.58-2.46.67.9-.53 1.59-1.37 1.92-2.38-.84.5-1.78.86-2.79 1.07C18.28 4.42 17.03 4 15.64 4c-2.94 0-5.32 2.38-5.32 5.32 0 .42.05.83.14 1.22-4.42-.22-8.33-2.34-10.96-5.55-.46.79-.72 1.7-.72 2.67 0 1.84.94 3.47 2.37 4.42-.87-.03-1.69-.27-2.41-.66v.07c0 2.57 1.83 4.72 4.25 5.21-.44.12-.91.18-1.39.18-.34 0-.67-.03-1-.1 0 .67.65 1.37 1.77 1.84-.7.55-1.59.88-2.58.88-.39 0-.77-.02-1.14-.07.91.59 2 1.02 3.19 1.02 3.83 0 5.93-3.18 5.93-5.93 0-.09 0-.18-.01-.27.41-.3.76-.68 1.04-1.09z"/></svg>
                 </a>
                  <a href="#" class="text-secondary hover:text-accent transition-colors duration-200" aria-label="Placeholder Instagram">
-                    <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 1.17.053 1.805.248 2.227.415.562.217.96.477 1.382.896.419.42.679.819.896 1.381.167.422.362 1.056.415 2.227.058 1.266.07 1.646.07 4.85s-.012 3.584-.07 4.85c-.053 1.17-.248 1.805-.415 2.227a3.48 3.48 0 01-.896 1.382c-.42.419-.82.679-1.382.896-.422.167-1.056.362-2.227.415-1.266.058-1.646.07-4.85.07s-3.584-.012-4.85-.07c-1.17-.053-1.805-.248-2.227-.415a3.492 3.492 0 01-1.381-.896 3.492 3.492 0 01-.896-1.381c-.167-.422-.362-1.056-.415-2.227-.058-1.266-.07-1.646-.07-4.85s.012-3.584.07-4.85c.053-1.17.248-1.805.415-2.227.218-.562.477-.96.896-1.381.419-.42.819-.679 1.381-.896.422-.167 1.056-.362 2.227-.415C8.416 2.175 8.796 2.163 12 2.163zm0 1.802c-3.143 0-3.505.012-4.725.068-1.09.05-1.647.235-1.98.378a1.69 1.69 0 00-.755.755c-.143.333-.328.89-.378 1.98C4.082 8.495 4.07 8.857 4.07 12s.012 3.505.068 4.725c.05 1.09.235 1.647.378 1.98.16.373.397.637.755.755.333.143.89.328 1.98.378 1.22.056 1.582.068 4.725.068s3.505-.012 4.725-.068c1.09-.05 1.647-.235 1.98-.378.373-.16.637-.397.755-.755.143-.333.328.89.378-1.98.056-1.22.068-1.582.068-4.725s-.012-3.505-.068-4.725c-.05-1.09-.235-1.647-.378-1.98a1.69 1.69 0 00-.755-.755c-.333-.143-.89-.328-1.98-.378C15.505 3.977 15.143 3.965 12 3.965zm0 3.273a4.762 4.762 0 100 9.524 4.762 4.762 0 000-9.524zm0 7.722a3.06 3.06 0 110-6.12 3.06 3.06 0 010 6.12zm4.758-7.868a1.128 1.128 0 100-2.255 1.128 1.128 0 000 2.255z"/></svg>
+                    <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 1.17.053 1.805.248 2.227.415.562.217.96.477 1.382.896.419.42.679.819.896 1.381.167.422.362 1.056.415 2.227.058 1.266.07 1.646.07 4.85s-.012 3.584-.07 4.85c-.053 1.17-.248 1.805-.415 2.227a3.48 3.48 0 01-.896 1.382c-.42.419-.82.679-1.382.896-.422.167-1.056.362-2.227.415-1.266.058-1.646.07-4.85.07s-3.584-.012-4.85-.07c-1.17-.053-1.805-.248-2.227-.415a3.492 3.492 0 01-1.381-.896 3.492 3.492 0 01-.896-1.381c-.167-.422-.362-1.056-.415-2.227-.058-1.266-.07-1.646-.07-4.85s.012-3.584.07-4.85c.053-1.17.248-1.805.415-2.227.218-.562.477-.96.896-1.381.419-.42.819-.679 1.381-.896.422-.167 1.056-.362 2.227-.415C8.416 2.175 8.796 2.163 12 2.163zm0 1.802c-3.143 0-3.505.012-4.725.068-1.09.05-1.647.235-1.98.378a1.69 1.69 0 00-.755.755c-.143.333-.328.89-.378 1.98C4.082 8.495 4.07 8.857 4.07 12s.012 3.505.068 4.725c.05 1.09.235 1.647.378 1.98.16.373.397.637.755.755.333.143.89.328 1.98.378 1.22.056 1.582.068 4.725.068s3.505-.012 4.725-.068c1.09-.05 1.647.235 1.98-.378.373-.16.637-.397.755-.755.143-.333.328.89.378-1.98.056-1.22.068-1.582.068-4.725s-.012-3.505-.068-4.725c-.05-1.09-.235-1.647-.378-1.98a1.69 1.69 0 00-.755-.755c-.333-.143-.89-.328-1.98-.378C15.505 3.977 15.143 3.965 12 3.965zm0 3.273a4.762 4.762 0 100 9.524 4.762 4.762 0 000-9.524zm0 7.722a3.06 3.06 0 110-6.12 3.06 3.06 0 010 6.12zm4.758-7.868a1.128 1.128 0 100-2.255 1.128 1.128 0 000 2.255z"/></svg>
                 </a>
                  <a href="polityka-prywatnosci.html" class="text-secondary hover:text-accent transition-colors duration-200" aria-label="Polityka Prywatności">
                     Polityka Prywatności
                 </a>
             </div>
             <p class="text-secondary text-sm">
-                &copy; <span id="currentYear"></span> Kroniki Elary. Wszelkie prawa zastrzeżone.
+                &copy; <span id="currentYear">2024</span> Kroniki Elary. Wszelkie prawa zastrzeżone.
             </p>
             <p class="text-xs mt-2.5" style="color: var(--text-secondary-light, #94A3B8);">
                 Stworzone z pasji do anime i mangi przez Arcadiusa i jego Strażników.
@@ -862,24 +395,7 @@
     </footer>
 
     <div id="eventModal" class="fixed inset-0 z-[60] items-center justify-center hidden p-4 modal">
-        <div class="modal-content w-full max-w-lg p-6 sm:p-8 rounded-2xl shadow-2xl overflow-y-auto">
-            <div class="flex justify-between items-center mb-6">
-                <h3 id="modalTitle" class="text-2xl sm:text-3xl font-semibold text-primary">Szczegóły Wydarzenia</h3>
-                <button id="closeModalButton" class="text-secondary hover:text-accent transition-colors" aria-label="Zamknij modal">
-                    <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
-                </button>
-            </div>
-            <img id="modalImage" src="https://placehold.co/500x300/1E293B/E2E8F0?text=Grafika+Wydarzenia" alt="Grafika wydarzenia" class="w-full h-auto max-h-64 object-cover rounded-lg mb-6" loading="lazy" onerror="this.onerror=null;this.src='https://placehold.co/500x300/0F172A/94A3B8?text=Błąd+obrazka';">
-            <p id="modalDate" class="text-sm text-secondary mb-1"><strong class="text-primary">Data:</strong> <span id="modalDateValue"></span></p>
-            <p id="modalTime" class="text-sm text-secondary mb-4"><strong class="text-primary">Godzina:</strong> <span id="modalTimeValue"></span></p>
-            <div id="modalDescription" class="text-md text-secondary leading-relaxed space-y-3">
-                <p>To jest przykładowy, bardziej szczegółowy opis wydarzenia. Można tu dodać więcej informacji, linki do regulaminów, listę prelegentów, agendę itp.</p>
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-            </div>
-            <a id="modalDiscordLink" href="#" target="_blank" rel="noopener noreferrer" class="btn-primary w-full text-center mt-8 py-3 px-6 rounded-lg inline-block">Przejdź do Kanału Discord</a>
         </div>
-    </div>
-
 
     <script>
         // Funkcja do obsługi aktywnego linku w nawigacji
@@ -887,8 +403,6 @@
             const currentPage = window.location.pathname.split("/").pop() || "index.html";
             const navLinks = document.querySelectorAll('header nav > a.nav-link, #mobileMenu > div > a.nav-link');
             const wikipediaSubPages = ["lore-postaci.html", "systemy-botow.html", "rangi-i-role.html", "lore-aethelgard.html", "komendy.html"];
-            const floatingNavLinks = document.querySelectorAll('#floating-nav a.floating-nav-link');
-            let isFloatingNavActive = false;
 
             navLinks.forEach(link => {
                 link.classList.remove('active');
@@ -900,49 +414,20 @@
                     link.classList.add('active');
                 }
             });
-            
-            // Specjalna logika dla prezentacja.html i pływającej nawigacji
-            if (currentPage === "prezentacja.html") {
-                let currentSectionId = '';
-                const sections = document.querySelectorAll('main section[id], section#hero-prezentacja[id]'); // Uwzględnij sekcję hero
-                sections.forEach(section => {
-                    const sectionTop = section.offsetTop;
-                    // Użyj window.innerHeight / 2 dla bardziej centralnego punktu aktywacji
-                    if (window.scrollY >= sectionTop - (window.innerHeight / 2)) { 
-                        currentSectionId = section.getAttribute('id');
-                    }
-                });
-
-                floatingNavLinks.forEach(link => {
-                    link.classList.remove('active-float-nav');
-                    if (link.getAttribute('href') === `#${currentSectionId}`) {
-                        link.classList.add('active-float-nav');
-                        isFloatingNavActive = true;
-                    }
-                });
-                // Jeśli żaden link nie jest aktywny (np. jesteśmy na samej górze), aktywuj pierwszy
-                if (!isFloatingNavActive && floatingNavLinks.length > 0 && window.scrollY < sections[0].offsetTop) {
-                     const firstFloatingLink = document.querySelector('#floating-nav a.floating-nav-link[href="#hero-prezentacja"]');
-                     if(firstFloatingLink) firstFloatingLink.classList.add('active-float-nav');
-                }
-            }
         }
 
-        // Funkcja do obsługi wyświetlania informacji o użytkowniku/logowania
         async function updateAuthDisplay() {
             const authSectionNav = document.getElementById('auth-section-nav');
             const authSectionMobileNav = document.getElementById('auth-section-mobile-nav');
-            const ADMIN_DISCORD_ID = "1238814802357387285"; // Upewnij się, że to jest ID admina
+            const mobileMenuLinksContainer = document.querySelector('#mobileMenu > div'); 
+            const ADMIN_DISCORD_ID = "1238814802357387285"; 
 
             function createLoginButton(isMobile = false) {
                 const loginButton = document.createElement('a');
-                loginButton.href = '/auth/discord/login'; // Upewnij się, że ten endpoint jest poprawny
+                loginButton.href = '/auth/discord/login'; 
                 loginButton.id = isMobile ? 'discordLoginButtonMobileNav' : 'discordLoginButtonNav';
                 loginButton.className = 'btn-discord !text-white px-4 py-2.5 rounded-md text-sm flex items-center' + (isMobile ? ' w-full justify-center mt-2' : '');
-                loginButton.innerHTML = `
-                    <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20.297 0H3.703C1.658 0 0 1.658 0 3.703V20.297C0 22.342 1.658 24 3.703 24H20.297C22.342 24 24 22.342 24 20.297V3.703C24 1.658 22.342 0 20.297 0ZM8.107 15.232C7.089 15.232 6.241 14.384 6.241 13.366C6.241 12.348 7.089 11.5 8.107 11.5C9.125 11.5 9.973 12.348 9.973 13.366C9.973 14.384 9.125 15.232 8.107 15.232ZM12.000 11.071C10.982 11.071 10.134 10.223 10.134 9.205C10.134 8.188 10.982 7.339 12.000 7.339C13.018 7.339 13.866 8.188 13.866 9.205C13.866 10.223 13.018 11.071 12.000 11.071ZM15.893 15.232C14.875 15.232 14.027 14.384 14.027 13.366C14.027 12.348 14.875 11.5 15.893 11.5C16.911 11.5 17.759 12.348 17.759 13.366C17.759 14.384 16.911 15.232 15.893 15.232Z"/></svg>
-                    Zaloguj przez Discord
-                `;
+                loginButton.innerHTML = `<svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 24 24"><path d="M20.297 0H3.703C1.658 0 0 1.658 0 3.703V20.297C0 22.342 1.658 24 3.703 24H20.297C22.342 24 24 22.342 24 20.297V3.703C24 1.658 22.342 0 20.297 0ZM8.107 15.232C7.089 15.232 6.241 14.384 6.241 13.366C6.241 12.348 7.089 11.5 8.107 11.5C9.125 11.5 9.973 12.348 9.973 13.366C9.973 14.384 9.125 15.232 8.107 15.232ZM12.000 11.071C10.982 11.071 10.134 10.223 10.134 9.205C10.134 8.188 10.982 7.339 12.000 7.339C13.018 7.339 13.866 8.188 13.866 9.205C13.866 10.223 13.018 11.071 12.000 11.071ZM15.893 15.232C14.875 15.232 14.027 14.384 14.027 13.366C14.027 12.348 14.875 11.5 15.893 11.5C16.911 11.5 17.759 12.348 17.759 13.366C17.759 14.384 16.911 15.232 15.893 15.232Z"/></svg> Zaloguj przez Discord`;
                 return loginButton;
             }
 
@@ -958,6 +443,7 @@
                 avatarImg.src = user.avatar ? `https://cdn.discordapp.com/avatars/${user.id}/${user.avatar}.png?size=32` : 'https://placehold.co/32x32/A78BFA/FFFFFF?text=U';
                 avatarImg.alt = 'Awatar użytkownika';
                 avatarImg.className = 'user-avatar';
+                avatarImg.onerror = () => { avatarImg.src = 'https://placehold.co/32x32/A78BFA/FFFFFF?text=U'; };
                 avatarImg.onclick = (event) => {
                     event.stopPropagation(); 
                     const dropdown = document.getElementById(dropdownId);
@@ -974,6 +460,16 @@
                 profileLink.textContent = 'Mój Profil';
                 dropdownMenu.appendChild(profileLink);
 
+                const botShopLink = document.createElement('a');
+                botShopLink.href = '/sklep-bota'; 
+                botShopLink.textContent = 'Sklep Bota (Dukaty)';
+                dropdownMenu.appendChild(botShopLink);
+                
+                const premiumShopLink = document.createElement('a');
+                premiumShopLink.href = 'sklep-premium.html';
+                premiumShopLink.textContent = 'Sklep Premium (Kryształy)';
+                dropdownMenu.appendChild(premiumShopLink);
+
                 const supportTicketsLink = document.createElement('a');
                 supportTicketsLink.href = 'support.html'; 
                 supportTicketsLink.textContent = 'Centrum Wsparcia';
@@ -981,13 +477,13 @@
 
                 if (user.id === ADMIN_DISCORD_ID) {
                     const adminLinkElement = document.createElement('a'); 
-                    adminLinkElement.href = '/admin.html'; 
+                    adminLinkElement.href = 'admin.html'; 
                     adminLinkElement.textContent = 'Panel Admina';
                     dropdownMenu.appendChild(adminLinkElement);
                 }
                 
                 const logoutForm = document.createElement('form');
-                logoutForm.action = '/auth/logout'; // Upewnij się, że ten endpoint jest poprawny
+                logoutForm.action = '/auth/logout'; 
                 logoutForm.method = 'POST';
                 const logoutButton = document.createElement('button');
                 logoutButton.type = 'submit';
@@ -998,27 +494,56 @@
                 container.appendChild(dropdownMenu);
                 return container;
             }
+            
+            if (mobileMenuLinksContainer) {
+                const existingMobileAuthElements = mobileMenuLinksContainer.querySelectorAll('#discordLoginButtonMobileNav, #userDropdownContainerMobileMenu, .mobile-auth-item');
+                existingMobileAuthElements.forEach(el => el.remove());
+            }
 
             try {
-                const response = await fetch('/api/me'); // Upewnij się, że ten endpoint jest poprawny
+                const response = await fetch('/api/me'); 
                 if (response.ok) {
                     const user = await response.json();
                     if (authSectionNav) {
                         authSectionNav.innerHTML = ''; 
                         authSectionNav.appendChild(createAvatarDropdown(user, false));
                     }
-                    if (authSectionMobileNav) {
+                    if (authSectionMobileNav) { 
                         authSectionMobileNav.innerHTML = ''; 
                         authSectionMobileNav.appendChild(createAvatarDropdown(user, true));
                     }
+                     if (mobileMenuLinksContainer) {
+                        const mobileDropdownContainer = createAvatarDropdown(user, true); 
+                        mobileDropdownContainer.id = 'userDropdownContainerMobileMenu';
+                        mobileDropdownContainer.classList.add('mt-2', 'border-t', 'border-[var(--border-card)]', 'pt-2', 'mobile-auth-item');
+                        
+                        const mobileAvatar = mobileDropdownContainer.querySelector('.user-avatar');
+                        const mobileDropdown = mobileDropdownContainer.querySelector('.dropdown-menu');
+                        
+                        if (mobileAvatar) mobileAvatar.classList.add('hidden'); 
+                        if (mobileDropdown) {
+                            mobileDropdown.classList.remove('absolute', 'top-full', 'right-0', 'dropdown-menu'); 
+                            mobileDropdown.classList.add('space-y-1');
+                            Array.from(mobileDropdown.children).forEach(child => {
+                                child.classList.add('block', 'py-2', 'px-3', 'text-base', 'font-medium', 'rounded-md', 'hover:bg-[rgba(var(--rgb-accent),0.1)]', 'hover:text-[var(--text-accent)]');
+                                mobileMenuLinksContainer.appendChild(child);
+                            });
+                        }
+                    }
+
                 } else {
                      if (authSectionNav) {
                         authSectionNav.innerHTML = '';
                         authSectionNav.appendChild(createLoginButton(false));
                     }
-                    if (authSectionMobileNav) {
+                    if (authSectionMobileNav) { 
                         authSectionMobileNav.innerHTML = '';
-                        authSectionMobileNav.appendChild(createLoginButton(true));
+                        authSectionMobileNav.appendChild(createLoginButton(true)); 
+                    }
+                    if (mobileMenuLinksContainer) {
+                        const mobileLoginButton = createLoginButton(true); 
+                        mobileLoginButton.classList.add('mt-2', 'border-t', 'border-[var(--border-card)]', 'pt-2', 'mobile-auth-item');
+                        mobileMenuLinksContainer.appendChild(mobileLoginButton);
                     }
                 }
             } catch (error) {
@@ -1031,6 +556,11 @@
                     authSectionMobileNav.innerHTML = '';
                     authSectionMobileNav.appendChild(createLoginButton(true));
                 }
+                if (mobileMenuLinksContainer) {
+                    const mobileLoginButton = createLoginButton(true);
+                    mobileLoginButton.classList.add('mt-2', 'border-t', 'border-[var(--border-card)]', 'pt-2', 'mobile-auth-item');
+                    mobileMenuLinksContainer.appendChild(mobileLoginButton);
+                }
             }
         }
         
@@ -1041,10 +571,10 @@
             if (mobileMenuButton && mobileMenu) {
                 mobileMenuButton.addEventListener('click', () => {
                     const isExpanded = mobileMenuButton.getAttribute('aria-expanded') === 'true' || false;
-                    mobileMenuButton.setAttribute('aria-expanded', !isExpanded);
+                    mobileMenuButton.setAttribute('aria-expanded', String(!isExpanded));
                     mobileMenu.classList.toggle('open');
                 });
-                mobileMenu.querySelectorAll('a.nav-link').forEach(link => { 
+                mobileMenu.querySelectorAll('a').forEach(link => { 
                     link.addEventListener('click', () => {
                         mobileMenuButton.setAttribute('aria-expanded', 'false');
                         mobileMenu.classList.remove('open');
@@ -1061,7 +591,7 @@
                         observer.unobserve(entry.target);
                     }
                 });
-            }, { threshold: 0.05 });
+            }, { threshold: 0.1 });
 
             document.querySelectorAll('.reveal').forEach(el => {
                 revealObserver.observe(el);
@@ -1071,99 +601,18 @@
         function setupDropdownDismiss() {
             window.addEventListener('click', function(e) {
                 const desktopDropdownContainer = document.getElementById('userDropdownContainerNav');
-                const mobileDropdownContainer = document.getElementById('userDropdownContainerMobile');
+                const mobileDropdownContainer = document.getElementById('userDropdownContainerMobile'); 
                 const desktopDropdown = document.getElementById('userDropdownNav');
-                const mobileDropdown = document.getElementById('userDropdownMobile');
+                const mobileDropdown = document.getElementById('userDropdownMobile'); 
 
-                if (desktopDropdownContainer && !desktopDropdownContainer.contains(e.target) && desktopDropdown) {
+                if (desktopDropdownContainer && !desktopDropdownContainer.contains(e.target) && desktopDropdown && desktopDropdown.classList.contains('open')) {
                     desktopDropdown.classList.remove('open');
                 }
-                if (mobileDropdownContainer && !mobileDropdownContainer.contains(e.target) && mobileDropdown) {
+                if (mobileDropdownContainer && !mobileDropdownContainer.contains(e.target) && mobileDropdown && mobileDropdown.classList.contains('open')) {
                      mobileDropdown.classList.remove('open');
                 }
             });
         }
-
-        function setupFloatingNav() {
-            const floatingNav = document.getElementById('floating-nav');
-            const toggleFloatingNavBtn = document.getElementById('toggleFloatingNavBtn');
-
-            if (floatingNav && toggleFloatingNavBtn) {
-                let isFloatingNavMinimized = localStorage.getItem('floatingNavMinimized') === 'true';
-                
-                function applyMinimizedState() {
-                    floatingNav.classList.toggle('minimized', isFloatingNavMinimized);
-                    toggleFloatingNavBtn.querySelector('svg').style.transform = isFloatingNavMinimized ? 'rotate(180deg)' : 'rotate(0deg)';
-                }
-                applyMinimizedState(); // Ustaw stan początkowy
-
-                toggleFloatingNavBtn.addEventListener('click', () => {
-                    isFloatingNavMinimized = !isFloatingNavMinimized;
-                    localStorage.setItem('floatingNavMinimized', isFloatingNavMinimized);
-                    applyMinimizedState();
-                });
-            }
-        }
-
-        function setupAccordions() {
-            const accordionItems = document.querySelectorAll('.accordion-item');
-            accordionItems.forEach((item, index) => {
-                const header = item.querySelector('.accordion-header');
-                const content = item.querySelector('.accordion-content');
-                const icon = header.querySelector('svg.accordion-icon');
-                const contentId = `accordion-content-b${index}`; 
-                
-                if(content) content.setAttribute('id', contentId);
-                if(header) {
-                    header.setAttribute('aria-controls', contentId);
-                    header.setAttribute('aria-expanded', 'false');
-
-                    header.addEventListener('click', () => {
-                        const isExpanded = header.getAttribute('aria-expanded') === 'true';
-                        
-                        // Opcjonalnie: zamykaj inne akordeony
-                        // accordionItems.forEach(otherItem => {
-                        //     if (otherItem !== item) {
-                        //         otherItem.querySelector('.accordion-content').classList.remove('open');
-                        //         otherItem.querySelector('.accordion-header').setAttribute('aria-expanded', 'false');
-                        //         const otherIcon = otherItem.querySelector('.accordion-header svg.accordion-icon');
-                        //         if (otherIcon) otherIcon.classList.remove('rotate-180');
-                        //         otherItem.classList.remove('open');
-                        //     }
-                        // });
-                        
-                        if(content) content.classList.toggle('open');
-                        item.classList.toggle('open'); 
-                        header.setAttribute('aria-expanded', String(!isExpanded));
-                        // if (icon) icon.classList.toggle('rotate-180'); // Usunięto, bo jest w CSS
-                    });
-                }
-            });
-        }
-
-        function setupEventModal() {
-            const eventModal = document.getElementById('eventModal');
-            const closeModalButton = document.getElementById('closeModalButton');
-            // Logika dla przycisków otwierających modal (eventDetailButtons) i danych wydarzeń (eventData)
-            // została usunięta, ponieważ nie ma elementów .event-details-button na tej stronie.
-            // Jeśli modal ma być używany w inny sposób, ta logika musi zostać dostosowana.
-
-            if (eventModal && closeModalButton) { 
-                closeModalButton.addEventListener('click', () => {
-                    eventModal.classList.add('hidden');
-                    eventModal.classList.remove('flex');
-                    document.body.style.overflow = ''; 
-                });
-                eventModal.addEventListener('click', (e) => {
-                    if (e.target === eventModal) { 
-                        eventModal.classList.add('hidden');
-                        eventModal.classList.remove('flex');
-                        document.body.style.overflow = '';
-                    }
-                });
-            }
-        }
-
 
         document.addEventListener('DOMContentLoaded', function() {
             document.getElementById('currentYear').textContent = new Date().getFullYear();
@@ -1177,18 +626,6 @@
             setupMobileMenu();
             setupRevealAnimations();
             setupDropdownDismiss();
-            setupFloatingNav();
-            setupAccordions();
-            setupEventModal(); // Nawet jeśli nie ma przycisków, modal może być wywoływany inaczej
-
-            // Aktualizacja aktywnego linku w pływającej nawigacji podczas scrollowania
-            let scrollTimeout;
-            window.addEventListener('scroll', () => {
-                if (window.location.pathname.includes('prezentacja.html')) {
-                    clearTimeout(scrollTimeout);
-                    scrollTimeout = setTimeout(setActiveNavLink, 50); 
-                }
-            }, { passive: true });
         });
     </script>
 </body>

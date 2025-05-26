@@ -3,61 +3,53 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Odkryj zaawansowany system Głównego Bota Kronik Elary! Poznaj jego moduły: moderacji, ekonomii, rozrywki, muzyki i wiele więcej.">
-    <meta name="keywords" content="kroniki elary, discord, bot, systemy botów, główny bot, moduły, komendy, automatyzacja, serwer discord, anime, manga">
+    <meta name="description" content="Poznaj zaawansowane systemy i autorskiego bota Elara Prime działającego na serwerze Kroniki Elary. Odkryj jego funkcje i możliwości.">
+    <meta name="keywords" content="bot discord, systemy serwerowe, kroniki elary, Elara Prime, ekonomia, rankingi, muzyka, gry, automatyzacja, discord">
     <meta name="author" content="Arcadius & Strażnicy Kronik Elary">
-    <title>Kroniki Elary - Systemy Głównego Bota</title>
+    <title>Systemy Botów - Wikipedia Kronik Elary</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600&display=swap" rel="stylesheet">
     <style>
         :root {
             --bg-primary: #0F172A; 
-            --bg-secondary: rgba(30, 41, 59, 0.8); 
-            --bg-card: #1E293B; 
+            --bg-secondary: #1E293B; 
+            --bg-card: #111827; 
             --bg-header: rgba(15, 23, 42, 0.92); 
-            
             --text-primary: #E2E8F0; 
             --text-secondary: #94A3B8; 
             --text-accent: #A78BFA; 
             --text-accent-hover: #8B5CF6; 
-            
-            --border-accent: #8B5CF6; 
-            --border-card: rgba(167, 139, 250, 0.25); 
-            
-            --btn-primary-bg: #8B5CF6; 
-            --btn-primary-hover-bg: #7C3AED; 
+            --border-accent: #8B5CF6;
+            --border-card: rgba(167, 139, 250, 0.15); 
+            --btn-primary-bg: #8B5CF6;
+            --btn-primary-hover-bg: #7C3AED;
             --btn-discord-bg: #5865F2;
             --btn-discord-hover-bg: #4752C4;
-            
             --scrollbar-thumb-bg: #8B5CF6;
             --scrollbar-thumb-hover-bg: #7C3AED;
-            
             --svg-icon-fill: #E2E8F0;
-            --shadow-color: rgba(167, 139, 250, 0.25); 
-            --shadow-strong-color: rgba(167, 139, 250, 0.4);
+            --shadow-color: rgba(167, 139, 250, 0.15); 
+            --shadow-strong-color: rgba(167, 139, 250, 0.3); 
             --modal-backdrop: rgba(15, 23, 42, 0.85);
-
             --rgb-accent: 167, 139, 250;
             --rgb-purple-400: 167, 139, 250; 
             --rgb-stone-400: 168, 162, 158; 
             --rgb-amber-400: 251, 191, 36; 
             --rgb-cyan-400: 34, 211, 238; 
-
             --text-purple-400: #A78BFA;
             --text-stone-400: #A8A29E;
             --text-amber-400: #FBBF24;
             --text-cyan-400: #22D3EE;
         }
-
-        html.light { 
-            --bg-primary: #F9FAFB;
-            --bg-secondary: rgba(243, 244, 246, 0.9);
-            --bg-card: #FFFFFF;
+        html.light {
+            --bg-primary: #F9FAFB; 
+            --bg-secondary: #F3F4F6; 
+            --bg-card: #FFFFFF; 
             --bg-header: rgba(255, 255, 255, 0.95);
-            --text-primary: #1F2937;
-            --text-secondary: #4B5563;
-            --text-accent: #7C3AED;
-            --text-accent-hover: #6D28D9;
+            --text-primary: #1F2937; 
+            --text-secondary: #4B5563; 
+            --text-accent: #7C3AED; 
+            --text-accent-hover: #6D28D9; 
             --border-accent: #7C3AED;
             --border-card: rgba(124, 58, 237, 0.1);
             --btn-primary-bg: #7C3AED;
@@ -70,7 +62,6 @@
             --shadow-color: rgba(124, 58, 237, 0.08);
             --shadow-strong-color: rgba(124, 58, 237, 0.15);
             --modal-backdrop: rgba(249, 250, 251, 0.85);
-
             --rgb-accent: 124, 58, 237;
             --rgb-purple-400: 124, 58, 237;
             --rgb-stone-400: 120, 113, 108;
@@ -81,223 +72,52 @@
             --text-amber-400: #D97706;
             --text-cyan-400: #0891B2;
         }
-
-        body {
-            font-family: 'Inter', sans-serif;
-            background-color: var(--bg-primary);
-            color: var(--text-primary);
-            transition: background-color 0.3s ease, color 0.3s ease;
-            -webkit-font-smoothing: antialiased;
-            -moz-osx-font-smoothing: grayscale;
-            line-height: 1.75; 
-        }
-
-        h1, h2, h3, h4, h5 {
-            font-family: 'Lora', serif;
-            font-weight: 600;
-            line-height: 1.35; 
-        }
-        h1 { letter-spacing: -0.025em; font-weight: 700; }
-        h2 { letter-spacing: -0.02em; font-weight: 700; }
-        h3 { font-weight: 600; }
-        
-        .hero-bots-bg {
-            background: linear-gradient(rgba(15, 23, 42, 0.92), rgba(15, 23, 42, 1)), url('https://placehold.co/1920x800/0a0f1e/a78bfa?text=Mechanizmy+Kronik') center/cover no-repeat fixed;
-        }
-        .card-bg, .bot-system-card {
-            background-color: var(--bg-card);
-            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), background-color 0.3s ease; 
-            border: 1px solid var(--border-card); 
-            box-shadow: 0 7px 18px -4px var(--shadow-color); 
-            overflow: hidden;
-        }
-        .card-bg:hover, .bot-system-card:hover {
-            transform: translateY(-10px) scale(1.035); 
-            box-shadow: 0 16px 32px -6px var(--shadow-strong-color); 
-        }
-        
-        .btn-primary, .btn-discord, .btn-secondary {
-            color: #FFFFFF; 
-            transition: background-color 0.25s ease, transform 0.25s ease, box-shadow 0.25s ease;
-            box-shadow: 0 5px 12px -3px var(--shadow-color);
-            font-weight: 600; 
-            letter-spacing: 0.03em;
-            padding-top: 0.85rem; 
-            padding-bottom: 0.85rem;
-            border-radius: 0.5rem;
-        }
-        .btn-primary { background-color: var(--btn-primary-bg); }
-        .btn-primary:hover {
-            background-color: var(--btn-primary-hover-bg);
-            transform: scale(1.06) translateY(-3px); 
-            box-shadow: 0 14px 24px -5px var(--shadow-strong-color);
-        }
-        .btn-discord { background-color: var(--btn-discord-bg); }
-        .btn-discord:hover {
-            background-color: var(--btn-discord-hover-bg);
-            transform: scale(1.06) translateY(-3px);
-            box-shadow: 0 10px 20px -5px rgba(88, 101, 242, 0.4);
-        }
-        .btn-secondary {
-            background-color: transparent;
-            border: 2px solid var(--border-accent);
-            color: var(--text-accent);
-            padding: calc(0.85rem - 2px) calc(1.5rem - 2px);
-        }
-        .btn-secondary:hover {
-            background-color: var(--border-accent);
-            color: white;
-            transform: scale(1.05) translateY(-1px);
-            box-shadow: 0 8px 15px -3px var(--shadow-color);
-        }
-        .text-accent {
-            color: var(--text-accent);
-        }
-        
-        .reveal {
-            opacity: 0;
-            transform: translateY(70px); 
-            transition: opacity 1s cubic-bezier(0.645, 0.045, 0.355, 1), transform 1s cubic-bezier(0.645, 0.045, 0.355, 1);
-        }
-        .reveal.visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
-        ::-webkit-scrollbar { width: 13px; } 
-        ::-webkit-scrollbar-track { background: var(--bg-primary); }
-        ::-webkit-scrollbar-thumb { background: var(--scrollbar-thumb-bg); border-radius: 7px; border: 3.5px solid var(--bg-primary); }
+        body { font-family: 'Inter', sans-serif; background-color: var(--bg-primary); color: var(--text-primary); transition: background-color 0.3s ease, color 0.3s ease; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; line-height: 1.75; }
+        h1, h2, h3, h4, h5 { font-family: 'Lora', serif; font-weight: 600; line-height: 1.35; }
+        h1 { letter-spacing: -0.025em; font-weight: 700; } h2 { letter-spacing: -0.02em; font-weight: 700; } h3 { font-weight: 600; }
+        .hero-bots-bg { background: linear-gradient(rgba(15, 23, 42, 0.88), rgba(15, 23, 42, 0.98)), url('https://placehold.co/1920x500/0a0f1e/A78BFA?text=Elara+Prime+-+Serce+Serwera') center/cover no-repeat; }
+        .section-bg { background-color: var(--bg-secondary); }
+        .card-bg { background-color: var(--bg-card); transition: transform 0.3s cubic-bezier(0.25, 0.1, 0.25, 1), box-shadow 0.3s cubic-bezier(0.25, 0.1, 0.25, 1), background-color 0.3s ease; border: 1px solid var(--border-card); box-shadow: 0 6px 12px -3px var(--shadow-color); overflow: hidden; }
+        .card-bg:hover { transform: translateY(-8px) scale(1.02); box-shadow: 0 12px 24px -4px var(--shadow-strong-color); }
+        .btn-primary, .btn-discord, .btn-secondary { color: #FFFFFF; transition: background-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease; box-shadow: 0 4px 8px -2px var(--shadow-color); font-weight: 600; letter-spacing: 0.03em; padding-top: 0.8rem; padding-bottom: 0.8rem; border-radius: 0.375rem; } 
+        .btn-primary { background-color: var(--btn-primary-bg); } .btn-primary:hover { background-color: var(--btn-primary-hover-bg); transform: scale(1.04) translateY(-2px); box-shadow: 0 10px 18px -4px var(--shadow-strong-color); }
+        .btn-discord { background-color: var(--btn-discord-bg); } .btn-discord:hover { background-color: var(--btn-discord-hover-bg); transform: scale(1.04) translateY(-2px); box-shadow: 0 10px 18px -4px rgba(88, 101, 242, 0.35); }
+        .btn-secondary { background-color: transparent; border: 2px solid var(--border-accent); color: var(--text-accent); padding: calc(0.8rem - 2px) calc(1.5rem - 2px); }
+        .btn-secondary:hover { background-color: var(--border-accent); color: white; transform: scale(1.04) translateY(-2px); box-shadow: 0 6px 12px -2px var(--shadow-color); }
+        .text-accent { color: var(--text-accent); }
+        .reveal { opacity: 0; transform: translateY(50px); transition: opacity 0.8s cubic-bezier(0.645, 0.045, 0.355, 1), transform 0.8s cubic-bezier(0.645, 0.045, 0.355, 1); }
+        .reveal.visible { opacity: 1; transform: translateY(0); }
+        ::-webkit-scrollbar { width: 12px; } ::-webkit-scrollbar-track { background: var(--bg-primary); }
+        ::-webkit-scrollbar-thumb { background: var(--scrollbar-thumb-bg); border-radius: 6px; border: 3px solid var(--bg-primary); }
         ::-webkit-scrollbar-thumb:hover { background: var(--scrollbar-thumb-hover-bg); }
-        
-        header#navbar {
-            background-color: var(--bg-header);
-            backdrop-filter: blur(18px); 
-            transition: background-color 0.3s ease, box-shadow 0.3s ease;
-            box-shadow: 0 5px 15px -4px rgba(15,23,42,0.2); 
-        }
-
-        .nav-link {
-            position: relative;
-            color: var(--text-secondary);
-            transition: color 0.2s ease, background-color 0.2s ease, transform 0.2s ease; 
-            padding: 0.65rem 1.1rem; 
-            border-radius: 0.6rem; 
-            font-weight: 500;
-        }
-        .nav-link:hover {
-            transform: translateY(-1px); 
-        }
-        .nav-link::after { 
-            content: '';
-            position: absolute;
-            width: 0;
-            height: 3px; 
-            bottom: 5px; 
-            left: 50%;
-            transform: translateX(-50%);
-            background-color: var(--text-accent);
-            transition: width 0.35s cubic-bezier(0.25, 0.8, 0.25, 1);
-            border-radius: 1.5px;
-        }
-        .nav-link:hover, .nav-link.active {
-            color: var(--text-accent);
-            background-color: rgba(var(--rgb-accent), 0.12); 
-        }
-        .nav-link:hover::after, .nav-link.active::after {
-            width: 60%; 
-        }
-        
-        #mobileMenu {
-            transition: transform 0.4s cubic-bezier(0.25, 0.8, 0.25, 1), opacity 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
-            transform: translateY(-100%);
-            opacity: 0;
-            pointer-events: none; 
-        }
-        #mobileMenu.open {
-            transform: translateY(0);
-            opacity: 1;
-            pointer-events: auto;
-        }
-        html.dark .text-shadow-custom { 
-             text-shadow: 1px 1px 4px rgba(0,0,0,0.6); 
-        }
-        .user-avatar {
-            width: 32px; 
-            height: 32px; 
-            border-radius: 50%;
-            border: 2px solid var(--border-accent);
-            cursor: pointer;
-            transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
-        }
-        .user-avatar:hover {
-            transform: scale(1.1);
-            box-shadow: 0 0 10px var(--shadow-strong-color);
-        }
-        .dropdown-menu {
-            position: absolute;
-            top: calc(100% + 0.5rem); 
-            right: 0;
-            background-color: var(--bg-card);
-            border: 1px solid var(--border-card);
-            border-radius: 0.5rem; 
-            box-shadow: 0 10px 25px -5px var(--shadow-strong-color), 0 8px 10px -6px var(--shadow-color);
-            z-index: 50;
-            min-width: 200px; 
-            opacity: 0;
-            visibility: hidden;
-            transform: translateY(-10px);
-            transition: opacity 0.2s ease, transform 0.2s ease, visibility 0s linear 0.2s;
-        }
-        .dropdown-menu.open {
-            opacity: 1;
-            visibility: visible;
-            transform: translateY(0);
-            transition: opacity 0.2s ease, transform 0.2s ease;
-        }
-        .dropdown-menu a, .dropdown-menu button {
-            display: block;
-            width: 100%;
-            text-align: left;
-            padding: 0.75rem 1rem; 
-            font-size: 0.875rem; 
-            color: var(--text-secondary);
-            transition: background-color 0.15s ease, color 0.15s ease;
-        }
-        .dropdown-menu a:hover, .dropdown-menu button:hover {
-            background-color: rgba(var(--rgb-accent), 0.1);
-            color: var(--text-accent);
-        }
+        header#navbar { background-color: var(--bg-header); backdrop-filter: blur(16px); transition: background-color 0.3s ease, box-shadow 0.3s ease; box-shadow: 0 4px 10px -3px rgba(15,23,42,0.15); }
+        .nav-link { position: relative; color: var(--text-secondary); transition: color 0.2s ease, background-color 0.2s ease, transform 0.2s ease; padding: 0.6rem 1rem; border-radius: 0.375rem; font-weight: 500; }
+        .nav-link:hover { transform: translateY(-1px); }
+        .nav-link::after { content: ''; position: absolute; width: 0; height: 2px; bottom: 4px; left: 50%; transform: translateX(-50%); background-color: var(--text-accent); transition: width 0.3s cubic-bezier(0.25, 0.8, 0.25, 1); border-radius: 1px; }
+        .nav-link:hover, .nav-link.active { color: var(--text-accent); background-color: rgba(var(--rgb-accent), 0.1); }
+        .nav-link:hover::after, .nav-link.active::after { width: 50%; }
+        #mobileMenu { transition: transform 0.3s cubic-bezier(0.25, 0.8, 0.25, 1), opacity 0.3s cubic-bezier(0.25, 0.8, 0.25, 1); transform: translateY(-100%); opacity: 0; pointer-events: none; }
+        #mobileMenu.open { transform: translateY(0); opacity: 1; pointer-events: auto; }
+        html.dark .text-shadow-custom { text-shadow: 1px 1px 3px rgba(0,0,0,0.5); }
+        .user-avatar { width: 32px; height: 32px; border-radius: 50%; border: 2px solid var(--border-accent); cursor: pointer; transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out; }
+        .user-avatar:hover { transform: scale(1.1); box-shadow: 0 0 8px var(--shadow-strong-color); }
+        .dropdown-menu { position: absolute; top: calc(100% + 0.5rem); right: 0; background-color: var(--bg-card); border: 1px solid var(--border-card); border-radius: 0.375rem; box-shadow: 0 8px 20px -4px var(--shadow-strong-color), 0 6px 8px -5px var(--shadow-color); z-index: 50; min-width: 220px; opacity: 0; visibility: hidden; transform: translateY(-8px); transition: opacity 0.15s ease, transform 0.15s ease, visibility 0s linear 0.15s; }
+        .dropdown-menu.open { opacity: 1; visibility: visible; transform: translateY(0); transition: opacity 0.15s ease, transform 0.15s ease; }
+        .dropdown-menu a, .dropdown-menu button { display: block; width: 100%; text-align: left; padding: 0.7rem 1rem; font-size: 0.875rem; color: var(--text-secondary); transition: background-color 0.1s ease, color 0.1s ease; }
+        .dropdown-menu a:hover, .dropdown-menu button:hover { background-color: rgba(var(--rgb-accent), 0.08); color: var(--text-accent); }
         .dropdown-menu form { margin: 0; } 
-        
-        .bot-system-icon {
-            font-size: 2.5rem; /* text-4xl */
-            margin-bottom: 0.75rem; /* mb-3 */
-            color: var(--text-accent);
-            transition: transform 0.3s ease-in-out; /* Animacja dla ikony */
-        }
-        .bot-system-card:hover .bot-system-icon {
-            transform: scale(1.2) rotate(3deg); /* Efekt "magii" dla ikon */
-        }
-        .bot-system-card ul {
-            list-style-type: '✨ '; /* Tematyczny punktor */
-            padding-left: 1.25rem; /* Tailwind: pl-5 */
-            color: var(--text-secondary);
-        }
-        .bot-system-card ul li {
-            margin-bottom: 0.25rem; /* Tailwind: mb-1 */
-            padding-left: 0.5rem;
-        }
-        .animated-gradient-text {
-            background: linear-gradient(45deg, var(--text-accent), var(--text-accent-hover), #c084fc, var(--text-accent));
-            background-size: 200% 200%;
-            -webkit-background-clip: text;
-            background-clip: text;
-            -webkit-text-fill-color: transparent;
-            animation: gradient-flow 8s ease infinite;
-        }
-        @keyframes gradient-flow {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
+        .modal { background-color: var(--modal-backdrop); backdrop-filter: blur(6px); }
+        .modal-content { background-color: var(--bg-card); max-height: 90vh; }
+        .bot-card img { filter: grayscale(20%) contrast(105%); transition: filter 0.3s ease, transform 0.3s ease; } /* Subtelniejszy filtr i dodany transform */
+        .bot-card:hover img { filter: grayscale(0%) contrast(100%); transform: scale(1.03); }
+        .feature-list li { padding-left: 1.75em; position: relative; margin-bottom: 0.5rem; } /* Zwiększony padding i margines */
+        .feature-list li::before { 
+            content: '❖'; /* Bardziej unikalny punktor */
+            position: absolute; 
+            left: 0; 
+            color: var(--text-accent); 
+            font-size: 1.1em; /* Lekko większy punktor */
+            line-height: 1.4; /* Lepsze wyrównanie z tekstem */
         }
     </style>
 </head>
@@ -311,7 +131,7 @@
             <nav class="hidden md:flex items-center space-x-1 lg:space-x-2">
                 <a href="index.html" class="nav-link">Strona Główna</a>
                 <a href="prezentacja.html" class="nav-link">Prezentacja Serwera</a>
-                <a href="wikipedia.html" class="nav-link active">Wikipedia Kronik</a> 
+                <a href="wikipedia.html" class="nav-link">Wikipedia Kronik</a> 
                 <a href="ranking-stats.html" class="nav-link">Rankingi</a>
                 <div id="auth-section-nav" class="ml-4 relative">
                     </div>
@@ -328,116 +148,97 @@
             <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
                 <a href="index.html" class="block py-2.5 px-3 nav-link text-base font-medium">Strona Główna</a>
                 <a href="prezentacja.html" class="block py-2.5 px-3 nav-link text-base font-medium">Prezentacja Serwera</a>
-                <a href="wikipedia.html" class="block py-2.5 px-3 nav-link text-base font-medium active">Wikipedia Kronik</a>
+                <a href="wikipedia.html" class="block py-2.5 px-3 nav-link text-base font-medium">Wikipedia Kronik</a>
                 <a href="ranking-stats.html" class="block py-2.5 px-3 nav-link text-base font-medium">Rankingi</a>
                 <a href="https://discord.gg/TWOJLINKZAPROSZENIOWY" target="_blank" rel="noopener noreferrer" class="block mt-2 py-2.5 px-3 text-base font-medium text-white bg-purple-600 hover:bg-purple-700 rounded-md text-center">Dołącz do Discorda</a>
-            </div>
+                 </div>
         </div>
     </header>
 
     <main>
-        <section class="hero-bots-bg min-h-[60vh] sm:min-h-[70vh] flex items-center justify-center text-center pt-24 sm:pt-20 reveal">
-            <div class="container mx-auto px-4 sm:px-6 py-12 sm:py-16">
-                <h1 class="text-5xl sm:text-6xl md:text-7xl font-bold text-white mb-6 leading-tight text-shadow-custom">
-                    Systemy Botów <span class="animated-gradient-text">Kronik Elary</span>
+        <section class="hero-bots-bg pt-32 pb-16 sm:pt-40 sm:pb-24 text-center reveal">
+            <div class="container mx-auto px-4 sm:px-6">
+                <h1 class="text-4xl sm:text-5xl md:text-6xl font-bold text-white mb-6 leading-tight text-shadow-custom">
+                    Systemy i Bot <span class="text-accent">Kronik Elary</span>
                 </h1>
-                <p class="text-xl md:text-2xl text-slate-200 mb-10 max-w-3xl mx-auto text-shadow-custom">
-                    Odkryj zaawansowane mechanizmy i moduły Głównego Bota Kronik, który wspiera naszą społeczność na każdym kroku.
+                <p class="text-lg md:text-xl text-slate-200 mb-10 max-w-3xl mx-auto text-shadow-custom">
+                    Odkryj zaawansowane mechanizmy i naszego wszechstronnego bota Elara Prime, który wzbogaca doświadczenie na serwerze Discord.
                 </p>
-                <a href="wikipedia.html" class="btn-secondary font-semibold py-3 px-8 rounded-lg text-md inline-block">&larr; Powrót do Głównej Strony Wikipedii</a>
+                <a href="wikipedia.html" class="btn-secondary font-semibold py-3 px-6 text-md inline-flex items-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-arrow-left-circle-fill mr-2" viewBox="0 0 16 16">
+                        <path d="M8 0a8 8 0 1 0 0 16A8 8 0 0 0 8 0m3.5 7.5a.5.5 0 0 1 0 1H5.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L5.707 7.5z"/>
+                    </svg>
+                    Powrót do Wikipedii
+                </a>
             </div>
         </section>
 
-        <section id="wprowadzenie-boty" class="py-16 sm:py-24">
+        <section id="wprowadzenie-systemy" class="py-16 sm:py-20 section-bg reveal">
             <div class="container mx-auto px-4 sm:px-6">
-                <div class="max-w-4xl mx-auto card-bg p-6 sm:p-10 rounded-2xl shadow-xl reveal">
-                    <h2 class="text-3xl sm:text-4xl font-bold text-primary mb-8">Główny Bot Kronik: Serce Automatyzacji</h2>
-                    <img src="https://placehold.co/800x400/1E293B/a78bfa?text=Schemat+Głównego+Bota+Kronik" alt="Schemat blokowy Głównego Bota Kronik Elary" class="w-full h-auto rounded-lg shadow-lg mb-8 border-2 border-[var(--border-accent)]" loading="lazy" onerror="this.onerror=null;this.src='https://placehold.co/800x400/0F172A/94A3B8?text=Błąd+ładowania+obrazu';">
-                    <p class="text-secondary text-lg leading-relaxed mb-6">
-                        W sercu Kronik Elary działa zaawansowany, wielomodułowy bot, zaprojektowany i nieustannie rozwijany przez naszą Techno-Zaklinaczkę, Runę. Główny Bot Kronik (często pieszczotliwie nazywany "Runa-Core" przez samą twórczynię) to nie tylko narzędzie moderacyjne, ale integralna część ekosystemu serwera, wzbogacająca doświadczenia wszystkich Kronikarzy.
-                    </p>
-                    <p class="text-secondary text-lg leading-relaxed mb-6">
-                        Bot został zbudowany w oparciu o najnowsze technologie i najlepsze praktyki, aby zapewnić stabilność, szybkość działania i szeroki wachlarz funkcjonalności. Jego architektura opiera się na systemie "kapsuł" (cogs), gdzie każda kapsuła odpowiada za określony zestaw funkcji, często inspirowanych przez jednego ze Strażników Kronik.
-                    </p>
-                    <p class="text-secondary text-lg leading-relaxed">
-                        Poniżej przedstawiamy kluczowe systemy i moduły Głównego Bota, które czynią Kroniki Elary miejscem jeszcze bardziej magicznym i interaktywnym.
+                <div class="text-center mb-14 sm:mb-18">
+                    <h2 class="text-3xl sm:text-4xl font-bold text-primary mb-4">Automatyzacja, Rozrywka i Zarządzanie</h2>
+                    <p class="text-lg text-secondary max-w-3xl mx-auto">
+                        Na serwerze Kroniki Elary sercem wielu interakcji i systemów jest nasz autorski bot – Elara Prime. Łączy on w sobie funkcje rozrywkowe, ekonomiczne i techniczne, wspierając naszą społeczność na każdym kroku.
                     </p>
                 </div>
             </div>
         </section>
 
-        <section id="moduly-bota" class="py-16 sm:py-24 bg-bg-secondary reveal">
+        <section id="bot-elara-prime" class="py-16 sm:py-20 reveal">
             <div class="container mx-auto px-4 sm:px-6">
-                <h2 class="text-3xl sm:text-4xl font-bold text-primary mb-12 text-center">Kluczowe Moduły i Systemy <span class="text-accent">Bota</span></h2>
+                <div class="grid md:grid-cols-2 gap-10 lg:gap-16 items-center">
+                    <div class="reveal md:order-2">
+                        <img src="https://placehold.co/550x550/A78BFA/0F172A?text=Elara+Prime" alt="Bot Elara Prime - Serce Serwera" class="bot-card rounded-lg shadow-xl w-full max-w-md mx-auto md:max-w-none" onerror="this.onerror=null;this.src='https://placehold.co/550x550/0F172A/94A3B8?text=ElaraPrime';">
+                    </div>
+                    <div class="reveal md:order-1">
+                        <h2 class="text-3xl sm:text-4xl font-bold text-primary mb-3">Elara Prime - <span class="text-accent">Wszechstronna Dusza Serwera</span></h2>
+                        <p class="text-lg font-semibold text-secondary mb-6">Centralny bot Kronik Elary, łączący rozrywkę, ekonomię i zarządzanie.</p>
+                        <p class="text-secondary mb-4">
+                            Elara Prime to zaawansowany, autorski bot, który stanowi integralną część życia na naszym serwerze. Nazwany na cześć opiekuńczego ducha społeczności, Elara Prime został zaprojektowany, by dostarczać rozrywki, zarządzać systemami ekonomicznymi, pomagać w moderacji i ułatwiać codzienne interakcje. Jest owocem połączonych wysiłków Strażników Lyrą i Runą, łącząc w sobie ich najlepsze cechy.
+                        </p>
+                        <h4 class="text-xl font-semibold text-primary mt-8 mb-4">Kluczowe Funkcje Bota Elara Prime:</h4>
+                        <ul class="feature-list space-y-2.5 text-secondary mb-6">
+                            <li><strong>Rozrywka i Wydarzenia:</strong> Moduły muzyczne, gry towarzyskie, organizacja konkursów i giveawayów, interaktywne komendy.</li>
+                            <li><strong>System Ekonomiczny:</strong> Zarządzanie Gwiezdnymi Dukatami i Kryształami Elary, sklep serwerowy z unikalnymi przedmiotami i rolami.</li>
+                            <li><strong>Aktywność i Rankingi:</strong> System poziomów i doświadczenia, rankingi użytkowników w różnych kategoriach.</li>
+                            <li><strong>Narzędzia Społecznościowe:</strong> Powiadomienia o wydarzeniach, system sugestii, tworzenie ankiet.</li>
+                            <li><strong>Moderacja i Zarządzanie:</strong> Podstawowe narzędzia moderacyjne, logowanie zdarzeń, wsparcie dla administracji.</li>
+                            <li><strong>Integracje:</strong> Możliwość integracji z zewnętrznymi API dla dodatkowych funkcjonalności.</li>
+                        </ul>
+                        <a href="komendy.html" class="btn-primary inline-block mt-3">Zobacz Wszystkie Komendy Elara Prime</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="inne-systemy" class="py-16 sm:py-20 section-bg reveal">
+            <div class="container mx-auto px-4 sm:px-6">
+                <div class="text-center mb-14 sm:mb-18">
+                    <h2 class="text-3xl sm:text-4xl font-bold text-primary mb-4">Dodatkowe <span class="text-accent">Systemy Wspierające</span></h2>
+                    <p class="text-lg text-secondary max-w-2xl mx-auto">
+                        Oprócz Elara Prime, wykorzystujemy również inne narzędzia i systemy, aby zapewnić płynne działanie serwera i bezpieczeństwo naszej społeczności.
+                    </p>
+                </div>
                 <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-                    
-                    <div class="bot-system-card p-6 rounded-xl shadow-lg reveal">
-                        <div class="bot-system-icon">🛡️</div>
-                        <h3 class="text-2xl font-semibold text-accent mb-3">Moduł Moderacji (Kaelen)</h3>
-                        <p class="text-secondary text-md mb-4">Zapewnia porządek i bezpieczeństwo. Automatyczne filtry, system ostrzeżeń, komendy dla moderatorów (kick, ban, mute, purge).</p>
-                        <ul>
-                            <li>Automatyczne usuwanie spamu i wulgaryzmów.</li>
-                            <li>System logowania działań moderacyjnych.</li>
-                            <li>Możliwość konfiguracji filtrów przez administratorów.</li>
-                        </ul>
+                    <div class="card-bg p-7 rounded-lg reveal">
+                        <h3 class="text-xl font-semibold text-primary mb-3">Zaawansowana Weryfikacja</h3>
+                        <p class="text-secondary text-sm">Wielopoziomowy system weryfikacji nowych użytkowników, skutecznie chroniący serwer przed niechcianymi botami, spamem i próbami rajdów, zapewniając bezpieczne środowisko dla wszystkich.</p>
                     </div>
-
-                    <div class="bot-system-card p-6 rounded-xl shadow-lg reveal" style="transition-delay: 0.1s;">
-                        <div class="bot-system-icon">🌟</div>
-                        <h3 class="text-2xl font-semibold text-accent mb-3">System Doświadczenia i Poziomów (Elara)</h3>
-                        <p class="text-secondary text-md mb-4">Nagradza aktywność użytkowników. Zdobywanie XP za wiadomości, reakcje, czas na kanałach głosowych. Awansowanie na kolejne poziomy i odblokowywanie rang.</p>
-                        <ul>
-                            <li>Konfigurowalne ilości XP i cooldowny.</li>
-                            <li>Rankingi serwerowe i globalne (jeśli dotyczy).</li>
-                            <li>Automatyczne nadawanie ról po osiągnięciu poziomu.</li>
-                        </ul>
+                    <div class="card-bg p-7 rounded-lg reveal" style="transition-delay: 0.1s;">
+                        <h3 class="text-xl font-semibold text-primary mb-3">Automatyzacja Ról i Kanałów</h3>
+                        <p class="text-secondary text-sm">Inteligentne systemy zarządzania rolami, które automatycznie przydzielają uprawnienia na podstawie aktywności, osiągnięć lub wyboru użytkownika. Dynamiczne tworzenie i archiwizacja kanałów tematycznych.</p>
                     </div>
-
-                    <div class="bot-system-card p-6 rounded-xl shadow-lg reveal" style="transition-delay: 0.2s;">
-                        <div class="bot-system-icon">💰</div>
-                        <h3 class="text-2xl font-semibold text-accent mb-3">Moduł Ekonomii (Gwiezdne Dukaty)</h3>
-                        <p class="text-secondary text-md mb-4">Wprowadza serwerową walutę - Gwiezdne Dukaty. Możliwość zdobywania za aktywność, udział w eventach, codzienne logowanie. Sklep z unikalnymi przedmiotami i bonusami.</p>
-                        <ul>
-                            <li>Komendy: <code>/balans</code>, <code>/daily</code>, <code>/sklep</code>, <code>/kup</code>, <code>/przelej</code>.</li>
-                            <li>Możliwość tworzenia niestandardowych przedmiotów w sklepie.</li>
-                        </ul>
-                    </div>
-
-                    <div class="bot-system-card p-6 rounded-xl shadow-lg reveal" style="transition-delay: 0.3s;">
-                        <div class="bot-system-icon">🎉</div>
-                        <h3 class="text-2xl font-semibold text-accent mb-3">Moduł Rozrywki i Gier (Lyra)</h3>
-                        <p class="text-secondary text-md mb-4">Zapewnia dobrą zabawę. Komendy do gier (np. rzut monetą, papier-kamień-nożyce), generowanie memów, cytaty, wróżby.</p>
-                        <ul>
-                            <li>Integracja z zewnętrznymi API dla ciekawostek.</li>
-                            <li>Możliwość dodawania własnych mini-gier.</li>
-                        </ul>
-                    </div>
-                    
-                    <div class="bot-system-card p-6 rounded-xl shadow-lg reveal" style="transition-delay: 0.4s;">
-                        <div class="bot-system-icon">🎵</div>
-                        <h3 class="text-2xl font-semibold text-accent mb-3">Moduł Muzyczny</h3>
-                        <p class="text-secondary text-md mb-4">Umożliwia odtwarzanie muzyki z YouTube, Spotify i innych źródeł na kanałach głosowych. Tworzenie playlist, kolejkowanie utworów.</p>
-                        <ul>
-                            <li>Komendy: <code>/play</code>, <code>/skip</code>, <code>/queue</code>, <code>/stop</code>, <code>/volume</code>.</li>
-                            <li>Wysoka jakość dźwięku i stabilność.</li>
-                        </ul>
-                    </div>
-
-                    <div class="bot-system-card p-6 rounded-xl shadow-lg reveal" style="transition-delay: 0.5s;">
-                        <div class="bot-system-icon">🏆</div>
-                        <h3 class="text-2xl font-semibold text-accent mb-3">System Osiągnięć</h3>
-                        <p class="text-secondary text-md mb-4">Nagradza użytkowników za specjalne osiągnięcia na serwerze (np. liczba wysłanych wiadomości, wygrane eventy, zdobycie określonego poziomu). Odblokowuje unikalne odznaki lub role.</p>
-                        <ul>
-                            <li>Możliwość definiowania niestandardowych osiągnięć.</li>
-                            <li>Automatyczne przyznawanie po spełnieniu warunków.</li>
-                        </ul>
+                    <div class="card-bg p-7 rounded-lg reveal" style="transition-delay: 0.2s;">
+                        <h3 class="text-xl font-semibold text-primary mb-3">Szczegółowy Audit Log</h3>
+                        <p class="text-secondary text-sm">Kompleksowe logowanie wszystkich istotnych działań na serwerze, w tym komend administracyjnych, zmian w konfiguracji i działań moderacyjnych. Kluczowe narzędzie dla transparentności i bezpieczeństwa.</p>
                     </div>
                 </div>
-                 <div class="text-center mt-12 sm:mt-16 reveal">
-                    <a href="komendy.html" class="btn-primary font-semibold py-3 px-8 rounded-lg text-md">Zobacz Pełną Listę Komend Bota</a>
-                </div>
+                 <p class="text-center text-secondary mt-10 text-md reveal">
+                    Stale pracujemy nad rozwojem naszych systemów i wprowadzaniem nowych, aby Kroniki Elary były jeszcze lepszym miejscem dla naszej społeczności.
+                </p>
             </div>
         </section>
+
     </main>
 
     <footer class="py-12 text-center" style="background-color: var(--bg-header);">
@@ -454,13 +255,16 @@
                 </a>
             </div>
             <p class="text-secondary text-sm">
-                &copy; <span id="currentYear"></span> Kroniki Elary. Wszelkie prawa zastrzeżone.
+                &copy; <span id="currentYear">2024</span> Kroniki Elary. Wszelkie prawa zastrzeżone.
             </p>
             <p class="text-xs mt-2.5" style="color: var(--text-secondary-light, #94A3B8);">
                 Stworzone z pasji do anime i mangi przez Arcadiusa i jego Strażników.
             </p>
         </div>
     </footer>
+
+    <div id="eventModal" class="fixed inset-0 z-[60] items-center justify-center hidden p-4 modal">
+        </div>
 
     <script>
         // Funkcja do obsługi aktywnego linku w nawigacji
@@ -481,21 +285,18 @@
             });
         }
 
-        // Funkcja do obsługi wyświetlania informacji o użytkowniku/logowania
         async function updateAuthDisplay() {
             const authSectionNav = document.getElementById('auth-section-nav');
             const authSectionMobileNav = document.getElementById('auth-section-mobile-nav');
-            const ADMIN_DISCORD_ID = "1238814802357387285"; // Upewnij się, że to jest ID admina
+            const mobileMenuLinksContainer = document.querySelector('#mobileMenu > div'); 
+            const ADMIN_DISCORD_ID = "1238814802357387285"; 
 
             function createLoginButton(isMobile = false) {
                 const loginButton = document.createElement('a');
-                loginButton.href = '/auth/discord/login'; // Upewnij się, że ten endpoint jest poprawny
+                loginButton.href = '/auth/discord/login'; 
                 loginButton.id = isMobile ? 'discordLoginButtonMobileNav' : 'discordLoginButtonNav';
                 loginButton.className = 'btn-discord !text-white px-4 py-2.5 rounded-md text-sm flex items-center' + (isMobile ? ' w-full justify-center mt-2' : '');
-                loginButton.innerHTML = `
-                    <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20.297 0H3.703C1.658 0 0 1.658 0 3.703V20.297C0 22.342 1.658 24 3.703 24H20.297C22.342 24 24 22.342 24 20.297V3.703C24 1.658 22.342 0 20.297 0ZM8.107 15.232C7.089 15.232 6.241 14.384 6.241 13.366C6.241 12.348 7.089 11.5 8.107 11.5C9.125 11.5 9.973 12.348 9.973 13.366C9.973 14.384 9.125 15.232 8.107 15.232ZM12.000 11.071C10.982 11.071 10.134 10.223 10.134 9.205C10.134 8.188 10.982 7.339 12.000 7.339C13.018 7.339 13.866 8.188 13.866 9.205C13.866 10.223 13.018 11.071 12.000 11.071ZM15.893 15.232C14.875 15.232 14.027 14.384 14.027 13.366C14.027 12.348 14.875 11.5 15.893 11.5C16.911 11.5 17.759 12.348 17.759 13.366C17.759 14.384 16.911 15.232 15.893 15.232Z"/></svg>
-                    Zaloguj przez Discord
-                `;
+                loginButton.innerHTML = `<svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 24 24"><path d="M20.297 0H3.703C1.658 0 0 1.658 0 3.703V20.297C0 22.342 1.658 24 3.703 24H20.297C22.342 24 24 22.342 24 20.297V3.703C24 1.658 22.342 0 20.297 0ZM8.107 15.232C7.089 15.232 6.241 14.384 6.241 13.366C6.241 12.348 7.089 11.5 8.107 11.5C9.125 11.5 9.973 12.348 9.973 13.366C9.973 14.384 9.125 15.232 8.107 15.232ZM12.000 11.071C10.982 11.071 10.134 10.223 10.134 9.205C10.134 8.188 10.982 7.339 12.000 7.339C13.018 7.339 13.866 8.188 13.866 9.205C13.866 10.223 13.018 11.071 12.000 11.071ZM15.893 15.232C14.875 15.232 14.027 14.384 14.027 13.366C14.027 12.348 14.875 11.5 15.893 11.5C16.911 11.5 17.759 12.348 17.759 13.366C17.759 14.384 16.911 15.232 15.893 15.232Z"/></svg> Zaloguj przez Discord`;
                 return loginButton;
             }
 
@@ -511,6 +312,7 @@
                 avatarImg.src = user.avatar ? `https://cdn.discordapp.com/avatars/${user.id}/${user.avatar}.png?size=32` : 'https://placehold.co/32x32/A78BFA/FFFFFF?text=U';
                 avatarImg.alt = 'Awatar użytkownika';
                 avatarImg.className = 'user-avatar';
+                avatarImg.onerror = () => { avatarImg.src = 'https://placehold.co/32x32/A78BFA/FFFFFF?text=U'; };
                 avatarImg.onclick = (event) => {
                     event.stopPropagation(); 
                     const dropdown = document.getElementById(dropdownId);
@@ -527,6 +329,16 @@
                 profileLink.textContent = 'Mój Profil';
                 dropdownMenu.appendChild(profileLink);
 
+                const botShopLink = document.createElement('a');
+                botShopLink.href = '/sklep-bota'; 
+                botShopLink.textContent = 'Sklep Bota (Dukaty)';
+                dropdownMenu.appendChild(botShopLink);
+                
+                const premiumShopLink = document.createElement('a');
+                premiumShopLink.href = 'sklep-premium.html';
+                premiumShopLink.textContent = 'Sklep Premium (Kryształy)';
+                dropdownMenu.appendChild(premiumShopLink);
+
                 const supportTicketsLink = document.createElement('a');
                 supportTicketsLink.href = 'support.html'; 
                 supportTicketsLink.textContent = 'Centrum Wsparcia';
@@ -534,13 +346,13 @@
 
                 if (user.id === ADMIN_DISCORD_ID) {
                     const adminLinkElement = document.createElement('a'); 
-                    adminLinkElement.href = '/admin.html'; 
+                    adminLinkElement.href = 'admin.html'; 
                     adminLinkElement.textContent = 'Panel Admina';
                     dropdownMenu.appendChild(adminLinkElement);
                 }
                 
                 const logoutForm = document.createElement('form');
-                logoutForm.action = '/auth/logout'; // Upewnij się, że ten endpoint jest poprawny
+                logoutForm.action = '/auth/logout'; 
                 logoutForm.method = 'POST';
                 const logoutButton = document.createElement('button');
                 logoutButton.type = 'submit';
@@ -551,27 +363,56 @@
                 container.appendChild(dropdownMenu);
                 return container;
             }
+            
+            if (mobileMenuLinksContainer) {
+                const existingMobileAuthElements = mobileMenuLinksContainer.querySelectorAll('#discordLoginButtonMobileNav, #userDropdownContainerMobileMenu, .mobile-auth-item');
+                existingMobileAuthElements.forEach(el => el.remove());
+            }
 
             try {
-                const response = await fetch('/api/me'); // Upewnij się, że ten endpoint jest poprawny
+                const response = await fetch('/api/me'); 
                 if (response.ok) {
                     const user = await response.json();
                     if (authSectionNav) {
                         authSectionNav.innerHTML = ''; 
                         authSectionNav.appendChild(createAvatarDropdown(user, false));
                     }
-                    if (authSectionMobileNav) {
+                    if (authSectionMobileNav) { 
                         authSectionMobileNav.innerHTML = ''; 
                         authSectionMobileNav.appendChild(createAvatarDropdown(user, true));
                     }
+                     if (mobileMenuLinksContainer) {
+                        const mobileDropdownContainer = createAvatarDropdown(user, true); 
+                        mobileDropdownContainer.id = 'userDropdownContainerMobileMenu';
+                        mobileDropdownContainer.classList.add('mt-2', 'border-t', 'border-[var(--border-card)]', 'pt-2', 'mobile-auth-item');
+                        
+                        const mobileAvatar = mobileDropdownContainer.querySelector('.user-avatar');
+                        const mobileDropdown = mobileDropdownContainer.querySelector('.dropdown-menu');
+                        
+                        if (mobileAvatar) mobileAvatar.classList.add('hidden'); 
+                        if (mobileDropdown) {
+                            mobileDropdown.classList.remove('absolute', 'top-full', 'right-0', 'dropdown-menu'); 
+                            mobileDropdown.classList.add('space-y-1');
+                            Array.from(mobileDropdown.children).forEach(child => {
+                                child.classList.add('block', 'py-2', 'px-3', 'text-base', 'font-medium', 'rounded-md', 'hover:bg-[rgba(var(--rgb-accent),0.1)]', 'hover:text-[var(--text-accent)]');
+                                mobileMenuLinksContainer.appendChild(child);
+                            });
+                        }
+                    }
+
                 } else {
                      if (authSectionNav) {
                         authSectionNav.innerHTML = '';
                         authSectionNav.appendChild(createLoginButton(false));
                     }
-                    if (authSectionMobileNav) {
+                    if (authSectionMobileNav) { 
                         authSectionMobileNav.innerHTML = '';
-                        authSectionMobileNav.appendChild(createLoginButton(true));
+                        authSectionMobileNav.appendChild(createLoginButton(true)); 
+                    }
+                    if (mobileMenuLinksContainer) {
+                        const mobileLoginButton = createLoginButton(true); 
+                        mobileLoginButton.classList.add('mt-2', 'border-t', 'border-[var(--border-card)]', 'pt-2', 'mobile-auth-item');
+                        mobileMenuLinksContainer.appendChild(mobileLoginButton);
                     }
                 }
             } catch (error) {
@@ -584,6 +425,11 @@
                     authSectionMobileNav.innerHTML = '';
                     authSectionMobileNav.appendChild(createLoginButton(true));
                 }
+                if (mobileMenuLinksContainer) {
+                    const mobileLoginButton = createLoginButton(true);
+                    mobileLoginButton.classList.add('mt-2', 'border-t', 'border-[var(--border-card)]', 'pt-2', 'mobile-auth-item');
+                    mobileMenuLinksContainer.appendChild(mobileLoginButton);
+                }
             }
         }
         
@@ -594,10 +440,10 @@
             if (mobileMenuButton && mobileMenu) {
                 mobileMenuButton.addEventListener('click', () => {
                     const isExpanded = mobileMenuButton.getAttribute('aria-expanded') === 'true' || false;
-                    mobileMenuButton.setAttribute('aria-expanded', !isExpanded);
+                    mobileMenuButton.setAttribute('aria-expanded', String(!isExpanded));
                     mobileMenu.classList.toggle('open');
                 });
-                mobileMenu.querySelectorAll('a.nav-link').forEach(link => { 
+                mobileMenu.querySelectorAll('a').forEach(link => { 
                     link.addEventListener('click', () => {
                         mobileMenuButton.setAttribute('aria-expanded', 'false');
                         mobileMenu.classList.remove('open');
@@ -614,7 +460,7 @@
                         observer.unobserve(entry.target);
                     }
                 });
-            }, { threshold: 0.05 }); 
+            }, { threshold: 0.1 });
 
             document.querySelectorAll('.reveal').forEach(el => {
                 revealObserver.observe(el);
@@ -624,19 +470,19 @@
         function setupDropdownDismiss() {
             window.addEventListener('click', function(e) {
                 const desktopDropdownContainer = document.getElementById('userDropdownContainerNav');
-                const mobileDropdownContainer = document.getElementById('userDropdownContainerMobile');
+                const mobileDropdownContainer = document.getElementById('userDropdownContainerMobile'); 
                 const desktopDropdown = document.getElementById('userDropdownNav');
-                const mobileDropdown = document.getElementById('userDropdownMobile');
+                const mobileDropdown = document.getElementById('userDropdownMobile'); 
 
-                if (desktopDropdownContainer && !desktopDropdownContainer.contains(e.target) && desktopDropdown) {
+                if (desktopDropdownContainer && !desktopDropdownContainer.contains(e.target) && desktopDropdown && desktopDropdown.classList.contains('open')) {
                     desktopDropdown.classList.remove('open');
                 }
-                if (mobileDropdownContainer && !mobileDropdownContainer.contains(e.target) && mobileDropdown) {
+                if (mobileDropdownContainer && !mobileDropdownContainer.contains(e.target) && mobileDropdown && mobileDropdown.classList.contains('open')) {
                      mobileDropdown.classList.remove('open');
                 }
             });
         }
-        
+
         document.addEventListener('DOMContentLoaded', function() {
             document.getElementById('currentYear').textContent = new Date().getFullYear();
             

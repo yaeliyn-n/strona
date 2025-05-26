@@ -3,61 +3,53 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Pełna lista komend Głównego Bota Kronik Elary. Dowiedz się, jak korzystać z modułów moderacji, ekonomii, muzyki, rozrywki i wielu innych na naszym serwerze Discord.">
-    <meta name="keywords" content="kroniki elary, discord, bot, komendy, lista komend, pomoc, moderacja, ekonomia, muzyka, rozrywka, serwer discord, anime, manga">
+    <meta name="description" content="Lista komend dla botów na serwerze Kroniki Elary. Dowiedz się, jak korzystać z funkcji Elara Prime i innych botów.">
+    <meta name="keywords" content="komendy discord, boty discord, kroniki elary, Elara Prime, komendy, pomoc, serwer discord">
     <meta name="author" content="Arcadius & Strażnicy Kronik Elary">
-    <title>Kroniki Elary - Lista Komend Bota</title>
+    <title>Komendy Botów - Wikipedia Kronik Elary</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600&display=swap" rel="stylesheet">
     <style>
         :root {
             --bg-primary: #0F172A; 
-            --bg-secondary: rgba(30, 41, 59, 0.8); 
-            --bg-card: #1E293B; 
+            --bg-secondary: #1E293B; 
+            --bg-card: #111827; 
             --bg-header: rgba(15, 23, 42, 0.92); 
-            
             --text-primary: #E2E8F0; 
             --text-secondary: #94A3B8; 
             --text-accent: #A78BFA; 
             --text-accent-hover: #8B5CF6; 
-            
-            --border-accent: #8B5CF6; 
-            --border-card: rgba(167, 139, 250, 0.25); 
-            
-            --btn-primary-bg: #8B5CF6; 
-            --btn-primary-hover-bg: #7C3AED; 
+            --border-accent: #8B5CF6;
+            --border-card: rgba(167, 139, 250, 0.15); 
+            --btn-primary-bg: #8B5CF6;
+            --btn-primary-hover-bg: #7C3AED;
             --btn-discord-bg: #5865F2;
             --btn-discord-hover-bg: #4752C4;
-            
             --scrollbar-thumb-bg: #8B5CF6;
             --scrollbar-thumb-hover-bg: #7C3AED;
-            
             --svg-icon-fill: #E2E8F0;
-            --shadow-color: rgba(167, 139, 250, 0.25); 
-            --shadow-strong-color: rgba(167, 139, 250, 0.4);
+            --shadow-color: rgba(167, 139, 250, 0.15); 
+            --shadow-strong-color: rgba(167, 139, 250, 0.3); 
             --modal-backdrop: rgba(15, 23, 42, 0.85);
-
             --rgb-accent: 167, 139, 250;
             --rgb-purple-400: 167, 139, 250; 
             --rgb-stone-400: 168, 162, 158; 
             --rgb-amber-400: 251, 191, 36; 
             --rgb-cyan-400: 34, 211, 238; 
-
             --text-purple-400: #A78BFA;
             --text-stone-400: #A8A29E;
             --text-amber-400: #FBBF24;
             --text-cyan-400: #22D3EE;
         }
-
-        html.light { 
-            --bg-primary: #F9FAFB;
-            --bg-secondary: rgba(243, 244, 246, 0.9);
-            --bg-card: #FFFFFF;
+        html.light {
+            --bg-primary: #F9FAFB; 
+            --bg-secondary: #F3F4F6; 
+            --bg-card: #FFFFFF; 
             --bg-header: rgba(255, 255, 255, 0.95);
-            --text-primary: #1F2937;
-            --text-secondary: #4B5563;
-            --text-accent: #7C3AED;
-            --text-accent-hover: #6D28D9;
+            --text-primary: #1F2937; 
+            --text-secondary: #4B5563; 
+            --text-accent: #7C3AED; 
+            --text-accent-hover: #6D28D9; 
             --border-accent: #7C3AED;
             --border-card: rgba(124, 58, 237, 0.1);
             --btn-primary-bg: #7C3AED;
@@ -70,7 +62,6 @@
             --shadow-color: rgba(124, 58, 237, 0.08);
             --shadow-strong-color: rgba(124, 58, 237, 0.15);
             --modal-backdrop: rgba(249, 250, 251, 0.85);
-
             --rgb-accent: 124, 58, 237;
             --rgb-purple-400: 124, 58, 237;
             --rgb-stone-400: 120, 113, 108;
@@ -81,245 +72,45 @@
             --text-amber-400: #D97706;
             --text-cyan-400: #0891B2;
         }
-
-        body {
-            font-family: 'Inter', sans-serif;
-            background-color: var(--bg-primary);
-            color: var(--text-primary);
-            transition: background-color 0.3s ease, color 0.3s ease;
-            -webkit-font-smoothing: antialiased;
-            -moz-osx-font-smoothing: grayscale;
-            line-height: 1.75; 
-        }
-
-        h1, h2, h3, h4, h5 {
-            font-family: 'Lora', serif;
-            font-weight: 600;
-            line-height: 1.35; 
-        }
-        h1 { letter-spacing: -0.025em; font-weight: 700; }
-        h2 { letter-spacing: -0.02em; font-weight: 700; }
-        h3 { font-weight: 600; }
-        
-        .hero-commands-bg {
-            background: linear-gradient(rgba(15, 23, 42, 0.92), rgba(15, 23, 42, 1)), url('https://placehold.co/1920x800/0a0f1e/a78bfa?text=Zwoje+Komend+Bota') center/cover no-repeat fixed;
-        }
-        .card-bg, .command-category-card {
-            background-color: var(--bg-card);
-            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), background-color 0.3s ease; 
-            border: 1px solid var(--border-card); 
-            box-shadow: 0 7px 18px -4px var(--shadow-color); 
-            overflow: hidden;
-        }
-        .card-bg:hover, .command-category-card:hover {
-            transform: translateY(-8px) scale(1.025); 
-            box-shadow: 0 14px 28px -6px var(--shadow-strong-color); 
-        }
-        
-        .btn-primary, .btn-discord, .btn-secondary {
-            color: #FFFFFF; 
-            transition: background-color 0.25s ease, transform 0.25s ease, box-shadow 0.25s ease;
-            box-shadow: 0 5px 12px -3px var(--shadow-color);
-            font-weight: 600; 
-            letter-spacing: 0.03em;
-            padding-top: 0.85rem; 
-            padding-bottom: 0.85rem;
-            border-radius: 0.5rem;
-        }
-        .btn-primary { background-color: var(--btn-primary-bg); }
-        .btn-primary:hover {
-            background-color: var(--btn-primary-hover-bg);
-            transform: scale(1.06) translateY(-3px); 
-            box-shadow: 0 14px 24px -5px var(--shadow-strong-color);
-        }
-        .btn-discord { background-color: var(--btn-discord-bg); }
-        .btn-discord:hover {
-            background-color: var(--btn-discord-hover-bg);
-            transform: scale(1.06) translateY(-3px);
-            box-shadow: 0 10px 20px -5px rgba(88, 101, 242, 0.4);
-        }
-        .btn-secondary {
-            background-color: transparent;
-            border: 2px solid var(--border-accent);
-            color: var(--text-accent);
-            padding: calc(0.85rem - 2px) calc(1.5rem - 2px);
-        }
-        .btn-secondary:hover {
-            background-color: var(--border-accent);
-            color: white;
-            transform: scale(1.05) translateY(-1px);
-            box-shadow: 0 8px 15px -3px var(--shadow-color);
-        }
-        .text-accent {
-            color: var(--text-accent);
-        }
-        
-        .reveal {
-            opacity: 0;
-            transform: translateY(70px); 
-            transition: opacity 1s cubic-bezier(0.645, 0.045, 0.355, 1), transform 1s cubic-bezier(0.645, 0.045, 0.355, 1);
-        }
-        .reveal.visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
-        ::-webkit-scrollbar { width: 13px; } 
-        ::-webkit-scrollbar-track { background: var(--bg-primary); }
-        ::-webkit-scrollbar-thumb { background: var(--scrollbar-thumb-bg); border-radius: 7px; border: 3.5px solid var(--bg-primary); }
+        body { font-family: 'Inter', sans-serif; background-color: var(--bg-primary); color: var(--text-primary); transition: background-color 0.3s ease, color 0.3s ease; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; line-height: 1.75; }
+        h1, h2, h3, h4, h5 { font-family: 'Lora', serif; font-weight: 600; line-height: 1.35; }
+        h1 { letter-spacing: -0.025em; font-weight: 700; } h2 { letter-spacing: -0.02em; font-weight: 700; } h3 { font-weight: 600; }
+        .hero-commands-bg { background: linear-gradient(rgba(15, 23, 42, 0.88), rgba(15, 23, 42, 0.98)), url('https://placehold.co/1920x500/0a0f1e/7C3AED?text=Komendy+Botów') center/cover no-repeat; }
+        .section-bg { background-color: var(--bg-secondary); }
+        .card-bg { background-color: var(--bg-card); transition: transform 0.3s cubic-bezier(0.25, 0.1, 0.25, 1), box-shadow 0.3s cubic-bezier(0.25, 0.1, 0.25, 1), background-color 0.3s ease; border: 1px solid var(--border-card); box-shadow: 0 6px 12px -3px var(--shadow-color); overflow: hidden; }
+        .card-bg:hover { transform: translateY(-8px) scale(1.02); box-shadow: 0 12px 24px -4px var(--shadow-strong-color); }
+        .btn-primary, .btn-discord, .btn-secondary { color: #FFFFFF; transition: background-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease; box-shadow: 0 4px 8px -2px var(--shadow-color); font-weight: 600; letter-spacing: 0.03em; padding-top: 0.8rem; padding-bottom: 0.8rem; border-radius: 0.375rem; } 
+        .btn-primary { background-color: var(--btn-primary-bg); } .btn-primary:hover { background-color: var(--btn-primary-hover-bg); transform: scale(1.04) translateY(-2px); box-shadow: 0 10px 18px -4px var(--shadow-strong-color); }
+        .btn-discord { background-color: var(--btn-discord-bg); } .btn-discord:hover { background-color: var(--btn-discord-hover-bg); transform: scale(1.04) translateY(-2px); box-shadow: 0 10px 18px -4px rgba(88, 101, 242, 0.35); }
+        .btn-secondary { background-color: transparent; border: 2px solid var(--border-accent); color: var(--text-accent); padding: calc(0.8rem - 2px) calc(1.5rem - 2px); }
+        .btn-secondary:hover { background-color: var(--border-accent); color: white; transform: scale(1.04) translateY(-2px); box-shadow: 0 6px 12px -2px var(--shadow-color); }
+        .text-accent { color: var(--text-accent); }
+        .reveal { opacity: 0; transform: translateY(50px); transition: opacity 0.8s cubic-bezier(0.645, 0.045, 0.355, 1), transform 0.8s cubic-bezier(0.645, 0.045, 0.355, 1); }
+        .reveal.visible { opacity: 1; transform: translateY(0); }
+        ::-webkit-scrollbar { width: 12px; } ::-webkit-scrollbar-track { background: var(--bg-primary); }
+        ::-webkit-scrollbar-thumb { background: var(--scrollbar-thumb-bg); border-radius: 6px; border: 3px solid var(--bg-primary); }
         ::-webkit-scrollbar-thumb:hover { background: var(--scrollbar-thumb-hover-bg); }
-        
-        header#navbar {
-            background-color: var(--bg-header);
-            backdrop-filter: blur(18px); 
-            transition: background-color 0.3s ease, box-shadow 0.3s ease;
-            box-shadow: 0 5px 15px -4px rgba(15,23,42,0.2); 
-        }
-
-        .nav-link {
-            position: relative;
-            color: var(--text-secondary);
-            transition: color 0.2s ease, background-color 0.2s ease, transform 0.2s ease; 
-            padding: 0.65rem 1.1rem; 
-            border-radius: 0.6rem; 
-            font-weight: 500;
-        }
-        .nav-link:hover {
-            transform: translateY(-1px); 
-        }
-        .nav-link::after { 
-            content: '';
-            position: absolute;
-            width: 0;
-            height: 3px; 
-            bottom: 5px; 
-            left: 50%;
-            transform: translateX(-50%);
-            background-color: var(--text-accent);
-            transition: width 0.35s cubic-bezier(0.25, 0.8, 0.25, 1);
-            border-radius: 1.5px;
-        }
-        .nav-link:hover, .nav-link.active {
-            color: var(--text-accent);
-            background-color: rgba(var(--rgb-accent), 0.12); 
-        }
-        .nav-link:hover::after, .nav-link.active::after {
-            width: 60%; 
-        }
-        
-        #mobileMenu {
-            transition: transform 0.4s cubic-bezier(0.25, 0.8, 0.25, 1), opacity 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
-            transform: translateY(-100%);
-            opacity: 0;
-            pointer-events: none; 
-        }
-        #mobileMenu.open {
-            transform: translateY(0);
-            opacity: 1;
-            pointer-events: auto;
-        }
-        html.dark .text-shadow-custom { 
-             text-shadow: 1px 1px 4px rgba(0,0,0,0.6); 
-        }
-        .user-avatar {
-            width: 32px; 
-            height: 32px; 
-            border-radius: 50%;
-            border: 2px solid var(--border-accent);
-            cursor: pointer;
-            transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
-        }
-        .user-avatar:hover {
-            transform: scale(1.1);
-            box-shadow: 0 0 10px var(--shadow-strong-color);
-        }
-        .dropdown-menu {
-            position: absolute;
-            top: calc(100% + 0.5rem); 
-            right: 0;
-            background-color: var(--bg-card);
-            border: 1px solid var(--border-card);
-            border-radius: 0.5rem; 
-            box-shadow: 0 10px 25px -5px var(--shadow-strong-color), 0 8px 10px -6px var(--shadow-color);
-            z-index: 50;
-            min-width: 200px; 
-            opacity: 0;
-            visibility: hidden;
-            transform: translateY(-10px);
-            transition: opacity 0.2s ease, transform 0.2s ease, visibility 0s linear 0.2s;
-        }
-        .dropdown-menu.open {
-            opacity: 1;
-            visibility: visible;
-            transform: translateY(0);
-            transition: opacity 0.2s ease, transform 0.2s ease;
-        }
-        .dropdown-menu a, .dropdown-menu button {
-            display: block;
-            width: 100%;
-            text-align: left;
-            padding: 0.75rem 1rem; 
-            font-size: 0.875rem; 
-            color: var(--text-secondary);
-            transition: background-color 0.15s ease, color 0.15s ease;
-        }
-        .dropdown-menu a:hover, .dropdown-menu button:hover {
-            background-color: rgba(var(--rgb-accent), 0.1);
-            color: var(--text-accent);
-        }
+        header#navbar { background-color: var(--bg-header); backdrop-filter: blur(16px); transition: background-color 0.3s ease, box-shadow 0.3s ease; box-shadow: 0 4px 10px -3px rgba(15,23,42,0.15); }
+        .nav-link { position: relative; color: var(--text-secondary); transition: color 0.2s ease, background-color 0.2s ease, transform 0.2s ease; padding: 0.6rem 1rem; border-radius: 0.375rem; font-weight: 500; }
+        .nav-link:hover { transform: translateY(-1px); }
+        .nav-link::after { content: ''; position: absolute; width: 0; height: 2px; bottom: 4px; left: 50%; transform: translateX(-50%); background-color: var(--text-accent); transition: width 0.3s cubic-bezier(0.25, 0.8, 0.25, 1); border-radius: 1px; }
+        .nav-link:hover, .nav-link.active { color: var(--text-accent); background-color: rgba(var(--rgb-accent), 0.1); }
+        .nav-link:hover::after, .nav-link.active::after { width: 50%; }
+        #mobileMenu { transition: transform 0.3s cubic-bezier(0.25, 0.8, 0.25, 1), opacity 0.3s cubic-bezier(0.25, 0.8, 0.25, 1); transform: translateY(-100%); opacity: 0; pointer-events: none; }
+        #mobileMenu.open { transform: translateY(0); opacity: 1; pointer-events: auto; }
+        html.dark .text-shadow-custom { text-shadow: 1px 1px 3px rgba(0,0,0,0.5); }
+        .user-avatar { width: 32px; height: 32px; border-radius: 50%; border: 2px solid var(--border-accent); cursor: pointer; transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out; }
+        .user-avatar:hover { transform: scale(1.1); box-shadow: 0 0 8px var(--shadow-strong-color); }
+        .dropdown-menu { position: absolute; top: calc(100% + 0.5rem); right: 0; background-color: var(--bg-card); border: 1px solid var(--border-card); border-radius: 0.375rem; box-shadow: 0 8px 20px -4px var(--shadow-strong-color), 0 6px 8px -5px var(--shadow-color); z-index: 50; min-width: 220px; opacity: 0; visibility: hidden; transform: translateY(-8px); transition: opacity 0.15s ease, transform 0.15s ease, visibility 0s linear 0.15s; }
+        .dropdown-menu.open { opacity: 1; visibility: visible; transform: translateY(0); transition: opacity 0.15s ease, transform 0.15s ease; }
+        .dropdown-menu a, .dropdown-menu button { display: block; width: 100%; text-align: left; padding: 0.7rem 1rem; font-size: 0.875rem; color: var(--text-secondary); transition: background-color 0.1s ease, color 0.1s ease; }
+        .dropdown-menu a:hover, .dropdown-menu button:hover { background-color: rgba(var(--rgb-accent), 0.08); color: var(--text-accent); }
         .dropdown-menu form { margin: 0; } 
-        
-        .command-table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 1.5rem; /* Tailwind: mt-6 */
-        }
-        .command-table th, .command-table td {
-            border: 1px solid var(--border-card);
-            padding: 0.75rem 1rem; /* Tailwind: p-3 sm:p-4 */
-            text-align: left;
-            vertical-align: top; /* Lepsze wyrównanie dla dłuższych opisów */
-        }
-        .command-table th {
-            background-color: rgba(var(--rgb-accent), 0.1);
-            color: var(--text-accent);
-            font-weight: 600;
-        }
-        .command-table td code {
-            background-color: rgba(var(--rgb-accent), 0.15);
-            color: var(--text-accent);
-            padding: 0.2em 0.4em;
-            border-radius: 0.25rem; /* Tailwind: rounded-sm */
-            font-size: 0.9em;
-            border: 1px solid rgba(var(--rgb-accent), 0.3); /* Subtelne obramowanie dla kodu */
-        }
-        .command-category-card .category-title-icon { /* Zmieniono nazwę klasy dla jasności */
-            display: flex;
-            align-items: center;
-            color: var(--text-accent); /* Kolor tytułu i ikony */
-        }
-        .command-category-card .category-title-icon svg {
-            margin-right: 0.75rem; /* Tailwind: mr-3 */
-            width: 1.75rem; /* Tailwind: w-7 */
-            height: 1.75rem; /* Tailwind: h-7 */
-            flex-shrink: 0; /* Zapobiega kurczeniu się ikony */
-            transition: transform 0.3s ease-in-out;
-        }
-        .command-category-card:hover .category-title-icon svg {
-            transform: rotate(5deg) scale(1.1); /* Efekt "magii" dla ikon */
-        }
-        .animated-gradient-text {
-            background: linear-gradient(45deg, var(--text-accent), var(--text-accent-hover), #c084fc, var(--text-accent));
-            background-size: 200% 200%;
-            -webkit-background-clip: text;
-            background-clip: text;
-            -webkit-text-fill-color: transparent;
-            animation: gradient-flow 8s ease infinite;
-        }
-        @keyframes gradient-flow {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
-        }
+        .modal { background-color: var(--modal-backdrop); backdrop-filter: blur(6px); }
+        .modal-content { background-color: var(--bg-card); max-height: 90vh; }
+        .command-category .command-item { border-left: 3px solid var(--border-accent); }
+        .command-name { color: var(--text-accent); font-family: 'Courier New', Courier, monospace; }
+        .command-args { color: var(--text-amber-400); font-style: italic; }
     </style>
 </head>
 <body class="antialiased">
@@ -332,7 +123,7 @@
             <nav class="hidden md:flex items-center space-x-1 lg:space-x-2">
                 <a href="index.html" class="nav-link">Strona Główna</a>
                 <a href="prezentacja.html" class="nav-link">Prezentacja Serwera</a>
-                <a href="wikipedia.html" class="nav-link active">Wikipedia Kronik</a> 
+                <a href="wikipedia.html" class="nav-link">Wikipedia Kronik</a> 
                 <a href="ranking-stats.html" class="nav-link">Rankingi</a>
                 <div id="auth-section-nav" class="ml-4 relative">
                     </div>
@@ -349,143 +140,109 @@
             <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
                 <a href="index.html" class="block py-2.5 px-3 nav-link text-base font-medium">Strona Główna</a>
                 <a href="prezentacja.html" class="block py-2.5 px-3 nav-link text-base font-medium">Prezentacja Serwera</a>
-                <a href="wikipedia.html" class="block py-2.5 px-3 nav-link text-base font-medium active">Wikipedia Kronik</a>
+                <a href="wikipedia.html" class="block py-2.5 px-3 nav-link text-base font-medium">Wikipedia Kronik</a>
                 <a href="ranking-stats.html" class="block py-2.5 px-3 nav-link text-base font-medium">Rankingi</a>
                 <a href="https://discord.gg/TWOJLINKZAPROSZENIOWY" target="_blank" rel="noopener noreferrer" class="block mt-2 py-2.5 px-3 text-base font-medium text-white bg-purple-600 hover:bg-purple-700 rounded-md text-center">Dołącz do Discorda</a>
-            </div>
+                 </div>
         </div>
     </header>
 
     <main>
-        <section class="hero-commands-bg min-h-[60vh] sm:min-h-[70vh] flex items-center justify-center text-center pt-24 sm:pt-20 reveal">
-            <div class="container mx-auto px-4 sm:px-6 py-12 sm:py-16">
-                <h1 class="text-5xl sm:text-6xl md:text-7xl font-bold text-white mb-6 leading-tight text-shadow-custom">
-                    Komendy Bota <span class="animated-gradient-text">Kronik Elary</span>
+        <section class="hero-commands-bg pt-32 pb-16 sm:pt-40 sm:pb-24 text-center reveal">
+            <div class="container mx-auto px-4 sm:px-6">
+                <h1 class="text-4xl sm:text-5xl md:text-6xl font-bold text-white mb-6 leading-tight text-shadow-custom">
+                    Komendy Bota <span class="text-accent">Elara Prime</span>
                 </h1>
-                <p class="text-xl md:text-2xl text-slate-200 mb-10 max-w-3xl mx-auto text-shadow-custom">
-                    Odkryj pełną listę komend dostępnych dla Głównego Bota Kronik. Używaj ich mądrze, by wzbogacić swoje doświadczenie na serwerze!
+                <p class="text-lg md:text-xl text-slate-200 mb-10 max-w-3xl mx-auto text-shadow-custom">
+                    Odkryj pełną listę komend naszego wszechstronnego bota Elara Prime i wykorzystaj jego potencjał na serwerze Kroniki Elary.
                 </p>
-                <a href="wikipedia.html" class="btn-secondary font-semibold py-3 px-8 rounded-lg text-md inline-block">&larr; Powrót do Głównej Strony Wikipedii</a>
+                <a href="wikipedia.html" class="btn-secondary font-semibold py-3 px-6 text-md inline-flex items-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-arrow-left-circle-fill mr-2" viewBox="0 0 16 16">
+                        <path d="M8 0a8 8 0 1 0 0 16A8 8 0 0 0 8 0m3.5 7.5a.5.5 0 0 1 0 1H5.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L5.707 7.5z"/>
+                    </svg>
+                    Powrót do Wikipedii
+                </a>
             </div>
         </section>
 
-        <section id="lista-komend" class="py-16 sm:py-24">
+        <section id="wprowadzenie-komendy" class="py-16 sm:py-20 section-bg reveal">
             <div class="container mx-auto px-4 sm:px-6">
-                <h2 class="text-3xl sm:text-4xl font-bold text-primary mb-12 text-center reveal">Kategorie <span class="text-accent">Komend</span></h2>
-                
-                <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-                    <div class="command-category-card p-6 sm:p-8 rounded-2xl shadow-xl reveal">
-                        <h3 class="text-2xl font-semibold category-title-icon mb-4">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.38a2 2 0 0 0-.73-2.73l-.15-.09a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"></path><circle cx="12" cy="12" r="3"></circle></svg>
-                            Ogólne (general)
-                        </h3>
-                        <table class="command-table">
-                            <thead>
-                                <tr><th>Komenda</th><th>Opis</th></tr>
-                            </thead>
-                            <tbody>
-                                <tr><td><code>/pomoc [kategoria/komenda]</code></td><td>Wyświetla pomoc dotyczącą komend.</td></tr>
-                                <tr><td><code>/serwer</code></td><td>Wyświetla informacje o serwerze Kronik Elary.</td></tr>
-                                <tr><td><code>/ping</code></td><td>Sprawdza opóźnienie bota.</td></tr>
-                                <tr><td><code>/zapros</code></td><td>Generuje link zaproszeniowy dla bota.</td></tr>
-                                <tr><td><code>/avatar [użytkownik]</code></td><td>Wyświetla awatar użytkownika.</td></tr>
-                            </tbody>
-                        </table>
-                    </div>
+                <div class="text-center mb-14 sm:mb-18">
+                    <h2 class="text-3xl sm:text-4xl font-bold text-primary mb-4">Jak Korzystać z Komend?</h2>
+                    <p class="text-lg text-secondary max-w-3xl mx-auto">
+                        Większość komend bota Elara Prime wpisuje się na wyznaczonych kanałach tekstowych (np. <code class="bg-bg-card px-1.5 py-0.5 rounded text-xs text-text-secondary">#🤖-komendy-botów</code>) poprzedzając je ustalonym prefiksem (domyślnie <code class="bg-bg-card px-1.5 py-0.5 rounded text-xs text-text-accent">!</code> lub <code class="bg-bg-card px-1.5 py-0.5 rounded text-xs text-text-accent">/</code> dla komend slash). Poniżej znajdziesz listę dostępnych komend podzieloną na kategorie.
+                    </p>
+                </div>
+            </div>
+        </section>
 
-                    <div class="command-category-card p-6 sm:p-8 rounded-2xl shadow-xl reveal" style="transition-delay: 0.1s;">
-                        <h3 class="text-2xl font-semibold category-title-icon mb-4">
-                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
-                            Doświadczenie (doświadczenie)
-                        </h3>
-                        <table class="command-table">
-                            <thead>
-                                <tr><th>Komenda</th><th>Opis</th></tr>
-                            </thead>
-                            <tbody>
-                                <tr><td><code>/poziom [użytkownik]</code></td><td>Wyświetla poziom i XP użytkownika.</td></tr>
-                                <tr><td><code>/ranking [typ]</code></td><td>Wyświetla ranking serwera (np. wiadomości, XP).</td></tr>
-                                <tr><td><code>/osiagniecia [użytkownik]</code></td><td>Pokazuje zdobyte osiągnięcia użytkownika.</td></tr>
-                                <tr><td><code>/listaosiagniec</code></td><td>Wyświetla listę wszystkich dostępnych osiągnięć.</td></tr>
-                            </tbody>
-                        </table>
-                    </div>
-
-                    <div class="command-category-card p-6 sm:p-8 rounded-2xl shadow-xl reveal" style="transition-delay: 0.2s;">
-                        <h3 class="text-2xl font-semibold category-title-icon mb-4">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="21" r="1"></circle><circle cx="19" cy="21" r="1"></circle><path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12"></path></svg>
-                            Waluta (waluta)
-                        </h3>
-                        <table class="command-table">
-                            <thead>
-                                <tr><th>Komenda</th><th>Opis</th></tr>
-                            </thead>
-                            <tbody>
-                                <tr><td><code>/balans [użytkownik]</code></td><td>Sprawdza saldo Gwiezdnych Dukatów.</td></tr>
-                                <tr><td><code>/daily</code></td><td>Odbiera codzienną nagrodę w Dukatach.</td></tr>
-                                <tr><td><code>/sklep</code></td><td>Wyświetla przedmioty dostępne w sklepie.</td></tr>
-                                <tr><td><code>/kup [nazwa_przedmiotu]</code></td><td>Kupuje przedmiot ze sklepu.</td></tr>
-                                <tr><td><code>/przelej [użytkownik] [ilość]</code></td><td>Przelewa Dukaty innemu użytkownikowi.</td></tr>
-                            </tbody>
-                        </table>
-                    </div>
-
-                    <div class="command-category-card p-6 sm:p-8 rounded-2xl shadow-xl reveal" style="transition-delay: 0.3s;">
-                        <h3 class="text-2xl font-semibold category-title-icon mb-4">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
-                            Rozrywka (fun)
-                        </h3>
-                        <table class="command-table">
-                            <thead>
-                                <tr><th>Komenda</th><th>Opis</th></tr>
-                            </thead>
-                            <tbody>
-                                <tr><td><code>/rzutmoneta</code></td><td>Rzuca monetą (orzeł/reszka).</td></tr>
-                                <tr><td><code>/pkn</code></td><td>Gra w papier, kamień, nożyce.</td></tr>
-                                <tr><td><code>/losowyfakt</code></td><td>Wyświetla losowy fakt.</td></tr>
-                                 <tr><td><code>/mem</code></td><td>Wyświetla losowy mem.</td></tr>
-                            </tbody>
-                        </table>
-                    </div>
-
-                    <div class="command-category-card p-6 sm:p-8 rounded-2xl shadow-xl reveal" style="transition-delay: 0.4s;">
-                        <h3 class="text-2xl font-semibold category-title-icon mb-4">
-                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
-                            Moderacja (moderacja)
-                        </h3>
-                        <p class="text-sm text-secondary mb-3">Komendy dostępne dla moderatorów i administratorów.</p>
-                        <table class="command-table">
-                            <thead>
-                                <tr><th>Komenda</th><th>Opis</th></tr>
-                            </thead>
-                            <tbody>
-                                <tr><td><code>/wyrzuc [użytkownik] [powód]</code></td><td>Wyrzuca użytkownika.</td></tr>
-                                <tr><td><code>/ban [użytkownik] [powód]</code></td><td>Banuje użytkownika.</td></tr>
-                                <tr><td><code>/unban [id_użytkownika]</code></td><td>Odbanowuje użytkownika.</td></tr>
-                                <tr><td><code>/warn [użytkownik] [powód]</code></td><td>Daje ostrzeżenie użytkownikowi.</td></tr>
-                                <tr><td><code>/usunwarn [użytkownik] [id_warna]</code></td><td>Usuwa ostrzeżenie.</td></tr>
-                                <tr><td><code>/czysc [ilość]</code></td><td>Usuwa określoną liczbę wiadomości.</td></tr>
-                            </tbody>
-                        </table>
-                    </div>
-                    <div class="command-category-card p-6 sm:p-8 rounded-2xl shadow-xl reveal" style="transition-delay: 0.5s;">
-                        <h3 class="text-2xl font-semibold category-title-icon mb-4">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 12v4c0 2-2.5 4-5 4s-5-2-5-4V8"/><path d="M20 8v4"/><path d="M4 12v4c0 2 2.5 4 5 4s5-2 5-4V8"/><path d="M4 8v4"/><path d="M12 22v-6"/><path d="M12 8V2l6 3-6 3"/></svg>
-                            Konkursy (giveaway)
-                        </h3>
-                        <p class="text-sm text-secondary mb-3">Komendy do zarządzania konkursami (wymagane uprawnienia).</p>
-                        <table class="command-table">
-                            <thead>
-                                <tr><th>Komenda</th><th>Opis</th></tr>
-                            </thead>
-                            <tbody>
-                                <tr><td><code>/giveaway start [czas] [zwycięzcy] [nagroda]</code></td><td>Rozpoczyna nowy konkurs.</td></tr>
-                                <tr><td><code>/giveaway reroll [id_wiadomości_konkursu]</code></td><td>Losuje ponownie zwycięzcę.</td></tr>
-                                <tr><td><code>/giveaway end [id_wiadomości_konkursu]</code></td><td>Kończy konkurs przed czasem.</td></tr>
-                            </tbody>
-                        </table>
+        <section id="lista-komend" class="py-16 sm:py-20 reveal">
+            <div class="container mx-auto px-4 sm:px-6">
+                <div class="command-category mb-12 reveal">
+                    <h3 class="text-2xl sm:text-3xl font-semibold text-primary mb-6 border-b-2 border-border-accent pb-3">Komendy <span class="text-accent">Ogólne i Informacyjne</span></h3>
+                    <div class="space-y-6">
+                        <div class="card-bg p-5 rounded-lg command-item">
+                            <p><span class="command-name">!pomoc</span> lub <span class="command-name">/help</span> - Wyświetla listę dostępnych komend lub pomoc dla konkretnej komendy.</p>
+                            <p class="text-xs text-secondary mt-1">Przykład: <code class="text-xs">!pomoc profil</code></p>
+                        </div>
+                        <div class="card-bg p-5 rounded-lg command-item">
+                            <p><span class="command-name">!profil</span> <span class="command-args">[użytkownik]</span> lub <span class="command-name">/profile</span> <span class="command-args">[user]</span> - Wyświetla profil użytkownika (poziom, XP, waluty, etc.).</p>
+                            <p class="text-xs text-secondary mt-1">Przykład: <code class="text-xs">!profil @Arcadius</code></p>
+                        </div>
+                        <div class="card-bg p-5 rounded-lg command-item">
+                            <p><span class="command-name">!serwer</span> lub <span class="command-name">/serverinfo</span> - Wyświetla informacje o serwerze Kroniki Elary.</p>
+                        </div>
+                        <div class="card-bg p-5 rounded-lg command-item">
+                            <p><span class="command-name">!avatar</span> <span class="command-args">[użytkownik]</span> lub <span class="command-name">/avatar</span> <span class="command-args">[user]</span> - Wyświetla awatar użytkownika w większym rozmiarze.</p>
+                        </div>
                     </div>
                 </div>
+
+                <div class="command-category mb-12 reveal" style="transition-delay: 0.1s;">
+                    <h3 class="text-2xl sm:text-3xl font-semibold text-primary mb-6 border-b-2 border-border-accent pb-3">Komendy <span class="text-accent">Ekonomiczne</span></h3>
+                    <div class="space-y-6">
+                        <div class="card-bg p-5 rounded-lg command-item">
+                            <p><span class="command-name">!balans</span> lub <span class="command-name">/balance</span> - Sprawdza stan Twoich Gwiezdnych Dukatów i Kryształów Elary.</p>
+                        </div>
+                        <div class="card-bg p-5 rounded-lg command-item">
+                            <p><span class="command-name">!sklep</span> lub <span class="command-name">/shop</span> - Wyświetla dostępne przedmioty w sklepie serwerowym.</p>
+                        </div>
+                        <div class="card-bg p-5 rounded-lg command-item">
+                            <p><span class="command-name">!kup</span> <span class="command-args">&lt;ID_przedmiotu&gt;</span> lub <span class="command-name">/buy</span> <span class="command-args">&lt;item_id&gt;</span> - Kupuje przedmiot ze sklepu.</p>
+                            <p class="text-xs text-secondary mt-1">Przykład: <code class="text-xs">!kup 101</code></p>
+                        </div>
+                        <div class="card-bg p-5 rounded-lg command-item">
+                            <p><span class="command-name">!przelej</span> <span class="command-args">&lt;użytkownik&gt; &lt;ilość_dukatów&gt;</span> lub <span class="command-name">/pay</span> <span class="command-args">&lt;user&gt; &lt;amount&gt;</span> - Przelewa Gwiezdne Dukaty innemu użytkownikowi.</p>
+                        </div>
+                         <div class="card-bg p-5 rounded-lg command-item">
+                            <p><span class="command-name">!daily</span> lub <span class="command-name">/daily</span> - Odbiera codzienną nagrodę w Gwiezdnych Dukatach.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="command-category mb-12 reveal" style="transition-delay: 0.2s;">
+                    <h3 class="text-2xl sm:text-3xl font-semibold text-primary mb-6 border-b-2 border-border-accent pb-3">Komendy <span class="text-accent">Rozrywkowe i Muzyczne</span></h3>
+                    <div class="space-y-6">
+                        <div class="card-bg p-5 rounded-lg command-item">
+                            <p><span class="command-name">!play</span> <span class="command-args">&lt;tytuł_piosenki_lub_link_YouTube&gt;</span> lub <span class="command-name">/play</span> <span class="command-args">&lt;song_title_or_url&gt;</span> - Odtwarza piosenkę na kanale głosowym.</p>
+                        </div>
+                        <div class="card-bg p-5 rounded-lg command-item">
+                            <p><span class="command-name">!skip</span> lub <span class="command-name">/skip</span> - Pomija aktualnie odtwarzaną piosenkę.</p>
+                        </div>
+                        <div class="card-bg p-5 rounded-lg command-item">
+                            <p><span class="command-name">!queue</span> lub <span class="command-name">/queue</span> - Wyświetla kolejkę piosenek.</p>
+                        </div>
+                        <div class="card-bg p-5 rounded-lg command-item">
+                            <p><span class="command-name">!mem</span> lub <span class="command-name">/meme</span> - Wyświetla losowy mem.</p>
+                        </div>
+                        <div class="card-bg p-5 rounded-lg command-item">
+                            <p><span class="command-name">!8ball</span> <span class="command-args">&lt;pytanie&gt;</span> lub <span class="command-name">/8ball</span> <span class="command-args">&lt;question&gt;</span> - Magiczna kula odpowie na Twoje pytanie.</p>
+                        </div>
+                    </div>
+                </div>
+                 <p class="text-center text-secondary mt-10 text-md reveal">
+                    Powyższa lista zawiera tylko część dostępnych komend. Pełną i zawsze aktualną listę znajdziesz używając komendy <code class="bg-bg-card px-1.5 py-0.5 rounded text-xs text-text-accent">!pomoc</code> na naszym serwerze Discord.
+                </p>
             </div>
         </section>
     </main>
@@ -504,13 +261,16 @@
                 </a>
             </div>
             <p class="text-secondary text-sm">
-                &copy; <span id="currentYear"></span> Kroniki Elary. Wszelkie prawa zastrzeżone.
+                &copy; <span id="currentYear">2024</span> Kroniki Elary. Wszelkie prawa zastrzeżone.
             </p>
             <p class="text-xs mt-2.5" style="color: var(--text-secondary-light, #94A3B8);">
                 Stworzone z pasji do anime i mangi przez Arcadiusa i jego Strażników.
             </p>
         </div>
     </footer>
+
+    <div id="eventModal" class="fixed inset-0 z-[60] items-center justify-center hidden p-4 modal">
+        </div>
 
     <script>
         // Funkcja do obsługi aktywnego linku w nawigacji
@@ -531,21 +291,18 @@
             });
         }
 
-        // Funkcja do obsługi wyświetlania informacji o użytkowniku/logowania
         async function updateAuthDisplay() {
             const authSectionNav = document.getElementById('auth-section-nav');
             const authSectionMobileNav = document.getElementById('auth-section-mobile-nav');
-            const ADMIN_DISCORD_ID = "1238814802357387285"; // Upewnij się, że to jest ID admina
+            const mobileMenuLinksContainer = document.querySelector('#mobileMenu > div'); 
+            const ADMIN_DISCORD_ID = "1238814802357387285"; 
 
             function createLoginButton(isMobile = false) {
                 const loginButton = document.createElement('a');
-                loginButton.href = '/auth/discord/login'; // Upewnij się, że ten endpoint jest poprawny
+                loginButton.href = '/auth/discord/login'; 
                 loginButton.id = isMobile ? 'discordLoginButtonMobileNav' : 'discordLoginButtonNav';
                 loginButton.className = 'btn-discord !text-white px-4 py-2.5 rounded-md text-sm flex items-center' + (isMobile ? ' w-full justify-center mt-2' : '');
-                loginButton.innerHTML = `
-                    <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20.297 0H3.703C1.658 0 0 1.658 0 3.703V20.297C0 22.342 1.658 24 3.703 24H20.297C22.342 24 24 22.342 24 20.297V3.703C24 1.658 22.342 0 20.297 0ZM8.107 15.232C7.089 15.232 6.241 14.384 6.241 13.366C6.241 12.348 7.089 11.5 8.107 11.5C9.125 11.5 9.973 12.348 9.973 13.366C9.973 14.384 9.125 15.232 8.107 15.232ZM12.000 11.071C10.982 11.071 10.134 10.223 10.134 9.205C10.134 8.188 10.982 7.339 12.000 7.339C13.018 7.339 13.866 8.188 13.866 9.205C13.866 10.223 13.018 11.071 12.000 11.071ZM15.893 15.232C14.875 15.232 14.027 14.384 14.027 13.366C14.027 12.348 14.875 11.5 15.893 11.5C16.911 11.5 17.759 12.348 17.759 13.366C17.759 14.384 16.911 15.232 15.893 15.232Z"/></svg>
-                    Zaloguj przez Discord
-                `;
+                loginButton.innerHTML = `<svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 24 24"><path d="M20.297 0H3.703C1.658 0 0 1.658 0 3.703V20.297C0 22.342 1.658 24 3.703 24H20.297C22.342 24 24 22.342 24 20.297V3.703C24 1.658 22.342 0 20.297 0ZM8.107 15.232C7.089 15.232 6.241 14.384 6.241 13.366C6.241 12.348 7.089 11.5 8.107 11.5C9.125 11.5 9.973 12.348 9.973 13.366C9.973 14.384 9.125 15.232 8.107 15.232ZM12.000 11.071C10.982 11.071 10.134 10.223 10.134 9.205C10.134 8.188 10.982 7.339 12.000 7.339C13.018 7.339 13.866 8.188 13.866 9.205C13.866 10.223 13.018 11.071 12.000 11.071ZM15.893 15.232C14.875 15.232 14.027 14.384 14.027 13.366C14.027 12.348 14.875 11.5 15.893 11.5C16.911 11.5 17.759 12.348 17.759 13.366C17.759 14.384 16.911 15.232 15.893 15.232Z"/></svg> Zaloguj przez Discord`;
                 return loginButton;
             }
 
@@ -561,6 +318,7 @@
                 avatarImg.src = user.avatar ? `https://cdn.discordapp.com/avatars/${user.id}/${user.avatar}.png?size=32` : 'https://placehold.co/32x32/A78BFA/FFFFFF?text=U';
                 avatarImg.alt = 'Awatar użytkownika';
                 avatarImg.className = 'user-avatar';
+                avatarImg.onerror = () => { avatarImg.src = 'https://placehold.co/32x32/A78BFA/FFFFFF?text=U'; };
                 avatarImg.onclick = (event) => {
                     event.stopPropagation(); 
                     const dropdown = document.getElementById(dropdownId);
@@ -577,6 +335,16 @@
                 profileLink.textContent = 'Mój Profil';
                 dropdownMenu.appendChild(profileLink);
 
+                const botShopLink = document.createElement('a');
+                botShopLink.href = '/sklep-bota'; 
+                botShopLink.textContent = 'Sklep Bota (Dukaty)';
+                dropdownMenu.appendChild(botShopLink);
+                
+                const premiumShopLink = document.createElement('a');
+                premiumShopLink.href = 'sklep-premium.html';
+                premiumShopLink.textContent = 'Sklep Premium (Kryształy)';
+                dropdownMenu.appendChild(premiumShopLink);
+
                 const supportTicketsLink = document.createElement('a');
                 supportTicketsLink.href = 'support.html'; 
                 supportTicketsLink.textContent = 'Centrum Wsparcia';
@@ -584,13 +352,13 @@
 
                 if (user.id === ADMIN_DISCORD_ID) {
                     const adminLinkElement = document.createElement('a'); 
-                    adminLinkElement.href = '/admin.html'; 
+                    adminLinkElement.href = 'admin.html'; 
                     adminLinkElement.textContent = 'Panel Admina';
                     dropdownMenu.appendChild(adminLinkElement);
                 }
                 
                 const logoutForm = document.createElement('form');
-                logoutForm.action = '/auth/logout'; // Upewnij się, że ten endpoint jest poprawny
+                logoutForm.action = '/auth/logout'; 
                 logoutForm.method = 'POST';
                 const logoutButton = document.createElement('button');
                 logoutButton.type = 'submit';
@@ -601,27 +369,56 @@
                 container.appendChild(dropdownMenu);
                 return container;
             }
+            
+            if (mobileMenuLinksContainer) {
+                const existingMobileAuthElements = mobileMenuLinksContainer.querySelectorAll('#discordLoginButtonMobileNav, #userDropdownContainerMobileMenu, .mobile-auth-item');
+                existingMobileAuthElements.forEach(el => el.remove());
+            }
 
             try {
-                const response = await fetch('/api/me'); // Upewnij się, że ten endpoint jest poprawny
+                const response = await fetch('/api/me'); 
                 if (response.ok) {
                     const user = await response.json();
                     if (authSectionNav) {
                         authSectionNav.innerHTML = ''; 
                         authSectionNav.appendChild(createAvatarDropdown(user, false));
                     }
-                    if (authSectionMobileNav) {
+                    if (authSectionMobileNav) { 
                         authSectionMobileNav.innerHTML = ''; 
                         authSectionMobileNav.appendChild(createAvatarDropdown(user, true));
                     }
+                     if (mobileMenuLinksContainer) {
+                        const mobileDropdownContainer = createAvatarDropdown(user, true); 
+                        mobileDropdownContainer.id = 'userDropdownContainerMobileMenu';
+                        mobileDropdownContainer.classList.add('mt-2', 'border-t', 'border-[var(--border-card)]', 'pt-2', 'mobile-auth-item');
+                        
+                        const mobileAvatar = mobileDropdownContainer.querySelector('.user-avatar');
+                        const mobileDropdown = mobileDropdownContainer.querySelector('.dropdown-menu');
+                        
+                        if (mobileAvatar) mobileAvatar.classList.add('hidden'); 
+                        if (mobileDropdown) {
+                            mobileDropdown.classList.remove('absolute', 'top-full', 'right-0', 'dropdown-menu'); 
+                            mobileDropdown.classList.add('space-y-1');
+                            Array.from(mobileDropdown.children).forEach(child => {
+                                child.classList.add('block', 'py-2', 'px-3', 'text-base', 'font-medium', 'rounded-md', 'hover:bg-[rgba(var(--rgb-accent),0.1)]', 'hover:text-[var(--text-accent)]');
+                                mobileMenuLinksContainer.appendChild(child);
+                            });
+                        }
+                    }
+
                 } else {
                      if (authSectionNav) {
                         authSectionNav.innerHTML = '';
                         authSectionNav.appendChild(createLoginButton(false));
                     }
-                    if (authSectionMobileNav) {
+                    if (authSectionMobileNav) { 
                         authSectionMobileNav.innerHTML = '';
-                        authSectionMobileNav.appendChild(createLoginButton(true));
+                        authSectionMobileNav.appendChild(createLoginButton(true)); 
+                    }
+                    if (mobileMenuLinksContainer) {
+                        const mobileLoginButton = createLoginButton(true); 
+                        mobileLoginButton.classList.add('mt-2', 'border-t', 'border-[var(--border-card)]', 'pt-2', 'mobile-auth-item');
+                        mobileMenuLinksContainer.appendChild(mobileLoginButton);
                     }
                 }
             } catch (error) {
@@ -634,6 +431,11 @@
                     authSectionMobileNav.innerHTML = '';
                     authSectionMobileNav.appendChild(createLoginButton(true));
                 }
+                if (mobileMenuLinksContainer) {
+                    const mobileLoginButton = createLoginButton(true);
+                    mobileLoginButton.classList.add('mt-2', 'border-t', 'border-[var(--border-card)]', 'pt-2', 'mobile-auth-item');
+                    mobileMenuLinksContainer.appendChild(mobileLoginButton);
+                }
             }
         }
         
@@ -644,10 +446,10 @@
             if (mobileMenuButton && mobileMenu) {
                 mobileMenuButton.addEventListener('click', () => {
                     const isExpanded = mobileMenuButton.getAttribute('aria-expanded') === 'true' || false;
-                    mobileMenuButton.setAttribute('aria-expanded', !isExpanded);
+                    mobileMenuButton.setAttribute('aria-expanded', String(!isExpanded));
                     mobileMenu.classList.toggle('open');
                 });
-                mobileMenu.querySelectorAll('a.nav-link').forEach(link => { 
+                mobileMenu.querySelectorAll('a').forEach(link => { 
                     link.addEventListener('click', () => {
                         mobileMenuButton.setAttribute('aria-expanded', 'false');
                         mobileMenu.classList.remove('open');
@@ -664,7 +466,7 @@
                         observer.unobserve(entry.target);
                     }
                 });
-            }, { threshold: 0.05 }); 
+            }, { threshold: 0.1 });
 
             document.querySelectorAll('.reveal').forEach(el => {
                 revealObserver.observe(el);
@@ -674,19 +476,19 @@
         function setupDropdownDismiss() {
             window.addEventListener('click', function(e) {
                 const desktopDropdownContainer = document.getElementById('userDropdownContainerNav');
-                const mobileDropdownContainer = document.getElementById('userDropdownContainerMobile');
+                const mobileDropdownContainer = document.getElementById('userDropdownContainerMobile'); 
                 const desktopDropdown = document.getElementById('userDropdownNav');
-                const mobileDropdown = document.getElementById('userDropdownMobile');
+                const mobileDropdown = document.getElementById('userDropdownMobile'); 
 
-                if (desktopDropdownContainer && !desktopDropdownContainer.contains(e.target) && desktopDropdown) {
+                if (desktopDropdownContainer && !desktopDropdownContainer.contains(e.target) && desktopDropdown && desktopDropdown.classList.contains('open')) {
                     desktopDropdown.classList.remove('open');
                 }
-                if (mobileDropdownContainer && !mobileDropdownContainer.contains(e.target) && mobileDropdown) {
+                if (mobileDropdownContainer && !mobileDropdownContainer.contains(e.target) && mobileDropdown && mobileDropdown.classList.contains('open')) {
                      mobileDropdown.classList.remove('open');
                 }
             });
         }
-        
+
         document.addEventListener('DOMContentLoaded', function() {
             document.getElementById('currentYear').textContent = new Date().getFullYear();
             

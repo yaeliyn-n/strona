@@ -3,62 +3,53 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Poznaj dogłębnie postacie z uniwersum Kronik Elary: Arcadiusa, Elarę, Kaelena, Lyrę i Runę. Odkryj ich historie, osobowości i anegdoty.">
-    <meta name="keywords" content="kroniki elary, lore, postacie, Arcadius, Elara, Kaelen, Lyra, Runa, fabuła, serwer discord, anime, manga">
+    <meta name="description" content="Poznaj kluczowe postacie z uniwersum Kronik Elary. Odkryj historie Strażników i innych bohaterów kształtujących świat Aethelgardu.">
+    <meta name="keywords" content="postacie, lore, aethelgard, kroniki elary, bohaterowie, strażnicy, arcadius, elara, kaelen, lyra, runa, discord">
     <meta name="author" content="Arcadius & Strażnicy Kronik Elary">
-    <title>Kroniki Elary - Lore i Profile Postaci</title>
+    <title>Postacie - Wikipedia Kronik Elary</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600&display=swap" rel="stylesheet">
     <style>
         :root {
             --bg-primary: #0F172A; 
-            --bg-secondary: rgba(30, 41, 59, 0.8); 
-            --bg-card: #1E293B; 
+            --bg-secondary: #1E293B; 
+            --bg-card: #111827; 
             --bg-header: rgba(15, 23, 42, 0.92); 
-            
             --text-primary: #E2E8F0; 
             --text-secondary: #94A3B8; 
-            --text-accent: #A78BFA; /* Główny akcent - Arcadius */
+            --text-accent: #A78BFA; 
             --text-accent-hover: #8B5CF6; 
-            
-            --border-accent: #8B5CF6; 
-            --border-card: rgba(167, 139, 250, 0.25); 
-            
-            --btn-primary-bg: #8B5CF6; 
-            --btn-primary-hover-bg: #7C3AED; 
+            --border-accent: #8B5CF6;
+            --border-card: rgba(167, 139, 250, 0.15); 
+            --btn-primary-bg: #8B5CF6;
+            --btn-primary-hover-bg: #7C3AED;
             --btn-discord-bg: #5865F2;
             --btn-discord-hover-bg: #4752C4;
-            
             --scrollbar-thumb-bg: #8B5CF6;
             --scrollbar-thumb-hover-bg: #7C3AED;
-            
             --svg-icon-fill: #E2E8F0;
-            --shadow-color: rgba(167, 139, 250, 0.25); 
-            --shadow-strong-color: rgba(167, 139, 250, 0.4);
+            --shadow-color: rgba(167, 139, 250, 0.15); 
+            --shadow-strong-color: rgba(167, 139, 250, 0.3); 
             --modal-backdrop: rgba(15, 23, 42, 0.85);
-
-            /* Kolory dla poszczególnych postaci */
-            --rgb-accent: 167, 139, 250; /* Arcadius */
-            --rgb-purple-400: 167, 139, 250; /* Elara - taki sam jak Arcadius, ale może być inny */
-            --rgb-stone-400: 168, 162, 158; /* Kaelen */
-            --rgb-amber-400: 251, 191, 36; /* Lyra */
-            --rgb-cyan-400: 34, 211, 238; /* Runa */
-
-            --text-purple-400: #A78BFA; /* Elara */
-            --text-stone-400: #A8A29E; /* Kaelen */
-            --text-amber-400: #FBBF24; /* Lyra */
-            --text-cyan-400: #22D3EE; /* Runa */
+            --rgb-accent: 167, 139, 250;
+            --rgb-purple-400: 167, 139, 250; 
+            --rgb-stone-400: 168, 162, 158; 
+            --rgb-amber-400: 251, 191, 36; 
+            --rgb-cyan-400: 34, 211, 238; 
+            --text-purple-400: #A78BFA;
+            --text-stone-400: #A8A29E;
+            --text-amber-400: #FBBF24;
+            --text-cyan-400: #22D3EE;
         }
-
-        html.light { 
-            --bg-primary: #F9FAFB;
-            --bg-secondary: rgba(243, 244, 246, 0.9);
-            --bg-card: #FFFFFF;
+        html.light {
+            --bg-primary: #F9FAFB; 
+            --bg-secondary: #F3F4F6; 
+            --bg-card: #FFFFFF; 
             --bg-header: rgba(255, 255, 255, 0.95);
-            --text-primary: #1F2937;
-            --text-secondary: #4B5563;
-            --text-accent: #7C3AED;
-            --text-accent-hover: #6D28D9;
+            --text-primary: #1F2937; 
+            --text-secondary: #4B5563; 
+            --text-accent: #7C3AED; 
+            --text-accent-hover: #6D28D9; 
             --border-accent: #7C3AED;
             --border-card: rgba(124, 58, 237, 0.1);
             --btn-primary-bg: #7C3AED;
@@ -71,7 +62,6 @@
             --shadow-color: rgba(124, 58, 237, 0.08);
             --shadow-strong-color: rgba(124, 58, 237, 0.15);
             --modal-backdrop: rgba(249, 250, 251, 0.85);
-
             --rgb-accent: 124, 58, 237;
             --rgb-purple-400: 124, 58, 237;
             --rgb-stone-400: 120, 113, 108;
@@ -82,241 +72,47 @@
             --text-amber-400: #D97706;
             --text-cyan-400: #0891B2;
         }
-
-        body {
-            font-family: 'Inter', sans-serif;
-            background-color: var(--bg-primary);
-            color: var(--text-primary);
-            transition: background-color 0.3s ease, color 0.3s ease;
-            -webkit-font-smoothing: antialiased;
-            -moz-osx-font-smoothing: grayscale;
-            line-height: 1.75; 
-        }
-
-        h1, h2, h3, h4, h5 {
-            font-family: 'Lora', serif;
-            font-weight: 600;
-            line-height: 1.35; 
-        }
-        h1 { letter-spacing: -0.025em; font-weight: 700; }
-        h2 { letter-spacing: -0.02em; font-weight: 700; }
-        h3 { font-weight: 600; }
-        
-        .hero-lore-postaci-bg {
-            background: linear-gradient(rgba(15, 23, 42, 0.92), rgba(15, 23, 42, 1)), url('https://placehold.co/1920x800/0a0f1e/a78bfa?text=Panteon+Postaci+Kronik') center/cover no-repeat fixed;
-        }
-        .card-bg, .character-card {
-            background-color: var(--bg-card);
-            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), background-color 0.3s ease; 
-            border: 1px solid var(--border-card); 
-            box-shadow: 0 7px 18px -4px var(--shadow-color); 
-            overflow: hidden;
-        }
-        .card-bg:hover, .character-card:hover {
-            transform: translateY(-10px) scale(1.035); 
-            box-shadow: 0 16px 32px -6px var(--shadow-strong-color); 
-        }
-        
-        .btn-primary, .btn-discord, .btn-secondary {
-            color: #FFFFFF; 
-            transition: background-color 0.25s ease, transform 0.25s ease, box-shadow 0.25s ease;
-            box-shadow: 0 5px 12px -3px var(--shadow-color);
-            font-weight: 600; 
-            letter-spacing: 0.03em;
-            padding-top: 0.85rem; 
-            padding-bottom: 0.85rem;
-            border-radius: 0.5rem;
-        }
-        .btn-primary { background-color: var(--btn-primary-bg); }
-        .btn-primary:hover {
-            background-color: var(--btn-primary-hover-bg);
-            transform: scale(1.06) translateY(-3px); 
-            box-shadow: 0 14px 24px -5px var(--shadow-strong-color);
-        }
-        .btn-discord { background-color: var(--btn-discord-bg); }
-        .btn-discord:hover {
-            background-color: var(--btn-discord-hover-bg);
-            transform: scale(1.06) translateY(-3px);
-            box-shadow: 0 10px 20px -5px rgba(88, 101, 242, 0.4);
-        }
-        .btn-secondary {
-            background-color: transparent;
-            border: 2px solid var(--border-accent);
-            color: var(--text-accent);
-            padding: calc(0.85rem - 2px) calc(1.5rem - 2px);
-        }
-        .btn-secondary:hover {
-            background-color: var(--border-accent);
-            color: white;
-            transform: scale(1.05) translateY(-1px);
-            box-shadow: 0 8px 15px -3px var(--shadow-color);
-        }
-        .text-accent {
-            color: var(--text-accent);
-        }
-        
-        .reveal {
-            opacity: 0;
-            transform: translateY(70px); 
-            transition: opacity 1s cubic-bezier(0.645, 0.045, 0.355, 1), transform 1s cubic-bezier(0.645, 0.045, 0.355, 1);
-        }
-        .reveal.visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
-        ::-webkit-scrollbar { width: 13px; } 
-        ::-webkit-scrollbar-track { background: var(--bg-primary); }
-        ::-webkit-scrollbar-thumb { background: var(--scrollbar-thumb-bg); border-radius: 7px; border: 3.5px solid var(--bg-primary); }
+        body { font-family: 'Inter', sans-serif; background-color: var(--bg-primary); color: var(--text-primary); transition: background-color 0.3s ease, color 0.3s ease; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; line-height: 1.75; }
+        h1, h2, h3, h4, h5 { font-family: 'Lora', serif; font-weight: 600; line-height: 1.35; }
+        h1 { letter-spacing: -0.025em; font-weight: 700; } h2 { letter-spacing: -0.02em; font-weight: 700; } h3 { font-weight: 600; }
+        .hero-characters-bg { background: linear-gradient(rgba(15, 23, 42, 0.88), rgba(15, 23, 42, 0.98)), url('https://placehold.co/1920x500/0a0f1e/a78bfa?text=Postacie+Aethelgardu') center/cover no-repeat; }
+        .section-bg { background-color: var(--bg-secondary); }
+        .card-bg { background-color: var(--bg-card); transition: transform 0.3s cubic-bezier(0.25, 0.1, 0.25, 1), box-shadow 0.3s cubic-bezier(0.25, 0.1, 0.25, 1), background-color 0.3s ease; border: 1px solid var(--border-card); box-shadow: 0 6px 12px -3px var(--shadow-color); overflow: hidden; }
+        .card-bg:hover { transform: translateY(-8px) scale(1.02); box-shadow: 0 12px 24px -4px var(--shadow-strong-color); }
+        .btn-primary, .btn-discord, .btn-secondary { color: #FFFFFF; transition: background-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease; box-shadow: 0 4px 8px -2px var(--shadow-color); font-weight: 600; letter-spacing: 0.03em; padding-top: 0.8rem; padding-bottom: 0.8rem; border-radius: 0.375rem; } 
+        .btn-primary { background-color: var(--btn-primary-bg); } .btn-primary:hover { background-color: var(--btn-primary-hover-bg); transform: scale(1.04) translateY(-2px); box-shadow: 0 10px 18px -4px var(--shadow-strong-color); }
+        .btn-discord { background-color: var(--btn-discord-bg); } .btn-discord:hover { background-color: var(--btn-discord-hover-bg); transform: scale(1.04) translateY(-2px); box-shadow: 0 10px 18px -4px rgba(88, 101, 242, 0.35); }
+        .btn-secondary { background-color: transparent; border: 2px solid var(--border-accent); color: var(--text-accent); padding: calc(0.8rem - 2px) calc(1.5rem - 2px); }
+        .btn-secondary:hover { background-color: var(--border-accent); color: white; transform: scale(1.04) translateY(-2px); box-shadow: 0 6px 12px -2px var(--shadow-color); }
+        .text-accent { color: var(--text-accent); }
+        .reveal { opacity: 0; transform: translateY(50px); transition: opacity 0.8s cubic-bezier(0.645, 0.045, 0.355, 1), transform 0.8s cubic-bezier(0.645, 0.045, 0.355, 1); }
+        .reveal.visible { opacity: 1; transform: translateY(0); }
+        ::-webkit-scrollbar { width: 12px; } ::-webkit-scrollbar-track { background: var(--bg-primary); }
+        ::-webkit-scrollbar-thumb { background: var(--scrollbar-thumb-bg); border-radius: 6px; border: 3px solid var(--bg-primary); }
         ::-webkit-scrollbar-thumb:hover { background: var(--scrollbar-thumb-hover-bg); }
-        
-        header#navbar {
-            background-color: var(--bg-header);
-            backdrop-filter: blur(18px); 
-            transition: background-color 0.3s ease, box-shadow 0.3s ease;
-            box-shadow: 0 5px 15px -4px rgba(15,23,42,0.2); 
-        }
-
-        .nav-link {
-            position: relative;
-            color: var(--text-secondary);
-            transition: color 0.2s ease, background-color 0.2s ease, transform 0.2s ease; 
-            padding: 0.65rem 1.1rem; 
-            border-radius: 0.6rem; 
-            font-weight: 500;
-        }
-        .nav-link:hover {
-            transform: translateY(-1px); 
-        }
-        .nav-link::after { 
-            content: '';
-            position: absolute;
-            width: 0;
-            height: 3px; 
-            bottom: 5px; 
-            left: 50%;
-            transform: translateX(-50%);
-            background-color: var(--text-accent);
-            transition: width 0.35s cubic-bezier(0.25, 0.8, 0.25, 1);
-            border-radius: 1.5px;
-        }
-        .nav-link:hover, .nav-link.active {
-            color: var(--text-accent);
-            background-color: rgba(var(--rgb-accent), 0.12); 
-        }
-        .nav-link:hover::after, .nav-link.active::after {
-            width: 60%; 
-        }
-        
-        #mobileMenu {
-            transition: transform 0.4s cubic-bezier(0.25, 0.8, 0.25, 1), opacity 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
-            transform: translateY(-100%);
-            opacity: 0;
-            pointer-events: none; 
-        }
-        #mobileMenu.open {
-            transform: translateY(0);
-            opacity: 1;
-            pointer-events: auto;
-        }
-        html.dark .text-shadow-custom { 
-             text-shadow: 1px 1px 4px rgba(0,0,0,0.6); 
-        }
-        .user-avatar {
-            width: 32px; 
-            height: 32px; 
-            border-radius: 50%;
-            border: 2px solid var(--border-accent);
-            cursor: pointer;
-            transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
-        }
-        .user-avatar:hover {
-            transform: scale(1.1);
-            box-shadow: 0 0 10px var(--shadow-strong-color);
-        }
-        .dropdown-menu {
-            position: absolute;
-            top: calc(100% + 0.5rem); 
-            right: 0;
-            background-color: var(--bg-card);
-            border: 1px solid var(--border-card);
-            border-radius: 0.5rem; 
-            box-shadow: 0 10px 25px -5px var(--shadow-strong-color), 0 8px 10px -6px var(--shadow-color);
-            z-index: 50;
-            min-width: 200px; 
-            opacity: 0;
-            visibility: hidden;
-            transform: translateY(-10px);
-            transition: opacity 0.2s ease, transform 0.2s ease, visibility 0s linear 0.2s;
-        }
-        .dropdown-menu.open {
-            opacity: 1;
-            visibility: visible;
-            transform: translateY(0);
-            transition: opacity 0.2s ease, transform 0.2s ease;
-        }
-        .dropdown-menu a, .dropdown-menu button {
-            display: block;
-            width: 100%;
-            text-align: left;
-            padding: 0.75rem 1rem; 
-            font-size: 0.875rem; 
-            color: var(--text-secondary);
-            transition: background-color 0.15s ease, color 0.15s ease;
-        }
-        .dropdown-menu a:hover, .dropdown-menu button:hover {
-            background-color: rgba(var(--rgb-accent), 0.1);
-            color: var(--text-accent);
-        }
+        header#navbar { background-color: var(--bg-header); backdrop-filter: blur(16px); transition: background-color 0.3s ease, box-shadow 0.3s ease; box-shadow: 0 4px 10px -3px rgba(15,23,42,0.15); }
+        .nav-link { position: relative; color: var(--text-secondary); transition: color 0.2s ease, background-color 0.2s ease, transform 0.2s ease; padding: 0.6rem 1rem; border-radius: 0.375rem; font-weight: 500; }
+        .nav-link:hover { transform: translateY(-1px); }
+        .nav-link::after { content: ''; position: absolute; width: 0; height: 2px; bottom: 4px; left: 50%; transform: translateX(-50%); background-color: var(--text-accent); transition: width 0.3s cubic-bezier(0.25, 0.8, 0.25, 1); border-radius: 1px; }
+        .nav-link:hover, .nav-link.active { color: var(--text-accent); background-color: rgba(var(--rgb-accent), 0.1); }
+        .nav-link:hover::after, .nav-link.active::after { width: 50%; }
+        #mobileMenu { transition: transform 0.3s cubic-bezier(0.25, 0.8, 0.25, 1), opacity 0.3s cubic-bezier(0.25, 0.8, 0.25, 1); transform: translateY(-100%); opacity: 0; pointer-events: none; }
+        #mobileMenu.open { transform: translateY(0); opacity: 1; pointer-events: auto; }
+        html.dark .text-shadow-custom { text-shadow: 1px 1px 3px rgba(0,0,0,0.5); }
+        .user-avatar { width: 32px; height: 32px; border-radius: 50%; border: 2px solid var(--border-accent); cursor: pointer; transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out; }
+        .user-avatar:hover { transform: scale(1.1); box-shadow: 0 0 8px var(--shadow-strong-color); }
+        .dropdown-menu { position: absolute; top: calc(100% + 0.5rem); right: 0; background-color: var(--bg-card); border: 1px solid var(--border-card); border-radius: 0.375rem; box-shadow: 0 8px 20px -4px var(--shadow-strong-color), 0 6px 8px -5px var(--shadow-color); z-index: 50; min-width: 220px; opacity: 0; visibility: hidden; transform: translateY(-8px); transition: opacity 0.15s ease, transform 0.15s ease, visibility 0s linear 0.15s; }
+        .dropdown-menu.open { opacity: 1; visibility: visible; transform: translateY(0); transition: opacity 0.15s ease, transform 0.15s ease; }
+        .dropdown-menu a, .dropdown-menu button { display: block; width: 100%; text-align: left; padding: 0.7rem 1rem; font-size: 0.875rem; color: var(--text-secondary); transition: background-color 0.1s ease, color 0.1s ease; }
+        .dropdown-menu a:hover, .dropdown-menu button:hover { background-color: rgba(var(--rgb-accent), 0.08); color: var(--text-accent); }
         .dropdown-menu form { margin: 0; } 
-        
-        .character-avatar {
-            width: 120px; 
-            height: 120px; 
-            border-radius: 50%;
-            margin-bottom: 1rem; 
-            border: 4px solid var(--border-accent); /* Domyślny kolor dla Arcadiusa */
-            box-shadow: 0 0 15px var(--shadow-color);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }
-        .character-card:hover .character-avatar {
-            transform: scale(1.1);
-            box-shadow: 0 0 25px var(--shadow-strong-color);
-        }
-        /* Kolory specyficzne dla postaci */
-        #profile-arcadius .character-title { color: var(--text-accent); }
-        #profile-arcadius .character-quote { border-left-color: var(--text-accent); background-color: rgba(var(--rgb-accent), 0.05); }
-        #profile-arcadius .character-avatar { border-color: var(--text-accent); }
-
-        #profile-elara .character-title { color: var(--text-purple-400); }
-        #profile-elara .character-quote { border-left-color: var(--text-purple-400); background-color: rgba(var(--rgb-purple-400), 0.05); }
-        #profile-elara .character-avatar { border-color: var(--text-purple-400); }
-        
-        #profile-kaelen .character-title { color: var(--text-stone-400); }
-        #profile-kaelen .character-quote { border-left-color: var(--text-stone-400); background-color: rgba(var(--rgb-stone-400), 0.05); }
-        #profile-kaelen .character-avatar { border-color: var(--text-stone-400); }
-
-        #profile-lyra .character-title { color: var(--text-amber-400); }
-        #profile-lyra .character-quote { border-left-color: var(--text-amber-400); background-color: rgba(var(--rgb-amber-400), 0.05); }
-        #profile-lyra .character-avatar { border-color: var(--text-amber-400); }
-
-        #profile-runa .character-title { color: var(--text-cyan-400); }
-        #profile-runa .character-quote { border-left-color: var(--text-cyan-400); background-color: rgba(var(--rgb-cyan-400), 0.05); }
-        #profile-runa .character-avatar { border-color: var(--text-cyan-400); }
-        
-        .animated-gradient-text {
-            background: linear-gradient(45deg, var(--text-accent), var(--text-accent-hover), #c084fc, var(--text-accent));
-            background-size: 200% 200%;
-            -webkit-background-clip: text;
-            background-clip: text;
-            -webkit-text-fill-color: transparent;
-            animation: gradient-flow 8s ease infinite;
-        }
-        @keyframes gradient-flow {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
-        }
-
+        .modal { background-color: var(--modal-backdrop); backdrop-filter: blur(6px); }
+        .modal-content { background-color: var(--bg-card); max-height: 90vh; }
+        .character-card { display: flex; flex-direction: column; height: 100%; }
+        .character-card img { border-width: 3px; transition: transform 0.3s ease, box-shadow 0.3s ease; }
+        .character-card:hover img { transform: scale(1.05); box-shadow: 0 0 15px rgba(var(--rgb-accent), 0.5); }
+        .character-card .character-title { font-size: 1.1rem; line-height: 1.3; /* Lepsze dopasowanie tytułu */ }
+        .character-card .character-description { font-size: 0.85rem; /* Nieco mniejszy opis dla lepszej czytelności */ line-height: 1.6; }
     </style>
 </head>
 <body class="antialiased">
@@ -329,7 +125,7 @@
             <nav class="hidden md:flex items-center space-x-1 lg:space-x-2">
                 <a href="index.html" class="nav-link">Strona Główna</a>
                 <a href="prezentacja.html" class="nav-link">Prezentacja Serwera</a>
-                <a href="wikipedia.html" class="nav-link active">Wikipedia Kronik</a> 
+                <a href="wikipedia.html" class="nav-link">Wikipedia Kronik</a> 
                 <a href="ranking-stats.html" class="nav-link">Rankingi</a>
                 <div id="auth-section-nav" class="ml-4 relative">
                     </div>
@@ -346,130 +142,115 @@
             <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
                 <a href="index.html" class="block py-2.5 px-3 nav-link text-base font-medium">Strona Główna</a>
                 <a href="prezentacja.html" class="block py-2.5 px-3 nav-link text-base font-medium">Prezentacja Serwera</a>
-                <a href="wikipedia.html" class="block py-2.5 px-3 nav-link text-base font-medium active">Wikipedia Kronik</a>
+                <a href="wikipedia.html" class="block py-2.5 px-3 nav-link text-base font-medium">Wikipedia Kronik</a>
                 <a href="ranking-stats.html" class="block py-2.5 px-3 nav-link text-base font-medium">Rankingi</a>
                 <a href="https://discord.gg/TWOJLINKZAPROSZENIOWY" target="_blank" rel="noopener noreferrer" class="block mt-2 py-2.5 px-3 text-base font-medium text-white bg-purple-600 hover:bg-purple-700 rounded-md text-center">Dołącz do Discorda</a>
-            </div>
+                 </div>
         </div>
     </header>
 
     <main>
-        <section class="hero-lore-postaci-bg min-h-[60vh] sm:min-h-[70vh] flex items-center justify-center text-center pt-24 sm:pt-20 reveal">
-            <div class="container mx-auto px-4 sm:px-6 py-12 sm:py-16">
-                <h1 class="text-5xl sm:text-6xl md:text-7xl font-bold text-white mb-6 leading-tight text-shadow-custom">
-                    Postacie <span class="animated-gradient-text">Kronik Elary</span>
+        <section class="hero-characters-bg pt-32 pb-16 sm:pt-40 sm:pb-24 text-center reveal">
+            <div class="container mx-auto px-4 sm:px-6">
+                <h1 class="text-4xl sm:text-5xl md:text-6xl font-bold text-white mb-6 leading-tight text-shadow-custom">
+                    Postacie <span class="text-accent">Aethelgardu</span>
                 </h1>
-                <p class="text-xl md:text-2xl text-slate-200 mb-10 max-w-3xl mx-auto text-shadow-custom">
-                    Poznaj bliżej kluczowe postacie, które kształtują świat i fabułę naszego serwera.
+                <p class="text-lg md:text-xl text-slate-200 mb-10 max-w-3xl mx-auto text-shadow-custom">
+                    Poznaj bohaterów, złoczyńców i kluczowe figury, które kształtują historię i losy świata Kronik Elary.
                 </p>
-                <a href="wikipedia.html" class="btn-secondary font-semibold py-3 px-8 rounded-lg text-md inline-block">&larr; Powrót do Głównej Strony Wikipedii</a>
+                <a href="wikipedia.html" class="btn-secondary font-semibold py-3 px-6 text-md inline-flex items-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-arrow-left-circle-fill mr-2" viewBox="0 0 16 16">
+                        <path d="M8 0a8 8 0 1 0 0 16A8 8 0 0 0 8 0m3.5 7.5a.5.5 0 0 1 0 1H5.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L5.707 7.5z"/>
+                    </svg>
+                    Powrót do Wikipedii
+                </a>
             </div>
         </section>
 
-        <section id="profile-arcadius" class="py-12 sm:py-16">
+        <section id="straznicy-kronik" class="py-16 sm:py-20 section-bg reveal">
             <div class="container mx-auto px-4 sm:px-6">
-                <div class="character-card max-w-4xl mx-auto p-6 sm:p-10 rounded-2xl shadow-xl reveal grid md:grid-cols-3 gap-8 items-center">
-                    <div class="md:col-span-1 text-center">
-                        <img src="https://placehold.co/200x200/8B5CF6/FFFFFF?text=A" alt="Awatar postaci Arcadius" class="character-avatar mx-auto" loading="lazy" onerror="this.onerror=null;this.src='https://placehold.co/200x200/0F172A/E2E8F0?text=A';">
+                <div class="text-center mb-14 sm:mb-18">
+                    <h2 class="text-3xl sm:text-4xl font-bold text-primary mb-4">Strażnicy <span class="text-accent">Kronik Elary</span></h2>
+                    <p class="text-lg text-secondary max-w-2xl mx-auto">
+                        Filary naszej społeczności, architekci świata i opiekunowie magicznej atmosfery serwera. Ich decyzje i działania kształtują przyszłość Aethelgardu.
+                    </p>
+                </div>
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <div class="character-card card-bg p-7 rounded-lg text-center flex flex-col items-center reveal">
+                        <img src="https://placehold.co/180x180/8B5CF6/FFFFFF?text=A" alt="Arcadius - Kustosz Pierwotnej Opowieści" class="w-32 h-32 rounded-full mx-auto mb-5 border-accent shadow-lg object-cover" onerror="this.onerror=null;this.src='https://placehold.co/180x180/0F172A/E2E8F0?text=A';">
+                        <h4 class="text-2xl font-semibold text-primary">Arcadius</h4>
+                        <p class="character-title text-md font-medium mb-3" style="color: var(--text-purple-400);">Kustosz Pierwotnej Opowieści</p>
+                        <p class="character-description text-secondary flex-grow">Pradawna istota, której pochodzenie ginie w pomroce dziejów. Arcadius nie jest jedynie kronikarzem, lecz strażnikiem samej Esencji Opowieści, z której utkany jest Aethelgard. Mówi się, że potrafi zaglądać w niezapisane karty przyszłości i przeszłości, kierując delikatnie nurtem wydarzeń, by chronić świat przed zapomnieniem lub chaosem. Jego mądrość jest niezgłębiona, a jego motywacje często owiane tajemnicą.</p>
+                        <a href="#" class="btn-secondary text-sm mt-6 py-2 px-4">Odkryj Historię Arcadiusa</a>
                     </div>
-                    <div class="md:col-span-2">
-                        <h2 class="text-3xl sm:text-4xl font-bold character-title mb-2">Arcadius</h2>
-                        <p class="text-lg font-medium text-primary mb-4">Tkacz Przeznaczeń Kronik</p>
-                        <p class="text-secondary text-md leading-relaxed mb-4">
-                            Prastara, enigmatyczna istota, która z echa pierwszych opowieści i szeptów multiwersum utkała ideę Kronik Elary. Arcadius jest obserwatorem, mentorem i dyskretnym przewodnikiem dla Strażników. Rzadko interweniuje bezpośrednio, preferując subtelne wpływanie na bieg wydarzeń i inspirowanie innych do działania. Jego prawdziwa natura i pełnia mocy pozostają tajemnicą, nawet dla najbliższych mu istot.
-                        </p>
-                        <blockquote class="character-quote border-l-4 pl-4 py-2 text-secondary italic text-sm mb-4">
-                            "Każda opowieść, nawet najmniejsza, jest nicią w gobelinie rzeczywistości. Moim zadaniem jest dbać, by splot był harmonijny."
-                        </blockquote>
-                        <p class="text-secondary text-sm"><strong class="text-primary">Cechy charakterystyczne:</strong> Mądrość, tajemniczość, potężna, lecz subtelna magia, zdolność postrzegania wielu linii czasu i prawdopodobieństw.</p>
+
+                    <div class="character-card card-bg p-7 rounded-lg text-center flex flex-col items-center reveal" style="transition-delay: 0.1s;">
+                        <img src="https://placehold.co/180x180/A78BFA/FFFFFF?text=E" alt="Elara - Latarniczka Wspólnoty" class="w-32 h-32 rounded-full mx-auto mb-5 shadow-lg object-cover" style="border-color: var(--text-purple-400);" onerror="this.onerror=null;this.src='https://placehold.co/180x180/0F172A/E2E8F0?text=E';">
+                        <h4 class="text-2xl font-semibold text-primary">Elara</h4>
+                        <p class="character-title text-md font-medium mb-3" style="color: var(--text-purple-400);">Latarniczka Wspólnoty</p>
+                        <p class="character-description text-secondary flex-grow">Półelfka o sercu jaśniejącym niczym najczystszy kryształ. Elara posiada dar empatii tak potężny, że potrafi odczuwać emocje całej społeczności. Jej misją jest tkanie nici przyjaźni i zrozumienia, łagodzenie sporów i dbanie o to, by każdy głos w Kronikach był słyszany i szanowany. Jest niczym latarnia morska, prowadząca zagubione dusze do bezpiecznej przystani wspólnoty.</p>
+                         <a href="#" class="btn-secondary text-sm mt-6 py-2 px-4">Poznaj Działania Elary</a>
+                    </div>
+
+                    <div class="character-card card-bg p-7 rounded-lg text-center flex flex-col items-center reveal" style="transition-delay: 0.2s;">
+                        <img src="https://placehold.co/180x180/A8A29E/FFFFFF?text=K" alt="Kaelen - Żelazny Sędzia Równowagi" class="w-32 h-32 rounded-full mx-auto mb-5 shadow-lg object-cover" style="border-color: var(--text-stone-400);" onerror="this.onerror=null;this.src='https://placehold.co/180x180/0F172A/E2E8F0?text=K';">
+                        <h4 class="text-2xl font-semibold text-primary">Kaelen</h4>
+                        <p class="character-title text-md font-medium mb-3" style="color: var(--text-stone-400);">Żelazny Sędzia Równowagi</p>
+                        <p class="character-description text-secondary flex-grow">Być może nieśmiertelny konstrukt wykuty przez dawno zapomnianych bogów prawa, lub człowiek związany nierozerwalną przysięgą. Kaelen jest uosobieniem bezstronności i sprawiedliwości. Jego zadaniem jest strzeżenie fundamentalnych zasad Aethelgardu, pilnowanie, by żadna siła nie zachwiała delikatnej równowagi. Jego decyzje są twarde, lecz zawsze podyktowane dobrem ogółu.</p>
+                         <a href="#" class="btn-secondary text-sm mt-6 py-2 px-4">Zgłęb Tajemnice Kaelena</a>
+                    </div>
+                    
+                    <div class="character-card card-bg p-7 rounded-lg text-center flex flex-col items-center reveal" style="transition-delay: 0.3s;">
+                        <img src="https://placehold.co/180x180/FBBF24/0F172A?text=L" alt="Lyra - Reżyserka Niezapomnianych Chwil" class="w-32 h-32 rounded-full mx-auto mb-5 shadow-lg object-cover" style="border-color: var(--text-amber-400);" onerror="this.onerror=null;this.src='https://placehold.co/180x180/0F172A/E2E8F0?text=L';">
+                        <h4 class="text-2xl font-semibold text-primary">Lyra</h4>
+                        <p class="character-title text-md font-medium mb-3" style="color: var(--text-amber-400);">Reżyserka Niezapomnianych Chwil</p>
+                        <p class="character-description text-secondary flex-grow">Kapryśna i pełna energii istota, być może potomek fey lub duch samych świąt. Lyra potrafi zamienić najzwyklejszy dzień w magiczne widowisko. Jest mistrzynią iluzji, muzyki i opowieści, tworząc wydarzenia, które na długo zapadają w pamięć Kronikarzy. Jej bot jest jej magicznym rekwizytorium, pełnym niespodzianek.</p>
+                         <a href="#" class="btn-secondary text-sm mt-6 py-2 px-4">Dołącz do Wydarzeń Lyry</a>
+                    </div>
+
+                    <div class="character-card card-bg p-7 rounded-lg text-center flex flex-col items-center reveal" style="transition-delay: 0.4s;">
+                        <img src="https://placehold.co/180x180/22D3EE/0F172A?text=R" alt="Runa - Mistrzyni Runicznych Schematów" class="w-32 h-32 rounded-full mx-auto mb-5 shadow-lg object-cover" style="border-color: var(--text-cyan-400);" onerror="this.onerror=null;this.src='https://placehold.co/180x180/0F172A/E2E8F0?text=R';">
+                        <h4 class="text-2xl font-semibold text-primary">Runa</h4>
+                        <p class="character-title text-md font-medium mb-3" style="color: var(--text-cyan-400);">Mistrzyni Runicznych Schematów</p>
+                        <p class="character-description text-secondary flex-grow">Genialna wynalazczyni i badaczka starożytnych technologii runicznych, które stanowią fundament działania wielu mechanizmów Aethelgardu. Runa potrafi odczytywać i modyfikować te schematy, tworząc potężne artefakty i autonomiczne konstrukty (boty), które służą społeczności. Ceni logikę i precyzję ponad wszystko.</p>
+                         <a href="#" class="btn-secondary text-sm mt-6 py-2 px-4">Odkryj Innowacje Runy</a>
                     </div>
                 </div>
             </div>
         </section>
 
-        <section id="profile-elara" class="py-12 sm:py-16 bg-bg-secondary reveal">
+        <section id="inne-postacie" class="py-16 sm:py-20 reveal">
             <div class="container mx-auto px-4 sm:px-6">
-                <div class="character-card max-w-4xl mx-auto p-6 sm:p-10 rounded-2xl shadow-xl grid md:grid-cols-3 gap-8 items-center">
-                    <div class="md:col-span-1 text-center md:order-2">
-                        <img src="https://placehold.co/200x200/A78BFA/FFFFFF?text=E" alt="Awatar postaci Elara" class="character-avatar mx-auto" loading="lazy" onerror="this.onerror=null;this.src='https://placehold.co/200x200/0F172A/E2E8F0?text=E';">
+                <div class="text-center mb-14 sm:mb-18">
+                    <h2 class="text-3xl sm:text-4xl font-bold text-primary mb-4">Inne Ważne Postacie <span class="text-accent">Aethelgardu</span></h2>
+                    <p class="text-lg text-secondary max-w-2xl mx-auto">
+                        Świat Aethelgardu jest pełen barwnych postaci niezależnych (NPC), które odgrywają ważne role w fabule i życiu codziennym serwera.
+                    </p>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <div class="card-bg p-6 rounded-lg flex flex-col sm:flex-row items-center sm:items-start reveal">
+                        <img src="https://placehold.co/120x120/1E293B/94A3B8?text=NPC1" alt="NPC 1" class="w-24 h-24 sm:w-28 sm:h-28 rounded-full mb-4 sm:mb-0 sm:mr-6 flex-shrink-0 object-cover border-2 border-border-card" onerror="this.onerror=null;this.src='https://placehold.co/120x120/0F172A/E2E8F0?text=NPC';">
+                        <div>
+                            <h4 class="text-xl font-semibold text-primary">Mistrz Gildii Kupieckiej Valerius</h4>
+                            <p class="text-sm text-secondary mb-2">Człowiek, przywódca potężnej gildii handlowej w stolicy Eldorii.</p>
+                            <p class="text-xs text-secondary">Znany ze swojej przebiegłości i smykałki do interesów. Często zleca misje związane z handlem, eskortą karawan lub odzyskiwaniem cennych towarów. Jego lojalność bywa jednak płynna.</p>
+                        </div>
                     </div>
-                    <div class="md:col-span-2 md:order-1">
-                        <h2 class="text-3xl sm:text-4xl font-bold character-title mb-2">Elara</h2>
-                        <p class="text-lg font-medium text-primary mb-4">Elfka Gwiezdnego Pyłu, Strażniczka Kronik</p>
-                        <p class="text-secondary text-md leading-relaxed mb-4">
-                            Pochodząca z magicznej krainy Aethelgard, Elara jest sercem i duszą Kronik. Pełna entuzjazmu, ciekawości i wrodzonej dobroci, choć czasem nieco niezdarna. To jej pasja do anime, mangi i wszelkich opowieści stała się inspiracją do stworzenia serwera. Elara uwielbia odkrywać nowe historie, dzielić się nimi i tworzyć przyjazną atmosferę dla wszystkich Kronikarzy.
-                        </p>
-                        <blockquote class="character-quote border-l-4 pl-4 py-2 text-secondary italic text-sm mb-4">
-                            "Każda nowa osoba na serwerze to jak odkrycie kolejnej, wspaniałej opowieści! Cieszę się, że tu jesteście!"
-                        </blockquote>
-                        <p class="text-secondary text-sm"><strong class="text-primary">Cechy charakterystyczne:</strong> Entuzjazm, ciekawość, empatia, lekka niezdarność, miłość do słodyczy (zwłaszcza Gwiezdnych Ciasteczek).</p>
+                    <div class="card-bg p-6 rounded-lg flex flex-col sm:flex-row items-center sm:items-start reveal" style="transition-delay: 0.1s;">
+                        <img src="https://placehold.co/120x120/1E293B/94A3B8?text=NPC2" alt="NPC 2" class="w-24 h-24 sm:w-28 sm:h-28 rounded-full mb-4 sm:mb-0 sm:mr-6 flex-shrink-0 object-cover border-2 border-border-card" onerror="this.onerror=null;this.src='https://placehold.co/120x120/0F172A/E2E8F0?text=NPC';">
+                        <div>
+                            <h4 class="text-xl font-semibold text-primary">Aella, Szeptucha z Mokradeł</h4>
+                            <p class="text-sm text-secondary mb-2">Tajemnicza Sylvani, pustelniczka zamieszkująca Mokradła Szeptów.</p>
+                            <p class="text-xs text-secondary">Posiada ogromną wiedzę o ziołach, starożytnych rytuałach i zapomnianych ścieżkach. Pomaga tym, którzy zdobędą jej zaufanie, ale strzeże swoich sekretów.</p>
+                        </div>
                     </div>
                 </div>
+                <p class="text-center text-secondary mt-10 text-md reveal">
+                    Wiele innych postaci czeka na odkrycie w świecie Aethelgardu. Ich historie i zadania wzbogacają uniwersum Kronik Elary.
+                </p>
             </div>
         </section>
 
-        <section id="profile-kaelen" class="py-12 sm:py-16 reveal">
-            <div class="container mx-auto px-4 sm:px-6">
-                <div class="character-card max-w-4xl mx-auto p-6 sm:p-10 rounded-2xl shadow-xl grid md:grid-cols-3 gap-8 items-center">
-                    <div class="md:col-span-1 text-center">
-                        <img src="https://placehold.co/200x200/A8A29E/FFFFFF?text=K" alt="Awatar postaci Kaelen" class="character-avatar mx-auto" loading="lazy" onerror="this.onerror=null;this.src='https://placehold.co/200x200/0F172A/E2E8F0?text=K';">
-                    </div>
-                    <div class="md:col-span-2">
-                        <h2 class="text-3xl sm:text-4xl font-bold character-title mb-2">Kaelen</h2>
-                        <p class="text-lg font-medium text-primary mb-4">Archiwista Edyktów, Strażnik Porządku</p>
-                        <p class="text-secondary text-md leading-relaxed mb-4">
-                            Spokojny, opanowany i niezwykle zorganizowany. Kaelen dba o porządek i przestrzeganie zasad w Kronikach Elary. Jest głównym moderatorem i twórcą wielu systemów ułatwiających zarządzanie serwerem. Choć czasem wydaje się surowy, w głębi duszy troszczy się o dobro społeczności i sprawiedliwość. To on spisuje Edykty Królestwa.
-                        </p>
-                        <blockquote class="character-quote border-l-4 pl-4 py-2 text-secondary italic text-sm mb-4">
-                            "Porządek jest fundamentem każdej trwałej opowieści. Bez niego, nawet najpiękniejsze narracje pogrążą się w chaosie."
-                        </blockquote>
-                        <p class="text-secondary text-sm"><strong class="text-primary">Cechy charakterystyczne:</strong> Logiczne myślenie, stoicyzm, sprawiedliwość, analityczny umysł, skrupulatność.</p>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <section id="profile-lyra" class="py-12 sm:py-16 bg-bg-secondary reveal">
-            <div class="container mx-auto px-4 sm:px-6">
-                <div class="character-card max-w-4xl mx-auto p-6 sm:p-10 rounded-2xl shadow-xl grid md:grid-cols-3 gap-8 items-center">
-                     <div class="md:col-span-1 text-center md:order-2">
-                        <img src="https://placehold.co/200x200/FBBF24/0F172A?text=L" alt="Awatar postaci Lyra" class="character-avatar mx-auto" loading="lazy" onerror="this.onerror=null;this.src='https://placehold.co/200x200/0F172A/E2E8F0?text=L';">
-                    </div>
-                    <div class="md:col-span-2 md:order-1">
-                        <h2 class="text-3xl sm:text-4xl font-bold character-title mb-2">Lyra</h2>
-                        <p class="text-lg font-medium text-primary mb-4">Świąteczny Świetlik, Mistrzyni Ceremonii</p>
-                        <p class="text-secondary text-md leading-relaxed mb-4">
-                            Dusza towarzystwa i niewyczerpane źródło pozytywnej energii. Lyra jest odpowiedzialna za organizację wszelkich wydarzeń, konkursów i zabaw na serwerze. Jej śmiech jest zaraźliwy, a pomysły na integrację społeczności nie mają końca. Potrafi rozświetlić nawet najmroczniejszy zakątek Kronik swoim optymizmem.
-                        </p>
-                        <blockquote class="character-quote border-l-4 pl-4 py-2 text-secondary italic text-sm mb-4">
-                            "Hej, Kronikarze! Gotowi na kolejną dawkę śmiechu i niezapomnianych przygód? Bo ja zawsze!"
-                        </blockquote>
-                        <p class="text-secondary text-sm"><strong class="text-primary">Cechy charakterystyczne:</strong> Energia, optymizm, kreatywność, towarzyskość, poczucie humoru.</p>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <section id="profile-runa" class="py-12 sm:py-16 reveal">
-            <div class="container mx-auto px-4 sm:px-6">
-                <div class="character-card max-w-4xl mx-auto p-6 sm:p-10 rounded-2xl shadow-xl grid md:grid-cols-3 gap-8 items-center">
-                    <div class="md:col-span-1 text-center">
-                        <img src="https://placehold.co/200x200/22D3EE/0F172A?text=R" alt="Awatar postaci Runa" class="character-avatar mx-auto" loading="lazy" onerror="this.onerror=null;this.src='https://placehold.co/200x200/0F172A/E2E8F0?text=R';">
-                    </div>
-                    <div class="md:col-span-2">
-                        <h2 class="text-3xl sm:text-4xl font-bold character-title mb-2">Runa</h2>
-                        <p class="text-lg font-medium text-primary mb-4">Techno-Zaklinaczka, Mistrzyni Cyfrowych Splotów</p>
-                        <p class="text-secondary text-md leading-relaxed mb-4">
-                            Geniusz technologiczny i mistrzyni kodu. Runa jest odpowiedzialna za działanie wszystkich botów na serwerze, w tym Głównego Bota Kronik. Potrafi rozwiązać każdy problem techniczny i nieustannie ulepsza cyfrowe mechanizmy wspierające społeczność. Choć czasem bywa nieco ekscentryczna i pochłonięta swoimi projektami, jej wkład w funkcjonowanie Kronik jest nieoceniony.
-                        </p>
-                        <blockquote class="character-quote border-l-4 pl-4 py-2 text-secondary italic text-sm mb-4">
-                            "Kod jest jak poezja, tylko z większą ilością średników. A ja jestem jego bardem."
-                        </blockquote>
-                        <p class="text-secondary text-sm"><strong class="text-primary">Cechy charakterystyczne:</strong> Inteligencja, innowacyjność, biegłość technologiczna, lekkie roztargnienie, pasja do gadżetów.</p>
-                    </div>
-                </div>
-            </div>
-        </section>
     </main>
 
     <footer class="py-12 text-center" style="background-color: var(--bg-header);">
@@ -486,13 +267,16 @@
                 </a>
             </div>
             <p class="text-secondary text-sm">
-                &copy; <span id="currentYear"></span> Kroniki Elary. Wszelkie prawa zastrzeżone.
+                &copy; <span id="currentYear">2024</span> Kroniki Elary. Wszelkie prawa zastrzeżone.
             </p>
             <p class="text-xs mt-2.5" style="color: var(--text-secondary-light, #94A3B8);">
                 Stworzone z pasji do anime i mangi przez Arcadiusa i jego Strażników.
             </p>
         </div>
     </footer>
+
+    <div id="eventModal" class="fixed inset-0 z-[60] items-center justify-center hidden p-4 modal">
+        </div>
 
     <script>
         // Funkcja do obsługi aktywnego linku w nawigacji
@@ -513,21 +297,18 @@
             });
         }
 
-        // Funkcja do obsługi wyświetlania informacji o użytkowniku/logowania
         async function updateAuthDisplay() {
             const authSectionNav = document.getElementById('auth-section-nav');
             const authSectionMobileNav = document.getElementById('auth-section-mobile-nav');
-            const ADMIN_DISCORD_ID = "1238814802357387285"; // Upewnij się, że to jest ID admina
+            const mobileMenuLinksContainer = document.querySelector('#mobileMenu > div'); 
+            const ADMIN_DISCORD_ID = "1238814802357387285"; 
 
             function createLoginButton(isMobile = false) {
                 const loginButton = document.createElement('a');
-                loginButton.href = '/auth/discord/login'; // Upewnij się, że ten endpoint jest poprawny
+                loginButton.href = '/auth/discord/login'; 
                 loginButton.id = isMobile ? 'discordLoginButtonMobileNav' : 'discordLoginButtonNav';
                 loginButton.className = 'btn-discord !text-white px-4 py-2.5 rounded-md text-sm flex items-center' + (isMobile ? ' w-full justify-center mt-2' : '');
-                loginButton.innerHTML = `
-                    <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20.297 0H3.703C1.658 0 0 1.658 0 3.703V20.297C0 22.342 1.658 24 3.703 24H20.297C22.342 24 24 22.342 24 20.297V3.703C24 1.658 22.342 0 20.297 0ZM8.107 15.232C7.089 15.232 6.241 14.384 6.241 13.366C6.241 12.348 7.089 11.5 8.107 11.5C9.125 11.5 9.973 12.348 9.973 13.366C9.973 14.384 9.125 15.232 8.107 15.232ZM12.000 11.071C10.982 11.071 10.134 10.223 10.134 9.205C10.134 8.188 10.982 7.339 12.000 7.339C13.018 7.339 13.866 8.188 13.866 9.205C13.866 10.223 13.018 11.071 12.000 11.071ZM15.893 15.232C14.875 15.232 14.027 14.384 14.027 13.366C14.027 12.348 14.875 11.5 15.893 11.5C16.911 11.5 17.759 12.348 17.759 13.366C17.759 14.384 16.911 15.232 15.893 15.232Z"/></svg>
-                    Zaloguj przez Discord
-                `;
+                loginButton.innerHTML = `<svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 24 24"><path d="M20.297 0H3.703C1.658 0 0 1.658 0 3.703V20.297C0 22.342 1.658 24 3.703 24H20.297C22.342 24 24 22.342 24 20.297V3.703C24 1.658 22.342 0 20.297 0ZM8.107 15.232C7.089 15.232 6.241 14.384 6.241 13.366C6.241 12.348 7.089 11.5 8.107 11.5C9.125 11.5 9.973 12.348 9.973 13.366C9.973 14.384 9.125 15.232 8.107 15.232ZM12.000 11.071C10.982 11.071 10.134 10.223 10.134 9.205C10.134 8.188 10.982 7.339 12.000 7.339C13.018 7.339 13.866 8.188 13.866 9.205C13.866 10.223 13.018 11.071 12.000 11.071ZM15.893 15.232C14.875 15.232 14.027 14.384 14.027 13.366C14.027 12.348 14.875 11.5 15.893 11.5C16.911 11.5 17.759 12.348 17.759 13.366C17.759 14.384 16.911 15.232 15.893 15.232Z"/></svg> Zaloguj przez Discord`;
                 return loginButton;
             }
 
@@ -543,6 +324,7 @@
                 avatarImg.src = user.avatar ? `https://cdn.discordapp.com/avatars/${user.id}/${user.avatar}.png?size=32` : 'https://placehold.co/32x32/A78BFA/FFFFFF?text=U';
                 avatarImg.alt = 'Awatar użytkownika';
                 avatarImg.className = 'user-avatar';
+                avatarImg.onerror = () => { avatarImg.src = 'https://placehold.co/32x32/A78BFA/FFFFFF?text=U'; };
                 avatarImg.onclick = (event) => {
                     event.stopPropagation(); 
                     const dropdown = document.getElementById(dropdownId);
@@ -559,6 +341,16 @@
                 profileLink.textContent = 'Mój Profil';
                 dropdownMenu.appendChild(profileLink);
 
+                const botShopLink = document.createElement('a');
+                botShopLink.href = '/sklep-bota'; 
+                botShopLink.textContent = 'Sklep Bota (Dukaty)';
+                dropdownMenu.appendChild(botShopLink);
+                
+                const premiumShopLink = document.createElement('a');
+                premiumShopLink.href = 'sklep-premium.html';
+                premiumShopLink.textContent = 'Sklep Premium (Kryształy)';
+                dropdownMenu.appendChild(premiumShopLink);
+
                 const supportTicketsLink = document.createElement('a');
                 supportTicketsLink.href = 'support.html'; 
                 supportTicketsLink.textContent = 'Centrum Wsparcia';
@@ -566,13 +358,13 @@
 
                 if (user.id === ADMIN_DISCORD_ID) {
                     const adminLinkElement = document.createElement('a'); 
-                    adminLinkElement.href = '/admin.html'; 
+                    adminLinkElement.href = 'admin.html'; 
                     adminLinkElement.textContent = 'Panel Admina';
                     dropdownMenu.appendChild(adminLinkElement);
                 }
                 
                 const logoutForm = document.createElement('form');
-                logoutForm.action = '/auth/logout'; // Upewnij się, że ten endpoint jest poprawny
+                logoutForm.action = '/auth/logout'; 
                 logoutForm.method = 'POST';
                 const logoutButton = document.createElement('button');
                 logoutButton.type = 'submit';
@@ -583,27 +375,56 @@
                 container.appendChild(dropdownMenu);
                 return container;
             }
+            
+            if (mobileMenuLinksContainer) {
+                const existingMobileAuthElements = mobileMenuLinksContainer.querySelectorAll('#discordLoginButtonMobileNav, #userDropdownContainerMobileMenu, .mobile-auth-item');
+                existingMobileAuthElements.forEach(el => el.remove());
+            }
 
             try {
-                const response = await fetch('/api/me'); // Upewnij się, że ten endpoint jest poprawny
+                const response = await fetch('/api/me'); 
                 if (response.ok) {
                     const user = await response.json();
                     if (authSectionNav) {
                         authSectionNav.innerHTML = ''; 
                         authSectionNav.appendChild(createAvatarDropdown(user, false));
                     }
-                    if (authSectionMobileNav) {
+                    if (authSectionMobileNav) { 
                         authSectionMobileNav.innerHTML = ''; 
                         authSectionMobileNav.appendChild(createAvatarDropdown(user, true));
                     }
+                     if (mobileMenuLinksContainer) {
+                        const mobileDropdownContainer = createAvatarDropdown(user, true); 
+                        mobileDropdownContainer.id = 'userDropdownContainerMobileMenu';
+                        mobileDropdownContainer.classList.add('mt-2', 'border-t', 'border-[var(--border-card)]', 'pt-2', 'mobile-auth-item');
+                        
+                        const mobileAvatar = mobileDropdownContainer.querySelector('.user-avatar');
+                        const mobileDropdown = mobileDropdownContainer.querySelector('.dropdown-menu');
+                        
+                        if (mobileAvatar) mobileAvatar.classList.add('hidden'); 
+                        if (mobileDropdown) {
+                            mobileDropdown.classList.remove('absolute', 'top-full', 'right-0', 'dropdown-menu'); 
+                            mobileDropdown.classList.add('space-y-1');
+                            Array.from(mobileDropdown.children).forEach(child => {
+                                child.classList.add('block', 'py-2', 'px-3', 'text-base', 'font-medium', 'rounded-md', 'hover:bg-[rgba(var(--rgb-accent),0.1)]', 'hover:text-[var(--text-accent)]');
+                                mobileMenuLinksContainer.appendChild(child);
+                            });
+                        }
+                    }
+
                 } else {
                      if (authSectionNav) {
                         authSectionNav.innerHTML = '';
                         authSectionNav.appendChild(createLoginButton(false));
                     }
-                    if (authSectionMobileNav) {
+                    if (authSectionMobileNav) { 
                         authSectionMobileNav.innerHTML = '';
-                        authSectionMobileNav.appendChild(createLoginButton(true));
+                        authSectionMobileNav.appendChild(createLoginButton(true)); 
+                    }
+                    if (mobileMenuLinksContainer) {
+                        const mobileLoginButton = createLoginButton(true); 
+                        mobileLoginButton.classList.add('mt-2', 'border-t', 'border-[var(--border-card)]', 'pt-2', 'mobile-auth-item');
+                        mobileMenuLinksContainer.appendChild(mobileLoginButton);
                     }
                 }
             } catch (error) {
@@ -616,6 +437,11 @@
                     authSectionMobileNav.innerHTML = '';
                     authSectionMobileNav.appendChild(createLoginButton(true));
                 }
+                if (mobileMenuLinksContainer) {
+                    const mobileLoginButton = createLoginButton(true);
+                    mobileLoginButton.classList.add('mt-2', 'border-t', 'border-[var(--border-card)]', 'pt-2', 'mobile-auth-item');
+                    mobileMenuLinksContainer.appendChild(mobileLoginButton);
+                }
             }
         }
         
@@ -626,10 +452,10 @@
             if (mobileMenuButton && mobileMenu) {
                 mobileMenuButton.addEventListener('click', () => {
                     const isExpanded = mobileMenuButton.getAttribute('aria-expanded') === 'true' || false;
-                    mobileMenuButton.setAttribute('aria-expanded', !isExpanded);
+                    mobileMenuButton.setAttribute('aria-expanded', String(!isExpanded));
                     mobileMenu.classList.toggle('open');
                 });
-                mobileMenu.querySelectorAll('a.nav-link').forEach(link => { 
+                mobileMenu.querySelectorAll('a').forEach(link => { 
                     link.addEventListener('click', () => {
                         mobileMenuButton.setAttribute('aria-expanded', 'false');
                         mobileMenu.classList.remove('open');
@@ -646,7 +472,7 @@
                         observer.unobserve(entry.target);
                     }
                 });
-            }, { threshold: 0.05 }); 
+            }, { threshold: 0.1 });
 
             document.querySelectorAll('.reveal').forEach(el => {
                 revealObserver.observe(el);
@@ -656,19 +482,19 @@
         function setupDropdownDismiss() {
             window.addEventListener('click', function(e) {
                 const desktopDropdownContainer = document.getElementById('userDropdownContainerNav');
-                const mobileDropdownContainer = document.getElementById('userDropdownContainerMobile');
+                const mobileDropdownContainer = document.getElementById('userDropdownContainerMobile'); 
                 const desktopDropdown = document.getElementById('userDropdownNav');
-                const mobileDropdown = document.getElementById('userDropdownMobile');
+                const mobileDropdown = document.getElementById('userDropdownMobile'); 
 
-                if (desktopDropdownContainer && !desktopDropdownContainer.contains(e.target) && desktopDropdown) {
+                if (desktopDropdownContainer && !desktopDropdownContainer.contains(e.target) && desktopDropdown && desktopDropdown.classList.contains('open')) {
                     desktopDropdown.classList.remove('open');
                 }
-                if (mobileDropdownContainer && !mobileDropdownContainer.contains(e.target) && mobileDropdown) {
+                if (mobileDropdownContainer && !mobileDropdownContainer.contains(e.target) && mobileDropdown && mobileDropdown.classList.contains('open')) {
                      mobileDropdown.classList.remove('open');
                 }
             });
         }
-        
+
         document.addEventListener('DOMContentLoaded', function() {
             document.getElementById('currentYear').textContent = new Date().getFullYear();
             

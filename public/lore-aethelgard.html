@@ -3,61 +3,53 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Odkryj Aethelgard, magiczną krainę utkaną z gwiezdnego pyłu i szeptów opowieści, ojczyznę Elary z serwera Kroniki Elary. Poznaj jej sekrety, mieszkańców i magię.">
-    <meta name="keywords" content="kroniki elary, lore, aethelgard, elara, fabuła, świat, mitologia, magia, elfy, serwer discord, anime, manga">
+    <meta name="description" content="Odkryj bogate lore Aethelgardu, świata Kronik Elary. Poznaj historię, krainy, rasy i magię tego unikalnego uniwersum.">
+    <meta name="keywords" content="lore, aethelgard, kroniki elary, świat fantasy, historia świata, rasy, magia, mitologia, discord, anime, manga">
     <meta name="author" content="Arcadius & Strażnicy Kronik Elary">
-    <title>Kroniki Elary - Lore: Aethelgard, Kraina Szeptów</title>
+    <title>Lore Aethelgardu - Wikipedia Kronik Elary</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600&display=swap" rel="stylesheet">
     <style>
         :root {
             --bg-primary: #0F172A; 
-            --bg-secondary: rgba(30, 41, 59, 0.8); 
-            --bg-card: #1E293B; 
+            --bg-secondary: #1E293B; 
+            --bg-card: #111827; 
             --bg-header: rgba(15, 23, 42, 0.92); 
-            
             --text-primary: #E2E8F0; 
             --text-secondary: #94A3B8; 
             --text-accent: #A78BFA; 
             --text-accent-hover: #8B5CF6; 
-            
-            --border-accent: #8B5CF6; 
-            --border-card: rgba(167, 139, 250, 0.25); 
-            
-            --btn-primary-bg: #8B5CF6; 
-            --btn-primary-hover-bg: #7C3AED; 
+            --border-accent: #8B5CF6;
+            --border-card: rgba(167, 139, 250, 0.15); 
+            --btn-primary-bg: #8B5CF6;
+            --btn-primary-hover-bg: #7C3AED;
             --btn-discord-bg: #5865F2;
             --btn-discord-hover-bg: #4752C4;
-            
             --scrollbar-thumb-bg: #8B5CF6;
             --scrollbar-thumb-hover-bg: #7C3AED;
-            
             --svg-icon-fill: #E2E8F0;
-            --shadow-color: rgba(167, 139, 250, 0.25); 
-            --shadow-strong-color: rgba(167, 139, 250, 0.4); 
+            --shadow-color: rgba(167, 139, 250, 0.15); 
+            --shadow-strong-color: rgba(167, 139, 250, 0.3); 
             --modal-backdrop: rgba(15, 23, 42, 0.85);
-
             --rgb-accent: 167, 139, 250;
             --rgb-purple-400: 167, 139, 250; 
             --rgb-stone-400: 168, 162, 158; 
             --rgb-amber-400: 251, 191, 36; 
             --rgb-cyan-400: 34, 211, 238; 
-
             --text-purple-400: #A78BFA;
             --text-stone-400: #A8A29E;
             --text-amber-400: #FBBF24;
             --text-cyan-400: #22D3EE;
         }
-
-        html.light { 
-            --bg-primary: #F9FAFB;
-            --bg-secondary: rgba(243, 244, 246, 0.9);
-            --bg-card: #FFFFFF;
+        html.light {
+            --bg-primary: #F9FAFB; 
+            --bg-secondary: #F3F4F6; 
+            --bg-card: #FFFFFF; 
             --bg-header: rgba(255, 255, 255, 0.95);
-            --text-primary: #1F2937;
-            --text-secondary: #4B5563;
-            --text-accent: #7C3AED;
-            --text-accent-hover: #6D28D9;
+            --text-primary: #1F2937; 
+            --text-secondary: #4B5563; 
+            --text-accent: #7C3AED; 
+            --text-accent-hover: #6D28D9; 
             --border-accent: #7C3AED;
             --border-card: rgba(124, 58, 237, 0.1);
             --btn-primary-bg: #7C3AED;
@@ -70,7 +62,6 @@
             --shadow-color: rgba(124, 58, 237, 0.08);
             --shadow-strong-color: rgba(124, 58, 237, 0.15);
             --modal-backdrop: rgba(249, 250, 251, 0.85);
-
             --rgb-accent: 124, 58, 237;
             --rgb-purple-400: 124, 58, 237;
             --rgb-stone-400: 120, 113, 108;
@@ -81,230 +72,53 @@
             --text-amber-400: #D97706;
             --text-cyan-400: #0891B2;
         }
-
-        body {
-            font-family: 'Inter', sans-serif;
-            background-color: var(--bg-primary);
-            color: var(--text-primary);
-            transition: background-color 0.3s ease, color 0.3s ease;
-            -webkit-font-smoothing: antialiased;
-            -moz-osx-font-smoothing: grayscale;
-            line-height: 1.75; 
-        }
-
-        h1, h2, h3, h4, h5 {
-            font-family: 'Lora', serif;
-            font-weight: 600;
-            line-height: 1.35; 
-        }
-        h1 { letter-spacing: -0.025em; font-weight: 700; }
-        h2 { letter-spacing: -0.02em; font-weight: 700; }
-        h3 { font-weight: 600; font-size: 1.5rem; margin-top: 2rem; margin-bottom: 1rem; color: var(--text-accent); }
-        h4 { font-weight: 500; font-size: 1.25rem; margin-top: 1.5rem; margin-bottom: 0.75rem; color: var(--text-primary); }
-        
-        .hero-lore-bg {
-            background: linear-gradient(rgba(15, 23, 42, 0.92), rgba(15, 23, 42, 1)), url('https://placehold.co/1920x800/0a0f1e/a78bfa?text=Aethelgard+-+Kraina+Szeptów') center/cover no-repeat fixed;
-        }
-        .card-bg, .lore-content-card {
-            background-color: var(--bg-card);
-            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), background-color 0.3s ease; 
-            border: 1px solid var(--border-card); 
-            box-shadow: 0 7px 18px -4px var(--shadow-color); 
-            overflow: hidden;
-        }
-        .card-bg:hover, .lore-content-card:hover { 
-            transform: translateY(-10px) scale(1.02); /* Subtelniejszy hover dla kart z dużą ilością tekstu */
-            box-shadow: 0 16px 32px -6px var(--shadow-strong-color); 
-        }
-        
-        .btn-primary, .btn-discord, .btn-secondary {
-            color: #FFFFFF; 
-            transition: background-color 0.25s ease, transform 0.25s ease, box-shadow 0.25s ease;
-            box-shadow: 0 5px 12px -3px var(--shadow-color);
-            font-weight: 600; 
-            letter-spacing: 0.03em;
-            padding-top: 0.85rem; 
-            padding-bottom: 0.85rem;
-            border-radius: 0.5rem;
-        }
-        .btn-primary { background-color: var(--btn-primary-bg); }
-        .btn-primary:hover {
-            background-color: var(--btn-primary-hover-bg);
-            transform: scale(1.06) translateY(-3px); 
-            box-shadow: 0 14px 24px -5px var(--shadow-strong-color);
-        }
-        .btn-discord { background-color: var(--btn-discord-bg); }
-        .btn-discord:hover {
-            background-color: var(--btn-discord-hover-bg);
-            transform: scale(1.06) translateY(-3px);
-            box-shadow: 0 10px 20px -5px rgba(88, 101, 242, 0.4);
-        }
-        .btn-secondary {
-            background-color: transparent;
-            border: 2px solid var(--border-accent);
-            color: var(--text-accent);
-            padding: calc(0.85rem - 2px) calc(1.5rem - 2px);
-        }
-        .btn-secondary:hover {
-            background-color: var(--border-accent);
-            color: white;
-            transform: scale(1.05) translateY(-1px);
-            box-shadow: 0 8px 15px -3px var(--shadow-color);
-        }
-        .text-accent {
-            color: var(--text-accent);
-        }
-        
-        .reveal {
-            opacity: 0;
-            transform: translateY(70px); 
-            transition: opacity 1s cubic-bezier(0.645, 0.045, 0.355, 1), transform 1s cubic-bezier(0.645, 0.045, 0.355, 1);
-        }
-        .reveal.visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
-        ::-webkit-scrollbar { width: 13px; } 
-        ::-webkit-scrollbar-track { background: var(--bg-primary); }
-        ::-webkit-scrollbar-thumb { background: var(--scrollbar-thumb-bg); border-radius: 7px; border: 3.5px solid var(--bg-primary); }
+        body { font-family: 'Inter', sans-serif; background-color: var(--bg-primary); color: var(--text-primary); transition: background-color 0.3s ease, color 0.3s ease; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; line-height: 1.75; }
+        h1, h2, h3, h4, h5 { font-family: 'Lora', serif; font-weight: 600; line-height: 1.35; }
+        h1 { letter-spacing: -0.025em; font-weight: 700; } h2 { letter-spacing: -0.02em; font-weight: 700; } h3 { font-weight: 600; }
+        .hero-lore-bg { background: linear-gradient(rgba(15, 23, 42, 0.88), rgba(15, 23, 42, 0.98)), url('https://placehold.co/1920x500/0a0f1e/a78bfa?text=Świat+Aethelgardu') center/cover no-repeat; }
+        .section-bg { background-color: var(--bg-secondary); }
+        .card-bg { background-color: var(--bg-card); transition: transform 0.3s cubic-bezier(0.25, 0.1, 0.25, 1), box-shadow 0.3s cubic-bezier(0.25, 0.1, 0.25, 1), background-color 0.3s ease; border: 1px solid var(--border-card); box-shadow: 0 6px 12px -3px var(--shadow-color); overflow: hidden; }
+        .card-bg:hover { transform: translateY(-8px) scale(1.02); box-shadow: 0 12px 24px -4px var(--shadow-strong-color); }
+        .btn-primary, .btn-discord, .btn-secondary { color: #FFFFFF; transition: background-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease; box-shadow: 0 4px 8px -2px var(--shadow-color); font-weight: 600; letter-spacing: 0.03em; padding-top: 0.8rem; padding-bottom: 0.8rem; border-radius: 0.375rem; } 
+        .btn-primary { background-color: var(--btn-primary-bg); } .btn-primary:hover { background-color: var(--btn-primary-hover-bg); transform: scale(1.04) translateY(-2px); box-shadow: 0 10px 18px -4px var(--shadow-strong-color); }
+        .btn-discord { background-color: var(--btn-discord-bg); } .btn-discord:hover { background-color: var(--btn-discord-hover-bg); transform: scale(1.04) translateY(-2px); box-shadow: 0 10px 18px -4px rgba(88, 101, 242, 0.35); }
+        .btn-secondary { background-color: transparent; border: 2px solid var(--border-accent); color: var(--text-accent); padding: calc(0.8rem - 2px) calc(1.5rem - 2px); }
+        .btn-secondary:hover { background-color: var(--border-accent); color: white; transform: scale(1.04) translateY(-2px); box-shadow: 0 6px 12px -2px var(--shadow-color); }
+        .text-accent { color: var(--text-accent); }
+        .reveal { opacity: 0; transform: translateY(50px); transition: opacity 0.8s cubic-bezier(0.645, 0.045, 0.355, 1), transform 0.8s cubic-bezier(0.645, 0.045, 0.355, 1); }
+        .reveal.visible { opacity: 1; transform: translateY(0); }
+        ::-webkit-scrollbar { width: 12px; } ::-webkit-scrollbar-track { background: var(--bg-primary); }
+        ::-webkit-scrollbar-thumb { background: var(--scrollbar-thumb-bg); border-radius: 6px; border: 3px solid var(--bg-primary); }
         ::-webkit-scrollbar-thumb:hover { background: var(--scrollbar-thumb-hover-bg); }
-        
-        header#navbar {
-            background-color: var(--bg-header);
-            backdrop-filter: blur(18px); 
-            transition: background-color 0.3s ease, box-shadow 0.3s ease;
-            box-shadow: 0 5px 15px -4px rgba(15,23,42,0.2); 
-        }
-
-        .nav-link {
-            position: relative;
-            color: var(--text-secondary);
-            transition: color 0.2s ease, background-color 0.2s ease, transform 0.2s ease; 
-            padding: 0.65rem 1.1rem; 
-            border-radius: 0.6rem; 
-            font-weight: 500;
-        }
-        .nav-link:hover {
-            transform: translateY(-1px); 
-        }
-        .nav-link::after { 
-            content: '';
-            position: absolute;
-            width: 0;
-            height: 3px; 
-            bottom: 5px; 
-            left: 50%;
-            transform: translateX(-50%);
-            background-color: var(--text-accent);
-            transition: width 0.35s cubic-bezier(0.25, 0.8, 0.25, 1);
-            border-radius: 1.5px;
-        }
-        .nav-link:hover, .nav-link.active {
-            color: var(--text-accent);
-            background-color: rgba(var(--rgb-accent), 0.12); 
-        }
-        .nav-link:hover::after, .nav-link.active::after {
-            width: 60%; 
-        }
-        
-        #mobileMenu {
-            transition: transform 0.4s cubic-bezier(0.25, 0.8, 0.25, 1), opacity 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
-            transform: translateY(-100%);
-            opacity: 0;
-            pointer-events: none; 
-        }
-        #mobileMenu.open {
-            transform: translateY(0);
-            opacity: 1;
-            pointer-events: auto;
-        }
-        html.dark .text-shadow-custom { 
-             text-shadow: 1px 1px 4px rgba(0,0,0,0.6); 
-        }
-        .user-avatar {
-            width: 32px;
-            height: 32px;
-            border-radius: 50%;
-            border: 2px solid var(--border-accent);
-            cursor: pointer;
-            transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
-        }
-         .user-avatar:hover {
-            transform: scale(1.1);
-            box-shadow: 0 0 10px var(--shadow-strong-color);
-        }
-        .dropdown-menu {
-            position: absolute;
-            top: calc(100% + 0.5rem); 
-            right: 0;
-            background-color: var(--bg-card);
-            border: 1px solid var(--border-card);
-            border-radius: 0.5rem; 
-            box-shadow: 0 10px 25px -5px var(--shadow-strong-color), 0 8px 10px -6px var(--shadow-color);
-            z-index: 50;
-            min-width: 200px; 
-            opacity: 0;
-            visibility: hidden;
-            transform: translateY(-10px);
-            transition: opacity 0.2s ease, transform 0.2s ease, visibility 0s linear 0.2s;
-        }
-        .dropdown-menu.open {
-            opacity: 1;
-            visibility: visible;
-            transform: translateY(0);
-            transition: opacity 0.2s ease, transform 0.2s ease;
-        }
-        .dropdown-menu a, .dropdown-menu button {
-            display: block;
-            width: 100%;
-            text-align: left;
-            padding: 0.75rem 1rem; 
-            font-size: 0.875rem; 
-            color: var(--text-secondary);
-            transition: background-color 0.15s ease, color 0.15s ease;
-        }
-        .dropdown-menu a:hover, .dropdown-menu button:hover {
-            background-color: rgba(var(--rgb-accent), 0.1);
-            color: var(--text-accent);
-        }
+        header#navbar { background-color: var(--bg-header); backdrop-filter: blur(16px); transition: background-color 0.3s ease, box-shadow 0.3s ease; box-shadow: 0 4px 10px -3px rgba(15,23,42,0.15); }
+        .nav-link { position: relative; color: var(--text-secondary); transition: color 0.2s ease, background-color 0.2s ease, transform 0.2s ease; padding: 0.6rem 1rem; border-radius: 0.375rem; font-weight: 500; }
+        .nav-link:hover { transform: translateY(-1px); }
+        .nav-link::after { content: ''; position: absolute; width: 0; height: 2px; bottom: 4px; left: 50%; transform: translateX(-50%); background-color: var(--text-accent); transition: width 0.3s cubic-bezier(0.25, 0.8, 0.25, 1); border-radius: 1px; }
+        .nav-link:hover, .nav-link.active { color: var(--text-accent); background-color: rgba(var(--rgb-accent), 0.1); }
+        .nav-link:hover::after, .nav-link.active::after { width: 50%; }
+        #mobileMenu { transition: transform 0.3s cubic-bezier(0.25, 0.8, 0.25, 1), opacity 0.3s cubic-bezier(0.25, 0.8, 0.25, 1); transform: translateY(-100%); opacity: 0; pointer-events: none; }
+        #mobileMenu.open { transform: translateY(0); opacity: 1; pointer-events: auto; }
+        html.dark .text-shadow-custom { text-shadow: 1px 1px 3px rgba(0,0,0,0.5); }
+        .user-avatar { width: 32px; height: 32px; border-radius: 50%; border: 2px solid var(--border-accent); cursor: pointer; transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out; }
+        .user-avatar:hover { transform: scale(1.1); box-shadow: 0 0 8px var(--shadow-strong-color); }
+        .dropdown-menu { position: absolute; top: calc(100% + 0.5rem); right: 0; background-color: var(--bg-card); border: 1px solid var(--border-card); border-radius: 0.375rem; box-shadow: 0 8px 20px -4px var(--shadow-strong-color), 0 6px 8px -5px var(--shadow-color); z-index: 50; min-width: 220px; opacity: 0; visibility: hidden; transform: translateY(-8px); transition: opacity 0.15s ease, transform 0.15s ease, visibility 0s linear 0.15s; }
+        .dropdown-menu.open { opacity: 1; visibility: visible; transform: translateY(0); transition: opacity 0.15s ease, transform 0.15s ease; }
+        .dropdown-menu a, .dropdown-menu button { display: block; width: 100%; text-align: left; padding: 0.7rem 1rem; font-size: 0.875rem; color: var(--text-secondary); transition: background-color 0.1s ease, color 0.1s ease; }
+        .dropdown-menu a:hover, .dropdown-menu button:hover { background-color: rgba(var(--rgb-accent), 0.08); color: var(--text-accent); }
         .dropdown-menu form { margin: 0; } 
-
-        .lore-content p, .lore-content ul {
-            margin-bottom: 1.25rem; 
-            color: var(--text-secondary);
-            font-size: 1.05em; 
-        }
-        .lore-content ul {
-            list-style-type: '✨ '; /* Tematyczny punktor */
-            list-style-position: outside; /* Dla lepszego wyrównania */
-            padding-left: 1rem; 
-        }
-        .lore-content li {
-            margin-bottom: 0.6rem; 
-            padding-left: 0.5rem; /* Dodatkowy padding dla tekstu po punktorze */
-        }
-        .lore-content strong {
-            color: var(--text-primary);
-            font-weight: 600;
-        }
-        .lore-content .italic-highlight { 
-            font-style: italic;
-            color: var(--text-accent);
-            text-shadow: 0 0 5px rgba(var(--rgb-accent), 0.5); /* Subtelny blask */
-        }
-        .animated-gradient-text {
-            background: linear-gradient(45deg, var(--text-accent), var(--text-accent-hover), #c084fc, var(--text-accent));
-            background-size: 200% 200%;
-            -webkit-background-clip: text;
-            background-clip: text;
-            -webkit-text-fill-color: transparent;
-            animation: gradient-flow 8s ease infinite;
-        }
-        @keyframes gradient-flow {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
-        }
+        .modal { background-color: var(--modal-backdrop); backdrop-filter: blur(6px); }
+        .modal-content { background-color: var(--bg-card); max-height: 90vh; }
+        .prose { color: var(--text-secondary); }
+        .prose h1, .prose h2, .prose h3, .prose h4, .prose h5, .prose h6 { color: var(--text-primary); }
+        .prose strong { color: var(--text-primary); }
+        .prose a { color: var(--text-accent); text-decoration: none; }
+        .prose a:hover { text-decoration: underline; color: var(--text-accent-hover); }
+        .prose blockquote { border-left-color: var(--border-accent); background-color: rgba(var(--rgb-accent), 0.05); color: var(--text-secondary); }
+        .prose code { background-color: var(--bg-secondary); color: var(--text-accent); padding: 0.2em 0.4em; margin: 0; font-size: 85%; border-radius: 3px; }
+        .prose pre { background-color: var(--bg-secondary); color: var(--text-primary); }
+        .table-of-contents a { color: var(--text-secondary); }
+        .table-of-contents a:hover { color: var(--text-accent); }
+        .table-of-contents .active-toc { color: var(--text-accent); font-weight: 600; }
     </style>
 </head>
 <body class="antialiased">
@@ -317,9 +131,9 @@
             <nav class="hidden md:flex items-center space-x-1 lg:space-x-2">
                 <a href="index.html" class="nav-link">Strona Główna</a>
                 <a href="prezentacja.html" class="nav-link">Prezentacja Serwera</a>
-                <a href="wikipedia.html" class="nav-link active">Wikipedia Kronik</a> 
+                <a href="wikipedia.html" class="nav-link">Wikipedia Kronik</a> 
                 <a href="ranking-stats.html" class="nav-link">Rankingi</a>
-                 <div id="auth-section-nav" class="ml-4 relative">
+                <div id="auth-section-nav" class="ml-4 relative">
                     </div>
             </nav>
             <div class="md:hidden flex items-center">
@@ -334,61 +148,111 @@
             <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
                 <a href="index.html" class="block py-2.5 px-3 nav-link text-base font-medium">Strona Główna</a>
                 <a href="prezentacja.html" class="block py-2.5 px-3 nav-link text-base font-medium">Prezentacja Serwera</a>
-                <a href="wikipedia.html" class="block py-2.5 px-3 nav-link text-base font-medium active">Wikipedia Kronik</a>
+                <a href="wikipedia.html" class="block py-2.5 px-3 nav-link text-base font-medium">Wikipedia Kronik</a>
                 <a href="ranking-stats.html" class="block py-2.5 px-3 nav-link text-base font-medium">Rankingi</a>
                 <a href="https://discord.gg/TWOJLINKZAPROSZENIOWY" target="_blank" rel="noopener noreferrer" class="block mt-2 py-2.5 px-3 text-base font-medium text-white bg-purple-600 hover:bg-purple-700 rounded-md text-center">Dołącz do Discorda</a>
-            </div>
+                 </div>
         </div>
     </header>
 
     <main>
-        <section class="hero-lore-bg min-h-[50vh] sm:min-h-[60vh] flex items-center justify-center text-center pt-24 sm:pt-20 reveal">
-            <div class="container mx-auto px-4 sm:px-6 py-12 sm:py-16">
-                <h1 class="text-4xl sm:text-5xl md:text-6xl font-bold text-white mb-4 leading-tight text-shadow-custom">
-                    Aethelgard: <span class="animated-gradient-text">Kraina Gwiezdnego Pyłu</span>
-                </h1>
-                <p class="text-lg sm:text-xl text-slate-200 mb-8 max-w-2xl mx-auto text-shadow-custom">
-                    Odkryj mityczną ojczyznę Elary, miejsce zrodzone z magii opowieści i szeptów kosmosu, które stanowi inspirację dla Kronik Elary.
-                </p>
-                <div class="space-x-0 sm:space-x-4 space-y-3 sm:space-y-0">
-                    <a href="wikipedia.html" class="btn-secondary font-semibold py-2.5 px-6 rounded-lg text-sm inline-block w-full sm:w-auto">&larr; Powrót do Wikipedii Kronik</a>
-                    <a href="lore-postaci.html" class="btn-secondary font-semibold py-2.5 px-6 rounded-lg text-sm inline-block w-full sm:w-auto">Poznaj Postacie &rarr;</a>
-                </div>
-            </div>
-        </section>
-
-        <section id="aethelgard-lore-content" class="py-16 sm:py-24">
+        <section class="hero-lore-bg pt-32 pb-16 sm:pt-40 sm:pb-24 text-center reveal">
             <div class="container mx-auto px-4 sm:px-6">
-                <div class="max-w-3xl mx-auto lore-content-card p-6 sm:p-10 rounded-2xl shadow-xl reveal lore-content">
-                    <h2 class="text-3xl sm:text-4xl font-bold text-primary mb-8 text-center">Aethelgard: Kraina Utkana z Gwiezdnego Pyłu i Szeptów Opowieści</h2>
-                    
-                    <p>W najodleglejszych, ledwie muskanych echem znanych wszechświatów, tam gdzie rzeczywistość splata się ze snem w nierozerwalny gobelin, leży Aethelgard. To nie tyle ląd na mapie, co płaszczyzna istnienia, pulsująca żywą magią, skrząca się pyłem zrodzonym z umierających gwiazd i, co najistotniejsze, oddychająca samymi opowieściami. Każdy szept wiatru, każda gra cieni, każdy blask odległej konstelacji jest tu fragmentem niekończącej się narracji.</p>
-
-                    <h4>Kosmiczna Symfonia Światła i Cienia:</h4>
-                    <p>Aethelgard to wizualna uczta dla zmysłów. Niebo nad tą krainą płonie barwami nieznanymi ludzkiemu oku – od głębokich indygo, przez opalizujące fiolety, aż po złociste zorze, które zdają się tańczyć w rytm kosmicznej muzyki. Mgławice, niczym jedwabne welony rzucone przez eterycznych tancerzy, wirują w przestrzeni, a gwiazdy układają się nie tylko w konstelacje, ale i w prastare, świetliste runy, które szepczą o stworzeniu światów i losach zapomnianych bóstw. Czas w Aethelgardzie jest kapryśny – potrafi zwolnić do leniwego oddechu wieczności, by nagle przyspieszyć, pędząc z prędkością komety. Dzień i noc nie podlegają tu prawom astronomii, lecz są odzwierciedleniem przypływów i odpływów magicznej energii, która jest krwiobiegiem tej krainy. Raz niebo zalewa oślepiający blask tysiąca słońc, innym razem otula je aksamitna czerń, w której migoczą miliony punktów – to <span class="italic-highlight">dusze opowieści</span>, czekające na swojego barda, który tchnie w nie życie.</p>
-
-                    <h4>Mieszkańcy Aethelgardu – Dzieci Opowieści:</h4>
-                    <p>Rdzennymi mieszkańcami Aethelgardu są Elfy Gwiezdnego Pyłu, rasa istot o eterycznej urodzie, których istnienie jest nierozerwalnie splecione z magiczną naturą ich świata. Ich skóra, niczym polerowana perła, często lśni subtelnym, opalizującym blaskiem. Włosy, od barwy śniegu, przez srebrzyste strumienie, po delikatne odcienie lawendy, kosmicznego błękitu czy złota zachodzącego słońca, zdają się chłonąć i odbijać światło gwiazd. Ich oczy, najczęściej w głębokich odcieniach fioletu, ametystu, szafiru lub nawet szmaragdu, zdają się skrywać mądrość minionych eonów. Elfy te są istotami długowiecznymi, a ich życie toczy się w rytm opowieści – rodzą się z nich, uczą się poprzez nie, a ich własne czyny i słowa stają się kolejnymi wątkami w niekończącej się narracji Aethelgardu. Mówi się, że potrafią one <span class="italic-highlight">słyszeć szepty gwiazd</span> i rozumieć język wiatru niosącego zapomniane legendy.</p>
-                    <p>Aethelgard jest domem nie tylko dla Elfów. W jego świetlistych gajach i mrocznych, kryształowych jaskiniach można spotkać <strong class="text-primary">Spektralne Istoty</strong>, zrodzone z czystej energii narracyjnej, które przybierają formy bohaterów i potworów z niezliczonych opowieści. Figlarne <strong class="text-primary">Duszki Zwojów</strong>, małe, psotne istoty o skrzydłach utkanych z księżycowej poświaty, strzegą starożytnych bibliotek, często płatając figle nieostrożnym badaczom. Czasem przez niestabilne portale przybywają tu także mityczne stworzenia z innych, dawno zapomnianych wymiarów, przyciągnięte niezwykłą koncentracją magii opowieści.</p>
-
-                    <h4>Magia Słowa i Kryształy Snów:</h4>
-                    <p>W Aethelgardzie magia jest wszechobecna, a jej najpotężniejszą formą jest <strong class="text-primary">Magia Słowa</strong>. Wypowiedziane lub zapisane opowieści, legendy, zaklęcia i pieśni mogą tu nabierać niemal fizycznej postaci, wpływać na otoczenie, leczyć, ranić, a nawet kształtować samą rzeczywistość. Dlatego największymi skarbami Aethelgardu są jego <span class="italic-highlight">Żywe Biblioteki</span>, gdzie księgi same szepczą swoje historie, a zwoje rozwijają się, ukazując ruchome obrazy. Wiele najcenniejszych narracji przechowywanych jest w postaci <strong class="text-primary">Kryształów Snów</strong> – lśniących, wielobarwnych gemów, które po dotknięciu pozwalają przeżyć zapisaną w nich historię niczym własne, najbardziej intensywne wspomnienie, angażując wszystkie zmysły. Inne, równie ważne opowieści, spisane są na zwojach utkanych z księżycowej poświaty, które czyta się jedynie w blasku określonych faz księżyców Aethelgardu, lub wyryte są w tablicach z meteorytowego obsydianu, które pulsują wewnętrznym ogniem.</p>
-
-                    <h4>Flora i Fauna – Odbicie Kosmicznej Energii:</h4>
-                    <p>Natura Aethelgardu jest lustrzanym odbiciem jego magicznej esencji. Rośliny często emanują własnym, delikatnym światłem, a ich barwy zmieniają się w zależności od przepływających przez krainę prądów magicznych lub nastroju otaczających je opowieści. Najsłynniejsze są <strong class="text-primary">Luno-kwiaty</strong>, które rozkwitają jedynie w pełni blasku jednego z trzech księżyców Aethelgardu, rozsiewając wokół siebie pyłek o zapachu gwiezdnego nektaru, który, jak głoszą legendy, potrafi na chwilę ukazać fragmenty przyszłych opowieści. Drzewa, stare jak sama kraina, szepczą pradawne historie tym, którzy potrafią słuchać, a ich liście mienią się wszystkimi kolorami kosmicznych mgławic. Rzeki nie niosą zwykłej wody, lecz płynne światło gwiazd, a ich brzegi porastają <span class="italic-highlight">Kryształowe Trzciny</span>, które rezonują z pieśniami wszechświata. Zwierzęta Aethelgardu, takie jak <strong class="text-primary">Gwiezdne Lisy</strong> o futrze utkanym z konstelacji czy <strong class="text-primary">Szeptuchy</strong> – ptaki, których śpiew potrafi materializować krótkie iluzje, często posiadają zdolności magiczne lub są istotami półmaterialnymi, zrodzonymi z samej tkanki opowieści.</p>
-
-                    <h4>Kultura i Tradycje – Sztuka Opowiadania:</h4>
-                    <p>Życie w Aethelgardzie jest celebracją narracji. Największym szacunkiem i estymą darzeni są <strong class="text-primary">Kronikarze</strong>, którzy zbierają i katalogują historie; <strong class="text-primary">Skrybowie</strong>, potrafiący precyzyjnie utrwalić nawet najbardziej ulotne opowieści; <strong class="text-primary">Bardowie</strong>, których pieśni potrafią poruszyć serca i umysły; oraz <strong class="text-primary">Tkacze Snów</strong>, zdolni do formowania i interpretowania wizji zawartych w Kryształach Snów. Edukacja polega tu na zgłębianiu pradawnych narracji, nauce odczytywania subtelnych znaków wszechświata i doskonaleniu sztuki opowiadania. Festiwale, takie jak <span class="italic-highlight">Święto Pierwszej Opowieści</span> czy <span class="italic-highlight">Noc Spadających Gwiazd</span>, są często celebracją nowo odkrytej legendy lub rocznicą powstania ważnej opowieści, podczas których mieszkańcy dzielą się swoimi historiami, a niebo rozbłyska magicznymi fajerwerkami.</p>
-
-                    <h4>Portale Międzywymiarowe i Rola Arcadiusa:</h4>
-                    <p>Aethelgard, jako kraina na styku wielu rzeczywistości, posiada naturalne, choć często nieprzewidywalne i niestabilne, <strong class="text-primary">Portale Międzywymiarowe</strong>. To właśnie przez jeden z takich portali, podczas nieco zbyt entuzjastycznego poszukiwania legendarnego artefaktu (lub, jak twierdzi sama Elara, zaginionego przepisu na Gwiezdne Ciasteczka o smaku mgławicy krabowej!), nasza młoda elfka trafiła do cyfrowego wymiaru, w którym powstały Kroniki.</p>
-                    <p>Arcadius, Tkacz Przeznaczeń, od niezliczonych cykli obserwował Aethelgard, dostrzegając w nim nie tylko niezwykły potencjał, ale i nieskażoną czystość intencji jego mieszkańców. To on, w swojej nieskończonej mądrości i subtelny sposób, mógł skierować losy Elary, widząc w niej idealną iskrę do zapoczątkowania "Kronik Elary" – projektu, który miał połączyć eteryczną magię opowieści Aethelgardu z dynamicznym bogactwem narracji innych światów, w tym tych cyfrowych, które tak bardzo ją zafascynowały. Aethelgard stał się więc nie tylko ojczyzną Elary, ale także symbolicznym źródłem inspiracji, wartości i tej szczególnej magii, która przyświeca naszemu serwerowi Discord.</p>
-                    
-                    <h4>Dziedzictwo Aethelgardu w Kronikach Elary:</h4>
-                    <p>Choć Elara jest teraz daleko od swoich gwiezdnych lasów i szepczących drzew, duch Aethelgardu jest wiecznie żywy w "Kronikach Elary". To właśnie stamtąd czerpiemy dążenie do odkrywania i dzielenia się opowieściami, głęboki szacunek dla słowa pisanego i mówionego, niegasnące umiłowanie magii i fantazji, a także przyjazną, pełną ciekawości i wzajemnego wsparcia atmosferę. Wszystko to są echa jej gwiezdnej krainy, które teraz, dzięki Wam, drodzy Kronikarze, mogą rozbrzmiewać i ewoluować w nowym, cyfrowym wymiarze, tworząc wspólnie naszą unikalną historię.</p>
-                </div>
+                <h1 class="text-4xl sm:text-5xl md:text-6xl font-bold text-white mb-6 leading-tight text-shadow-custom">
+                    Lore Świata <span class="text-accent">Aethelgard</span>
+                </h1>
+                <p class="text-lg md:text-xl text-slate-200 mb-10 max-w-3xl mx-auto text-shadow-custom">
+                    Zanurz się w bogatej historii, mitologii i kulturach fantastycznego świata, który jest tłem dla przygód w Kronikach Elary.
+                </p>
+                 <a href="wikipedia.html" class="btn-secondary font-semibold py-3 px-6 text-md inline-flex items-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-arrow-left-circle-fill mr-2" viewBox="0 0 16 16">
+                        <path d="M8 0a8 8 0 1 0 0 16A8 8 0 0 0 8 0m3.5 7.5a.5.5 0 0 1 0 1H5.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L5.707 7.5z"/>
+                    </svg>
+                    Powrót do Wikipedii
+                </a>
             </div>
         </section>
+
+        <div class="container mx-auto px-4 sm:px-6 py-12 sm:py-16">
+            <div class="lg:flex lg:space-x-12">
+                <aside id="tableOfContentsContainer" class="lg:w-1/4 mb-10 lg:mb-0 lg:sticky lg:top-24 self-start reveal">
+                    <div class="p-6 rounded-lg bg-bg-card border border-border-card shadow-lg">
+                        <h3 class="text-xl font-semibold text-primary mb-4">Spis Treści</h3>
+                        <nav id="tableOfContents" class="space-y-2 text-sm table-of-contents">
+                            </nav>
+                    </div>
+                </aside>
+
+                <article class="lg:w-3/4 prose prose-lg max-w-none reveal">
+                    <section id="wstep" class="mb-12 scroll-mt-24">
+                        <h2 class="text-3xl font-bold text-accent mb-6 border-b-2 border-border-accent pb-2">Wstęp do Świata Aethelgardu</h2>
+                        <p>Aethelgard to kraina o bogatej i burzliwej historii, ukształtowana przez pradawne moce, boskie interwencje i heroiczne czyny śmiertelników. Od zarania dziejów, kontynent ten był świadkiem powstawania i upadku potężnych cywilizacji, wojen między rasami i nieustającej walki o równowagę między siłami światła i ciemności. Jego magia jest wszechobecna, manifestując się w różnorodnych formach – od subtelnych zaklęć po niszczycielskie kataklizmy.</p>
+                        <p>Świat ten zamieszkują liczne rasy, każda z unikalną kulturą, tradycjami i miejscem w skomplikowanej mozaice Aethelgardu. Ludzie, elfy, krasnoludy, orkowie, a także bardziej egzotyczne istoty, jak tajemniczy Sylvani czy dumni Drakonidzi, współistnieją, rywalizują i czasami jednoczą się w obliczu wspólnych zagrożeń. Niniejsza kronika ma na celu przybliżenie Wam tego fascynującego uniwersum.</p>
+                        <img src="https://placehold.co/800x400/111827/a78bfa?text=Krajobraz+Aethelgardu" alt="Krajobraz Aethelgardu" class="rounded-lg shadow-lg my-6" onerror="this.onerror=null;this.src='https://placehold.co/800x400/0F172A/94A3B8?text=Brak+obrazka';">
+                    </section>
+
+                    <section id="kosmologia" class="mb-12 scroll-mt-24">
+                        <h2 class="text-3xl font-bold text-accent mb-6 border-b-2 border-border-accent pb-2">Kosmologia i Bóstwa</h2>
+                        <p>Wszechświat, w którym znajduje się Aethelgard, jest wielowymiarowy i rządzony przez panteon bóstw o zróżnicowanych domenach i wpływach. Stworzenie świata przypisuje się Pierwotnym Istotom, których echa wciąż rezonują w najstarszych legendach. Główne bóstwa, takie jak Solara, Pani Światła i Życia, czy Nocturnus, Władca Cieni i Tajemnic, odgrywają kluczową rolę w życiu mieszkańców, a ich kapłani i wyznawcy cieszą się znaczącymi wpływami.</p>
+                        <blockquote class="my-6 p-4 border-l-4">
+                            <p class="italic">"Gwiazdy szepczą o pradawnych paktach, a księżyce skrywają sekrety starsze niż czas. Zrozumienie kosmicznego tańca jest kluczem do pojęcia prawdziwej natury magii."</p>
+                            <footer class="text-sm text-right mt-2">- Astromanta Elara</footer>
+                        </blockquote>
+                        <p>Oprócz głównych bóstw, istnieją również pomniejsze duchy natury, patroni rzemiosł oraz enigmatyczne byty z odległych planów egzystencji, które czasami ingerują w sprawy śmiertelników. Wiara i rytuały są integralną częścią życia w Aethelgardzie, wpływając na codzienne czynności, święta i wielkie wydarzenia historyczne.</p>
+                    </section>
+
+                    <section id="geografia" class="mb-12 scroll-mt-24">
+                        <h2 class="text-3xl font-bold text-accent mb-6 border-b-2 border-border-accent pb-2">Geografia i Krainy</h2>
+                        <p>Aethelgard jest kontynentem o zróżnicowanym krajobrazie, od mroźnych pustkowi Północy, przez rozległe lasy Królestwa Sylvanii, po spalone słońcem pustynie Południa. Centralną część kontynentu zajmują Wielkie Równiny, będące domem dla koczowniczych plemion i licznych osad ludzkich. Na wschodzie wznoszą się majestatyczne Smocze Góry, strzegące starożytnych krasnoludzkich twierdz, podczas gdy na zachodzie rozciągają się tajemnicze Mokradła Szeptów, pełne niezbadanych ruin i niebezpieczeństw.</p>
+                        <h4 class="text-xl font-semibold text-primary mt-6 mb-3">Kluczowe Regiony:</h4>
+                        <ul class="list-disc list-inside space-y-2 mb-4">
+                            <li><strong>Królestwo Eldorii:</strong> Największe i najstarsze królestwo ludzi, znane z potężnej armii i rozwiniętej nauki.</li>
+                            <li><strong>Las Sylvanis:</strong> Dom elfów wysokiego rodu, miejsce pełne prastarej magii i naturalnego piękna.</li>
+                            <li><strong>Khaz Modan:</strong> Podziemne królestwo krasnoludów, słynące z mistrzowskiego rzemiosła i bogatych kopalń.</li>
+                            <li><strong>Pustkowia Grom'ash:</strong> Terytoria orków i innych "dzikich" ras, kraina surowa i niebezpieczna.</li>
+                            <li><strong>Archipelag Szeptunów:</strong> Grupa wysp owianych mgłą i tajemnicą, zamieszkana przez izolowane społeczności i potężne morskie stworzenia.</li>
+                        </ul>
+                        <p>Każdy region posiada unikalną florę, faunę oraz specyficzne warunki klimatyczne, co wpływa na styl życia jego mieszkańców i dostępne zasoby.</p>
+                    </section>
+
+                    <section id="rasy" class="mb-12 scroll-mt-24">
+                        <h2 class="text-3xl font-bold text-accent mb-6 border-b-2 border-border-accent pb-2">Główne Rasy Aethelgardu</h2>
+                        <p>Aethelgard jest domem dla wielu inteligentnych ras, z których każda wniosła swój wkład w historię i kulturę kontynentu. Poniżej przedstawiono kilka z najważniejszych:</p>
+                        
+                        <div class="my-6 p-6 rounded-lg bg-bg-secondary border border-border-card">
+                            <h4 class="text-2xl font-semibold text-accent mb-2">Ludzie</h4>
+                            <p class="mb-2">Najliczniejsza i najbardziej zróżnicowana rasa Aethelgardu. Ludzie są znani ze swojej adaptacyjności, ambicji i krótkiego, lecz intensywnego życia. Tworzą królestwa, republiki i wolne miasta, a ich wpływ jest odczuwalny w każdym zakątku kontynentu.</p>
+                            <p class="text-sm"><strong>Cechy charakterystyczne:</strong> Zróżnicowany wygląd, wszechstronność, silna wola.</p>
+                        </div>
+
+                        <div class="my-6 p-6 rounded-lg bg-bg-secondary border border-border-card">
+                            <h4 class="text-2xl font-semibold text-accent mb-2">Elfy</h4>
+                            <p class="mb-2">Długowieczne, eleganckie istoty, głęboko związane z naturą i magią. Dzielą się na kilka podras, m.in. Elfy Wysokiego Rodu (zamieszkujące lasy Sylvanis) i Mroczne Elfy (preferujące podziemne królestwa). Cenią sztukę, wiedzę i harmonię.</p>
+                            <p class="text-sm"><strong>Cechy charakterystyczne:</strong> Zwinność, wrodzone zdolności magiczne, długowieczność, silne poczucie estetyki.</p>
+                        </div>
+
+                        <div class="my-6 p-6 rounded-lg bg-bg-secondary border border-border-card">
+                            <h4 class="text-2xl font-semibold text-accent mb-2">Krasnoludy</h4>
+                            <p class="mb-2">Krępe, wytrzymałe istoty zamieszkujące podziemne twierdze. Są mistrzami rzemiosła, kowalstwa i górnictwa. Cenią tradycję, honor i dobrze wykonaną pracę. Słyną z niechęci do magii i zamiłowania do piwa.</p>
+                            <p class="text-sm"><strong>Cechy charakterystyczne:</strong> Siła, wytrzymałość, talent rzemieślniczy, upór.</p>
+                        </div>
+                         <p class="mt-4">Oprócz wymienionych, Aethelgard zamieszkują również orkowie, gobliny, niziołki, drakonidzi, tajemniczy sylvani i wiele innych, mniej licznych, ale równie fascynujących ras, każda z własną, unikalną historią i kulturą.</p>
+                    </section>
+
+                    <section id="magia" class="mb-12 scroll-mt-24">
+                        <h2 class="text-3xl font-bold text-accent mb-6 border-b-2 border-border-accent pb-2">System Magii</h2>
+                        <p>Magia w Aethelgardzie jest potężną i wszechobecną siłą, lecz jej zrozumienie i opanowanie wymaga lat studiów i praktyki. Istnieje wiele szkół i tradycji magicznych, od elementalizmu, przez nekromancję, po iluzjonizm i zaklinanie. Magowie czerpią moc z różnych źródeł – jedni z naturalnych przepływów energii życiowej, inni z paktów z potężnymi bytami, a jeszcze inni z głębokiej wiedzy o kosmicznych prawach.</p>
+                        <p>Korzystanie z magii nie jest jednak pozbawione ryzyka. Niekontrolowane użycie potężnych zaklęć może prowadzić do katastrofalnych skutków, zarówno dla rzucającego, jak i dla otoczenia. Dlatego też istnieją zakony i gildie magiczne, które starają się regulować i kontrolować dostęp do najpotężniejszych form magii.</p>
+                    </section>
+                    
+                    <section id="historia-konflikty" class="mb-12 scroll-mt-24">
+                        <h2 class="text-3xl font-bold text-accent mb-6 border-b-2 border-border-accent pb-2">Ważne Wydarzenia Historyczne i Konflikty</h2>
+                        <p>Historia Aethelgardu jest naznaczona licznymi wojnami, sojuszami i przełomowymi odkryciami. Od Wielkiej Wojny Ras, która na wieki ukształtowała obecny układ sił, przez Erę Mrocznych Zaklęć, kiedy to nekromancja niemal doprowadziła świat na skraj zagłady, po niedawne Odkrycie Zapomnianych Wysp, które otworzyło nowe możliwości i zagrożenia.</p>
+                        <p>Obecnie kontynent znajduje się w stanie kruchej równowagi. Stare animozje wciąż tlą się pod powierzchnią, a nowe konflikty mogą wybuchnąć w każdej chwili. Bohaterowie i poszukiwacze przygód mają pełne ręce roboty, próbując zapobiegać katastrofom, odkrywać starożytne sekrety lub po prostu przetrwać w tym niebezpiecznym, lecz fascynującym świecie.</p>
+                    </section>
+                </article>
+            </div>
+        </div>
     </main>
 
     <footer class="py-12 text-center" style="background-color: var(--bg-header);">
@@ -405,13 +269,16 @@
                 </a>
             </div>
             <p class="text-secondary text-sm">
-                &copy; <span id="currentYear"></span> Kroniki Elary. Wszelkie prawa zastrzeżone.
+                &copy; <span id="currentYear">2024</span> Kroniki Elary. Wszelkie prawa zastrzeżone.
             </p>
             <p class="text-xs mt-2.5" style="color: var(--text-secondary-light, #94A3B8);">
                 Stworzone z pasji do anime i mangi przez Arcadiusa i jego Strażników.
             </p>
         </div>
     </footer>
+
+    <div id="eventModal" class="fixed inset-0 z-[60] items-center justify-center hidden p-4 modal">
+        </div>
 
     <script>
         // Funkcja do obsługi aktywnego linku w nawigacji
@@ -432,21 +299,18 @@
             });
         }
 
-        // Funkcja do obsługi wyświetlania informacji o użytkowniku/logowania
         async function updateAuthDisplay() {
             const authSectionNav = document.getElementById('auth-section-nav');
             const authSectionMobileNav = document.getElementById('auth-section-mobile-nav');
-            const ADMIN_DISCORD_ID = "1238814802357387285"; // Upewnij się, że to jest ID admina
+            const mobileMenuLinksContainer = document.querySelector('#mobileMenu > div'); 
+            const ADMIN_DISCORD_ID = "1238814802357387285"; 
 
             function createLoginButton(isMobile = false) {
                 const loginButton = document.createElement('a');
-                loginButton.href = '/auth/discord/login'; // Upewnij się, że ten endpoint jest poprawny
+                loginButton.href = '/auth/discord/login'; 
                 loginButton.id = isMobile ? 'discordLoginButtonMobileNav' : 'discordLoginButtonNav';
                 loginButton.className = 'btn-discord !text-white px-4 py-2.5 rounded-md text-sm flex items-center' + (isMobile ? ' w-full justify-center mt-2' : '');
-                loginButton.innerHTML = `
-                    <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20.297 0H3.703C1.658 0 0 1.658 0 3.703V20.297C0 22.342 1.658 24 3.703 24H20.297C22.342 24 24 22.342 24 20.297V3.703C24 1.658 22.342 0 20.297 0ZM8.107 15.232C7.089 15.232 6.241 14.384 6.241 13.366C6.241 12.348 7.089 11.5 8.107 11.5C9.125 11.5 9.973 12.348 9.973 13.366C9.973 14.384 9.125 15.232 8.107 15.232ZM12.000 11.071C10.982 11.071 10.134 10.223 10.134 9.205C10.134 8.188 10.982 7.339 12.000 7.339C13.018 7.339 13.866 8.188 13.866 9.205C13.866 10.223 13.018 11.071 12.000 11.071ZM15.893 15.232C14.875 15.232 14.027 14.384 14.027 13.366C14.027 12.348 14.875 11.5 15.893 11.5C16.911 11.5 17.759 12.348 17.759 13.366C17.759 14.384 16.911 15.232 15.893 15.232Z"/></svg>
-                    Zaloguj przez Discord
-                `;
+                loginButton.innerHTML = `<svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 24 24"><path d="M20.297 0H3.703C1.658 0 0 1.658 0 3.703V20.297C0 22.342 1.658 24 3.703 24H20.297C22.342 24 24 22.342 24 20.297V3.703C24 1.658 22.342 0 20.297 0ZM8.107 15.232C7.089 15.232 6.241 14.384 6.241 13.366C6.241 12.348 7.089 11.5 8.107 11.5C9.125 11.5 9.973 12.348 9.973 13.366C9.973 14.384 9.125 15.232 8.107 15.232ZM12.000 11.071C10.982 11.071 10.134 10.223 10.134 9.205C10.134 8.188 10.982 7.339 12.000 7.339C13.018 7.339 13.866 8.188 13.866 9.205C13.866 10.223 13.018 11.071 12.000 11.071ZM15.893 15.232C14.875 15.232 14.027 14.384 14.027 13.366C14.027 12.348 14.875 11.5 15.893 11.5C16.911 11.5 17.759 12.348 17.759 13.366C17.759 14.384 16.911 15.232 15.893 15.232Z"/></svg> Zaloguj przez Discord`;
                 return loginButton;
             }
 
@@ -462,6 +326,7 @@
                 avatarImg.src = user.avatar ? `https://cdn.discordapp.com/avatars/${user.id}/${user.avatar}.png?size=32` : 'https://placehold.co/32x32/A78BFA/FFFFFF?text=U';
                 avatarImg.alt = 'Awatar użytkownika';
                 avatarImg.className = 'user-avatar';
+                avatarImg.onerror = () => { avatarImg.src = 'https://placehold.co/32x32/A78BFA/FFFFFF?text=U'; };
                 avatarImg.onclick = (event) => {
                     event.stopPropagation(); 
                     const dropdown = document.getElementById(dropdownId);
@@ -478,6 +343,16 @@
                 profileLink.textContent = 'Mój Profil';
                 dropdownMenu.appendChild(profileLink);
 
+                const botShopLink = document.createElement('a');
+                botShopLink.href = '/sklep-bota'; 
+                botShopLink.textContent = 'Sklep Bota (Dukaty)';
+                dropdownMenu.appendChild(botShopLink);
+                
+                const premiumShopLink = document.createElement('a');
+                premiumShopLink.href = 'sklep-premium.html';
+                premiumShopLink.textContent = 'Sklep Premium (Kryształy)';
+                dropdownMenu.appendChild(premiumShopLink);
+
                 const supportTicketsLink = document.createElement('a');
                 supportTicketsLink.href = 'support.html'; 
                 supportTicketsLink.textContent = 'Centrum Wsparcia';
@@ -485,13 +360,13 @@
 
                 if (user.id === ADMIN_DISCORD_ID) {
                     const adminLinkElement = document.createElement('a'); 
-                    adminLinkElement.href = '/admin.html'; 
+                    adminLinkElement.href = 'admin.html'; 
                     adminLinkElement.textContent = 'Panel Admina';
                     dropdownMenu.appendChild(adminLinkElement);
                 }
                 
                 const logoutForm = document.createElement('form');
-                logoutForm.action = '/auth/logout'; // Upewnij się, że ten endpoint jest poprawny
+                logoutForm.action = '/auth/logout'; 
                 logoutForm.method = 'POST';
                 const logoutButton = document.createElement('button');
                 logoutButton.type = 'submit';
@@ -502,27 +377,56 @@
                 container.appendChild(dropdownMenu);
                 return container;
             }
+            
+            if (mobileMenuLinksContainer) {
+                const existingMobileAuthElements = mobileMenuLinksContainer.querySelectorAll('#discordLoginButtonMobileNav, #userDropdownContainerMobileMenu, .mobile-auth-item');
+                existingMobileAuthElements.forEach(el => el.remove());
+            }
 
             try {
-                const response = await fetch('/api/me'); // Upewnij się, że ten endpoint jest poprawny
+                const response = await fetch('/api/me'); 
                 if (response.ok) {
                     const user = await response.json();
                     if (authSectionNav) {
                         authSectionNav.innerHTML = ''; 
                         authSectionNav.appendChild(createAvatarDropdown(user, false));
                     }
-                    if (authSectionMobileNav) {
+                    if (authSectionMobileNav) { 
                         authSectionMobileNav.innerHTML = ''; 
                         authSectionMobileNav.appendChild(createAvatarDropdown(user, true));
                     }
+                     if (mobileMenuLinksContainer) {
+                        const mobileDropdownContainer = createAvatarDropdown(user, true); 
+                        mobileDropdownContainer.id = 'userDropdownContainerMobileMenu';
+                        mobileDropdownContainer.classList.add('mt-2', 'border-t', 'border-[var(--border-card)]', 'pt-2', 'mobile-auth-item');
+                        
+                        const mobileAvatar = mobileDropdownContainer.querySelector('.user-avatar');
+                        const mobileDropdown = mobileDropdownContainer.querySelector('.dropdown-menu');
+                        
+                        if (mobileAvatar) mobileAvatar.classList.add('hidden'); 
+                        if (mobileDropdown) {
+                            mobileDropdown.classList.remove('absolute', 'top-full', 'right-0', 'dropdown-menu'); 
+                            mobileDropdown.classList.add('space-y-1');
+                            Array.from(mobileDropdown.children).forEach(child => {
+                                child.classList.add('block', 'py-2', 'px-3', 'text-base', 'font-medium', 'rounded-md', 'hover:bg-[rgba(var(--rgb-accent),0.1)]', 'hover:text-[var(--text-accent)]');
+                                mobileMenuLinksContainer.appendChild(child);
+                            });
+                        }
+                    }
+
                 } else {
                      if (authSectionNav) {
                         authSectionNav.innerHTML = '';
                         authSectionNav.appendChild(createLoginButton(false));
                     }
-                    if (authSectionMobileNav) {
+                    if (authSectionMobileNav) { 
                         authSectionMobileNav.innerHTML = '';
-                        authSectionMobileNav.appendChild(createLoginButton(true));
+                        authSectionMobileNav.appendChild(createLoginButton(true)); 
+                    }
+                    if (mobileMenuLinksContainer) {
+                        const mobileLoginButton = createLoginButton(true); 
+                        mobileLoginButton.classList.add('mt-2', 'border-t', 'border-[var(--border-card)]', 'pt-2', 'mobile-auth-item');
+                        mobileMenuLinksContainer.appendChild(mobileLoginButton);
                     }
                 }
             } catch (error) {
@@ -535,6 +439,11 @@
                     authSectionMobileNav.innerHTML = '';
                     authSectionMobileNav.appendChild(createLoginButton(true));
                 }
+                if (mobileMenuLinksContainer) {
+                    const mobileLoginButton = createLoginButton(true);
+                    mobileLoginButton.classList.add('mt-2', 'border-t', 'border-[var(--border-card)]', 'pt-2', 'mobile-auth-item');
+                    mobileMenuLinksContainer.appendChild(mobileLoginButton);
+                }
             }
         }
         
@@ -545,10 +454,10 @@
             if (mobileMenuButton && mobileMenu) {
                 mobileMenuButton.addEventListener('click', () => {
                     const isExpanded = mobileMenuButton.getAttribute('aria-expanded') === 'true' || false;
-                    mobileMenuButton.setAttribute('aria-expanded', !isExpanded);
+                    mobileMenuButton.setAttribute('aria-expanded', String(!isExpanded));
                     mobileMenu.classList.toggle('open');
                 });
-                mobileMenu.querySelectorAll('a.nav-link').forEach(link => { 
+                mobileMenu.querySelectorAll('a').forEach(link => { 
                     link.addEventListener('click', () => {
                         mobileMenuButton.setAttribute('aria-expanded', 'false');
                         mobileMenu.classList.remove('open');
@@ -565,7 +474,7 @@
                         observer.unobserve(entry.target);
                     }
                 });
-            }, { threshold: 0.05 }); 
+            }, { threshold: 0.1 });
 
             document.querySelectorAll('.reveal').forEach(el => {
                 revealObserver.observe(el);
@@ -575,19 +484,85 @@
         function setupDropdownDismiss() {
             window.addEventListener('click', function(e) {
                 const desktopDropdownContainer = document.getElementById('userDropdownContainerNav');
-                const mobileDropdownContainer = document.getElementById('userDropdownContainerMobile');
+                const mobileDropdownContainer = document.getElementById('userDropdownContainerMobile'); 
                 const desktopDropdown = document.getElementById('userDropdownNav');
-                const mobileDropdown = document.getElementById('userDropdownMobile');
+                const mobileDropdown = document.getElementById('userDropdownMobile'); 
 
-                if (desktopDropdownContainer && !desktopDropdownContainer.contains(e.target) && desktopDropdown) {
+                if (desktopDropdownContainer && !desktopDropdownContainer.contains(e.target) && desktopDropdown && desktopDropdown.classList.contains('open')) {
                     desktopDropdown.classList.remove('open');
                 }
-                if (mobileDropdownContainer && !mobileDropdownContainer.contains(e.target) && mobileDropdown) {
+                if (mobileDropdownContainer && !mobileDropdownContainer.contains(e.target) && mobileDropdown && mobileDropdown.classList.contains('open')) {
                      mobileDropdown.classList.remove('open');
                 }
             });
         }
-        
+
+        // Generowanie spisu treści i obsługa smooth scroll
+        function generateTableOfContents() {
+            const articleContent = document.querySelector('article.prose');
+            const tocContainer = document.getElementById('tableOfContents');
+            if (!articleContent || !tocContainer) return;
+
+            const headings = articleContent.querySelectorAll('h2');
+            let tocHTML = '';
+
+            headings.forEach(heading => {
+                const id = heading.parentElement.id || heading.textContent.trim().toLowerCase().replace(/\s+/g, '-').replace(/[^\w-]+/g, '');
+                if (!heading.parentElement.id) { // Ustaw ID jeśli nie istnieje
+                     heading.parentElement.id = id;
+                }
+                heading.parentElement.classList.add('scroll-mt-24'); // Dodaj klasę do sekcji dla offsetu
+                tocHTML += `<a href="#${id}" class="block py-1.5 px-3 hover:bg-bg-secondary rounded-md transition-colors duration-150">${heading.textContent}</a>`;
+            });
+            tocContainer.innerHTML = tocHTML;
+
+            // Smooth scroll dla linków w spisie treści
+            tocContainer.querySelectorAll('a').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    const targetId = this.getAttribute('href').substring(1);
+                    const targetElement = document.getElementById(targetId);
+                    if (targetElement) {
+                        // Usunięcie klasy active ze wszystkich linków
+                        tocContainer.querySelectorAll('a').forEach(link => link.classList.remove('active-toc'));
+                        // Dodanie klasy active do klikniętego linku
+                        this.classList.add('active-toc');
+                        
+                        targetElement.scrollIntoView({
+                            behavior: 'smooth',
+                            block: 'start' 
+                        });
+                         // Aktualizacja URL bez przeładowania strony (opcjonalne)
+                        if (history.pushState) {
+                            history.pushState(null, null, `#${targetId}`);
+                        } else {
+                            location.hash = `#${targetId}`;
+                        }
+                    }
+                });
+            });
+
+            // Podświetlanie aktywnego linku w spisie treści podczas scrollowania
+            const observer = new IntersectionObserver(entries => {
+                entries.forEach(entry => {
+                    const id = entry.target.getAttribute('id');
+                    const tocLink = tocContainer.querySelector(`a[href="#${id}"]`);
+                    if (tocLink) {
+                        if (entry.isIntersecting && entry.intersectionRatio >= 0.5) {
+                             tocContainer.querySelectorAll('a').forEach(link => link.classList.remove('active-toc'));
+                             tocLink.classList.add('active-toc');
+                        }
+                    }
+                });
+            }, { threshold: 0.5, rootMargin: "0px 0px -50% 0px" }); // rootMargin, aby aktywować trochę wcześniej
+
+            headings.forEach(heading => {
+                const section = heading.parentElement;
+                if(section) observer.observe(section);
+            });
+        }
+
+
         document.addEventListener('DOMContentLoaded', function() {
             document.getElementById('currentYear').textContent = new Date().getFullYear();
             
@@ -600,6 +575,7 @@
             setupMobileMenu();
             setupRevealAnimations();
             setupDropdownDismiss();
+            generateTableOfContents(); // Wywołanie funkcji generującej spis treści
         });
     </script>
 </body>

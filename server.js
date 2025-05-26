@@ -1,5 +1,5 @@
     // server.js
-    require('dotenv').config(); 
+    require('dotenv').config();
 
     console.log("--- DEBUG ZMIENNYCH ŚRODOWISKOWYCH (strona WWW) ---");
     console.log("Port strony (process.env.PORT):", process.env.PORT);
@@ -14,14 +14,14 @@
     const fetch = require('node-fetch'); // Dla CommonJS, upewnij się, że masz node-fetch@2
     const nodemailer = require('nodemailer');
     const path = require('path');
-    const fs = require('fs'); 
-    const crypto = require('crypto'); 
+    const fs = require('fs');
+    const crypto = require('crypto');
 
     // Import modeli Sequelize
-    const SupportRequest = require('./models/SupportRequest'); 
-    const SupportReply = require('./models/SupportReply');   
-    const Content = require('./models/Content');             
-    const sequelize = require('./config/database');          
+    const SupportRequest = require('./models/SupportRequest');
+    const SupportReply = require('./models/SupportReply');
+    const Content = require('./models/Content');
+    const sequelize = require('./config/database');
 
 
     const app = express();
@@ -32,14 +32,14 @@
     const ADMIN_DISCORD_ID = process.env.ADMIN_DISCORD_ID;
 
     // Definicje asocjacji modeli Sequelize
-    if (SupportRequest && SupportReply) { 
-        SupportRequest.hasMany(SupportReply, { 
-            foreignKey: 'ticketId', 
+    if (SupportRequest && SupportReply) {
+        SupportRequest.hasMany(SupportReply, {
+            foreignKey: 'ticketId',
             as: 'replies',
             onDelete: 'CASCADE'
         });
-        SupportReply.belongsTo(SupportRequest, { 
-            foreignKey: 'ticketId', 
+        SupportReply.belongsTo(SupportRequest, {
+            foreignKey: 'ticketId',
             as: 'ticket'
         });
     }
@@ -47,14 +47,14 @@
 
     // --- Middleware podstawowe ---
     app.use(session({
-      secret: process.env.SESSION_SECRET || 'super_tajny_sekret_sesji_123!@#ABC_XYZ', 
+      secret: process.env.SESSION_SECRET || 'super_tajny_sekret_sesji_123!@#ABC_XYZ',
       resave: false,
       saveUninitialized: true,
-      cookie: { 
-        secure: process.env.NODE_ENV === 'production', 
-        httpOnly: true, 
-        sameSite: 'lax' 
-      } 
+      cookie: {
+        secure: process.env.NODE_ENV === 'production',
+        httpOnly: true,
+        sameSite: 'lax'
+      }
     }));
     app.use(express.json());
     app.use(express.urlencoded({ extended: true }));
@@ -68,14 +68,14 @@
 
     const storage = multer.diskStorage({
         destination: function (req, file, cb) { cb(null, uploadsDir); },
-        filename: function (req, file, cb) { 
-            const safeFileName = Date.now() + '-' + file.originalname.replace(/[^a-zA-Z0-9.-_]/g, '_'); 
+        filename: function (req, file, cb) {
+            const safeFileName = Date.now() + '-' + file.originalname.replace(/[^a-zA-Z0-9.-_]/g, '_');
             cb(null, safeFileName);
         }
     });
-    const upload = multer({ 
+    const upload = multer({
         storage: storage,
-        limits: { fileSize: 5 * 1024 * 1024 }, 
+        limits: { fileSize: 5 * 1024 * 1024 },
         fileFilter: function (req, file, cb) {
             const allowedTypes = /jpeg|jpg|png|gif/;
             const mimetype = allowedTypes.test(file.mimetype);
@@ -105,8 +105,8 @@
             console.log(`Proxy ${method}: Odpytywanie API bota: ${url.toString()}`);
             const fetchOptions = {
                 method: method,
-                headers: { 
-                    'X-API-Key': BOT_API_KEY, 
+                headers: {
+                    'X-API-Key': BOT_API_KEY,
                     'Content-Type': 'application/json',
                     'Accept': 'application/json'
                 },
@@ -143,9 +143,9 @@
         }
         try {
             const ticket = await SupportRequest.findOne({
-                where: { 
+                where: {
                     id: ticketId,
-                    ...( !isActuallyAdmin && { discordUserId: userId } ) 
+                    ...( !isActuallyAdmin && { discordUserId: userId } )
                 }
             });
             if (!ticket) {
@@ -161,14 +161,14 @@
                 replyText: replyText,
                 isAdminReply: isActuallyAdmin
             });
-            if (!isActuallyAdmin && (ticket.status === 'Otwarte' || ticket.status === 'W trakcie')) { 
-                ticket.status = 'Oczekuje na odpowiedź'; 
+            if (!isActuallyAdmin && (ticket.status === 'Otwarte' || ticket.status === 'W trakcie')) {
+                ticket.status = 'Oczekuje na odpowiedź';
                 await ticket.save();
             } else if (isActuallyAdmin && (ticket.status === 'Otwarte' || ticket.status === 'Oczekuje na odpowiedź')) {
-                 ticket.status = 'W trakcie'; 
+                 ticket.status = 'W trakcie';
                  await ticket.save();
             }
-            if (!isActuallyAdmin && process.env.DISCORD_WEBHOOK_URL_SUPPORT) { 
+            if (!isActuallyAdmin && process.env.DISCORD_WEBHOOK_URL_SUPPORT) {
                 await fetch(process.env.DISCORD_WEBHOOK_URL_SUPPORT, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
@@ -186,11 +186,11 @@
 
     // --- Ścieżki API (powinny być zdefiniowane przed ogólnymi handlerami plików statycznych) ---
     app.get('/auth/discord/login', (req, res) => {
-      const redirectPath = req.query.redirect || '/profil.html'; 
-      req.session.redirectTo = redirectPath; 
+      const redirectPath = req.query.redirect || '/profil.html';
+      req.session.redirectTo = redirectPath;
       const params = new URLSearchParams({
         client_id: process.env.DISCORD_CLIENT_ID,
-        redirect_uri: process.env.DISCORD_REDIRECT_URI, 
+        redirect_uri: process.env.DISCORD_REDIRECT_URI,
         response_type: 'code',
         scope: 'identify email'
       });
@@ -234,9 +234,9 @@
           avatar: userData.avatar
         };
         console.log("Użytkownik zalogowany:", req.session.user);
-        
+
         const redirectTo = req.session.redirectTo || (isAdmin(req) ? '/admin.html' : '/profil.html');
-        delete req.session.redirectTo; 
+        delete req.session.redirectTo;
         res.redirect(redirectTo);
 
       } catch (error) {
@@ -259,8 +259,8 @@
             console.error("Błąd wylogowania:", err);
             return res.status(500).json({ error: 'Błąd podczas wylogowywania' });
         }
-        res.clearCookie('connect.sid'); 
-        res.redirect('/'); 
+        res.clearCookie('connect.sid');
+        res.redirect('/');
       });
     });
 
@@ -273,10 +273,10 @@
     app.get('/api/web/ranking/xp', (req, res) => {
         proxyToBotApi(req, res, '/api/ranking/xp');
     });
-    app.get('/api/web/ranking/currency', (req, res) => { 
+    app.get('/api/web/ranking/currency', (req, res) => {
         proxyToBotApi(req, res, '/api/ranking/currency');
     });
-    app.get('/api/web/ranking/premium_currency', (req, res) => { 
+    app.get('/api/web/ranking/premium_currency', (req, res) => {
         proxyToBotApi(req, res, '/api/ranking/premium_currency');
     });
     app.get('/api/web/ranking/messages', (req, res) => {
@@ -292,7 +292,7 @@
         if (!req.session.user || !req.session.user.id) {
             return res.status(401).json({ error: 'Musisz być zalogowany, aby dokonać zakupu.' });
         }
-        const { currency_type } = req.body; 
+        const { currency_type } = req.body;
         const botApiBody = {
             discord_user_id: req.session.user.id,
             currency_type: currency_type || 'dukaty'
@@ -314,11 +314,11 @@
         const simulatedTransactionId = `WEB-${Date.now()}-${crypto.randomBytes(4).toString('hex')}`;
         const botApiBody = {
             discord_user_id: userId,
-            transaction_id: simulatedTransactionId 
+            transaction_id: simulatedTransactionId
         };
         proxyToBotApi(req, res, `/api/premium/finalize_purchase/${packageId}`, 'POST', botApiBody);
     });
-    
+
     // Support Tickets API
     app.get('/api/support/my-tickets', async (req, res) => {
       if (!req.session.user || !req.session.user.id) {
@@ -350,9 +350,9 @@
         const { ticketId } = req.params;
         try {
             const ticket = await SupportRequest.findOne({
-                where: { 
+                where: {
                     id: ticketId,
-                    ...( !isAdmin(req) && { discordUserId: req.session.user.id } ) 
+                    ...( !isAdmin(req) && { discordUserId: req.session.user.id } )
                 },
                 include: [{
                     model: SupportReply,
@@ -377,7 +377,7 @@
         const { replyText } = req.body;
         await handleSupportReplyLogic(req, res, ticketId, replyText, isAdmin(req));
     });
-    
+
     app.post('/api/support/submit', upload.single('attachment'), async (req, res) => {
       const { email, reportType, description } = req.body;
       const attachment = req.file;
@@ -411,18 +411,18 @@
               port: parseInt(process.env.EMAIL_PORT || "587", 10),
               secure: (process.env.EMAIL_PORT === '465'),
               auth: { user: process.env.EMAIL_USER, pass: process.env.EMAIL_PASS },
-              tls: { rejectUnauthorized: (process.env.EMAIL_TLS_REJECT_UNAUTHORIZED !== 'false') } 
+              tls: { rejectUnauthorized: (process.env.EMAIL_TLS_REJECT_UNAUTHORIZED !== 'false') }
             });
             await transporter.sendMail({
               from: `"Wsparcie Kronik Elary" <${process.env.EMAIL_USER}>`,
-              to: process.env.EMAIL_TO_SUPPORT, 
+              to: process.env.EMAIL_TO_SUPPORT,
               subject: `Nowe zgłoszenie wsparcia #${supportRequest.id}: ${reportType} od ${discordUsernameToLog}`,
               text: `Nowe zgłoszenie #${supportRequest.id} od: ${discordUsernameToLog} (ID: ${discordUserIdToLog || 'brak'})\nEmail: ${email || 'brak'}\nTyp: ${reportType}\nOpis:\n${description}${attachment ? `\nZałącznik: ${attachment.originalname}` : ''}`,
               attachments: attachment ? [{ filename: attachment.originalname, path: attachment.path }] : []
             });
             console.log("Wiadomość email o zgłoszeniu wysłana.");
         } else { console.warn("Konfiguracja email nie jest kompletna lub brakuje EMAIL_TO_SUPPORT. Pomijam wysyłanie emaila."); }
-        if (process.env.DISCORD_WEBHOOK_URL_SUPPORT) { 
+        if (process.env.DISCORD_WEBHOOK_URL_SUPPORT) {
             await fetch(process.env.DISCORD_WEBHOOK_URL_SUPPORT, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
@@ -466,7 +466,7 @@
             return res.status(403).json({ error: 'Forbidden - Brak uprawnień administratora.' });
         }
         const { ticketId } = req.params;
-        const { status } = req.body; 
+        const { status } = req.body;
         const allowedStatuses = ['Otwarte', 'W trakcie', 'Oczekuje na odpowiedź', 'Rozwiązane', 'Zamknięte'];
         if (!status || !allowedStatuses.includes(status)) {
             return res.status(400).json({ error: 'Nieprawidłowy status zgłoszenia.' });
@@ -486,7 +486,7 @@
         }
     });
     app.post('/api/admin/support-tickets/:ticketId/reply', async (req, res) => {
-        if (!isAdmin(req)) { 
+        if (!isAdmin(req)) {
             return res.status(403).json({ error: 'Forbidden - Brak uprawnień administratora.' });
         }
         const { ticketId } = req.params;
@@ -533,64 +533,62 @@
     });
 
     // --- Obsługa stron statycznych i React App ---
-    // Dedykowana ścieżka dla sklepu React musi być przed ogólnym handlerem dla *.html
-    app.get('/sklep-bota*', (req, res) => { 
+
+    // 1. Serwowanie plików z folderu 'uploads'
+    app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
+
+    // 2. Serwowanie statycznych zasobów aplikacji React (JS, CSS, obrazy itp. z client/dist/assets)
+    //    To jest kluczowe, aby pliki linkowane przez client/dist/index.html były dostępne.
+    //    Ścieżka '/assets' jest używana w client/dist/index.html
+    app.use('/assets', express.static(path.join(__dirname, 'client/dist/assets')));
+
+    // 3. Dedykowane ścieżki dla sklepu React - ZAWSZE serwują index.html aplikacji React
+    //    Obsługuje /sklep-bota, /sklep-bota/cokolwiek, /sklepbot, /sklepbot/cokolwiek
+    app.get(['/sklep-bota', '/sklep-bota/*', '/sklepbot', '/sklepbot/*'], (req, res, next) => {
         const reactAppIndexPath = path.join(__dirname, 'client/dist', 'index.html');
         if (fs.existsSync(reactAppIndexPath)) {
+            console.log(`Serwowanie aplikacji React dla: ${req.path}`);
             res.sendFile(reactAppIndexPath);
         } else {
-            console.error("Krytyczny błąd: Plik index.html aplikacji React nie został znaleziony w client/dist/");
-            res.status(500).send('Błąd serwera: Nie można załadować strony sklepu. Skontaktuj się z administratorem.');
+            console.error("Krytyczny błąd: Plik index.html aplikacji React nie został znaleziony w client/dist/ dla ścieżki sklepu");
+            // Przekaż do następnego handlera (np. 404)
+            next();
         }
     });
     
-    // Catch-all dla pozostałych plików .html w folderze public
-    // Musi być po definicjach API i specjalnych ścieżek React
-    app.get('/*.html', (req, res, next) => {
-        const pageName = path.basename(req.path); 
-        if (pageName.includes('..')) {
-            return res.status(400).send("Nieprawidłowa ścieżka");
-        }
-        const filePath = path.join(__dirname, 'public', pageName);
-        
-        fs.access(filePath, fs.constants.F_OK, (err) => {
-            if (err) {
-                return next(); 
-            }
-            res.sendFile(filePath);
-        });
-    });
+    // 4. Serwowanie plików statycznych z katalogu 'public'
+    //    To obsłuży public/index.html dla ścieżki '/', oraz inne pliki jak .css, .js, obrazy z 'public'.
+    app.use(express.static(path.join(__dirname, 'public')));
     
-    // Handler 404 na samym końcu
+    // 5. Handler dla wszystkich innych ścieżek (catch-all)
+    //    Jeśli żądanie nie pasuje do API, ani do plików statycznych z 'public',
+    //    ani do ścieżek aplikacji React, to jest to prawdopodobnie 404.
     app.use((req, res) => {
-        if (req.path.startsWith('/api/')) {
+        if (req.path.startsWith('/api/')) { // To już powinno być obsłużone przez API, ale na wszelki wypadek
             return res.status(404).json({ error: 'Nie znaleziono endpointu API.' });
         }
-        const filePath404 = path.join(__dirname, 'public', '404.html'); 
+        
+        console.log(`Nie znaleziono ścieżki: ${req.path}. Serwowanie strony 404.`);
+        const filePath404 = path.join(__dirname, 'public', '404.html');
         fs.access(filePath404, fs.constants.F_OK, (err) => {
             if (err) {
-                const mainIndexHtmlPath = path.join(__dirname, 'public', 'index.html');
-                fs.access(mainIndexHtmlPath, fs.constants.F_OK, (errMain) => {
-                    if(errMain) {
-                        res.status(404).send('404: Strona nie znaleziona. <a href="/">Powrót do strony głównej</a>');
-                    } else {
-                        res.status(404).sendFile(mainIndexHtmlPath); 
-                    }
-                });
+                res.status(404).send('404: Strona nie znaleziona. <a href="/">Powrót do strony głównej</a>');
             } else {
                 res.status(404).sendFile(filePath404);
             }
         });
     });
 
+
     app.listen(PORT, async () => {
       try {
         await sequelize.authenticate();
         console.log('Połączono z bazą danych strony (support.sqlite) pomyślnie.');
-        await sequelize.sync({ alter: process.env.NODE_ENV !== 'production' }); 
+        await sequelize.sync({ alter: process.env.NODE_ENV !== 'production' });
         console.log(`Modele bazy danych strony zsynchronizowane (alter: ${process.env.NODE_ENV !== 'production'}).`);
         console.log(`Serwer strony Kronik Elary działa na http://localhost:${PORT}`);
       } catch (error) {
         console.error('Nie udało się połączyć z bazą danych strony lub uruchomić serwera:', error);
       }
     });
+

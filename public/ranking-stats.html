@@ -3,61 +3,53 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Rankingi i statystyki na żywo z serwera Discord Kroniki Elary. Sprawdź, kto prowadzi w zdobywaniu XP, Gwiezdnych Dukatów i więcej!">
-    <meta name="keywords" content="kroniki elary, ranking, statystyki, live, discord, xp, waluta, aktywność, serwer discord">
+    <meta name="description" content="Sprawdź rankingi i statystyki graczy na serwerze Kroniki Elary. Zobacz, kto prowadzi w zdobywaniu XP, walut i aktywności.">
+    <meta name="keywords" content="rankingi, statystyki, kroniki elary, discord, gracze, xp, waluta, aktywność, top graczy">
     <meta name="author" content="Arcadius & Strażnicy Kronik Elary">
-    <title>Kroniki Elary - Rankingi i Statystyki Serwera</title>
+    <title>Rankingi i Statystyki - Kroniki Elary</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600&display=swap" rel="stylesheet">
     <style>
         :root {
             --bg-primary: #0F172A; 
-            --bg-secondary: rgba(30, 41, 59, 0.8); 
-            --bg-card: #1E293B; 
+            --bg-secondary: #1E293B; 
+            --bg-card: #111827; 
             --bg-header: rgba(15, 23, 42, 0.92); 
-            
             --text-primary: #E2E8F0; 
             --text-secondary: #94A3B8; 
             --text-accent: #A78BFA; 
             --text-accent-hover: #8B5CF6; 
-            
-            --border-accent: #8B5CF6; 
-            --border-card: rgba(167, 139, 250, 0.25); 
-            
-            --btn-primary-bg: #8B5CF6; 
-            --btn-primary-hover-bg: #7C3AED; 
+            --border-accent: #8B5CF6;
+            --border-card: rgba(167, 139, 250, 0.15); 
+            --btn-primary-bg: #8B5CF6;
+            --btn-primary-hover-bg: #7C3AED;
             --btn-discord-bg: #5865F2;
             --btn-discord-hover-bg: #4752C4;
-            
             --scrollbar-thumb-bg: #8B5CF6;
             --scrollbar-thumb-hover-bg: #7C3AED;
-            
             --svg-icon-fill: #E2E8F0;
-            --shadow-color: rgba(167, 139, 250, 0.25); 
-            --shadow-strong-color: rgba(167, 139, 250, 0.4);
+            --shadow-color: rgba(167, 139, 250, 0.15); 
+            --shadow-strong-color: rgba(167, 139, 250, 0.3); 
             --modal-backdrop: rgba(15, 23, 42, 0.85);
-
             --rgb-accent: 167, 139, 250;
             --rgb-purple-400: 167, 139, 250; 
             --rgb-stone-400: 168, 162, 158; 
             --rgb-amber-400: 251, 191, 36; 
             --rgb-cyan-400: 34, 211, 238; 
-
             --text-purple-400: #A78BFA;
             --text-stone-400: #A8A29E;
             --text-amber-400: #FBBF24;
             --text-cyan-400: #22D3EE;
         }
-
-        html.light { 
-            --bg-primary: #F9FAFB;
-            --bg-secondary: rgba(243, 244, 246, 0.9);
-            --bg-card: #FFFFFF;
+        html.light {
+            --bg-primary: #F9FAFB; 
+            --bg-secondary: #F3F4F6; 
+            --bg-card: #FFFFFF; 
             --bg-header: rgba(255, 255, 255, 0.95);
-            --text-primary: #1F2937;
-            --text-secondary: #4B5563;
-            --text-accent: #7C3AED;
-            --text-accent-hover: #6D28D9;
+            --text-primary: #1F2937; 
+            --text-secondary: #4B5563; 
+            --text-accent: #7C3AED; 
+            --text-accent-hover: #6D28D9; 
             --border-accent: #7C3AED;
             --border-card: rgba(124, 58, 237, 0.1);
             --btn-primary-bg: #7C3AED;
@@ -70,7 +62,6 @@
             --shadow-color: rgba(124, 58, 237, 0.08);
             --shadow-strong-color: rgba(124, 58, 237, 0.15);
             --modal-backdrop: rgba(249, 250, 251, 0.85);
-
             --rgb-accent: 124, 58, 237;
             --rgb-purple-400: 124, 58, 237;
             --rgb-stone-400: 120, 113, 108;
@@ -81,285 +72,52 @@
             --text-amber-400: #D97706;
             --text-cyan-400: #0891B2;
         }
-
-        body {
-            font-family: 'Inter', sans-serif;
-            background-color: var(--bg-primary);
-            color: var(--text-primary);
-            transition: background-color 0.3s ease, color 0.3s ease;
-            -webkit-font-smoothing: antialiased;
-            -moz-osx-font-smoothing: grayscale;
-            line-height: 1.75; 
-        }
-
-        h1, h2, h3, h4, h5 {
-            font-family: 'Lora', serif;
-            font-weight: 600;
-            line-height: 1.35; 
-        }
-        h1 { letter-spacing: -0.025em; font-weight: 700; }
-        h2 { letter-spacing: -0.02em; font-weight: 700; }
-        h3 { font-weight: 600; }
-        
-        .hero-ranking-bg {
-            background: linear-gradient(rgba(15, 23, 42, 0.92), rgba(15, 23, 42, 1)), url('https://placehold.co/1920x700/0a0f1e/a78bfa?text=Tablice+Chwały+Kronik') center/cover no-repeat fixed;
-        }
-        .stats-card, .ranking-table-container { /* Ujednolicenie nazwy klasy dla spójności */
-            background-color: var(--bg-card);
-            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); 
-            border: 1px solid var(--border-card); 
-            box-shadow: 0 7px 18px -4px var(--shadow-color); 
-            border-radius: 0.75rem; /* rounded-xl */
-        }
-        .stats-card:hover, .ranking-table-container:hover {
-            transform: translateY(-8px) scale(1.025);
-            box-shadow: 0 12px 24px -6px var(--shadow-strong-color);
-        }
-        
-        .btn-primary, .btn-discord, .btn-secondary {
-            color: #FFFFFF; 
-            transition: background-color 0.25s ease, transform 0.25s ease, box-shadow 0.25s ease;
-            box-shadow: 0 5px 12px -3px var(--shadow-color);
-            font-weight: 600; 
-            letter-spacing: 0.03em;
-            padding-top: 0.85rem; 
-            padding-bottom: 0.85rem;
-            border-radius: 0.5rem;
-        }
-        .btn-primary { background-color: var(--btn-primary-bg); }
-        .btn-primary:hover {
-            background-color: var(--btn-primary-hover-bg);
-            transform: scale(1.06) translateY(-3px); 
-            box-shadow: 0 14px 24px -5px var(--shadow-strong-color);
-        }
-         .btn-discord { background-color: var(--btn-discord-bg); }
-        .btn-discord:hover {
-            background-color: var(--btn-discord-hover-bg);
-            transform: scale(1.06) translateY(-3px);
-            box-shadow: 0 10px 20px -5px rgba(88, 101, 242, 0.4);
-        }
-        .btn-secondary {
-            background-color: transparent;
-            border: 2px solid var(--border-accent);
-            color: var(--text-accent);
-            padding: calc(0.85rem - 2px) calc(1.5rem - 2px);
-        }
-        .btn-secondary:hover {
-            background-color: var(--border-accent);
-            color: white;
-            transform: scale(1.05) translateY(-1px);
-            box-shadow: 0 8px 15px -3px var(--shadow-color);
-        }
-        
-        .reveal {
-            opacity: 0;
-            transform: translateY(50px); 
-            transition: opacity 0.8s cubic-bezier(0.645, 0.045, 0.355, 1), transform 0.8s cubic-bezier(0.645, 0.045, 0.355, 1);
-        }
-        .reveal.visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
-        ::-webkit-scrollbar { width: 13px; } 
-        ::-webkit-scrollbar-track { background: var(--bg-primary); }
-        ::-webkit-scrollbar-thumb { background: var(--scrollbar-thumb-bg); border-radius: 7px; border: 3.5px solid var(--bg-primary); }
+        body { font-family: 'Inter', sans-serif; background-color: var(--bg-primary); color: var(--text-primary); transition: background-color 0.3s ease, color 0.3s ease; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; line-height: 1.75; }
+        h1, h2, h3, h4, h5 { font-family: 'Lora', serif; font-weight: 600; line-height: 1.35; }
+        h1 { letter-spacing: -0.025em; font-weight: 700; } h2 { letter-spacing: -0.02em; font-weight: 700; } h3 { font-weight: 600; }
+        .hero-ranking-bg { background: linear-gradient(rgba(15, 23, 42, 0.88), rgba(15, 23, 42, 0.98)), url('https://placehold.co/1920x500/0a0f1e/A78BFA?text=Rankingi+Serwera') center/cover no-repeat; }
+        .section-bg { background-color: var(--bg-secondary); }
+        .card-bg { background-color: var(--bg-card); transition: transform 0.3s cubic-bezier(0.25, 0.1, 0.25, 1), box-shadow 0.3s cubic-bezier(0.25, 0.1, 0.25, 1), background-color 0.3s ease; border: 1px solid var(--border-card); box-shadow: 0 6px 12px -3px var(--shadow-color); overflow: hidden; }
+        .card-bg:hover { transform: translateY(-8px) scale(1.02); box-shadow: 0 12px 24px -4px var(--shadow-strong-color); }
+        .btn-primary, .btn-discord, .btn-secondary { color: #FFFFFF; transition: background-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease; box-shadow: 0 4px 8px -2px var(--shadow-color); font-weight: 600; letter-spacing: 0.03em; padding-top: 0.8rem; padding-bottom: 0.8rem; border-radius: 0.375rem; } 
+        .btn-primary { background-color: var(--btn-primary-bg); } .btn-primary:hover { background-color: var(--btn-primary-hover-bg); transform: scale(1.04) translateY(-2px); box-shadow: 0 10px 18px -4px var(--shadow-strong-color); }
+        .btn-discord { background-color: var(--btn-discord-bg); } .btn-discord:hover { background-color: var(--btn-discord-hover-bg); transform: scale(1.04) translateY(-2px); box-shadow: 0 10px 18px -4px rgba(88, 101, 242, 0.35); }
+        .btn-secondary { background-color: transparent; border: 2px solid var(--border-accent); color: var(--text-accent); padding: calc(0.8rem - 2px) calc(1.5rem - 2px); }
+        .btn-secondary:hover { background-color: var(--border-accent); color: white; transform: scale(1.04) translateY(-2px); box-shadow: 0 6px 12px -2px var(--shadow-color); }
+        .text-accent { color: var(--text-accent); }
+        .reveal { opacity: 0; transform: translateY(50px); transition: opacity 0.8s cubic-bezier(0.645, 0.045, 0.355, 1), transform 0.8s cubic-bezier(0.645, 0.045, 0.355, 1); }
+        .reveal.visible { opacity: 1; transform: translateY(0); }
+        ::-webkit-scrollbar { width: 12px; } ::-webkit-scrollbar-track { background: var(--bg-primary); }
+        ::-webkit-scrollbar-thumb { background: var(--scrollbar-thumb-bg); border-radius: 6px; border: 3px solid var(--bg-primary); }
         ::-webkit-scrollbar-thumb:hover { background: var(--scrollbar-thumb-hover-bg); }
-        
-        header#navbar {
-            background-color: var(--bg-header);
-            backdrop-filter: blur(18px); 
-            transition: background-color 0.3s ease, box-shadow 0.3s ease;
-            box-shadow: 0 5px 15px -4px rgba(15,23,42,0.2); 
-        }
-
-        .nav-link {
-            position: relative;
-            color: var(--text-secondary);
-            transition: color 0.2s ease, background-color 0.2s ease, transform 0.2s ease; 
-            padding: 0.65rem 1.1rem; 
-            border-radius: 0.6rem; 
-            font-weight: 500;
-        }
-        .nav-link:hover {
-            transform: translateY(-1px); 
-        }
-        .nav-link::after { 
-            content: '';
-            position: absolute;
-            width: 0;
-            height: 3px; 
-            bottom: 5px; 
-            left: 50%;
-            transform: translateX(-50%);
-            background-color: var(--text-accent);
-            transition: width 0.35s cubic-bezier(0.25, 0.8, 0.25, 1);
-            border-radius: 1.5px;
-        }
-        .nav-link:hover, .nav-link.active {
-            color: var(--text-accent);
-            background-color: rgba(var(--rgb-accent), 0.12); 
-        }
-        .nav-link:hover::after, .nav-link.active::after {
-            width: 60%; 
-        }
-        
-        #mobileMenu {
-            transition: transform 0.4s cubic-bezier(0.25, 0.8, 0.25, 1), opacity 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
-            transform: translateY(-100%);
-            opacity: 0;
-            pointer-events: none; 
-        }
-        #mobileMenu.open {
-            transform: translateY(0);
-            opacity: 1;
-            pointer-events: auto;
-        }
-        html.dark .text-shadow-custom { 
-             text-shadow: 1px 1px 4px rgba(0,0,0,0.6); 
-        }
-        .user-avatar {
-            width: 32px; 
-            height: 32px; 
-            border-radius: 50%;
-            border: 2px solid var(--border-accent);
-            cursor: pointer;
-            transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
-        }
-        .user-avatar:hover {
-            transform: scale(1.1);
-            box-shadow: 0 0 10px var(--shadow-strong-color);
-        }
-        .dropdown-menu {
-            position: absolute;
-            top: calc(100% + 0.5rem); 
-            right: 0;
-            background-color: var(--bg-card);
-            border: 1px solid var(--border-card);
-            border-radius: 0.5rem; 
-            box-shadow: 0 10px 25px -5px var(--shadow-strong-color), 0 8px 10px -6px var(--shadow-color);
-            z-index: 50;
-            min-width: 200px; 
-            opacity: 0;
-            visibility: hidden;
-            transform: translateY(-10px);
-            transition: opacity 0.2s ease, transform 0.2s ease, visibility 0s linear 0.2s;
-        }
-        .dropdown-menu.open {
-            opacity: 1;
-            visibility: visible;
-            transform: translateY(0);
-            transition: opacity 0.2s ease, transform 0.2s ease;
-        }
-        .dropdown-menu a, .dropdown-menu button {
-            display: block;
-            width: 100%;
-            text-align: left;
-            padding: 0.75rem 1rem; 
-            font-size: 0.875rem; 
-            color: var(--text-secondary);
-            transition: background-color 0.15s ease, color 0.15s ease;
-        }
-        .dropdown-menu a:hover, .dropdown-menu button:hover {
-            background-color: rgba(var(--rgb-accent), 0.1);
-            color: var(--text-accent);
-        }
+        header#navbar { background-color: var(--bg-header); backdrop-filter: blur(16px); transition: background-color 0.3s ease, box-shadow 0.3s ease; box-shadow: 0 4px 10px -3px rgba(15,23,42,0.15); }
+        .nav-link { position: relative; color: var(--text-secondary); transition: color 0.2s ease, background-color 0.2s ease, transform 0.2s ease; padding: 0.6rem 1rem; border-radius: 0.375rem; font-weight: 500; }
+        .nav-link:hover { transform: translateY(-1px); }
+        .nav-link::after { content: ''; position: absolute; width: 0; height: 2px; bottom: 4px; left: 50%; transform: translateX(-50%); background-color: var(--text-accent); transition: width 0.3s cubic-bezier(0.25, 0.8, 0.25, 1); border-radius: 1px; }
+        .nav-link:hover, .nav-link.active { color: var(--text-accent); background-color: rgba(var(--rgb-accent), 0.1); }
+        .nav-link:hover::after, .nav-link.active::after { width: 50%; }
+        #mobileMenu { transition: transform 0.3s cubic-bezier(0.25, 0.8, 0.25, 1), opacity 0.3s cubic-bezier(0.25, 0.8, 0.25, 1); transform: translateY(-100%); opacity: 0; pointer-events: none; }
+        #mobileMenu.open { transform: translateY(0); opacity: 1; pointer-events: auto; }
+        html.dark .text-shadow-custom { text-shadow: 1px 1px 3px rgba(0,0,0,0.5); }
+        .user-avatar { width: 32px; height: 32px; border-radius: 50%; border: 2px solid var(--border-accent); cursor: pointer; transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out; }
+        .user-avatar:hover { transform: scale(1.1); box-shadow: 0 0 8px var(--shadow-strong-color); }
+        .dropdown-menu { position: absolute; top: calc(100% + 0.5rem); right: 0; background-color: var(--bg-card); border: 1px solid var(--border-card); border-radius: 0.375rem; box-shadow: 0 8px 20px -4px var(--shadow-strong-color), 0 6px 8px -5px var(--shadow-color); z-index: 50; min-width: 220px; opacity: 0; visibility: hidden; transform: translateY(-8px); transition: opacity 0.15s ease, transform 0.15s ease, visibility 0s linear 0.15s; }
+        .dropdown-menu.open { opacity: 1; visibility: visible; transform: translateY(0); transition: opacity 0.15s ease, transform 0.15s ease; }
+        .dropdown-menu a, .dropdown-menu button { display: block; width: 100%; text-align: left; padding: 0.7rem 1rem; font-size: 0.875rem; color: var(--text-secondary); transition: background-color 0.1s ease, color 0.1s ease; }
+        .dropdown-menu a:hover, .dropdown-menu button:hover { background-color: rgba(var(--rgb-accent), 0.08); color: var(--text-accent); }
         .dropdown-menu form { margin: 0; } 
-
-        .stat-item .value {
-            font-size: 2.25rem; /* text-4xl */
-            font-weight: 700;
-            color: var(--text-accent);
-            transition: color 0.3s ease; /* Dodana animacja dla wartości */
-        }
-        .stats-card:hover .stat-item .value {
-             color: var(--text-accent-hover); /* Zmiana koloru wartości przy najechaniu na kartę */
-        }
-        .stat-item .label {
-            font-size: 1rem; /* text-base */
-            color: var(--text-secondary);
-        }
-        .ranking-table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 1rem;
-        }
-        .ranking-table th, .ranking-table td {
-            padding: 0.75rem 1rem;
-            border-bottom: 1px solid var(--border-card);
-            text-align: left;
-        }
-        .ranking-table th {
-            color: var(--text-accent);
-            font-weight: 600;
-            font-size: 0.875rem;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-        }
-        .ranking-table td {
-            color: var(--text-primary);
-        }
-        .ranking-table tr:last-child td {
-            border-bottom: none;
-        }
-        .ranking-table .rank-col { width: 10%; text-align: center; font-weight: bold; }
-        .ranking-table .avatar-col { width: 15%; }
-        .ranking-table .avatar-col img { 
-            width: 32px; 
-            height: 32px; 
-            border-radius: 50%; 
-            margin-right: 0.5rem; 
-            vertical-align: middle; 
-            border: 1px solid var(--border-accent); /* Subtelne obramowanie awatara */
-            transition: transform 0.2s ease;
-        }
-        .ranking-table tr:hover .avatar-col img {
-            transform: scale(1.15); /* Powiększenie awatara przy najechaniu na wiersz */
-        }
-        .ranking-table .name-col { width: 45%; }
-        .ranking-table .score-col { width: 30%; text-align: right; font-weight: 500; }
-        
-        .loading-placeholder {
-            display: flex;
-            flex-direction: column; /* Ułożenie w kolumnie dla tekstu i spinnera */
-            justify-content: center;
-            align-items: center;
-            min-height: 150px;
-            color: var(--text-secondary);
-            font-style: italic;
-        }
-        .loading-placeholder .spinner {
-            width: 2rem; /* 32px */
-            height: 2rem; /* 32px */
-            border: 3px solid rgba(var(--rgb-accent), 0.3);
-            border-top-color: var(--text-accent);
-            border-radius: 50%;
-            animation: spin 0.8s linear infinite;
-            margin-bottom: 0.75rem; /* mb-3 */
-        }
-        #refreshStatsButton.loading {
-            cursor: not-allowed;
-            opacity: 0.7;
-        }
-        #refreshStatsButton.loading svg.refresh-icon { /* Celowanie w konkretną ikonę */
-            animation: spin 1s linear infinite;
-        }
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-        .animated-gradient-text {
-            background: linear-gradient(45deg, var(--text-accent), var(--text-accent-hover), #c084fc, var(--text-accent));
-            background-size: 200% 200%;
-            -webkit-background-clip: text;
-            background-clip: text;
-            -webkit-text-fill-color: transparent;
-            animation: gradient-flow 8s ease infinite;
-        }
-        @keyframes gradient-flow {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
-        }
+        .modal { background-color: var(--modal-backdrop); backdrop-filter: blur(6px); }
+        .modal-content { background-color: var(--bg-card); max-height: 90vh; }
+        .ranking-table th, .ranking-table td { padding: 0.75rem 1rem; text-align: left; border-bottom: 1px solid var(--border-card); }
+        .ranking-table th { font-weight: 600; color: var(--text-accent); }
+        .ranking-table tbody tr:hover { background-color: rgba(var(--rgb-accent), 0.05); }
+        .ranking-table .rank-avatar { width: 2.5rem; height: 2.5rem; border-radius: 50%; margin-right: 0.75rem; }
+        .ranking-table .rank-position { font-weight: bold; color: var(--text-accent); min-width: 2.5rem; text-align: center; }
+         .tab-button { padding: 0.75rem 1.5rem; margin: 0 0.25rem; border-radius: 0.375rem 0.375rem 0 0; background-color: transparent; color: var(--text-secondary); font-weight: 500; transition: background-color 0.2s ease, color 0.2s ease; border-bottom: 2px solid transparent; }
+        .tab-button.active { background-color: var(--bg-card); color: var(--text-accent); border-bottom-color: var(--text-accent); }
+        .tab-button:hover:not(.active) { background-color: rgba(var(--rgb-accent), 0.05); color: var(--text-accent-hover); }
+        .tab-content { display: none; }
+        .tab-content.active { display: block; }
     </style>
 </head>
 <body class="antialiased">
@@ -373,7 +131,7 @@
                 <a href="index.html" class="nav-link">Strona Główna</a>
                 <a href="prezentacja.html" class="nav-link">Prezentacja Serwera</a>
                 <a href="wikipedia.html" class="nav-link">Wikipedia Kronik</a> 
-                <a href="ranking-stats.html" class="nav-link active">Rankingi</a> 
+                <a href="ranking-stats.html" class="nav-link">Rankingi</a>
                 <div id="auth-section-nav" class="ml-4 relative">
                     </div>
             </nav>
@@ -390,102 +148,54 @@
                 <a href="index.html" class="block py-2.5 px-3 nav-link text-base font-medium">Strona Główna</a>
                 <a href="prezentacja.html" class="block py-2.5 px-3 nav-link text-base font-medium">Prezentacja Serwera</a>
                 <a href="wikipedia.html" class="block py-2.5 px-3 nav-link text-base font-medium">Wikipedia Kronik</a>
-                <a href="ranking-stats.html" class="block py-2.5 px-3 nav-link text-base font-medium active">Rankingi</a>
+                <a href="ranking-stats.html" class="block py-2.5 px-3 nav-link text-base font-medium">Rankingi</a>
                 <a href="https://discord.gg/TWOJLINKZAPROSZENIOWY" target="_blank" rel="noopener noreferrer" class="block mt-2 py-2.5 px-3 text-base font-medium text-white bg-purple-600 hover:bg-purple-700 rounded-md text-center">Dołącz do Discorda</a>
-            </div>
+                 </div>
         </div>
     </header>
 
     <main>
-        <section class="hero-ranking-bg min-h-[50vh] sm:min-h-[60vh] flex items-center justify-center text-center pt-24 sm:pt-20 reveal">
-            <div class="container mx-auto px-4 sm:px-6 py-12 sm:py-16">
-                <h1 class="text-5xl sm:text-6xl md:text-7xl font-bold text-white mb-6 leading-tight text-shadow-custom">
-                    Rankingi i Statystyki <span class="animated-gradient-text">Kronik Elary</span>
+        <section class="hero-ranking-bg pt-32 pb-16 sm:pt-40 sm:pb-24 text-center reveal">
+            <div class="container mx-auto px-4 sm:px-6">
+                <h1 class="text-4xl sm:text-5xl md:text-6xl font-bold text-white mb-6 leading-tight text-shadow-custom">
+                    Rankingi i Statystyki <span class="text-accent">Kronik Elary</span>
                 </h1>
-                <p class="text-xl md:text-2xl text-slate-200 mb-10 max-w-3xl mx-auto text-shadow-custom">
-                    Zobacz, kto przoduje w zdobywaniu Mocy Opowieści, Gwiezdnych Dukatów i innych aktywnościach na naszym serwerze! Dane odświeżane są okresowo.
+                <p class="text-lg md:text-xl text-slate-200 mb-10 max-w-3xl mx-auto text-shadow-custom">
+                    Zobacz, kto wiedzie prym w naszym świecie! Sprawdź rankingi aktywności, zdobytych Gwiezdnych Dukatów, Kryształów Elary i wiele więcej.
                 </p>
-                 <button id="refreshStatsButton" class="btn-primary font-semibold py-3 px-8 rounded-lg text-md inline-flex items-center">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" class="bi bi-arrow-clockwise refresh-icon mr-2" viewBox="0 0 16 16">
-                        <path fill-rule="evenodd" d="M8 3a5 5 0 1 0 4.546 2.914.5.5 0 0 1 .908-.417A6 6 0 1 1 8 2v1z"/>
-                        <path d="M8 4.466V.534a.25.25 0 0 1 .41-.192l2.36 1.966c.12.1.12.284 0 .384L8.41 4.658A.25.25 0 0 1 8 4.466z"/>
-                    </svg>
-                    Odśwież Dane
-                </button>
             </div>
         </section>
 
-        <section id="server-stats-overview" class="py-16 sm:py-20 bg-bg-secondary reveal">
+        <section id="wprowadzenie-rankingi" class="py-16 sm:py-20 section-bg reveal">
             <div class="container mx-auto px-4 sm:px-6">
-                <h2 class="text-3xl sm:text-4xl font-bold text-primary mb-10 text-center">Ogólne Statystyki <span class="text-accent">Królestwa</span></h2>
-                <div id="generalServerStatsContainer" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 text-center">
-                    <div class="stats-card p-6">
-                        <div class="stat-item">
-                            <p class="value" id="totalMembers">Ładowanie...</p>
-                            <p class="label">Wszystkich Kronikarzy</p>
-                        </div>
-                    </div>
-                    <div class="stats-card p-6">
-                        <div class="stat-item">
-                            <p class="value" id="onlineMembers">Ładowanie...</p>
-                            <p class="label">Kronikarzy Online</p>
-                        </div>
-                    </div>
-                    <div class="stats-card p-6">
-                        <div class="stat-item">
-                            <p class="value" id="totalMessages">Ładowanie...</p>
-                            <p class="label">Wysłanych Zwojów (wiadomości)</p>
-                        </div>
-                    </div>
-                    <div class="stats-card p-6">
-                        <div class="stat-item">
-                            <p class="value" id="activeGiveaways">Ładowanie...</p>
-                            <p class="label">Aktywnych Konkursów</p>
-                        </div>
-                    </div>
+                <div class="text-center mb-14 sm:mb-18">
+                    <h2 class="text-3xl sm:text-4xl font-bold text-primary mb-4">Tablice Chwały Aethelgardu</h2>
+                    <p class="text-lg text-secondary max-w-3xl mx-auto">
+                        W Kronikach Elary doceniamy zaangażowanie i osiągnięcia naszych Kronikarzy. Poniższe rankingi są odzwierciedleniem Waszej aktywności, zaradności i poświęcenia. Pamiętajcie, że dane są aktualizowane regularnie!
+                    </p>
                 </div>
             </div>
         </section>
 
-        <section id="leaderboards" class="py-16 sm:py-24 reveal">
+        <section id="rankingi-lista" class="py-16 sm:py-20 reveal">
             <div class="container mx-auto px-4 sm:px-6">
-                <h2 class="text-3xl sm:text-4xl font-bold text-primary mb-12 text-center">Tablice Chwały <span class="text-accent">Kronikarzy</span></h2>
-                <div class="grid lg:grid-cols-2 gap-10">
+                <div class="mb-8 flex flex-wrap justify-center border-b border-border-card">
+                    <button class="tab-button active" data-tab="xp">Ranking XP</button>
+                    <button class="tab-button" data-tab="currency">Dukaty</button>
+                    <button class="tab-button" data-tab="premium_currency">Kryształy</button>
+                    <button class="tab-button" data-tab="messages">Wiadomości</button>
+                    <button class="tab-button" data-tab="voicetime">Czas Głosowy</button>
+                </div>
 
-                    <div class="ranking-table-container p-6 reveal">
-                        <h3 class="text-2xl font-semibold text-accent mb-4">🏆 Top Mocy Opowieści (XP)</h3>
-                        <div id="xpRankingTable" class="loading-placeholder">
-                            <div class="spinner"></div>
-                            Ładowanie rankingu Mocy Opowieści...
-                        </div>
-                    </div>
-
-                    <div class="ranking-table-container p-6 reveal" style="transition-delay: 0.1s;">
-                        <h3 class="text-2xl font-semibold text-accent mb-4">💰 Top Gwiezdnych Dukatów</h3>
-                        <div id="currencyRankingTable" class="loading-placeholder">
-                            <div class="spinner"></div>
-                            Ładowanie rankingu Gwiezdnych Dukatów...
-                        </div>
-                    </div>
-
-                    <div class="ranking-table-container p-6 reveal" style="transition-delay: 0.2s;">
-                        <h3 class="text-2xl font-semibold text-accent mb-4">💬 Top Aktywności (Wiadomości)</h3>
-                        <div id="messagesRankingTable" class="loading-placeholder">
-                            <div class="spinner"></div>
-                            Ładowanie rankingu Wysłanych Zwojów...
-                        </div>
-                    </div>
-                    
-                    <div class="ranking-table-container p-6 reveal" style="transition-delay: 0.3s;">
-                        <h3 class="text-2xl font-semibold text-accent mb-4">🎤 Top Czasu na Naradach (Głos)</h3>
-                        <div id="voiceTimeRankingTable" class="loading-placeholder">
-                            <div class="spinner"></div>
-                            Ładowanie rankingu Czasu na Naradach...
-                        </div>
+                <div id="rankingContent" class="card-bg p-4 sm:p-6 rounded-lg shadow-xl">
+                    <div class="text-center py-10">
+                        <p class="text-secondary text-lg">Ładowanie danych rankingowych...</p>
+                        <div class="mt-4 animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-accent mx-auto"></div>
                     </div>
                 </div>
             </div>
         </section>
+        
     </main>
 
     <footer class="py-12 text-center" style="background-color: var(--bg-header);">
@@ -495,20 +205,23 @@
                     <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M22.46 6c-.77.35-1.6.58-2.46.67.9-.53 1.59-1.37 1.92-2.38-.84.5-1.78.86-2.79 1.07C18.28 4.42 17.03 4 15.64 4c-2.94 0-5.32 2.38-5.32 5.32 0 .42.05.83.14 1.22-4.42-.22-8.33-2.34-10.96-5.55-.46.79-.72 1.7-.72 2.67 0 1.84.94 3.47 2.37 4.42-.87-.03-1.69-.27-2.41-.66v.07c0 2.57 1.83 4.72 4.25 5.21-.44.12-.91.18-1.39.18-.34 0-.67-.03-1-.1 0 .67.65 1.37 1.77 1.84-.7.55-1.59.88-2.58.88-.39 0-.77-.02-1.14-.07.91.59 2 1.02 3.19 1.02 3.83 0 5.93-3.18 5.93-5.93 0-.09 0-.18-.01-.27.41-.3.76-.68 1.04-1.09z"/></svg>
                 </a>
                  <a href="#" class="text-secondary hover:text-accent transition-colors duration-200" aria-label="Placeholder Instagram">
-                    <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 1.17.053 1.805.248 2.227.415.562.217.96.477 1.382.896.419.42.679.819.896 1.381.167.422.362 1.056.415 2.227.058 1.266.07 1.646.07 4.85s-.012 3.584-.07 4.85c-.053 1.17-.248 1.805-.415 2.227a3.48 3.48 0 01-.896 1.382c-.42.419-.82.679-1.382.896-.422.167-1.056.362-2.227.415-1.266.058-1.646.07-4.85.07s-3.584-.012-4.85-.07c-1.17-.053-1.805-.248-2.227-.415a3.492 3.492 0 01-1.381-.896 3.492 3.492 0 01-.896-1.381c-.167-.422-.362-1.056-.415-2.227-.058-1.266-.07-1.646-.07-4.85s.012-3.584.07-4.85c.053-1.17.248-1.805.415-2.227.218-.562.477-.96.896-1.381.419-.42.819-.679 1.381-.896.422-.167 1.056-.362 2.227-.415C8.416 2.175 8.796 2.163 12 2.163zm0 1.802c-3.143 0-3.505.012-4.725.068-1.09.05-1.647.235-1.98.378a1.69 1.69 0 00-.755.755c-.143.333-.328.89-.378 1.98C4.082 8.495 4.07 8.857 4.07 12s.012 3.505.068 4.725c.05 1.09.235 1.647.378 1.98.16.373.397.637.755.755.333.143.89.328 1.98.378 1.22.056 1.582.068 4.725.068s3.505-.012 4.725-.068c1.09-.05 1.647-.235 1.98-.378.373-.16.637-.397.755-.755.143-.333.328.89.378-1.98.056-1.22.068-1.582.068-4.725s-.012-3.505-.068-4.725c-.05-1.09-.235-1.647-.378-1.98a1.69 1.69 0 00-.755-.755c-.333-.143-.89-.328-1.98-.378C15.505 3.977 15.143 3.965 12 3.965zm0 3.273a4.762 4.762 0 100 9.524 4.762 4.762 0 000-9.524zm0 7.722a3.06 3.06 0 110-6.12 3.06 3.06 0 010 6.12zm4.758-7.868a1.128 1.128 0 100-2.255 1.128 1.128 0 000 2.255z"/></svg>
+                    <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 1.17.053 1.805.248 2.227.415.562.217.96.477 1.382.896.419.42.679.819.896 1.381.167.422.362 1.056.415 2.227.058 1.266.07 1.646.07 4.85s-.012 3.584-.07 4.85c-.053 1.17-.248 1.805-.415 2.227a3.48 3.48 0 01-.896 1.382c-.42.419-.82.679-1.382.896-.422.167-1.056.362-2.227.415-1.266.058-1.646.07-4.85.07s-3.584-.012-4.85-.07c-1.17-.053-1.805-.248-2.227-.415a3.492 3.492 0 01-1.381-.896 3.492 3.492 0 01-.896-1.381c-.167-.422-.362-1.056-.415-2.227-.058-1.266-.07-1.646-.07-4.85s.012-3.584.07-4.85c.053-1.17.248-1.805.415-2.227.218-.562.477-.96.896-1.381.419-.42.819-.679 1.381-.896.422-.167 1.056-.362 2.227-.415C8.416 2.175 8.796 2.163 12 2.163zm0 1.802c-3.143 0-3.505.012-4.725.068-1.09.05-1.647.235-1.98.378a1.69 1.69 0 00-.755.755c-.143.333-.328.89-.378 1.98C4.082 8.495 4.07 8.857 4.07 12s.012 3.505.068 4.725c.05 1.09.235 1.647.378 1.98.16.373.397.637.755.755.333.143.89.328 1.98.378 1.22.056 1.582.068 4.725.068s3.505-.012 4.725-.068c1.09-.05 1.647.235 1.98-.378.373-.16.637-.397.755-.755.143-.333.328.89.378-1.98.056-1.22.068-1.582.068-4.725s-.012-3.505-.068-4.725c-.05-1.09-.235-1.647-.378-1.98a1.69 1.69 0 00-.755-.755c-.333-.143-.89-.328-1.98-.378C15.505 3.977 15.143 3.965 12 3.965zm0 3.273a4.762 4.762 0 100 9.524 4.762 4.762 0 000-9.524zm0 7.722a3.06 3.06 0 110-6.12 3.06 3.06 0 010 6.12zm4.758-7.868a1.128 1.128 0 100-2.255 1.128 1.128 0 000 2.255z"/></svg>
                 </a>
                  <a href="polityka-prywatnosci.html" class="text-secondary hover:text-accent transition-colors duration-200" aria-label="Polityka Prywatności">
                     Polityka Prywatności
                 </a>
             </div>
             <p class="text-secondary text-sm">
-                &copy; <span id="currentYear"></span> Kroniki Elary. Wszelkie prawa zastrzeżone.
+                &copy; <span id="currentYear">2024</span> Kroniki Elary. Wszelkie prawa zastrzeżone.
             </p>
             <p class="text-xs mt-2.5" style="color: var(--text-secondary-light, #94A3B8);">
                 Stworzone z pasji do anime i mangi przez Arcadiusa i jego Strażników.
             </p>
         </div>
     </footer>
+
+    <div id="eventModal" class="fixed inset-0 z-[60] items-center justify-center hidden p-4 modal">
+        </div>
 
     <script>
         // Funkcja do obsługi aktywnego linku w nawigacji
@@ -529,21 +242,18 @@
             });
         }
 
-        // Funkcja do obsługi wyświetlania informacji o użytkowniku/logowania
         async function updateAuthDisplay() {
             const authSectionNav = document.getElementById('auth-section-nav');
             const authSectionMobileNav = document.getElementById('auth-section-mobile-nav');
-            const ADMIN_DISCORD_ID = "1238814802357387285";
+            const mobileMenuLinksContainer = document.querySelector('#mobileMenu > div'); 
+            const ADMIN_DISCORD_ID = "1238814802357387285"; 
 
             function createLoginButton(isMobile = false) {
                 const loginButton = document.createElement('a');
-                loginButton.href = '/auth/discord/login';
+                loginButton.href = '/auth/discord/login'; 
                 loginButton.id = isMobile ? 'discordLoginButtonMobileNav' : 'discordLoginButtonNav';
                 loginButton.className = 'btn-discord !text-white px-4 py-2.5 rounded-md text-sm flex items-center' + (isMobile ? ' w-full justify-center mt-2' : '');
-                loginButton.innerHTML = `
-                    <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20.297 0H3.703C1.658 0 0 1.658 0 3.703V20.297C0 22.342 1.658 24 3.703 24H20.297C22.342 24 24 22.342 24 20.297V3.703C24 1.658 22.342 0 20.297 0ZM8.107 15.232C7.089 15.232 6.241 14.384 6.241 13.366C6.241 12.348 7.089 11.5 8.107 11.5C9.125 11.5 9.973 12.348 9.973 13.366C9.973 14.384 9.125 15.232 8.107 15.232ZM12.000 11.071C10.982 11.071 10.134 10.223 10.134 9.205C10.134 8.188 10.982 7.339 12.000 7.339C13.018 7.339 13.866 8.188 13.866 9.205C13.866 10.223 13.018 11.071 12.000 11.071ZM15.893 15.232C14.875 15.232 14.027 14.384 14.027 13.366C14.027 12.348 14.875 11.5 15.893 11.5C16.911 11.5 17.759 12.348 17.759 13.366C17.759 14.384 16.911 15.232 15.893 15.232Z"/></svg>
-                    Zaloguj przez Discord
-                `;
+                loginButton.innerHTML = `<svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 24 24"><path d="M20.297 0H3.703C1.658 0 0 1.658 0 3.703V20.297C0 22.342 1.658 24 3.703 24H20.297C22.342 24 24 22.342 24 20.297V3.703C24 1.658 22.342 0 20.297 0ZM8.107 15.232C7.089 15.232 6.241 14.384 6.241 13.366C6.241 12.348 7.089 11.5 8.107 11.5C9.125 11.5 9.973 12.348 9.973 13.366C9.973 14.384 9.125 15.232 8.107 15.232ZM12.000 11.071C10.982 11.071 10.134 10.223 10.134 9.205C10.134 8.188 10.982 7.339 12.000 7.339C13.018 7.339 13.866 8.188 13.866 9.205C13.866 10.223 13.018 11.071 12.000 11.071ZM15.893 15.232C14.875 15.232 14.027 14.384 14.027 13.366C14.027 12.348 14.875 11.5 15.893 11.5C16.911 11.5 17.759 12.348 17.759 13.366C17.759 14.384 16.911 15.232 15.893 15.232Z"/></svg> Zaloguj przez Discord`;
                 return loginButton;
             }
 
@@ -559,6 +269,7 @@
                 avatarImg.src = user.avatar ? `https://cdn.discordapp.com/avatars/${user.id}/${user.avatar}.png?size=32` : 'https://placehold.co/32x32/A78BFA/FFFFFF?text=U';
                 avatarImg.alt = 'Awatar użytkownika';
                 avatarImg.className = 'user-avatar';
+                avatarImg.onerror = () => { avatarImg.src = 'https://placehold.co/32x32/A78BFA/FFFFFF?text=U'; };
                 avatarImg.onclick = (event) => {
                     event.stopPropagation(); 
                     const dropdown = document.getElementById(dropdownId);
@@ -575,20 +286,30 @@
                 profileLink.textContent = 'Mój Profil';
                 dropdownMenu.appendChild(profileLink);
 
+                const botShopLink = document.createElement('a');
+                botShopLink.href = '/sklep-bota'; 
+                botShopLink.textContent = 'Sklep Bota (Dukaty)';
+                dropdownMenu.appendChild(botShopLink);
+                
+                const premiumShopLink = document.createElement('a');
+                premiumShopLink.href = 'sklep-premium.html';
+                premiumShopLink.textContent = 'Sklep Premium (Kryształy)';
+                dropdownMenu.appendChild(premiumShopLink);
+
                 const supportTicketsLink = document.createElement('a');
-                supportTicketsLink.href = 'support.html';
+                supportTicketsLink.href = 'support.html'; 
                 supportTicketsLink.textContent = 'Centrum Wsparcia';
                 dropdownMenu.appendChild(supportTicketsLink);
 
                 if (user.id === ADMIN_DISCORD_ID) {
                     const adminLinkElement = document.createElement('a'); 
-                    adminLinkElement.href = '/admin.html';
+                    adminLinkElement.href = 'admin.html'; 
                     adminLinkElement.textContent = 'Panel Admina';
                     dropdownMenu.appendChild(adminLinkElement);
                 }
                 
                 const logoutForm = document.createElement('form');
-                logoutForm.action = '/auth/logout';
+                logoutForm.action = '/auth/logout'; 
                 logoutForm.method = 'POST';
                 const logoutButton = document.createElement('button');
                 logoutButton.type = 'submit';
@@ -599,27 +320,56 @@
                 container.appendChild(dropdownMenu);
                 return container;
             }
+            
+            if (mobileMenuLinksContainer) {
+                const existingMobileAuthElements = mobileMenuLinksContainer.querySelectorAll('#discordLoginButtonMobileNav, #userDropdownContainerMobileMenu, .mobile-auth-item');
+                existingMobileAuthElements.forEach(el => el.remove());
+            }
 
             try {
-                const response = await fetch('/api/me');
+                const response = await fetch('/api/me'); 
                 if (response.ok) {
                     const user = await response.json();
                     if (authSectionNav) {
                         authSectionNav.innerHTML = ''; 
                         authSectionNav.appendChild(createAvatarDropdown(user, false));
                     }
-                    if (authSectionMobileNav) {
+                    if (authSectionMobileNav) { 
                         authSectionMobileNav.innerHTML = ''; 
                         authSectionMobileNav.appendChild(createAvatarDropdown(user, true));
                     }
+                     if (mobileMenuLinksContainer) {
+                        const mobileDropdownContainer = createAvatarDropdown(user, true); 
+                        mobileDropdownContainer.id = 'userDropdownContainerMobileMenu';
+                        mobileDropdownContainer.classList.add('mt-2', 'border-t', 'border-[var(--border-card)]', 'pt-2', 'mobile-auth-item');
+                        
+                        const mobileAvatar = mobileDropdownContainer.querySelector('.user-avatar');
+                        const mobileDropdown = mobileDropdownContainer.querySelector('.dropdown-menu');
+                        
+                        if (mobileAvatar) mobileAvatar.classList.add('hidden'); 
+                        if (mobileDropdown) {
+                            mobileDropdown.classList.remove('absolute', 'top-full', 'right-0', 'dropdown-menu'); 
+                            mobileDropdown.classList.add('space-y-1');
+                            Array.from(mobileDropdown.children).forEach(child => {
+                                child.classList.add('block', 'py-2', 'px-3', 'text-base', 'font-medium', 'rounded-md', 'hover:bg-[rgba(var(--rgb-accent),0.1)]', 'hover:text-[var(--text-accent)]');
+                                mobileMenuLinksContainer.appendChild(child);
+                            });
+                        }
+                    }
+
                 } else {
                      if (authSectionNav) {
                         authSectionNav.innerHTML = '';
                         authSectionNav.appendChild(createLoginButton(false));
                     }
-                    if (authSectionMobileNav) {
+                    if (authSectionMobileNav) { 
                         authSectionMobileNav.innerHTML = '';
-                        authSectionMobileNav.appendChild(createLoginButton(true));
+                        authSectionMobileNav.appendChild(createLoginButton(true)); 
+                    }
+                    if (mobileMenuLinksContainer) {
+                        const mobileLoginButton = createLoginButton(true); 
+                        mobileLoginButton.classList.add('mt-2', 'border-t', 'border-[var(--border-card)]', 'pt-2', 'mobile-auth-item');
+                        mobileMenuLinksContainer.appendChild(mobileLoginButton);
                     }
                 }
             } catch (error) {
@@ -632,6 +382,11 @@
                     authSectionMobileNav.innerHTML = '';
                     authSectionMobileNav.appendChild(createLoginButton(true));
                 }
+                if (mobileMenuLinksContainer) {
+                    const mobileLoginButton = createLoginButton(true);
+                    mobileLoginButton.classList.add('mt-2', 'border-t', 'border-[var(--border-card)]', 'pt-2', 'mobile-auth-item');
+                    mobileMenuLinksContainer.appendChild(mobileLoginButton);
+                }
             }
         }
         
@@ -642,10 +397,10 @@
             if (mobileMenuButton && mobileMenu) {
                 mobileMenuButton.addEventListener('click', () => {
                     const isExpanded = mobileMenuButton.getAttribute('aria-expanded') === 'true' || false;
-                    mobileMenuButton.setAttribute('aria-expanded', !isExpanded);
+                    mobileMenuButton.setAttribute('aria-expanded', String(!isExpanded));
                     mobileMenu.classList.toggle('open');
                 });
-                mobileMenu.querySelectorAll('a.nav-link').forEach(link => { 
+                mobileMenu.querySelectorAll('a').forEach(link => { 
                     link.addEventListener('click', () => {
                         mobileMenuButton.setAttribute('aria-expanded', 'false');
                         mobileMenu.classList.remove('open');
@@ -662,7 +417,7 @@
                         observer.unobserve(entry.target);
                     }
                 });
-            }, { threshold: 0.05 }); // Zmniejszony próg dla szybszego pojawiania się
+            }, { threshold: 0.1 });
 
             document.querySelectorAll('.reveal').forEach(el => {
                 revealObserver.observe(el);
@@ -672,157 +427,99 @@
         function setupDropdownDismiss() {
             window.addEventListener('click', function(e) {
                 const desktopDropdownContainer = document.getElementById('userDropdownContainerNav');
-                const mobileDropdownContainer = document.getElementById('userDropdownContainerMobile');
+                const mobileDropdownContainer = document.getElementById('userDropdownContainerMobile'); 
                 const desktopDropdown = document.getElementById('userDropdownNav');
-                const mobileDropdown = document.getElementById('userDropdownMobile');
+                const mobileDropdown = document.getElementById('userDropdownMobile'); 
 
-                if (desktopDropdownContainer && !desktopDropdownContainer.contains(e.target) && desktopDropdown) {
+                if (desktopDropdownContainer && !desktopDropdownContainer.contains(e.target) && desktopDropdown && desktopDropdown.classList.contains('open')) {
                     desktopDropdown.classList.remove('open');
                 }
-                if (mobileDropdownContainer && !mobileDropdownContainer.contains(e.target) && mobileDropdown) {
+                if (mobileDropdownContainer && !mobileDropdownContainer.contains(e.target) && mobileDropdown && mobileDropdown.classList.contains('open')) {
                      mobileDropdown.classList.remove('open');
                 }
             });
         }
+        
+        // Obsługa zakładek rankingu
+        function setupRankingTabs() {
+            const tabButtons = document.querySelectorAll('.tab-button');
+            const rankingContent = document.getElementById('rankingContent');
+            const API_BASE_URL = '/api/web/ranking'; // Zakładając, że to jest bazowy URL dla API rankingów
 
-        // --- Ranking and Stats Logic ---
-        const refreshButton = document.getElementById('refreshStatsButton');
-        const totalMembersEl = document.getElementById('totalMembers');
-        const onlineMembersEl = document.getElementById('onlineMembers');
-        const totalMessagesEl = document.getElementById('totalMessages');
-        const activeGiveawaysEl = document.getElementById('activeGiveaways');
+            async function fetchAndDisplayRanking(type) {
+                rankingContent.innerHTML = `
+                    <div class="text-center py-10">
+                        <p class="text-secondary text-lg">Ładowanie rankingu ${type.replace('_', ' ')}...</p>
+                        <div class="mt-4 animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-accent mx-auto"></div>
+                    </div>`;
 
-        const xpRankingTableEl = document.getElementById('xpRankingTable');
-        const currencyRankingTableEl = document.getElementById('currencyRankingTable');
-        const messagesRankingTableEl = document.getElementById('messagesRankingTable');
-        const voiceTimeRankingTableEl = document.getElementById('voiceTimeRankingTable');
+                try {
+                    const response = await fetch(`${API_BASE_URL}/${type}`);
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! status: ${response.status}`);
+                    }
+                    const data = await response.json();
 
-        const API_BASE_URL = ''; // Pusty, bo żądania idą do tego samego serwera
+                    if (data && data.length > 0) {
+                        let tableHTML = `
+                            <div class="overflow-x-auto">
+                                <table class="min-w-full ranking-table">
+                                    <thead>
+                                        <tr>
+                                            <th class="w-16">Pozycja</th>
+                                            <th>Użytkownik</th>
+                                            <th>Wynik</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>`;
+                        
+                        data.forEach((entry, index) => {
+                            const avatarUrl = entry.avatar_url || `https://placehold.co/40x40/1E293B/E2E8F0?text=${entry.username.charAt(0)}`;
+                            let score = entry.xp_total !== undefined ? entry.xp_total :
+                                        entry.currency_total !== undefined ? entry.currency_total :
+                                        entry.premium_currency_total !== undefined ? entry.premium_currency_total :
+                                        entry.message_count !== undefined ? entry.message_count :
+                                        entry.voice_time_total !== undefined ? (entry.voice_time_total / 60).toFixed(0) + ' min' : 'N/A';
 
-        function createRankingTable(data, valueKey, valueSuffix = '', isXP = false) {
-            if (!data || !Array.isArray(data) || data.length === 0) {
-                return '<p class="text-center text-secondary py-4">Brak danych do wyświetlenia lub dane są w trakcie ładowania.</p>';
-            }
-            let tableHtml = '<table class="ranking-table">';
-            tableHtml += '<thead><tr><th class="rank-col">#</th><th class="name-col" colspan="2">Użytkownik</th><th class="score-col">Wynik</th></tr></thead><tbody>';
-            data.forEach((user, index) => {
-                let scoreDisplay = user[valueKey] !== undefined ? user[valueKey] : '0';
-                if (isXP && user.level !== undefined) {
-                    scoreDisplay = `Poziom ${user.level} (${scoreDisplay}${valueSuffix})`;
-                } else {
-                    scoreDisplay = `${scoreDisplay}${valueSuffix}`;
+                            tableHTML += `
+                                <tr>
+                                    <td class="rank-position">${index + 1}</td>
+                                    <td class="flex items-center">
+                                        <img src="${avatarUrl}" alt="Avatar gracza ${entry.username}" class="rank-avatar" onerror="this.onerror=null;this.src='https://placehold.co/40x40/1E293B/E2E8F0?text=${entry.username.charAt(0)}';">
+                                        <span class="font-medium text-primary">${entry.username}</span>
+                                    </td>
+                                    <td class="font-semibold text-accent">${score}</td>
+                                </tr>`;
+                        });
+
+                        tableHTML += `
+                                    </tbody>
+                                </table>
+                            </div>`;
+                        rankingContent.innerHTML = tableHTML;
+                    } else {
+                        rankingContent.innerHTML = `<p class="text-center text-secondary py-10">Brak danych do wyświetlenia dla tego rankingu.</p>`;
+                    }
+                } catch (error) {
+                    console.error('Błąd podczas ładowania rankingu:', error);
+                    rankingContent.innerHTML = `<p class="text-center text-red-400 py-10">Wystąpił błąd podczas ładowania danych rankingu. Spróbuj ponownie później.</p>`;
                 }
+            }
 
-                tableHtml += `
-                    <tr>
-                        <td class="rank-col">${index + 1}</td>
-                        <td class="avatar-col">
-                            <img src="${user.avatar_url || 'https://placehold.co/32x32/A78BFA/FFFFFF?text=?'}" alt="Awatar ${user.username || 'Nieznany'}" onerror="this.onerror=null;this.src='https://placehold.co/32x32/A78BFA/FFFFFF?text=?';">
-                        </td>
-                        <td class="name-col">${user.username || 'Nieznany Kronikarz'}</td>
-                        <td class="score-col">${scoreDisplay}</td>
-                    </tr>
-                `;
+            tabButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    tabButtons.forEach(btn => btn.classList.remove('active'));
+                    button.classList.add('active');
+                    const tabType = button.dataset.tab;
+                    fetchAndDisplayRanking(tabType);
+                });
             });
-            tableHtml += '</tbody></table>';
-            return tableHtml;
-        }
-        
-        function formatVoiceTime(totalSeconds) {
-                if (isNaN(totalSeconds) || totalSeconds === null || totalSeconds < 0) return "0s";
-            const hours = Math.floor(totalSeconds / 3600);
-            const minutes = Math.floor((totalSeconds % 3600) / 60);
-            const seconds = totalSeconds % 60;
-            let timeString = "";
-            if (hours > 0) timeString += `${hours}g `;
-            if (minutes > 0 || hours > 0) timeString += `${minutes}m `; // Pokaż minuty jeśli są godziny
-            timeString += `${seconds}s`;
-            return timeString.trim() || "0s";
+
+            // Załaduj domyślny ranking (np. XP) przy pierwszym otwarciu strony
+            fetchAndDisplayRanking('xp');
         }
 
-        async function fetchAndDisplayData() {
-            if (refreshButton) refreshButton.classList.add('loading');
 
-            const loadingPlaceholder = (text) => `<div class="loading-placeholder"><div class="spinner"></div>${text}</div>`;
-
-            if(totalMembersEl) totalMembersEl.textContent = '...';
-            if(onlineMembersEl) onlineMembersEl.textContent = '...';
-            if(totalMessagesEl) totalMessagesEl.textContent = '...';
-            if(activeGiveawaysEl) activeGiveawaysEl.textContent = '...';
-            if(xpRankingTableEl) xpRankingTableEl.innerHTML = loadingPlaceholder('Ładowanie rankingu Mocy Opowieści...');
-            if(currencyRankingTableEl) currencyRankingTableEl.innerHTML = loadingPlaceholder('Ładowanie rankingu Gwiezdnych Dukatów...');
-            if(messagesRankingTableEl) messagesRankingTableEl.innerHTML = loadingPlaceholder('Ładowanie rankingu Wysłanych Zwojów...');
-            if(voiceTimeRankingTableEl) voiceTimeRankingTableEl.innerHTML = loadingPlaceholder('Ładowanie rankingu Czasu na Naradach...');
-
-            try {
-                const serverStatsResponse = await fetch(`${API_BASE_URL}/api/web/server-stats`);
-                if (serverStatsResponse.ok) {
-                    const serverStats = await serverStatsResponse.json();
-                    if(totalMembersEl) totalMembersEl.textContent = serverStats.total_members !== undefined ? serverStats.total_members.toLocaleString('pl-PL') : 'N/A';
-                    if(onlineMembersEl) onlineMembersEl.textContent = serverStats.online_members !== undefined ? serverStats.online_members.toLocaleString('pl-PL') : 'N/A';
-                    if(totalMessagesEl) totalMessagesEl.textContent = serverStats.total_messages !== undefined ? serverStats.total_messages.toLocaleString('pl-PL') : 'N/A';
-                    if(activeGiveawaysEl) activeGiveawaysEl.textContent = serverStats.active_giveaways !== undefined ? serverStats.active_giveaways : 'N/A';
-                } else {
-                    console.warn('Nie udało się pobrać ogólnych statystyk serwera. Status:', serverStatsResponse.status);
-                     if(totalMembersEl) totalMembersEl.textContent = 'N/A';
-                     if(onlineMembersEl) onlineMembersEl.textContent = 'N/A';
-                     if(totalMessagesEl) totalMessagesEl.textContent = 'N/A';
-                     if(activeGiveawaysEl) activeGiveawaysEl.textContent = 'N/A';
-                }
-
-                const xpRankingResponse = await fetch(`${API_BASE_URL}/api/web/ranking/xp?limit=10`);
-                if (xpRankingResponse.ok) {
-                    const xpData = await xpRankingResponse.json();
-                    if(xpRankingTableEl) xpRankingTableEl.innerHTML = createRankingTable(xpData, 'xp_total', ' XP', true);
-                } else {
-                     console.warn('Nie udało się załadować rankingu XP. Status:', xpRankingResponse.status);
-                     if(xpRankingTableEl) xpRankingTableEl.innerHTML = '<p class="text-center text-secondary py-4">Nie udało się załadować rankingu XP.</p>';
-                }
-                
-                const currencyRankingResponse = await fetch(`${API_BASE_URL}/api/web/ranking/currency?limit=10`);
-                if (currencyRankingResponse.ok) {
-                    const currencyData = await currencyRankingResponse.json();
-                    if(currencyRankingTableEl) currencyRankingTableEl.innerHTML = createRankingTable(currencyData, 'currency_balance', ' ✨');
-                } else {
-                     console.warn('Nie udało się załadować rankingu waluty. Status:', currencyRankingResponse.status);
-                     if(currencyRankingTableEl) currencyRankingTableEl.innerHTML = '<p class="text-center text-secondary py-4">Nie udało się załadować rankingu waluty.</p>';
-                }
-
-                const messagesRankingResponse = await fetch(`${API_BASE_URL}/api/web/ranking/messages?limit=10`);
-                if (messagesRankingResponse.ok) {
-                    const messagesData = await messagesRankingResponse.json();
-                    if(messagesRankingTableEl) messagesRankingTableEl.innerHTML = createRankingTable(messagesData, 'message_count', ' zwojów');
-                } else {
-                     console.warn('Nie udało się załadować rankingu wiadomości. Status:', messagesRankingResponse.status);
-                     if(messagesRankingTableEl) messagesRankingTableEl.innerHTML = '<p class="text-center text-secondary py-4">Nie udało się załadować rankingu wiadomości.</p>';
-                }
-                
-                const voiceTimeRankingResponse = await fetch(`${API_BASE_URL}/api/web/ranking/voicetime?limit=10`);
-                if (voiceTimeRankingResponse.ok) {
-                    const voiceData = await voiceTimeRankingResponse.json();
-                    const formattedVoiceData = Array.isArray(voiceData) ? voiceData.map(user => ({...user, voice_time_formatted: formatVoiceTime(user.voice_time_seconds) })) : [];
-                    if(voiceTimeRankingTableEl) voiceTimeRankingTableEl.innerHTML = createRankingTable(formattedVoiceData, 'voice_time_formatted');
-                } else {
-                     console.warn('Nie udało się załadować rankingu czasu głosowego. Status:', voiceTimeRankingResponse.status);
-                     if(voiceTimeRankingTableEl) voiceTimeRankingTableEl.innerHTML = '<p class="text-center text-secondary py-4">Nie udało się załadować rankingu czasu głosowego.</p>';
-                }
-
-            } catch (error) {
-                console.error("Błąd podczas pobierania danych rankingowych:", error);
-                const errorMsg = '<p class="text-center text-red-400 py-4">Wystąpił błąd sieciowy podczas ładowania danych.</p>';
-                if(totalMembersEl) totalMembersEl.textContent = 'Błąd';
-                if(onlineMembersEl) onlineMembersEl.textContent = 'Błąd';
-                if(totalMessagesEl) totalMessagesEl.textContent = 'Błąd';
-                if(activeGiveawaysEl) activeGiveawaysEl.textContent = 'Błąd';
-                if(xpRankingTableEl) xpRankingTableEl.innerHTML = errorMsg;
-                if(currencyRankingTableEl) currencyRankingTableEl.innerHTML = errorMsg;
-                if(messagesRankingTableEl) messagesRankingTableEl.innerHTML = errorMsg;
-                if(voiceTimeRankingTableEl) voiceTimeRankingTableEl.innerHTML = errorMsg;
-            } finally {
-                if (refreshButton) refreshButton.classList.remove('loading');
-            }
-        }
-        
         document.addEventListener('DOMContentLoaded', function() {
             document.getElementById('currentYear').textContent = new Date().getFullYear();
             
@@ -835,11 +532,9 @@
             setupMobileMenu();
             setupRevealAnimations();
             setupDropdownDismiss();
-            
-            if (refreshButton) {
-                refreshButton.addEventListener('click', fetchAndDisplayData);
+            if (document.getElementById('rankingContent')) { // Upewnij się, że element istnieje
+                setupRankingTabs();
             }
-            fetchAndDisplayData(); // Initial data fetch
         });
     </script>
 </body>
