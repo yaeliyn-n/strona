@@ -6,7 +6,7 @@
     console.log("URL API Bota (process.env.BOT_API_URL):", process.env.BOT_API_URL);
     console.log("Klucz API Bota (process.env.BOT_API_KEY):", process.env.BOT_API_KEY ? "Ustawiony" : "NIE USTAWIONY");
     console.log("ID Admina (process.env.ADMIN_DISCORD_ID):", process.env.ADMIN_DISCORD_ID);
-    console.log("--- KONIEC DEBUG ---");
+    console.log("--- KONIEC DEBUG ---\n");
 
     const express = require('express');
     const session = require('express-session');
@@ -111,7 +111,7 @@
                     'Accept': 'application/json'
                 },
             };
-            if (body && (method.toUpperCase() === 'POST' || method.toUpperCase() === 'PUT')) {
+            if (body && (method.toUpperCase() === 'POST' || method.toUpperCase() === 'PUT' || method.toUpperCase() === 'DELETE')) {
                 fetchOptions.body = JSON.stringify(body);
             }
             const botApiResponse = await fetch(url.toString(), fetchOptions);
@@ -264,6 +264,7 @@
       });
     });
 
+    // Proxy do API bota Discord
     app.get('/api/bot-stats/:discordUserId', (req, res) => {
         proxyToBotApi(req, res, `/api/user_stats/${req.params.discordUserId}`);
     });
@@ -299,6 +300,25 @@
         };
         proxyToBotApi(req, res, `/api/shop/buy/${req.params.itemId}`, 'POST', botApiBody);
     });
+
+    // Auction house API proxy routes
+    app.get('/api/web/auctions', (req, res) => {
+        proxyToBotApi(req, res, '/api/auctions', 'GET');
+    });
+    app.post('/api/web/auctions', (req, res) => {
+        if (!req.session.user || !req.session.user.id) {
+            return res.status(401).json({ error: 'Musisz być zalogowany, aby utworzyć aukcję.' });
+        }
+        const body = Object.assign({}, req.body, { discord_user_id: req.session.user.id });
+        proxyToBotApi(req, res, '/api/auctions', 'POST', body);
+    });
+    app.post('/api/web/auctions/:auctionId/bid', (req, res) => {
+        if (!req.session.user || !req.session.user.id) {
+            return res.status(401).json({ error: 'Musisz być zalogowany, aby licytować.' });
+        }
+        const body = Object.assign({}, req.body, { discord_user_id: req.session.user.id });
+        proxyToBotApi(req, res, `/api/auctions/${req.params.auctionId}/bid`, 'POST', body);
+    });
     app.get('/api/bot-inventory/:discordUserId', (req, res) => {
         proxyToBotApi(req, res, `/api/user_inventory/${req.params.discordUserId}`);
     });
@@ -319,7 +339,31 @@
         proxyToBotApi(req, res, `/api/premium/finalize_purchase/${packageId}`, 'POST', botApiBody);
     });
 
-    // Support Tickets API
+    // Proxy dla ostrzeżeń, misji i osiągnięć
+    app.get('/api/warnings/list/:guildId/:discordUserId', (req, res) => {
+        proxyToBotApi(req, res, `/api/warnings/list/${req.params.guildId}/${req.params.discordUserId}`);
+    });
+    app.post('/api/warnings/add', (req, res) => { // Proxy dla dodawania ostrzeżeń
+        if (!isAdmin(req)) return res.status(403).json({ error: 'Forbidden' });
+        proxyToBotApi(req, res, '/api/warnings/add', 'POST', req.body);
+    });
+    app.delete('/api/warnings/remove', (req, res) => { // Proxy dla usuwania ostrzeżeń
+        if (!isAdmin(req)) return res.status(403).json({ error: 'Forbidden' });
+        proxyToBotApi(req, res, '/api/warnings/remove', 'DELETE', req.body);
+    });
+
+    app.get('/api/missions/progress/:guildId/:discordUserId', (req, res) => {
+        proxyToBotApi(req, res, `/api/missions/progress/${req.params.guildId}/${req.params.discordUserId}`);
+    });
+    app.get('/api/missions/completed/:guildId/:discordUserId', (req, res) => {
+        proxyToBotApi(req, res, `/api/missions/completed/${req.params.guildId}/${req.params.discordUserId}`);
+    });
+    app.get('/api/user_achievements/:guildId/:discordUserId', (req, res) => {
+        proxyToBotApi(req, res, `/api/user_achievements/${req.params.guildId}/${req.params.discordUserId}`);
+    });
+
+
+    // Support Tickets API (obsługiwane przez ten serwer Node.js)
     app.get('/api/support/my-tickets', async (req, res) => {
       if (!req.session.user || !req.session.user.id) {
         return res.status(401).json({ error: 'Unauthorized - Musisz być zalogowany, aby zobaczyć swoje zgłoszenia.' });
@@ -441,7 +485,7 @@
         res.status(500).json({ error: 'Wystąpił błąd serwera podczas przyjmowania zgłoszenia.' });
       }
     });
-    // Admin API Endpoints
+    // Admin API Endpoints (obsługiwane przez ten serwer Node.js)
     app.get('/api/admin/support-tickets', async (req, res) => {
         if (!isAdmin(req)) {
             return res.status(403).json({ error: 'Forbidden - Brak uprawnień administratora.' });
@@ -458,7 +502,7 @@
             res.json(allTickets);
         } catch (error) {
             console.error('Błąd pobierania wszystkich zgłoszeń dla admina:', error);
-            res.status(500).json({ error: 'Błąd serwera podczas pobierania zgłoszeń.' });
+            res.status(500).json({ error: "Błąd serwera podczas pobierania zgłoszeń." });
         }
     });
     app.post('/api/admin/support-tickets/:ticketId/status', async (req, res) => {
@@ -532,6 +576,54 @@
       }
     });
 
+    // ENDPOINTY ADMINA DLA SKLEPU (proxy do API bota)
+    app.get('/api/admin/shop-items', (req, res) => {
+        if (!isAdmin(req)) return res.status(403).json({ error: 'Forbidden' });
+        proxyToBotApi(req, res, '/api/admin/shop-items', 'GET');
+    });
+
+    app.get('/api/admin/shop-items/:itemId', (req, res) => {
+        if (!isAdmin(req)) return res.status(403).json({ error: 'Forbidden' });
+        proxyToBotApi(req, res, `/api/admin/shop-items/${req.params.itemId}`, 'GET');
+    });
+
+    app.post('/api/admin/shop-items', (req, res) => {
+        if (!isAdmin(req)) return res.status(403).json({ error: 'Forbidden' });
+        proxyToBotApi(req, res, '/api/admin/shop-items', 'POST', req.body);
+    });
+
+    app.put('/api/admin/shop-items/:itemId', (req, res) => {
+        if (!isAdmin(req)) return res.status(403).json({ error: 'Forbidden' });
+        proxyToBotApi(req, res, `/api/admin/shop-items/${req.params.itemId}`, 'PUT', req.body);
+    });
+
+    app.delete('/api/admin/shop-items/:itemId', (req, res) => {
+        if (!isAdmin(req)) return res.status(403).json({ error: 'Forbidden' });
+        proxyToBotApi(req, res, `/api/admin/shop-items/${req.params.itemId}`, 'DELETE');
+    });
+
+    // PROXY DLA KONFIGURACJI BOTA
+    app.get('/api/config/:guildId', (req, res) => { // Endpoint do pobierania konfiguracji (GET)
+        proxyToBotApi(req, res, `/api/config/${req.params.guildId}`);
+    });
+    app.put('/api/config/:guildId/xp', (req, res) => {
+        if (!isAdmin(req)) return res.status(403).json({ error: 'Forbidden' });
+        proxyToBotApi(req, res, `/api/config/${req.params.guildId}/xp`, 'PUT', req.body);
+    });
+    app.put('/api/config/:guildId/channel_xp', (req, res) => {
+        if (!isAdmin(req)) return res.status(403).json({ error: 'Forbidden' });
+        proxyToBotApi(req, res, `/api/config/${req.params.guildId}/channel_xp`, 'PUT', req.body);
+    });
+    app.delete('/api/config/:guildId/channel_xp/:channelId', (req, res) => {
+        if (!isAdmin(req)) return res.status(403).json({ error: 'Forbidden' });
+        proxyToBotApi(req, res, `/api/config/${req.params.guildId}/channel_xp/${req.params.channelId}`, 'DELETE');
+    });
+    app.put('/api/config/:guildId/other', (req, res) => {
+        if (!isAdmin(req)) return res.status(403).json({ error: 'Forbidden' });
+        proxyToBotApi(req, res, `/api/config/${req.params.guildId}/other`, 'PUT', req.body);
+    });
+
+
     // --- Obsługa stron statycznych i React App ---
 
     // 1. Serwowanie plików z folderu 'uploads'
@@ -542,17 +634,15 @@
     //    Ścieżka '/assets' jest używana w client/dist/index.html
     app.use('/assets', express.static(path.join(__dirname, 'client/dist/assets')));
 
-    // 3. Dedykowane ścieżki dla sklepu React - ZAWSZE serwują index.html aplikacji React
-    //    Obsługuje /sklep-bota, /sklep-bota/cokolwiek, /sklepbot, /sklepbot/cokolwiek
-    app.get(['/sklep-bota', '/sklep-bota/*', '/sklepbot', '/sklepbot/*'], (req, res, next) => {
-        const reactAppIndexPath = path.join(__dirname, 'client/dist', 'index.html');
-        if (fs.existsSync(reactAppIndexPath)) {
-            console.log(`Serwowanie aplikacji React dla: ${req.path}`);
-            res.sendFile(reactAppIndexPath);
+    // 3. Dedykowane ścieżki dla sklepu bota (teraz HTML, nie React)
+    app.get('/sklep-bota', (req, res, next) => {
+        const shopHtmlPath = path.join(__dirname, 'public', 'sklep-bota.html'); // Zakładamy, że sklep-bota.html będzie w public
+        if (fs.existsSync(shopHtmlPath)) {
+            console.log(`Serwowanie sklepu bota (HTML) dla: ${req.path}`);
+            res.sendFile(shopHtmlPath);
         } else {
-            console.error("Krytyczny błąd: Plik index.html aplikacji React nie został znaleziony w client/dist/ dla ścieżki sklepu");
-            // Przekaż do następnego handlera (np. 404)
-            next();
+            console.error("Krytyczny błąd: Plik sklep-bota.html nie został znaleziony w public/.");
+            next(); // Przekaż do następnego handlera (np. 404)
         }
     });
     

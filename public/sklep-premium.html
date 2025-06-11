@@ -449,18 +449,29 @@
 
             try {
                 const response = await fetch('/api/web/premium/packages');
-                if (!response.ok) throw new Error(`Błąd HTTP: ${response.status}`);
+                if (!response.ok) {
+                    // Sprawdź, czy to błąd autoryzacji
+                    if (response.status === 401 || response.status === 403) {
+                        container.innerHTML = `
+                            <p class="text-center text-red-400 col-span-full py-10">
+                                Aby przeglądać sklep premium, musisz być zalogowany. 
+                                <a href="/auth/discord/login?redirect=${encodeURIComponent(window.location.pathname + window.location.search)}" class="text-accent hover:underline">Zaloguj się przez Discord</a>
+                            </p>`;
+                        return;
+                    }
+                    throw new Error(`Błąd HTTP: ${response.status}`);
+                }
                 const packages = await response.json();
 
-                if (packages && packages.length > 0) {
-                    container.innerHTML = packages.map((pkg, index) => `
+                if (packages && Object.keys(packages).length > 0) { // Sprawdź, czy obiekt pakietów nie jest pusty
+                    container.innerHTML = Object.entries(packages).map(([packageId, pkg], index) => `
                         <div class="premium-package-card card-bg p-6 rounded-lg text-center flex flex-col items-center reveal" style="transition-delay: ${index * 0.1}s;">
-                            <div class="package-icon">💎</div>
-                            <h3 class="text-2xl font-semibold text-primary mb-2">${pkg.name}</h3>
-                            <p class="text-secondary text-sm mb-3 flex-grow">${pkg.description}</p>
-                            <p class="package-price">${pkg.price_usd ? `${pkg.price_usd.toFixed(2)} USD` : 'Darmowy (Test)'}</p> 
-                            <p class="text-sm text-amber-400 font-semibold mb-4">+${pkg.crystals_awarded} Kryształów Elary</p>
-                            <button class="btn-purchase btn-primary w-full purchase-button" data-package-id="${pkg.id}" data-package-name="${pkg.name}">Zdobądź Pakiet</button>
+                            <div class="package-icon">${pkg.emoji || '💎'}</div>
+                            <h3 class="text-2xl font-semibold text-primary mb-2">${pkg.nazwa}</h3>
+                            <p class="text-secondary text-sm mb-3 flex-grow">${pkg.opis}</p>
+                            <p class="package-price">${pkg.cena_pln ? `${pkg.cena_pln.toFixed(2)} PLN` : 'Darmowy (Test)'}</p> 
+                            <p class="text-sm text-amber-400 font-semibold mb-4">+${pkg.ilosc_krysztalow} Kryształów Elary</p>
+                            <button class="btn-purchase btn-primary w-full purchase-button" data-package-id="${packageId}" data-package-name="${pkg.nazwa}">Zdobądź Pakiet</button>
                         </div>
                     `).join('');
                     
@@ -494,7 +505,7 @@
                                     const purchaseResponse = await fetch(`/api/web/premium/initiate_purchase/${packageId}`, { method: 'POST' });
                                     const result = await purchaseResponse.json();
                                     if (purchaseResponse.ok && result.message) {
-                                        statusDiv.innerHTML = `<p class="text-green-400">${result.message} Otrzymano ${result.crystals_awarded || '?'} kryształów.</p>`;
+                                        statusDiv.innerHTML = `<p class="text-green-400">${result.message} Otrzymano ${result.new_premium_currency_balance || '?'} kryształów.</p>`;
                                     } else {
                                         statusDiv.innerHTML = `<p class="text-red-400">${result.error || 'Wystąpił błąd podczas zakupu.'}</p>`;
                                     }
@@ -515,10 +526,7 @@
                         setTimeout(() => el.classList.add('visible'), 10);
                     });
 
-                } else if (packages && packages.error) {
-                     container.innerHTML = `<p class="text-center text-red-400 col-span-full py-10">${packages.error}</p>`;
-                }
-                else {
+                } else { // Jeśli packages jest pustym obiektem lub ma inny format
                     container.innerHTML = '<p class="text-center text-secondary col-span-full py-10">Brak dostępnych pakietów premium w tym momencie.</p>';
                 }
             } catch (error) {

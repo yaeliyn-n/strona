@@ -547,11 +547,14 @@
         }
 
         function getStatusClass(status) {
-            if (status.toLowerCase().includes('otwarte')) return 'ticket-status-Otwarte';
-            if (status.toLowerCase().includes('w trakcie')) return 'ticket-status-W-trakcie';
-            if (status.toLowerCase().includes('oczekuje')) return 'ticket-status-Oczekuje';
-            if (status.toLowerCase().includes('rozwiązane')) return 'ticket-status-Rozwiązane';
-            if (status.toLowerCase().includes('zamknięte')) return 'ticket-status-Zamknięte';
+            // Normalizuj status do formatu bez spacji i z małych liter dla klasy CSS
+            const normalizedStatus = (status || '').toLowerCase().replace(/\s+/g, '-').replace(/[^\w-]/g, '');
+            // Mapuj znormalizowany status na konkretne klasy CSS
+            if (normalizedStatus.includes('otwarte')) return 'ticket-status-Otwarte';
+            if (normalizedStatus.includes('w-trakcie')) return 'ticket-status-W-trakcie';
+            if (normalizedStatus.includes('oczekuje')) return 'ticket-status-Oczekuje'; // Używamy 'Oczekuje' dla "Oczekuje na odpowiedź"
+            if (normalizedStatus.includes('rozwiązane')) return 'ticket-status-Rozwiązane';
+            if (normalizedStatus.includes('zamknięte')) return 'ticket-status-Zamknięte';
             return 'bg-gray-700 text-gray-300'; // Domyślny styl
         }
 

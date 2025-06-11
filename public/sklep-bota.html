@@ -3,10 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Sprawdź rankingi i statystyki graczy na serwerze Kroniki Elary. Zobacz, kto prowadzi w zdobywaniu XP, walut i aktywności.">
-    <meta name="keywords" content="rankingi, statystyki, kroniki elary, discord, gracze, xp, waluta, aktywność, top graczy">
+    <meta name="description" content="Skarbiec Artefaktów Mocy - kupuj unikalne przedmioty i bonusy za Gwiezdne Dukaty i Kryształy Elary.">
+    <meta name="keywords" content="sklep, bot, discord, kroniki elary, dukaty, kryształy, przedmioty, bonusy">
     <meta name="author" content="Arcadius & Strażnicy Kronik Elary">
-    <title>Rankingi i Statystyki - Kroniki Elary</title>
+    <title>Skarbiec Artefaktów Mocy - Kroniki Elary</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600&display=swap" rel="stylesheet">
     <style>
@@ -75,7 +75,7 @@
         body { font-family: 'Inter', sans-serif; background-color: var(--bg-primary); color: var(--text-primary); transition: background-color 0.3s ease, color 0.3s ease; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; line-height: 1.75; }
         h1, h2, h3, h4, h5 { font-family: 'Lora', serif; font-weight: 600; line-height: 1.35; }
         h1 { letter-spacing: -0.025em; font-weight: 700; } h2 { letter-spacing: -0.02em; font-weight: 700; } h3 { font-weight: 600; }
-        .hero-ranking-bg { background: linear-gradient(rgba(15, 23, 42, 0.88), rgba(15, 23, 42, 0.98)), url('https://placehold.co/1920x500/0a0f1e/A78BFA?text=Rankingi+Serwera') center/cover no-repeat; }
+        .hero-shop-bg { background: linear-gradient(rgba(15, 23, 42, 0.88), rgba(15, 23, 42, 0.98)), url('https://placehold.co/1920x500/0a0f1e/8B5CF6?text=Skarbiec+Artefaktów') center/cover no-repeat; }
         .section-bg { background-color: var(--bg-secondary); }
         .card-bg { background-color: var(--bg-card); transition: transform 0.3s cubic-bezier(0.25, 0.1, 0.25, 1), box-shadow 0.3s cubic-bezier(0.25, 0.1, 0.25, 1), background-color 0.3s ease; border: 1px solid var(--border-card); box-shadow: 0 6px 12px -3px var(--shadow-color); overflow: hidden; }
         .card-bg:hover { transform: translateY(-8px) scale(1.02); box-shadow: 0 12px 24px -4px var(--shadow-strong-color); }
@@ -108,16 +108,10 @@
         .dropdown-menu form { margin: 0; } 
         .modal { background-color: var(--modal-backdrop); backdrop-filter: blur(6px); }
         .modal-content { background-color: var(--bg-card); max-height: 90vh; }
-        .ranking-table th, .ranking-table td { padding: 0.75rem 1rem; text-align: left; border-bottom: 1px solid var(--border-card); }
-        .ranking-table th { font-weight: 600; color: var(--text-accent); }
-        .ranking-table tbody tr:hover { background-color: rgba(var(--rgb-accent), 0.05); }
-        .ranking-table .rank-avatar { width: 2.5rem; height: 2.5rem; border-radius: 50%; margin-right: 0.75rem; }
-        .ranking-table .rank-position { font-weight: bold; color: var(--text-accent); min-width: 2.5rem; text-align: center; }
-         .tab-button { padding: 0.75rem 1.5rem; margin: 0 0.25rem; border-radius: 0.375rem 0.375rem 0 0; background-color: transparent; color: var(--text-secondary); font-weight: 500; transition: background-color 0.2s ease, color 0.2s ease; border-bottom: 2px solid transparent; }
-        .tab-button.active { background-color: var(--bg-card); color: var(--text-accent); border-bottom-color: var(--text-accent); }
-        .tab-button:hover:not(.active) { background-color: rgba(var(--rgb-accent), 0.05); color: var(--text-accent-hover); }
-        .tab-content { display: none; }
-        .tab-content.active { display: block; }
+        .shop-item-card { display: flex; flex-direction: column; height: 100%; }
+        .shop-item-card .item-icon { font-size: 3rem; line-height: 1; margin-bottom: 0.75rem; }
+        .shop-item-card .item-price { font-size: 1.5rem; font-weight: 700; color: var(--text-accent); margin: 0.5rem 0 1rem 0; }
+        .loading-spinner { border-color: var(--text-accent) transparent var(--text-accent) transparent; }
     </style>
 </head>
 <body class="antialiased">
@@ -155,44 +149,40 @@
     </header>
 
     <main>
-        <section class="hero-ranking-bg pt-32 pb-16 sm:pt-40 sm:pb-24 text-center reveal">
+        <section class="hero-shop-bg pt-32 pb-16 sm:pt-40 sm:pb-24 text-center reveal">
             <div class="container mx-auto px-4 sm:px-6">
                 <h1 class="text-4xl sm:text-5xl md:text-6xl font-bold text-white mb-6 leading-tight text-shadow-custom">
-                    Rankingi i Statystyki <span class="text-accent">Kronik Elary</span>
+                    Skarbiec <span class="text-accent">Artefaktów Mocy</span>
                 </h1>
                 <p class="text-lg md:text-xl text-slate-200 mb-10 max-w-3xl mx-auto text-shadow-custom">
-                    Zobacz, kto wiedzie prym w naszym świecie! Sprawdź rankingi aktywności, zdobytych Gwiezdnych Dukatów, Kryształów Elary i wiele więcej.
+                    Wymień swoje Gwiezdne Dukaty na potężne artefakty, bonusy XP, unikalne role i inne skarby!
                 </p>
             </div>
         </section>
 
-        <section id="wprowadzenie-rankingi" class="py-16 sm:py-20 section-bg reveal">
+        <section id="wprowadzenie-shop" class="py-16 sm:py-20 section-bg reveal">
             <div class="container mx-auto px-4 sm:px-6">
                 <div class="text-center mb-14 sm:mb-18">
-                    <h2 class="text-3xl sm:text-4xl font-bold text-primary mb-4">Tablice Chwały Aethelgardu</h2>
+                    <h2 class="text-3xl sm:text-4xl font-bold text-primary mb-4">Wybierz Swój <span class="text-accent">Artefakt</span></h2>
                     <p class="text-lg text-secondary max-w-3xl mx-auto">
-                        W Kronikach Elary doceniamy zaangażowanie i osiągnięcia naszych Kronikarzy. Poniższe rankingi są odzwierciedleniem Waszej aktywności, zaradności i poświęcenia. Pamiętajcie, że dane są aktualizowane regularnie!
+                        Przedmioty w Skarbcu są regularnie uzupełniane. Pamiętaj, aby sprawdzać dostępność i korzystać z okazji!
+                    </p>
+                    <p id="userCurrencyBalance" class="text-xl text-primary mt-4 font-semibold">
+                        Twoje Dukaty: Ładowanie... ✨ | Twoje Kryształy: Ładowanie... 💠
                     </p>
                 </div>
             </div>
         </section>
 
-        <section id="rankingi-lista" class="py-16 sm:py-20 reveal">
+        <section id="shop-items" class="py-16 sm:py-20 reveal">
             <div class="container mx-auto px-4 sm:px-6">
-                <div class="mb-8 flex flex-wrap justify-center border-b border-border-card">
-                    <button class="tab-button active" data-tab="xp">Ranking XP</button>
-                    <button class="tab-button" data-tab="currency">Dukaty</button>
-                    <button class="tab-button" data-tab="premium_currency">Kryształy</button>
-                    <button class="tab-button" data-tab="messages">Wiadomości</button>
-                    <button class="tab-button" data-tab="voicetime">Czas Głosowy</button>
-                </div>
-
-                <div id="rankingContent" class="card-bg p-4 sm:p-6 rounded-lg shadow-xl">
-                    <div class="text-center py-10">
-                        <p class="text-secondary text-lg">Ładowanie danych rankingowych...</p>
-                        <div class="mt-4 animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-accent mx-auto"></div>
+                <div id="shopItemsContainer" class="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
+                    <div class="text-center py-10 col-span-full">
+                        <div class="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 loading-spinner mx-auto mb-3"></div>
+                        <p class="text-secondary text-lg">Ładowanie przedmiotów sklepu...</p>
                     </div>
                 </div>
+                <div id="shopStatus" class="mt-8 text-center text-lg font-semibold"></div>
             </div>
         </section>
         
@@ -220,8 +210,17 @@
         </div>
     </footer>
 
-    <div id="eventModal" class="fixed inset-0 z-[60] items-center justify-center hidden p-4 modal">
+    <div id="confirmationModal" class="fixed inset-0 z-[70] items-center justify-center hidden p-4 modal">
+        <div class="modal-content w-full max-w-md p-6 rounded-lg shadow-xl reveal">
+            <h3 class="text-xl font-semibold text-primary mb-4" id="modalTitle">Potwierdzenie Zakupu</h3>
+            <p class="text-secondary mb-6" id="modalMessage">Czy na pewno chcesz zakupić ten przedmiot?</p>
+            <div class="flex justify-end space-x-3">
+                <button id="cancelButton" class="btn-secondary py-2 px-4 text-sm">Anuluj</button>
+                <button id="confirmButton" class="btn-primary py-2 px-4 text-sm">Potwierdź Zakup</button>
+            </div>
         </div>
+    </div>
+
 
     <script>
         // Funkcja do obsługi aktywnego linku w nawigacji
@@ -246,11 +245,11 @@
             const authSectionNav = document.getElementById('auth-section-nav');
             const authSectionMobileNav = document.getElementById('auth-section-mobile-nav');
             const mobileMenuLinksContainer = document.querySelector('#mobileMenu > div'); 
-            const ADMIN_DISCORD_ID = "1238814802357387285"; 
+            const ADMIN_DISCORD_ID = "1238814802357387285"; // TODO: ZASTĄP RZECZYWISTYM ID ADMINA
 
             function createLoginButton(isMobile = false) {
                 const loginButton = document.createElement('a');
-                loginButton.href = '/auth/discord/login'; 
+                loginButton.href = '/auth/discord/login?redirect=' + encodeURIComponent(window.location.pathname + window.location.search); 
                 loginButton.id = isMobile ? 'discordLoginButtonMobileNav' : 'discordLoginButtonNav';
                 loginButton.className = 'btn-discord !text-white px-4 py-2.5 rounded-md text-sm flex items-center' + (isMobile ? ' w-full justify-center mt-2' : '');
                 loginButton.innerHTML = `<svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 24 24"><path d="M20.297 0H3.703C1.658 0 0 1.658 0 3.703V20.297C0 22.342 1.658 24 3.703 24H20.297C22.342 24 24 22.342 24 20.297V3.703C24 1.658 22.342 0 20.297 0ZM8.107 15.232C7.089 15.232 6.241 14.384 6.241 13.366C6.241 12.348 7.089 11.5 8.107 11.5C9.125 11.5 9.973 12.348 9.973 13.366C9.973 14.384 9.125 15.232 8.107 15.232ZM12.000 11.071C10.982 11.071 10.134 10.223 10.134 9.205C10.134 8.188 10.982 7.339 12.000 7.339C13.018 7.339 13.866 8.188 13.866 9.205C13.866 10.223 13.018 11.071 12.000 11.071ZM15.893 15.232C14.875 15.232 14.027 14.384 14.027 13.366C14.027 12.348 14.875 11.5 15.893 11.5C16.911 11.5 17.759 12.348 17.759 13.366C17.759 14.384 16.911 15.232 15.893 15.232Z"/></svg> Zaloguj przez Discord`;
@@ -356,6 +355,10 @@
                             });
                         }
                     }
+                     // Po pomyślnym załadowaniu danych użytkownika, załaduj jego saldo
+                    if (user && user.id) {
+                        loadUserCurrencyBalance(user.id);
+                    }
 
                 } else {
                      if (authSectionNav) {
@@ -371,6 +374,16 @@
                         mobileLoginButton.classList.add('mt-2', 'border-t', 'border-[var(--border-card)]', 'pt-2', 'mobile-auth-item');
                         mobileMenuLinksContainer.appendChild(mobileLoginButton);
                     }
+                    // Jeśli użytkownik nie jest zalogowany, wyświetl komunikat
+                    document.getElementById('shopItemsContainer').innerHTML = `
+                        <div class="text-center py-10 col-span-full card-bg p-8 rounded-lg">
+                            <h2 class="text-2xl font-semibold text-primary mb-4">Dostęp Wymaga Logowania</h2>
+                            <p class="text-secondary mb-6">Aby przeglądać Skarbiec Artefaktów, musisz być zalogowany.</p>
+                            <a href="/auth/discord/login?redirect=${encodeURIComponent(window.location.pathname + window.location.search)}" class="btn-discord inline-flex items-center">
+                                <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 24 24"><path d="M20.297 0H3.703C1.658 0 0 1.658 0 3.703V20.297C0 22.342 1.658 24 3.703 24H20.297C22.342 24 24 22.342 24 20.297V3.703C24 1.658 22.342 0 20.297 0ZM8.107 15.232C7.089 15.232 6.241 14.384 6.241 13.366C6.241 12.348 7.089 11.5 8.107 11.5C9.125 11.5 9.973 12.348 9.973 13.366C9.973 14.384 9.125 15.232 8.107 15.232ZM12.000 11.071C10.982 11.071 10.134 10.223 10.134 9.205C10.134 8.188 10.982 7.339 12.000 7.339C13.018 7.339 13.866 8.188 13.866 9.205C13.866 10.223 13.018 11.071 12.000 11.071ZM15.893 15.232C14.875 15.232 14.027 14.384 14.027 13.366C14.027 12.348 14.875 11.5 15.893 11.5C16.911 11.5 17.759 12.348 17.759 13.366C17.759 14.384 16.911 15.232 15.893 15.232Z"/></svg>
+                                Zaloguj się przez Discord
+                            </a>
+                        </div>`;
                 }
             } catch (error) {
                 console.error('Błąd aktualizacji UI logowania:', error);
@@ -387,6 +400,7 @@
                     mobileLoginButton.classList.add('mt-2', 'border-t', 'border-[var(--border-card)]', 'pt-2', 'mobile-auth-item');
                     mobileMenuLinksContainer.appendChild(mobileLoginButton);
                 }
+                document.getElementById('shopItemsContainer').innerHTML = `<p class="text-center text-red-400 col-span-full py-10">Wystąpił błąd podczas ładowania sklepu. Spróbuj odświeżyć stronę.</p>`;
             }
         }
         
@@ -439,110 +453,169 @@
                 }
             });
         }
-        
-        // Obsługa zakładek rankingu
-        function setupRankingTabs() {
-            const tabButtons = document.querySelectorAll('.tab-button');
-            const rankingContent = document.getElementById('rankingContent');
-            const API_BASE_URL = '/api/web/ranking'; // Zakładając, że to jest bazowy URL dla API rankingów
 
-            async function fetchAndDisplayRanking(type) {
-                rankingContent.innerHTML = `
-                    <div class="text-center py-10">
-                        <p class="text-secondary text-lg">Ładowanie rankingu ${type.replace('_', ' ')}...</p>
-                        <div class="mt-4 animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-accent mx-auto"></div>
-                    </div>`;
+        async function loadShopItems() {
+            const container = document.getElementById('shopItemsContainer');
+            const statusDiv = document.getElementById('shopStatus');
+            container.innerHTML = `
+                <div class="text-center py-10 col-span-full">
+                    <div class="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 loading-spinner mx-auto mb-3"></div>
+                    <p class="text-secondary text-lg">Ładowanie przedmiotów sklepu...</p>
+                </div>`;
+            statusDiv.innerHTML = '';
 
-                try {
-                    const response = await fetch(`${API_BASE_URL}/${type}`);
-                    if (!response.ok) {
-                        throw new Error(`HTTP error! status: ${response.status}`);
-                    }
-                    const data = await response.json();
+            try {
+                const response = await fetch('/api/web/shop/items');
+                if (!response.ok) {
+                    throw new Error(`Błąd HTTP: ${response.status}`);
+                }
+                const items = await response.json();
 
-                    if (data && data.length > 0) {
-                        let tableHTML = `
-                            <div class="overflow-x-auto">
-                                <table class="min-w-full ranking-table">
-                                    <thead>
-                                        <tr>
-                                            <th class="w-16">Pozycja</th>
-                                            <th>Użytkownik</th>
-                                            <th>Wynik</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>`;
+                if (items && items.length > 0) {
+                    container.innerHTML = items.map((item, index) => {
+                        const costDukaty = item.cost_dukaty !== null ? `${item.cost_dukaty} ✨` : '';
+                        const costKrysztaly = item.cost_krysztaly !== null ? `${item.cost_krysztaly} 💠` : '';
+                        const priceString = [costDukaty, costKrysztaly].filter(Boolean).join(' lub ');
+                        const stockInfo = item.stock === -1 ? 'Nieskończony' : `Dostępnych: ${item.stock}`;
                         
-                        data.forEach((entry, index) => {
-                            const avatarUrl = entry.avatar_url || `https://placehold.co/40x40/1E293B/E2E8F0?text=${entry.username.charAt(0)}`;
-                            let score = entry.xp_total !== undefined ? entry.xp_total :
-                                        entry.currency_balance !== undefined ? entry.currency_balance :
-                                        entry.premium_currency_balance !== undefined ? entry.premium_currency_balance :
-                                        entry.message_count !== undefined ? entry.message_count :
-                                        entry.voice_time_seconds !== undefined ? formatDuration(entry.voice_time_seconds) : 'N/A';
+                        return `
+                            <div class="shop-item-card card-bg p-6 rounded-lg text-center flex flex-col items-center reveal" style="transition-delay: ${index * 0.05}s;">
+                                <div class="item-icon">${item.emoji || '🛍️'}</div>
+                                <h3 class="text-xl font-semibold text-primary mb-2">${item.name}</h3>
+                                <p class="text-secondary text-sm mb-3 flex-grow">${item.description}</p>
+                                <p class="item-price">${priceString}</p>
+                                <p class="text-sm text-secondary mb-4">${stockInfo}</p>
+                                <button class="btn-primary w-full purchase-button" 
+                                    data-item-id="${item.id}" 
+                                    data-item-name="${item.name}"
+                                    data-cost-dukaty="${item.cost_dukaty}"
+                                    data-cost-krysztaly="${item.cost_krysztaly}"
+                                    ${item.stock !== -1 && item.stock <= 0 ? 'disabled' : ''}>
+                                    ${item.stock !== -1 && item.stock <= 0 ? 'Wyprzedane' : 'Kup Teraz'}
+                                </button>
+                            </div>
+                        `;
+                    }).join('');
+                    
+                    document.querySelectorAll('.purchase-button').forEach(button => {
+                        button.addEventListener('click', async function() {
+                            const itemId = this.dataset.itemId;
+                            const itemName = this.dataset.itemName;
+                            const costDukaty = this.dataset.costDukaty !== 'null' ? parseInt(this.dataset.costDukaty) : null;
+                            const costKrysztaly = this.dataset.costKrysztaly !== 'null' ? parseInt(this.dataset.costKrysztaly) : null;
 
-                            // Dodaj symbol waluty dla odpowiednich rankingów
-                            if (type === 'currency' && entry.currency_balance !== undefined) score += ' ✨';
-                            if (type === 'premium_currency' && entry.premium_currency_balance !== undefined) score += ' 💠';
+                            let currencyType = null;
+                            if (costDukaty !== null && costKrysztaly !== null) {
+                                // Jeśli są obie waluty, zapytaj użytkownika lub domyślnie użyj dukatów
+                                if (!confirm(`Przedmiot "${itemName}" kosztuje ${costDukaty} ✨ lub ${costKrysztaly} 💠. Czy chcesz zapłacić Dukatami? (Anuluj dla Kryształów)`)) {
+                                    currencyType = 'krysztaly';
+                                } else {
+                                    currencyType = 'dukaty';
+                                }
+                            } else if (costDukaty !== null) {
+                                currencyType = 'dukaty';
+                            } else if (costKrysztaly !== null) {
+                                currencyType = 'krysztaly';
+                            } else {
+                                alert('Błąd: Przedmiot nie ma ustalonej ceny.');
+                                return;
+                            }
 
+                            // Pokaż modal potwierdzenia
+                            const modal = document.getElementById('confirmationModal');
+                            const modalTitle = document.getElementById('modalTitle'); // Dodano pobieranie modalTitle
+                            const modalMessage = document.getElementById('modalMessage');
+                            const confirmBtn = document.getElementById('confirmButton');
+                            const cancelBtn = document.getElementById('cancelButton');
 
-                            tableHTML += `
-                                <tr>
-                                    <td class="rank-position">${index + 1}</td>
-                                    <td class="flex items-center">
-                                        <img src="${avatarUrl}" alt="Avatar gracza ${entry.username}" class="rank-avatar" onerror="this.onerror=null;this.src='https://placehold.co/40x40/1E293B/E2E8F0?text=${entry.username.charAt(0)}';">
-                                        <span class="font-medium text-primary">${entry.username}</span>
-                                    </td>
-                                    <td class="font-semibold text-accent">${score}</td>
-                                </tr>`;
+                            modalTitle.textContent = `Potwierdzenie Zakupu: ${itemName}`;
+                            modalMessage.textContent = `Czy na pewno chcesz zakupić "${itemName}" za ${cost} ${currencySymbol} ${currencyName}?`;
+                            modal.classList.remove('hidden');
+                            modal.classList.add('flex');
+
+                            const newConfirmBtn = confirmBtn.cloneNode(true);
+                            confirmBtn.parentNode.replaceChild(newConfirmBtn, confirmBtn);
+                            
+                            const newCancelBtn = cancelBtn.cloneNode(true);
+                            cancelBtn.parentNode.replaceChild(newCancelBtn, cancelBtn);
+
+                            newConfirmBtn.addEventListener('click', async () => {
+                                modal.classList.add('hidden');
+                                modal.classList.remove('flex');
+                                statusDiv.innerHTML = '<p class="text-secondary">Przetwarzanie zakupu...</p>';
+                                try {
+                                    const purchaseResponse = await fetch(`/api/web/shop/buy/${itemId}`, {
+                                        method: 'POST',
+                                        headers: { 'Content-Type': 'application/json' },
+                                        body: JSON.stringify({ currency_type: currencyType })
+                                    });
+                                    const result = await purchaseResponse.json();
+                                    if (purchaseResponse.ok && result.message) {
+                                        statusDiv.innerHTML = `<p class="text-green-400">${result.message}</p>`;
+                                        loadShopItems(); // Odśwież listę, aby zaktualizować stan magazynowy
+                                        loadUserCurrencyBalance(); // Odśwież saldo użytkownika
+                                    } else {
+                                        statusDiv.innerHTML = `<p class="text-red-400">${result.error || 'Wystąpił błąd podczas zakupu.'}</p>`;
+                                    }
+                                } catch (err) {
+                                    console.error('Błąd zakupu:', err);
+                                    statusDiv.innerHTML = `<p class="text-red-400">Wystąpił błąd sieciowy podczas zakupu.</p>`;
+                                }
+                            });
+                            newCancelBtn.addEventListener('click', () => {
+                                modal.classList.add('hidden');
+                                modal.classList.remove('flex');
+                                statusDiv.innerHTML = '<p class="text-secondary">Zakup anulowany.</p>';
+                            });
                         });
+                    });
 
-                        tableHTML += `
-                                    </tbody>
-                                </table>
-                            </div>`;
-                        rankingContent.innerHTML = tableHTML;
+                    document.querySelectorAll('#shopItemsContainer .reveal').forEach(el => {
+                        setTimeout(() => el.classList.add('visible'), 10);
+                    });
+
+                } else {
+                    container.innerHTML = '<p class="text-center text-secondary col-span-full py-10">Skarbiec jest obecnie pusty. Runa pracuje nad nowymi magicznymi przedmiotami!</p>';
+                }
+            } catch (error) {
+                console.error('Błąd ładowania przedmiotów sklepu:', error);
+                container.innerHTML = `<p class="text-center text-red-400 col-span-full py-10">Wystąpił błąd podczas ładowania przedmiotów. Spróbuj odświeżyć stronę.</p>`;
+            }
+        }
+
+        async function loadUserCurrencyBalance(discordUserId = null) {
+            const balanceElement = document.getElementById('userCurrencyBalance');
+            if (!balanceElement) return;
+
+            if (!discordUserId) {
+                try {
+                    const userResponse = await fetch('/api/me');
+                    if (userResponse.ok) {
+                        const user = await userResponse.json();
+                        discordUserId = user.id;
                     } else {
-                        rankingContent.innerHTML = `<p class="text-center text-secondary py-10">Brak danych do wyświetlenia dla tego rankingu.</p>`;
+                        balanceElement.textContent = 'Zaloguj się, aby zobaczyć saldo.';
+                        return;
                     }
                 } catch (error) {
-                    console.error('Błąd podczas ładowania rankingu:', error);
-                    rankingContent.innerHTML = `<p class="text-center text-red-400 py-10">Wystąpił błąd podczas ładowania danych rankingu. Spróbuj ponownie później.</p>`;
+                    console.error('Błąd pobierania danych użytkownika dla salda:', error);
+                    balanceElement.textContent = 'Błąd ładowania salda.';
+                    return;
                 }
             }
 
-            tabButtons.forEach(button => {
-                button.addEventListener('click', () => {
-                    tabButtons.forEach(btn => btn.classList.remove('active'));
-                    button.classList.add('active');
-                    const tabType = button.dataset.tab;
-                    fetchAndDisplayRanking(tabType);
-                });
-            });
-
-            // Załaduj domyślny ranking (np. XP) przy pierwszym otwarciu strony
-            fetchAndDisplayRanking('xp');
-        }
-
-        // Helper to format duration (copied from profil.html, can be a common utility)
-        function formatDuration(seconds) {
-            if (seconds === null || seconds === undefined) return 'N/A';
-            if (seconds < 0) seconds = 0;
-
-            const days = Math.floor(seconds / (3600 * 24));
-            seconds %= (3600 * 24);
-            const hours = Math.floor(seconds / 3600);
-            seconds %= 3600;
-            const minutes = Math.floor(seconds / 60);
-            const remainingSeconds = seconds % 60;
-
-            let parts = [];
-            if (days > 0) parts.push(`${days}d`);
-            if (hours > 0) parts.push(`${hours}h`);
-            if (minutes > 0) parts.push(`${minutes}m`);
-            if (remainingSeconds > 0 || parts.length === 0) parts.push(`${remainingSeconds}s`);
-
-            return parts.join(' ');
+            try {
+                const statsResponse = await fetch(`/api/bot-stats/${discordUserId}`);
+                if (statsResponse.ok) {
+                    const stats = await statsResponse.json();
+                    balanceElement.textContent = `Twoje Dukaty: ${stats.currency || 0} ✨ | Twoje Kryształy: ${stats.premium_currency || 0} 💠`;
+                } else {
+                    balanceElement.textContent = 'Nie udało się załadować salda.';
+                }
+            } catch (error) {
+                console.error('Błąd ładowania salda walut:', error);
+                balanceElement.textContent = 'Błąd ładowania salda.';
+            }
         }
 
 
@@ -554,13 +627,11 @@
             }
 
             setActiveNavLink();
-            updateAuthDisplay();
+            updateAuthDisplay(); // To wywoła loadUserCurrencyBalance jeśli użytkownik jest zalogowany
             setupMobileMenu();
             setupRevealAnimations();
             setupDropdownDismiss();
-            if (document.getElementById('rankingContent')) { // Upewnij się, że element istnieje
-                setupRankingTabs();
-            }
+            loadShopItems(); // Załaduj przedmioty sklepu
         });
     </script>
 </body>

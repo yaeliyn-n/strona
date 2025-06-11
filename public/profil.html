@@ -119,6 +119,47 @@
         .inventory-item-name { font-size: 0.875rem; font-weight: 500; color: var(--text-primary); }
         .inventory-item-quantity { font-size: 0.75rem; color: var(--text-accent); }
         .loading-spinner { border-color: var(--text-accent) transparent var(--text-accent) transparent; }
+
+        /* Styles for Missions */
+        .mission-card { background-color: var(--bg-secondary); padding: 1rem; border-radius: 0.5rem; border-left: 4px solid var(--border-accent); }
+        .mission-progress-bar { width: 100%; background-color: rgba(var(--rgb-accent), 0.1); border-radius: 9999px; height: 0.5rem; margin-top: 0.5rem; overflow: hidden; }
+        .mission-progress-fill { height: 100%; background-color: var(--text-accent); border-radius: 9999px; transition: width 0.5s ease-in-out; }
+        .mission-status-completed { color: #34D399; } /* green-400 */
+        .mission-status-active { color: #FBBF24; } /* amber-400 */
+        .mission-status-locked { color: #EF4444; } /* red-500 */
+
+        /* Styles for Achievements */
+        .achievement-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 1rem; }
+        .achievement-card { background-color: var(--bg-secondary); border: 1px solid var(--border-card); border-radius: 0.5rem; padding: 1rem; text-align: center; height: 100%; display: flex; flex-direction: column; justify-content: space-between; }
+        .achievement-icon { font-size: 2.5rem; margin-bottom: 0.5rem; }
+        .achievement-title { font-weight: 600; color: var(--text-primary); font-size: 0.95rem; line-height: 1.2; }
+        .achievement-description { font-size: 0.75rem; color: var(--text-secondary); margin-top: 0.25rem; flex-grow: 1; }
+        .achievement-date { font-size: 0.65rem; color: var(--text-secondary); margin-top: 0.5rem; }
+        .achievement-unlocked { border-color: #34D399; } /* Green border for unlocked */
+        .achievement-locked { border-color: #EF4444; opacity: 0.6; } /* Red border for locked, slightly faded */
+
+        /* Styles for Warnings */
+        .warnings-list {
+            background-color: var(--bg-card);
+            border-radius: 0.5rem;
+            padding: 1.5rem;
+        }
+        .warning-item {
+            border-bottom: 1px solid var(--border-card);
+            padding: 0.75rem 0;
+        }
+        .warning-item:last-child {
+            border-bottom: none;
+        }
+        .warning-reason {
+            font-size: 0.9rem;
+            color: var(--text-primary);
+        }
+        .warning-details {
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+            margin-top: 0.25rem;
+        }
     </style>
 </head>
 <body class="antialiased">
@@ -180,7 +221,7 @@
                     <div id="statsLoadingError" class="hidden text-red-400 bg-red-900/50 p-3 rounded-md mt-4"></div>
                 </div>
 
-                <div>
+                <div class="mb-12">
                     <h2 class="text-2xl sm:text-3xl font-semibold text-primary mb-6 text-center sm:text-left">Twój <span class="text-accent">Ekwipunek</span></h2>
                     <div id="inventoryContainer" class="inventory-grid">
                         <div class="text-center py-6 col-span-full">
@@ -189,6 +230,39 @@
                         </div>
                     </div>
                     <div id="inventoryLoadingError" class="hidden text-red-400 bg-red-900/50 p-3 rounded-md mt-4"></div>
+                </div>
+
+                <div class="mb-12">
+                    <h2 class="text-2xl sm:text-3xl font-semibold text-primary mb-6 text-center sm:text-left">Twoje <span class="text-accent">Misje</span></h2>
+                    <div id="missionsContainer" class="space-y-4">
+                        <div class="text-center py-6">
+                            <div class="animate-spin rounded-full h-10 w-10 border-t-2 border-b-2 loading-spinner mx-auto mb-2"></div>
+                            <p class="text-secondary">Ładowanie misji...</p>
+                        </div>
+                    </div>
+                    <div id="missionsLoadingError" class="hidden text-red-400 bg-red-900/50 p-3 rounded-md mt-4"></div>
+                </div>
+
+                <div class="mb-12">
+                    <h2 class="text-2xl sm:text-3xl font-semibold text-primary mb-6 text-center sm:text-left">Twoje <span class="text-accent">Osiągnięcia</span></h2>
+                    <div id="achievementsContainer" class="achievement-grid">
+                        <div class="text-center py-6 col-span-full">
+                            <div class="animate-spin rounded-full h-10 w-10 border-t-2 border-b-2 loading-spinner mx-auto mb-2"></div>
+                            <p class="text-secondary">Ładowanie osiągnięć...</p>
+                        </div>
+                    </div>
+                    <div id="achievementsLoadingError" class="hidden text-red-400 bg-red-900/50 p-3 rounded-md mt-4"></div>
+                </div>
+
+                <div class="mb-12">
+                    <h2 class="text-2xl sm:text-3xl font-semibold text-primary mb-6 text-center sm:text-left">Twoje <span class="text-accent">Ostrzeżenia</span></h2>
+                    <div id="warningsContainer" class="warnings-list">
+                        <div class="text-center py-6">
+                            <div class="animate-spin rounded-full h-10 w-10 border-t-2 border-b-2 loading-spinner mx-auto mb-2"></div>
+                            <p class="text-secondary">Ładowanie ostrzeżeń...</p>
+                        </div>
+                    </div>
+                    <div id="warningsLoadingError" class="hidden text-red-400 bg-red-900/50 p-3 rounded-md mt-4"></div>
                 </div>
             </div>
         </section>
@@ -243,7 +317,7 @@
             const authSectionNav = document.getElementById('auth-section-nav');
             const authSectionMobileNav = document.getElementById('auth-section-mobile-nav');
             const mobileMenuLinksContainer = document.querySelector('#mobileMenu > div'); 
-            const ADMIN_DISCORD_ID = "1238814802357387285"; // Przykładowe ID admina
+            const ADMIN_DISCORD_ID = "1238814802357387285"; // TODO: ZASTĄP RZECZYWISTYM ID ADMINA
 
             function createLoginButton(isMobile = false) {
                 const loginButton = document.createElement('a');
@@ -357,6 +431,26 @@
                     if (user && user.id) {
                         loadUserStats(user.id);
                         loadUserInventory(user.id);
+                        
+                        // Użyj tutaj RZECZYWISTEGO ID swojego serwera Discord
+                        const GUILD_ID = "1375477258172502086"; 
+                        
+                        // Sprawdzenie, czy GUILD_ID jest poprawnie ustawione
+                        if (!GUILD_ID || !/^\d+$/.test(GUILD_ID)) {
+                            document.getElementById('missionsLoadingError').innerHTML = '<p class="text-center text-red-400 py-6">Błąd konfiguracji: ID serwera (GUILD_ID) jest nieprawidłowe. Upewnij się, że jest ustawione w kodzie profil.html.</p>';
+                            document.getElementById('missionsLoadingError').classList.remove('hidden');
+                            document.getElementById('achievementsLoadingError').innerHTML = '<p class="text-center text-red-400 col-span-full py-6">Błąd konfiguracji: ID serwera (GUILD_ID) jest nieprawidłowe. Upewnij się, że jest ustawione w kodzie profil.html.</p>';
+                            document.getElementById('achievementsLoadingError').classList.remove('hidden');
+                            document.getElementById('warningsLoadingError').innerHTML = '<p class="text-center text-red-400 py-6">Błąd konfiguracji: ID serwera (GUILD_ID) jest nieprawidłowe. Upewnij się, że jest ustawione w kodzie profil.html.</p>';
+                            document.getElementById('warningsLoadingError').classList.remove('hidden');
+                            console.error("Błąd: GUILD_ID jest nieprawidłowe. Sprawdź profil.html.");
+                        } else {
+                            console.log(`Ładowanie danych dla użytkownika ${user.id} na serwerze ${GUILD_ID}`);
+                            loadUserMissions(user.id, GUILD_ID); 
+                            loadUserAchievements(user.id, GUILD_ID); 
+                            loadUserWarnings(user.id, GUILD_ID); 
+                        }
+
                         document.getElementById('profileUsername').textContent = user.username || 'Brak nazwy użytkownika';
                         document.getElementById('profileEmail').textContent = user.email || 'Brak adresu email';
                         const largeAvatar = document.getElementById('profileAvatarLarge');
@@ -385,6 +479,9 @@
                     document.getElementById('profileEmail').textContent = 'Zaloguj się, aby zobaczyć swój profil.';
                     document.getElementById('statsContainer').innerHTML = '<p class="text-center text-secondary col-span-full py-6">Zaloguj się, aby zobaczyć swoje statystyki.</p>';
                     document.getElementById('inventoryContainer').innerHTML = '<p class="text-center text-secondary col-span-full py-6">Zaloguj się, aby zobaczyć swój ekwipunek.</p>';
+                    document.getElementById('missionsContainer').innerHTML = '<p class="text-center text-secondary py-6">Zaloguj się, aby zobaczyć swoje misje.</p>';
+                    document.getElementById('achievementsContainer').innerHTML = '<p class="text-center text-secondary col-span-full py-6">Zaloguj się, aby zobaczyć swoje osiągnięcia.</p>';
+                    document.getElementById('warningsContainer').innerHTML = '<p class="text-center text-secondary py-6">Zaloguj się, aby zobaczyć swoje ostrzeżenia.</p>'; 
                 }
             } catch (error) {
                 console.error('Błąd aktualizacji UI logowania:', error);
@@ -420,31 +517,44 @@
             try {
                 const response = await fetch(`/api/bot-stats/${discordUserId}`);
                 if (!response.ok) {
-                    throw new Error(`Błąd serwera: ${response.status}`);
+                    const errorData = await response.json().catch(() => ({error: 'Nieznany błąd serwera'}));
+                    throw new Error(`Błąd serwera: ${response.status} - ${errorData.error || response.statusText}`);
                 }
                 const stats = await response.json();
 
                 if (stats && !stats.error) {
                     statsContainer.innerHTML = `
                         <div class="stat-card reveal">
-                            <span class="stat-value">${stats.xp_total || 0}</span>
+                            <span class="stat-value">${stats.xp || 0}</span>
                             <span class="stat-label">Punktów Doświadczenia</span>
                         </div>
+                        <div class="stat-card reveal" style="transition-delay: 0.05s;">
+                            <span class="stat-value">${stats.level || 0}</span>
+                            <span class="stat-label">Poziom</span>
+                        </div>
                         <div class="stat-card reveal" style="transition-delay: 0.1s;">
-                            <span class="stat-value">${stats.currency_total || 0}</span>
+                            <span class="stat-value">${stats.currency || 0}</span>
                             <span class="stat-label">Gwiezdnych Dukatów</span>
                         </div>
-                        <div class="stat-card reveal" style="transition-delay: 0.2s;">
-                            <span class="stat-value">${stats.premium_currency_total || 0}</span>
+                        <div class="stat-card reveal" style="transition-delay: 0.15s;">
+                            <span class="stat-value">${stats.premium_currency || 0}</span>
                             <span class="stat-label">Kryształów Elary</span>
                         </div>
-                        <div class="stat-card reveal" style="transition-delay: 0.3s;">
+                        <div class="stat-card reveal" style="transition-delay: 0.2s;">
                             <span class="stat-value">${stats.message_count || 0}</span>
                             <span class="stat-label">Wysłanych Wiadomości</span>
                         </div>
-                        <div class="stat-card reveal" style="transition-delay: 0.4s;">
-                            <span class="stat-value">${(stats.voice_time_total / 60 || 0).toFixed(0)}</span>
-                            <span class="stat-label">Minut na Kanałach Głosowych</span>
+                        <div class="stat-card reveal" style="transition-delay: 0.25s;">
+                            <span class="stat-value">${(stats.voice_time_seconds / 60 || 0).toFixed(0)}</span>
+                            <span class="stat-label">Minut na Głosowych</span>
+                        </div>
+                        <div class="stat-card reveal" style="transition-delay: 0.3s;">
+                            <span class="stat-value">${stats.current_streak_days || 0}</span>
+                            <span class="stat-label">Dni Streaka</span>
+                        </div>
+                        <div class="stat-card reveal" style="transition-delay: 0.35s;">
+                            <span class="stat-value">${stats.reaction_count || 0}</span>
+                            <span class="stat-label">Dodanych Reakcji</span>
                         </div>
                     `;
                      // Ponownie zainicjuj animacje dla nowo dodanych elementów
@@ -458,7 +568,7 @@
                 }
             } catch (error) {
                 console.error('Błąd ładowania statystyk użytkownika:', error);
-                statsErrorContainer.textContent = 'Nie udało się załadować statystyk. Spróbuj odświeżyć stronę.';
+                statsErrorContainer.textContent = `Nie udało się załadować statystyk. ${error.message}. Spróbuj odświeżyć stronę.`;
                 statsErrorContainer.classList.remove('hidden');
                 statsContainer.innerHTML = `<p class="text-center text-red-400 col-span-full py-6">Błąd ładowania statystyk.</p>`;
             }
@@ -477,18 +587,24 @@
             try {
                 const response = await fetch(`/api/bot-inventory/${discordUserId}`);
                 if (!response.ok) {
-                    throw new Error(`Błąd serwera: ${response.status}`);
+                    const errorData = await response.json().catch(() => ({error: 'Nieznany błąd serwera'}));
+                    throw new Error(`Błąd serwera: ${response.status} - ${errorData.error || response.statusText}`);
                 }
                 const inventory = await response.json();
 
                 if (inventory && inventory.length > 0) {
-                    inventoryContainer.innerHTML = inventory.map((item, index) => `
-                        <div class="inventory-item reveal" style="transition-delay: ${index * 0.05}s;">
-                            <img src="${item.icon_url || 'https://placehold.co/64x64/1E293B/A78BFA?text=?'}" alt="${item.name}" onerror="this.onerror=null;this.src='https://placehold.co/64x64/1E293B/A78BFA?text=?';">
-                            <p class="inventory-item-name">${item.name}</p>
-                            <p class="inventory-item-quantity">Ilość: ${item.quantity}</p>
-                        </div>
-                    `).join('');
+                    inventoryContainer.innerHTML = inventory.map((item, index) => {
+                        const remainingTime = item.expiration_timestamp ? Math.max(0, item.expiration_timestamp - Math.floor(Date.now() / 1000)) : null;
+                        const timeString = remainingTime !== null ? formatDuration(remainingTime) : 'Stały';
+                        return `
+                            <div class="inventory-item reveal" style="transition-delay: ${index * 0.05}s;">
+                                <img src="${item.emoji || 'https://placehold.co/64x64/1E293B/A78BFA?text=?'}" alt="${item.name}" onerror="this.onerror=null;this.src='https://placehold.co/64x64/1E293B/A78BFA?text=?';">
+                                <p class="inventory-item-name">${item.name}</p>
+                                <p class="inventory-item-quantity">Typ: ${item.type}</p>
+                                <p class="inventory-item-quantity">Trwanie: ${timeString}</p>
+                            </div>
+                        `;
+                    }).join('');
                     // Ponownie zainicjuj animacje dla nowo dodanych elementów
                      document.querySelectorAll('#inventoryContainer .reveal').forEach(el => {
                         setTimeout(() => el.classList.add('visible'), 10);
@@ -501,10 +617,251 @@
                 }
             } catch (error) {
                 console.error('Błąd ładowania ekwipunku użytkownika:', error);
-                inventoryErrorContainer.textContent = 'Nie udało się załadować ekwipunku. Spróbuj odświeżyć stronę.';
+                inventoryErrorContainer.textContent = `Nie udało się załadować ekwipunku. ${error.message}. Spróbuj odświeżyć stronę.`;
                 inventoryErrorContainer.classList.remove('hidden');
                 inventoryContainer.innerHTML = `<p class="text-center text-red-400 col-span-full py-6">Błąd ładowania ekwipunku.</p>`;
             }
+        }
+
+        async function loadUserMissions(discordUserId, guildId) {
+            const missionsContainer = document.getElementById('missionsContainer');
+            const missionsErrorContainer = document.getElementById('missionsLoadingError');
+            missionsContainer.innerHTML = `
+                <div class="text-center py-6">
+                    <div class="animate-spin rounded-full h-10 w-10 border-t-2 border-b-2 loading-spinner mx-auto mb-2"></div>
+                    <p class="text-secondary">Ładowanie misji...</p>
+                </div>`;
+            missionsErrorContainer.classList.add('hidden');
+
+            if (!guildId || !/^\d+$/.test(guildId)) {
+                missionsContainer.innerHTML = '<p class="text-center text-red-400 py-6">Błąd: ID serwera do pobrania misji jest nieprawidłowe. Upewnij się, że ID serwera jest ustawione w kodzie profil.html.</p>';
+                console.error("Błąd: GUILD_ID jest nieprawidłowe dla misji. Sprawdź profil.html.");
+                return;
+            }
+
+            try {
+                // Ładowanie aktywnych misji
+                const activeMissionsResponse = await fetch(`/api/missions/progress/${guildId}/${discordUserId}`);
+                console.log(`Odpowiedź API dla aktywnych misji (status ${activeMissionsResponse.status}):`, await activeMissionsResponse.clone().text());
+                if (!activeMissionsResponse.ok) {
+                    const errorData = await activeMissionsResponse.json().catch(() => ({error: 'Nieznany błąd serwera'}));
+                    throw new Error(`Błąd serwera (aktywne misje): ${activeMissionsResponse.status} - ${errorData.error || activeMissionsResponse.statusText}`);
+                }
+                const activeMissionsData = await activeMissionsResponse.json();
+
+                // Ładowanie ukończonych misji
+                const completedMissionsResponse = await fetch(`/api/missions/completed/${guildId}/${discordUserId}`);
+                console.log(`Odpowiedź API dla ukończonych misji (status ${completedMissionsResponse.status}):`, await completedMissionsResponse.clone().text());
+                if (!completedMissionsResponse.ok) {
+                    const errorData = await completedMissionsResponse.json().catch(() => ({error: 'Nieznany błąd serwera'}));
+                    throw new Error(`Błąd serwera (ukończone misje): ${completedMissionsResponse.status} - ${errorData.error || completedMissionsResponse.statusText}`);
+                }
+                const completedMissionsData = await completedMissionsResponse.json();
+
+                let missionsHtml = '';
+
+                // Wyświetlanie aktywnych misji
+                if (activeMissionsData && activeMissionsData.missions_progress && activeMissionsData.missions_progress.length > 0) {
+                    missionsHtml += '<h3 class="text-xl font-semibold text-primary mb-4">Aktywne Misje</h3>';
+                    missionsHtml += activeMissionsData.missions_progress.map((mission, index) => {
+                        const progress = mission.warunki_postep[0]; // Assuming one condition per mission for simplicity
+                        const current = progress.aktualna_wartosc;
+                        const required = progress.wymagana_wartosc;
+                        const percentage = required > 0 ? (current / required) * 100 : 100;
+                        const statusClass = mission.status === 'ukonczona_w_cyklu' || mission.status === 'ukonczona_jednorazowa' ? 'mission-status-completed' : 'mission-status-active';
+                        const statusText = mission.status === 'ukonczona_w_cyklu' ? 'Ukończono (w tym cyklu)' : (mission.status === 'ukonczona_jednorazowa' ? 'Ukończono' : 'Aktywna');
+
+                        return `
+                            <div class="mission-card reveal ${statusClass}" style="transition-delay: ${index * 0.05}s;">
+                                <div class="flex justify-between items-center mb-2">
+                                    <h4 class="text-lg font-semibold text-primary">${mission.ikona} ${mission.nazwa}</h4>
+                                    <span class="text-xs font-medium ${statusClass}">${statusText}</span>
+                                </div>
+                                <p class="text-sm text-secondary mb-2">${mission.opis}</p>
+                                <div class="text-xs text-secondary mb-1">Postęp: ${current}/${required}</div>
+                                <div class="mission-progress-bar">
+                                    <div class="mission-progress-fill" style="width: ${percentage}%;"></div>
+                                </div>
+                                <div class="text-xs text-secondary mt-1">Nagrody: ${Object.entries(mission.nagrody).map(([key, val]) => `${val} ${key.replace('_', ' ')}`).join(', ')}</div>
+                            </div>
+                        `;
+                    }).join('');
+                } else {
+                    missionsHtml += '<p class="text-center text-secondary py-6">Brak aktywnych misji.</p>';
+                }
+
+                // Wyświetlanie ukończonych misji
+                if (completedMissionsData && completedMissionsData.completed_missions && completedMissionsData.completed_missions.length > 0) {
+                    missionsHtml += '<h3 class="text-xl font-semibold text-primary mt-8 mb-4">Ukończone Misje</h3>';
+                    missionsHtml += completedMissionsData.completed_missions.map((mission, index) => {
+                        const completedDate = mission.completed_at_utc ? new Date(mission.completed_at_utc).toLocaleDateString('pl-PL') : 'Brak daty';
+                        return `
+                            <div class="mission-card reveal mission-status-completed" style="transition-delay: ${index * 0.05}s;">
+                                <div class="flex justify-between items-center mb-2">
+                                    <h4 class="text-lg font-semibold text-primary">${mission.icon} ${mission.name}</h4>
+                                    <span class="text-xs font-medium mission-status-completed">Ukończono</span>
+                                </div>
+                                <p class="text-sm text-secondary mb-2">${mission.description}</p>
+                                <div class="text-xs text-secondary mt-1">Ukończono: ${completedDate}</div>
+                            </div>
+                        `;
+                    }).join('');
+                } else {
+                    missionsHtml += '<p class="text-center text-secondary py-6">Brak ukończonych misji.</p>';
+                }
+
+                missionsContainer.innerHTML = missionsHtml;
+                document.querySelectorAll('#missionsContainer .reveal').forEach(el => {
+                    setTimeout(() => el.classList.add('visible'), 10);
+                });
+
+            } catch (error) {
+                console.error('Błąd ładowania misji użytkownika:', error);
+                missionsErrorContainer.textContent = `Nie udało się załadować misji. ${error.message}. Spróbuj odświeżyć stronę.`;
+                missionsErrorContainer.classList.remove('hidden');
+                missionsContainer.innerHTML = `<p class="text-center text-red-400 py-6">Błąd ładowania misji.</p>`;
+            }
+        }
+
+        async function loadUserAchievements(discordUserId, guildId) {
+            const achievementsContainer = document.getElementById('achievementsContainer');
+            const achievementsErrorContainer = document.getElementById('achievementsLoadingError');
+            achievementsContainer.innerHTML = `
+                <div class="text-center py-6 col-span-full">
+                    <div class="animate-spin rounded-full h-10 w-10 border-t-2 border-b-2 loading-spinner mx-auto mb-2"></div>
+                    <p class="text-secondary">Ładowanie osiągnięć...</p>
+                </div>`;
+            achievementsErrorContainer.classList.add('hidden');
+
+            if (!guildId || !/^\d+$/.test(guildId)) {
+                achievementsContainer.innerHTML = '<p class="text-center text-red-400 col-span-full py-6">Błąd: ID serwera do pobrania osiągnięć jest nieprawidłowe. Upewnij się, że ID serwera jest ustawione w kodzie profil.html.</p>';
+                console.error("Błąd: GUILD_ID jest nieprawidłowe dla osiągnięć. Sprawdź profil.html.");
+                return;
+            }
+
+            try {
+                const response = await fetch(`/api/user_achievements/${guildId}/${discordUserId}`); 
+                console.log(`Odpowiedź API dla osiągnięć (status ${response.status}):`, await response.clone().text());
+                if (!response.ok) {
+                    const errorData = await response.json().catch(() => ({error: 'Nieznany błąd serwera'}));
+                    throw new Error(`Błąd serwera: ${response.status} - ${errorData.error || response.statusText}`);
+                }
+                const data = await response.json();
+
+                if (data && data.achievements && data.achievements.length > 0) {
+                    achievementsContainer.innerHTML = data.achievements.map((ach, index) => {
+                        const isUnlocked = ach.unlocked;
+                        const cardClass = isUnlocked ? 'achievement-unlocked' : 'achievement-locked';
+                        const dateText = isUnlocked && ach.unlocked_at ? new Date(ach.unlocked_at).toLocaleDateString('pl-PL') : 'Zablokowane';
+                        
+                        // Obliczanie postępu
+                        let progressText = '';
+                        if (!isUnlocked && ach.progress !== null && ach.required_value !== null && !ach.hidden) {
+                            progressText = `Postęp: ${ach.progress}/${ach.required_value}`;
+                        } else if (!isUnlocked && ach.hidden) {
+                            progressText = 'Ukryte osiągnięcie';
+                        }
+
+
+                        return `
+                            <div class="achievement-card reveal ${cardClass}" style="transition-delay: ${index * 0.05}s;">
+                                <div class="text-center">
+                                    <div class="achievement-icon">${ach.icon}</div>
+                                    <h3 class="achievement-title">${ach.name}</h3>
+                                    <p class="achievement-description">${ach.description}</p>
+                                </div>
+                                <p class="achievement-date">${dateText}</p>
+                                ${progressText ? `<p class="text-xs text-secondary mt-1">${progressText}</p>` : ''}
+                            </div>
+                        `;
+                    }).join('');
+                    document.querySelectorAll('#achievementsContainer .reveal').forEach(el => {
+                        setTimeout(() => el.classList.add('visible'), 10);
+                    });
+                } else if (data && data.achievements && data.achievements.length === 0) {
+                    achievementsContainer.innerHTML = '<p class="text-center text-secondary col-span-full py-6">Brak zdobytych osiągnięć.</p>';
+                } else {
+                    achievementsContainer.innerHTML = `<p class="text-center text-secondary col-span-full py-6">${data.error || 'Nie udało się załadować osiągnięć.'}</p>`;
+                }
+            } catch (error) {
+                console.error('Błąd ładowania osiągnięć użytkownika:', error);
+                achievementsErrorContainer.textContent = `Nie udało się załadować osiągnięć. ${error.message}. Spróbuj odświeżyć stronę.`;
+                achievementsErrorContainer.classList.remove('hidden');
+                achievementsContainer.innerHTML = `<p class="text-center text-red-400 col-span-full py-6">Błąd ładowania osiągnięć.</p>`;
+            }
+        }
+
+        async function loadUserWarnings(discordUserId, guildId) {
+            const warningsContainer = document.getElementById('warningsContainer');
+            const warningsErrorContainer = document.getElementById('warningsLoadingError');
+            warningsContainer.innerHTML = `
+                <div class="text-center py-6">
+                    <div class="animate-spin rounded-full h-10 w-10 border-t-2 border-b-2 loading-spinner mx-auto mb-2"></div>
+                    <p class="text-secondary">Ładowanie ostrzeżeń...</p>
+                </div>`;
+            warningsErrorContainer.classList.add('hidden');
+
+            if (!guildId || !/^\d+$/.test(guildId)) {
+                warningsContainer.innerHTML = '<p class="text-center text-red-400 py-6">Błąd: ID serwera do pobrania ostrzeżeń jest nieprawidłowe. Upewnij się, że ID serwera jest ustawione w kodzie profil.html.</p>';
+                console.error("Błąd: GUILD_ID jest nieprawidłowe dla ostrzeżeń. Sprawdź profil.html.");
+                return;
+            }
+
+            try {
+                const response = await fetch(`/api/warnings/list/${guildId}/${discordUserId}`);
+                console.log(`Odpowiedź API dla ostrzeżeń (status ${response.status}):`, await response.clone().text());
+                if (!response.ok) {
+                    const errorData = await response.json().catch(() => ({error: 'Nieznany błąd serwera'}));
+                    throw new Error(`Błąd serwera: ${response.status} - ${errorData.error || response.statusText}`);
+                }
+                const data = await response.json();
+
+                if (data && data.warnings && data.warnings.length > 0) {
+                    warningsContainer.innerHTML = data.warnings.map((warning, index) => {
+                        const warnDate = warning.created_at_utc ? new Date(warning.created_at_utc).toLocaleDateString('pl-PL', { year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit' }) : 'Brak daty';
+                        return `
+                            <div class="warning-item reveal" style="transition-delay: ${index * 0.05}s;">
+                                <p class="warning-reason"><strong>Powód:</strong> ${warning.reason}</p>
+                                <p class="warning-details">Przez: ${warning.moderator_username} (ID: ${warning.moderator_id}) | Data: ${warnDate}</p>
+                            </div>
+                        `;
+                    }).join('');
+                    document.querySelectorAll('#warningsContainer .reveal').forEach(el => {
+                        setTimeout(() => el.classList.add('visible'), 10);
+                    });
+                } else if (data && data.warnings && data.warnings.length === 0) {
+                    warningsContainer.innerHTML = '<p class="text-center text-secondary py-6">Brak ostrzeżeń dla tego użytkownika.</p>';
+                } else {
+                    warningsContainer.innerHTML = `<p class="text-center text-secondary py-6">${data.error || 'Nie udało się załadować ostrzeżeń.'}</p>`;
+                }
+            } catch (error) {
+                console.error('Błąd ładowania ostrzeżeń użytkownika:', error);
+                warningsErrorContainer.textContent = `Nie udało się załadować ostrzeżeń. ${error.message}. Spróbuj odświeżyć stronę.`;
+                warningsErrorContainer.classList.remove('hidden');
+                warningsContainer.innerHTML = `<p class="text-center text-red-400 py-6">Błąd ładowania ostrzeżeń.</p>`;
+            }
+        }
+
+
+        // Helper to format duration
+        function formatDuration(seconds) {
+            if (seconds === null || seconds === undefined) return 'N/A';
+            if (seconds < 0) seconds = 0;
+
+            const days = Math.floor(seconds / (3600 * 24));
+            seconds %= (3600 * 24);
+            const hours = Math.floor(seconds / 3600);
+            seconds %= 3600;
+            const minutes = Math.floor(seconds / 60);
+            const remainingSeconds = seconds % 60;
+
+            let parts = [];
+            if (days > 0) parts.push(`${days}d`);
+            if (hours > 0) parts.push(`${hours}h`);
+            if (minutes > 0) parts.push(`${minutes}m`);
+            if (remainingSeconds > 0 || parts.length === 0) parts.push(`${remainingSeconds}s`);
+
+            return parts.join(' ');
         }
 
 

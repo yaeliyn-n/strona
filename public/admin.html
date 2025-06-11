@@ -119,7 +119,7 @@
             color: var(--text-accent); 
         }
         .dropdown-menu form { margin: 0; }
-
+        /* Style for text input, select, and textarea */
         .form-input, .form-select, .form-textarea {
             background-color: var(--bg-secondary);
             border: 1px solid var(--border-card);
@@ -161,12 +161,12 @@
             transform: translateY(-2px); 
             box-shadow: 0 6px 12px -3px var(--shadow-color);
         }
-        .btn-success { background-color: var(--btn-success-bg); color: white; }
-        .btn-success:hover { background-color: var(--btn-success-hover-bg); transform: translateY(-2px); box-shadow: 0 8px 15px -3px rgba(34,197,94,0.4); }
-        .btn-danger { background-color: var(--btn-danger-bg); color: white; }
-        .btn-danger:hover { background-color: var(--btn-danger-hover-bg); transform: translateY(-2px); box-shadow: 0 8px 15px -3px rgba(239,68,68,0.4); }
-        .btn-discord { background-color: var(--btn-discord-bg); color: white; }
-        .btn-discord:hover { background-color: var(--btn-discord-hover-bg); transform: translateY(-2px); box-shadow: 0 8px 15px -3px rgba(88,101,242,0.4); }
+        .btn-success { background-color: #22C55E; color: white; }
+        .btn-success:hover { background-color: #16A34A; transform: translateY(-2px); box-shadow: 0 8px 15px -3px rgba(34,197,94,0.4); }
+        .btn-danger { background-color: #EF4444; color: white; }
+        .btn-danger:hover { background-color: #DC2626; transform: translateY(-2px); box-shadow: 0 8px 15px -3px rgba(239,68,68,0.4); }
+        .btn-discord { background-color: #5865F2; color: white; }
+        .btn-discord:hover { background-color: #4752C4; transform: translateY(-2px); box-shadow: 0 8px 15px -3px rgba(88,101,242,0.4); }
 
 
         #adminMessage { 
@@ -272,6 +272,8 @@
                 <button data-tab="contentManagement" class="tab-button block w-full text-left py-2.5 px-3 text-base font-medium">Zarządzanie Treścią</button>
                 <button data-tab="supportManagement" class="tab-button block w-full text-left py-2.5 px-3 text-base font-medium">Zarządzanie Wsparciem</button>
                 <button data-tab="shopManagement" class="tab-button block w-full text-left py-2.5 px-3 text-base font-medium">Zarządzanie Sklepem</button>
+                <button data-tab="warningsManagement" class="tab-button block w-full text-left py-2.5 px-3 text-base font-medium">Zarządzanie Ostrzeżeniami</button>
+                <button data-tab="botConfigManagement" class="tab-button block w-full text-left py-2.5 px-3 text-base font-medium">Konfiguracja Bota</button>
                 <a href="index.html" class="block py-2.5 px-3 nav-link text-base font-medium">Strona Główna Serwisu</a>
             </div>
         </div>
@@ -284,6 +286,8 @@
                     <button data-tab="contentManagement" class="tab-button active">Zarządzanie Treścią</button>
                     <button data-tab="supportManagement" class="tab-button">Zarządzanie Wsparciem</button>
                     <button data-tab="shopManagement" class="tab-button">Zarządzanie Sklepem</button>
+                    <button data-tab="warningsManagement" class="tab-button">Zarządzanie Ostrzeżeniami</button>
+                    <button data-tab="botConfigManagement" class="tab-button">Konfiguracja Bota</button>
                 </nav>
             </div>
 
@@ -344,14 +348,18 @@
                     <h2 class="text-2xl font-semibold text-accent mb-6">Dodaj / Edytuj Przedmiot w Sklepie</h2>
                     <form id="shopItemForm" class="space-y-6">
                         <input type="hidden" id="editShopItemId">
+                        <div>
+                            <label for="shopItemId" class="form-label">ID Przedmiotu (unikalne, np. "xp_boost_1h"):</label>
+                            <input type="text" id="shopItemId" name="id" class="form-input" required>
+                        </div>
                         <div class="grid md:grid-cols-2 gap-6">
                             <div>
                                 <label for="shopItemName" class="form-label">Nazwa przedmiotu:</label>
                                 <input type="text" id="shopItemName" name="name" class="form-input" required>
                             </div>
                             <div>
-                                <label for="shopItemPrice" class="form-label">Cena (Gwiezdne Dukaty ✨):</label>
-                                <input type="number" id="shopItemPrice" name="price" class="form-input" required min="0">
+                                <label for="shopItemEmoji" class="form-label">Ikona (Emoji lub URL):</label>
+                                <input type="text" id="shopItemEmoji" name="emoji" class="form-input" placeholder="np. ✨ lub URL do obrazka">
                             </div>
                         </div>
                         <div>
@@ -360,15 +368,35 @@
                         </div>
                         <div class="grid md:grid-cols-2 gap-6">
                             <div>
-                                <label for="shopItemIcon" class="form-label">Ikona (Emoji lub URL):</label>
-                                <input type="text" id="shopItemIcon" name="icon" class="form-input" placeholder="np. ✨ lub URL do obrazka">
+                                <label for="shopItemCostDukaty" class="form-label">Koszt (Gwiezdne Dukaty ✨, opcjonalnie):</label>
+                                <input type="number" id="shopItemCostDukaty" name="cost_dukaty" class="form-input" min="0">
                             </div>
                             <div>
-                                <label for="shopItemType" class="form-label">Typ przedmiotu:</label>
-                                <input type="text" id="shopItemType" name="type" class="form-input" placeholder="np. cosmetic_role, xp_boost">
+                                <label for="shopItemCostKrysztaly" class="form-label">Koszt (Kryształy Elary 💠, opcjonalnie):</label>
+                                <input type="number" id="shopItemCostKrysztaly" name="cost_krysztaly" class="form-input" min="0">
                             </div>
                         </div>
-                         <div>
+                        <div class="grid md:grid-cols-2 gap-6">
+                            <div>
+                                <label for="shopItemType" class="form-label">Typ przedmiotu (np. "xp_mnoznik", "timed_role"):</label>
+                                <input type="text" id="shopItemType" name="item_type" class="form-input" required>
+                            </div>
+                            <div>
+                                <label for="shopItemBonusValue" class="form-label">Wartość bonusu (np. 0.25 dla 25% XP, 0 dla kosmetycznych):</label>
+                                <input type="number" step="0.01" id="shopItemBonusValue" name="bonus_value" class="form-input">
+                            </div>
+                        </div>
+                        <div class="grid md:grid-cols-2 gap-6">
+                            <div>
+                                <label for="shopItemDurationSeconds" class="form-label">Czas trwania (sekundy, 0 lub puste dla stałych):</label>
+                                <input type="number" id="shopItemDurationSeconds" name="duration_seconds" class="form-input" min="0">
+                            </div>
+                            <div>
+                                <label for="shopItemRoleIdToGrant" class="form-label">ID Roli do nadania (dla "timed_role", opcjonalnie):</label>
+                                <input type="text" id="shopItemRoleIdToGrant" name="role_id_to_grant" class="form-input" placeholder="np. 123456789012345678">
+                            </div>
+                        </div>
+                        <div>
                             <label for="shopItemStock" class="form-label">Ilość w magazynie (opcjonalnie, -1 dla nieskończonej):</label>
                             <input type="number" id="shopItemStock" name="stock" class="form-input" placeholder="-1">
                         </div>
@@ -388,12 +416,12 @@
                                 <tr>
                                     <th class="w-1/12">ID</th>
                                     <th class="w-1/12 text-center">Ikona</th>
-                                    <th class="w-3/12">Nazwa</th>
-                                    <th class="w-1/12 text-right">Cena</th>
-                                    <th class="w-3/12">Opis</th>
-                                    <th class="w-1/12">Typ</th>
+                                    <th class="w-2/12">Nazwa</th>
+                                    <th class="w-1/12 text-right">Koszt ✨</th>
+                                    <th class="w-1/12 text-right">Koszt 💠</th>
+                                    <th class="w-2/12">Typ</th>
                                     <th class="w-1/12 text-center">Magazyn</th>
-                                    <th class="w-1/12">Akcje</th>
+                                    <th class="w-2/12">Akcje</th>
                                 </tr>
                             </thead>
                             <tbody id="shopItemsTableBody">
@@ -403,6 +431,163 @@
                     </div>
                 </div>
             </div>
+
+            <div id="warningsManagement" class="tab-content">
+                <h1 class="text-3xl font-bold text-primary mb-8 text-center">Panel Zarządzania Ostrzeżeniami</h1>
+                <div class="bg-bg-card p-6 sm:p-8 rounded-xl shadow-xl">
+                    <h2 class="text-2xl font-semibold text-accent mb-6">Dodaj Nowe Ostrzeżenie</h2>
+                    <form id="addWarningForm" class="space-y-6">
+                        <div>
+                            <label for="warnUserId" class="form-label">ID Użytkownika (Discord ID):</label>
+                            <input type="text" id="warnUserId" name="user_id" class="form-input" required placeholder="np. 123456789012345678">
+                        </div>
+                        <div>
+                            <label for="warnReason" class="form-label">Powód ostrzeżenia:</label>
+                            <textarea id="warnReason" name="reason" rows="3" class="form-textarea" required placeholder="Krótki, zwięzły powód ostrzeżenia..."></textarea>
+                        </div>
+                        <div class="flex justify-end">
+                            <button type="submit" id="addWarningButton" class="btn btn-danger">
+                                <span class="button-text">Dodaj Ostrzeżenie</span>
+                                <span class="loading-spinner hidden"></span>
+                            </button>
+                        </div>
+                    </form>
+                    <div id="addWarningStatus" class="mt-4 text-center text-sm"></div>
+
+                    <hr class="my-8 border-[var(--border-card)]">
+
+                    <h2 class="text-2xl font-semibold text-accent mb-6">Usuń Ostrzeżenie</h2>
+                    <form id="removeWarningForm" class="space-y-6">
+                        <div>
+                            <label for="removeWarnId" class="form-label">ID Ostrzeżenia do usunięcia:</label>
+                            <input type="number" id="removeWarnId" name="warn_id" class="form-input" required placeholder="ID ostrzeżenia (np. z profilu użytkownika)">
+                        </div>
+                        <div class="flex justify-end">
+                            <button type="submit" id="removeWarningButton" class="btn btn-danger">
+                                <span class="button-text">Usuń Ostrzeżenie</span>
+                                <span class="loading-spinner hidden"></span>
+                            </button>
+                        </div>
+                    </form>
+                    <div id="removeWarningStatus" class="mt-4 text-center text-sm"></div>
+
+                    <hr class="my-8 border-[var(--border-card)]">
+
+                    <h2 class="text-2xl font-semibold text-accent mb-6">Wyszukaj Ostrzeżenia Użytkownika</h2>
+                    <form id="searchWarningsForm" class="space-y-6">
+                        <div>
+                            <label for="searchWarnUserId" class="form-label">ID Użytkownika (Discord ID):</label>
+                            <input type="text" id="searchWarnUserId" class="form-input" required placeholder="np. 123456789012345678">
+                        </div>
+                        <div class="flex justify-end">
+                            <button type="submit" id="searchWarningsButton" class="btn btn-secondary">
+                                <span class="button-text">Wyszukaj Ostrzeżenia</span>
+                                <span class="loading-spinner hidden"></span>
+                            </button>
+                        </div>
+                    </form>
+                    <div id="searchWarningsStatus" class="mt-4 text-center text-sm"></div>
+                    <div id="userWarningsList" class="mt-6">
+                        <table class="shop-item-table">
+                            <thead>
+                                <tr>
+                                    <th class="w-1/12">ID</th>
+                                    <th class="w-2/12">Moderator</th>
+                                    <th class="w-6/12">Powód</th>
+                                    <th class="w-3/12">Data</th>
+                                </tr>
+                            </thead>
+                            <tbody id="userWarningsTableBody">
+                                <tr><td colspan="4" class="text-center py-4 text-secondary">Brak ostrzeżeń do wyświetlenia.</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <div id="botConfigManagement" class="tab-content">
+                <h1 class="text-3xl font-bold text-primary mb-8 text-center">Panel Konfiguracji Bota</h1>
+                <div class="bg-bg-card p-6 sm:p-8 rounded-xl shadow-xl">
+                    <h2 class="text-2xl font-semibold text-accent mb-6">Ustawienia XP</h2>
+                    <form id="xpConfigForm" class="space-y-6">
+                        <div>
+                            <label for="xpBlockedGlobally" class="form-label flex items-center">
+                                <input type="checkbox" id="xpBlockedGlobally" class="mr-2 h-4 w-4 text-accent rounded border-gray-300 focus:ring-accent">
+                                Globalna blokada XP
+                            </label>
+                        </div>
+                        <div>
+                            <label for="xpMultiplierEvent" class="form-label">Mnożnik XP (Event):</label>
+                            <input type="number" step="0.01" id="xpMultiplierEvent" class="form-input" placeholder="np. 1.5 dla 50% więcej XP">
+                        </div>
+                        <div>
+                            <label for="xpEventName" class="form-label">Nazwa Eventu XP (opcjonalnie):</label>
+                            <input type="text" id="xpEventName" class="form-input" placeholder="np. 'Event Letni'">
+                        </div>
+                        <div class="flex justify-end">
+                            <button type="submit" id="saveXpConfigButton" class="btn btn-primary">
+                                <span class="button-text">Zapisz Ustawienia XP</span>
+                                <span class="loading-spinner hidden"></span>
+                            </button>
+                        </div>
+                    </form>
+                    <div id="xpConfigStatus" class="mt-4 text-center text-sm"></div>
+
+                    <hr class="my-8 border-[var(--border-card)]">
+
+                    <h2 class="text-2xl font-semibold text-accent mb-6">Ustawienia Kanałów XP</h2>
+                    <form id="channelXpConfigForm" class="space-y-6">
+                        <div>
+                            <label for="channelIdToConfig" class="form-label">ID Kanału:</label>
+                            <input type="text" id="channelIdToConfig" class="form-input" required placeholder="np. 123456789012345678">
+                        </div>
+                        <div>
+                            <label for="channelXpBlocked" class="form-label flex items-center">
+                                <input type="checkbox" id="channelXpBlocked" class="mr-2 h-4 w-4 text-accent rounded border-gray-300 focus:ring-accent">
+                                Blokada XP dla tego kanału
+                            </label>
+                        </div>
+                        <div>
+                            <label for="channelXpMultiplier" class="form-label">Mnożnik XP dla tego kanału:</label>
+                            <input type="number" step="0.01" id="channelXpMultiplier" class="form-input" placeholder="np. 0.5 (połowa XP), 1.0 (standard)">
+                        </div>
+                        <div class="flex justify-end space-x-3">
+                            <button type="submit" id="saveChannelXpConfigButton" class="btn btn-primary">
+                                <span class="button-text">Zapisz Konfigurację Kanału</span>
+                                <span class="loading-spinner hidden"></span>
+                            </button>
+                            <button type="button" id="removeChannelXpConfigButton" class="btn btn-danger">
+                                <span class="button-text">Usuń Konfigurację Kanału</span>
+                                <span class="loading-spinner hidden"></span>
+                            </button>
+                        </div>
+                    </form>
+                    <div id="channelXpConfigStatus" class="mt-4 text-center text-sm"></div>
+
+                    <hr class="my-8 border-[var(--border-card)]">
+
+                    <h2 class="text-2xl font-semibold text-accent mb-6">Inne Ustawienia</h2>
+                    <form id="otherConfigForm" class="space-y-6">
+                        <div>
+                            <label for="welcomeChannelId" class="form-label">ID Kanału Powitalnego:</label>
+                            <input type="text" id="welcomeChannelId" class="form-input" placeholder="np. 123456789012345678">
+                        </div>
+                        <div>
+                            <label for="defaultRoleId" class="form-label">ID Domyślnej Roli:</label>
+                            <input type="text" id="defaultRoleId" class="form-input" placeholder="np. 123456789012345678">
+                        </div>
+                        <div class="flex justify-end">
+                            <button type="submit" id="saveOtherConfigButton" class="btn btn-primary">
+                                <span class="button-text">Zapisz Inne Ustawienia</span>
+                                <span class="loading-spinner hidden"></span>
+                            </button>
+                        </div>
+                    </form>
+                    <div id="otherConfigStatus" class="mt-4 text-center text-sm"></div>
+
+                </div>
+            </div>
+
             <div id="adminMessage" class="hidden mt-6"></div> </div>
     </main>
 
@@ -433,7 +618,8 @@
             const authSectionMobileNav = document.getElementById('auth-section-mobile-nav');
             const adminPanelContainer = document.getElementById('admin-panel-container'); // Zmieniono na kontener zakładek
             const adminLoginPrompt = document.getElementById('admin-login-prompt');
-            const ADMIN_DISCORD_ID = "1238814802357387285"; 
+            const ADMIN_DISCORD_ID = "1238814802357387285"; // TODO: ZASTĄP RZECZYWISTYM ID ADMINA
+            const GUILD_ID = "1375477258172502086"; // TODO: ZASTĄP RZECZYWISTYM ID GŁÓWNEGO SERWERA
             let localLoggedInUser = null;
 
             function createLoginButton(isMobile = false) {
@@ -508,6 +694,14 @@
                         }
                         await fetchContentKeys(); 
                         await fetchShopItems(); // Załaduj przedmioty sklepu
+                        
+                        // Załaduj konfigurację bota
+                        if (GUILD_ID && /^\d+$/.test(GUILD_ID)) {
+                            await loadBotConfig(GUILD_ID);
+                        } else {
+                            displayAdminMessage('Błąd konfiguracji: ID serwera (GUILD_ID) jest nieprawidłowe. Sprawdź kod admin.html.', 'error');
+                        }
+
                         setActiveTab('contentManagement'); // Domyślna zakładka
                     } else {
                         if (adminPanelContainer) adminPanelContainer.classList.add('hidden');
@@ -590,15 +784,60 @@
         // --- Shop Management Logic ---
         const shopItemForm = document.getElementById('shopItemForm');
         const editShopItemId = document.getElementById('editShopItemId');
+        const shopItemIdInput = document.getElementById('shopItemId'); 
         const shopItemNameInput = document.getElementById('shopItemName');
-        const shopItemPriceInput = document.getElementById('shopItemPrice');
+        const shopItemEmojiInput = document.getElementById('shopItemEmoji'); 
         const shopItemDescriptionInput = document.getElementById('shopItemDescription');
-        const shopItemIconInput = document.getElementById('shopItemIcon');
+        const shopItemCostDukatyInput = document.getElementById('shopItemCostDukaty'); 
+        const shopItemCostKrysztalyInput = document.getElementById('shopItemCostKrysztaly'); 
         const shopItemTypeInput = document.getElementById('shopItemType');
+        const shopItemBonusValueInput = document.getElementById('shopItemBonusValue'); 
+        const shopItemDurationSecondsInput = document.getElementById('shopItemDurationSeconds'); 
+        const shopItemRoleIdToGrantInput = document.getElementById('shopItemRoleIdToGrant'); 
         const shopItemStockInput = document.getElementById('shopItemStock');
         const clearShopItemFormButton = document.getElementById('clearShopItemFormButton');
         const saveShopItemButton = document.getElementById('saveShopItemButton');
         const shopItemsTableBody = document.getElementById('shopItemsTableBody');
+
+        // --- Warnings Management Logic ---
+        const addWarningForm = document.getElementById('addWarningForm');
+        const warnUserIdInput = document.getElementById('warnUserId');
+        const warnReasonInput = document.getElementById('warnReason');
+        const addWarningButton = document.getElementById('addWarningButton');
+        const addWarningStatus = document.getElementById('addWarningStatus');
+
+        const removeWarningForm = document.getElementById('removeWarningForm');
+        const removeWarnIdInput = document.getElementById('removeWarnId');
+        const removeWarningButton = document.getElementById('removeWarningButton');
+        const removeWarningStatus = document.getElementById('removeWarningStatus');
+
+        const searchWarningsForm = document.getElementById('searchWarningsForm');
+        const searchWarnUserIdInput = document.getElementById('searchWarnUserId');
+        const searchWarningsButton = document.getElementById('searchWarningsButton');
+        const searchWarningsStatus = document.getElementById('searchWarningsStatus');
+        const userWarningsTableBody = document.getElementById('userWarningsTableBody');
+
+        // --- Bot Config Management Logic ---
+        const xpConfigForm = document.getElementById('xpConfigForm');
+        const xpBlockedGloballyInput = document.getElementById('xpBlockedGlobally');
+        const xpMultiplierEventInput = document.getElementById('xpMultiplierEvent');
+        const xpEventNameInput = document.getElementById('xpEventName');
+        const saveXpConfigButton = document.getElementById('saveXpConfigButton');
+        const xpConfigStatus = document.getElementById('xpConfigStatus');
+
+        const channelXpConfigForm = document.getElementById('channelXpConfigForm');
+        const channelIdToConfigInput = document.getElementById('channelIdToConfig');
+        const channelXpBlockedInput = document.getElementById('channelXpBlocked');
+        const channelXpMultiplierInput = document.getElementById('channelXpMultiplier');
+        const saveChannelXpConfigButton = document.getElementById('saveChannelXpConfigButton');
+        const removeChannelXpConfigButton = document.getElementById('removeChannelXpConfigButton');
+        const channelXpConfigStatus = document.getElementById('channelXpConfigStatus');
+
+        const otherConfigForm = document.getElementById('otherConfigForm');
+        const welcomeChannelIdInput = document.getElementById('welcomeChannelId');
+        const defaultRoleIdInput = document.getElementById('defaultRoleId');
+        const saveOtherConfigButton = document.getElementById('saveOtherConfigButton');
+        const otherConfigStatus = document.getElementById('otherConfigStatus');
 
 
         function displayAdminMessage(message, type = 'info', duration = 5000) {
@@ -739,18 +978,10 @@
             if (!shopItemsTableBody) return;
             shopItemsTableBody.innerHTML = '<tr><td colspan="8" class="text-center py-4 text-secondary">Ładowanie przedmiotów... <span class="loading-spinner !ml-2 !mr-0"></span></td></tr>';
             try {
-                // const response = await fetch(new URL('/api/admin/shop-items', window.location.href).href);
-                // if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
-                // const items = await response.json();
+                const response = await fetch(new URL('/api/admin/shop-items', window.location.href).href);
+                if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+                const items = await response.json();
                 
-                // --- Zastępcze dane sklepu dla panelu admina ---
-                 const items = [
-                    { id: 'role_kolor_1', name: '✨ Migocząca Aureola', description: 'Dodaj swojemu nickowi unikalny, migoczący kolor na tydzień!', price: 150, icon: '🎨', type: 'cosmetic_role', stock: -1 },
-                    { id: 'xp_boost_1', name: '📜 Zwój Mądrości', description: 'Podwójne XP na następne 100 wiadomości.', price: 250, icon: '🚀', type: 'xp_boost', stock: 10 },
-                    { id: 'custom_emote_slot_1', name: '🖼️ Ramka na Emotkę', description: 'Zaproponuj własną emotkę na serwer (po akceptacji administracji).', price: 500, icon: '💡', type: 'emote_slot', stock: 5 },
-                ];
-                // --- Koniec zastępczych danych ---
-
                 renderShopItemsTable(items);
             } catch (error) {
                 console.error("Błąd ładowania przedmiotów sklepu:", error);
@@ -767,11 +998,11 @@
             shopItemsTableBody.innerHTML = items.map(item => `
                 <tr>
                     <td>${item.id}</td>
-                    <td class="item-icon-preview">${item.icon || '-'}</td>
+                    <td class="item-icon-preview">${item.emoji || '-'}</td>
                     <td>${item.name}</td>
-                    <td class="text-right">${item.price.toLocaleString('pl-PL')} ✨</td>
-                    <td class="text-sm">${item.description}</td>
-                    <td>${item.type || '-'}</td>
+                    <td class="text-right">${item.cost_dukaty !== null ? item.cost_dukaty.toLocaleString('pl-PL') + ' ✨' : '-'}</td>
+                    <td class="text-right">${item.cost_krysztaly !== null ? item.cost_krysztaly.toLocaleString('pl-PL') + ' 💠' : '-'}</td>
+                    <td>${item.item_type || '-'}</td>
                     <td class="text-center">${item.stock === -1 ? '∞' : (item.stock || 0)}</td>
                     <td class="whitespace-nowrap">
                         <button class="btn btn-secondary btn-action-sm edit-shop-item-btn" data-item-id="${item.id}">Edytuj</button>
@@ -784,12 +1015,18 @@
         
         function populateShopItemForm(item) {
             if (!shopItemForm) return;
-            editShopItemId.value = item.id;
+            editShopItemId.value = item.id; // Przechowujemy ID do edycji
+            shopItemIdInput.value = item.id;
+            shopItemIdInput.disabled = true; // Zablokuj edycję ID istniejącego przedmiotu
             shopItemNameInput.value = item.name;
-            shopItemPriceInput.value = item.price;
+            shopItemEmojiInput.value = item.emoji || '';
             shopItemDescriptionInput.value = item.description;
-            shopItemIconInput.value = item.icon || '';
-            shopItemTypeInput.value = item.type || '';
+            shopItemCostDukatyInput.value = item.cost_dukaty !== null ? item.cost_dukaty : '';
+            shopItemCostKrysztalyInput.value = item.cost_krysztaly !== null ? item.cost_krysztaly : '';
+            shopItemTypeInput.value = item.item_type || '';
+            shopItemBonusValueInput.value = item.bonus_value !== null ? item.bonus_value : '';
+            shopItemDurationSecondsInput.value = item.duration_seconds !== null ? item.duration_seconds : '';
+            shopItemRoleIdToGrantInput.value = item.role_id_to_grant || '';
             shopItemStockInput.value = item.stock !== undefined ? item.stock : '';
             if(saveShopItemButton) saveShopItemButton.querySelector('.button-text').textContent = 'Zaktualizuj Przedmiot';
         }
@@ -798,6 +1035,7 @@
             clearShopItemFormButton.addEventListener('click', () => {
                 if(shopItemForm) shopItemForm.reset();
                 if(editShopItemId) editShopItemId.value = '';
+                if(shopItemIdInput) shopItemIdInput.disabled = false; // Odblokuj ID przy czyszczeniu
                 if(saveShopItemButton) saveShopItemButton.querySelector('.button-text').textContent = 'Zapisz Przedmiot';
             });
         }
@@ -806,25 +1044,17 @@
             document.querySelectorAll('.edit-shop-item-btn').forEach(button => {
                 button.addEventListener('click', async (event) => {
                     const itemId = event.target.dataset.itemId;
-                    // const response = await fetch(new URL(`/api/admin/shop-items/${itemId}`, window.location.href).href);
-                    // if (response.ok) {
-                    //     const item = await response.json();
-                    //     populateShopItemForm(item);
-                    // } else {
-                    //     displayAdminMessage('Błąd ładowania danych przedmiotu do edycji.', 'error');
-                    // }
-                    // Symulacja dla edycji
-                    const items = [ // Te same dane co w fetchShopItems
-                        { id: 'role_kolor_1', name: '✨ Migocząca Aureola', description: 'Dodaj swojemu nickowi unikalny, migoczący kolor na tydzień!', price: 150, icon: '🎨', type: 'cosmetic_role', stock: -1 },
-                        { id: 'xp_boost_1', name: '📜 Zwój Mądrości', description: 'Podwójne XP na następne 100 wiadomości.', price: 250, icon: '🚀', type: 'xp_boost', stock: 10 },
-                        { id: 'custom_emote_slot_1', name: '🖼️ Ramka na Emotkę', description: 'Zaproponuj własną emotkę na serwer (po akceptacji administracji).', price: 500, icon: '💡', type: 'emote_slot', stock: 5 },
-                    ];
-                    const item = items.find(i => i.id === itemId);
-                    if (item) {
-                        populateShopItemForm(item);
-                        shopItemNameInput.focus(); // Ustaw focus na pierwszym polu formularza
-                    } else {
-                        displayAdminMessage('Nie znaleziono przedmiotu do edycji.', 'error');
+                    try {
+                        const response = await fetch(new URL(`/api/admin/shop-items/${itemId}`, window.location.href).href);
+                        if (response.ok) {
+                            const item = await response.json();
+                            populateShopItemForm(item);
+                            shopItemNameInput.focus(); // Ustaw focus na pierwszym polu formularza
+                        } else {
+                            displayAdminMessage('Błąd ładowania danych przedmiotu do edycji.', 'error');
+                        }
+                    } catch (error) {
+                        displayAdminMessage('Błąd sieci podczas ładowania danych przedmiotu.', 'error');
                     }
                 });
             });
@@ -832,27 +1062,23 @@
             document.querySelectorAll('.delete-shop-item-btn').forEach(button => {
                 button.addEventListener('click', async (event) => {
                     const itemId = event.target.dataset.itemId;
-                    // if (confirm(`Czy na pewno chcesz usunąć przedmiot o ID: ${itemId}? Tej operacji nie można cofnąć.`)) {
+                    if (confirm(`Czy na pewno chcesz usunąć przedmiot o ID: ${itemId}? Tej operacji nie można cofnąć.`)) {
                         toggleButtonLoadingState(event.target, true);
                         try {
-                            // const response = await fetch(new URL(`/api/admin/shop-items/${itemId}`, window.location.href).href, { method: 'DELETE' });
-                            // if (response.ok) {
-                            //     displayAdminMessage(`Przedmiot o ID: ${itemId} został usunięty.`, 'success');
-                            //     await fetchShopItems(); 
-                            // } else {
-                            //     const errorData = await response.json().catch(() => ({error: 'Nieznany błąd serwera'}));
-                            //     displayAdminMessage(`Błąd usuwania przedmiotu: ${errorData.error || response.status}`, 'error');
-                            // }
-                            // Symulacja usunięcia
-                            await new Promise(resolve => setTimeout(resolve, 500));
-                            displayAdminMessage(`Symulacja: Przedmiot o ID: ${itemId} został usunięty.`, 'success');
-                            await fetchShopItems(); // Odśwież listę
+                            const response = await fetch(new URL(`/api/admin/shop-items/${itemId}`, window.location.href).href, { method: 'DELETE' });
+                            if (response.ok) {
+                                displayAdminMessage(`Przedmiot o ID: ${itemId} został usunięty.`, 'success');
+                                await fetchShopItems(); 
+                            } else {
+                                const errorData = await response.json().catch(() => ({error: 'Nieznany błąd serwera'}));
+                                displayAdminMessage(`Błąd usuwania przedmiotu: ${errorData.error || response.status}`, 'error');
+                            }
                         } catch (error) {
                             displayAdminMessage('Błąd sieci podczas usuwania przedmiotu.', 'error');
                         } finally {
                             toggleButtonLoadingState(event.target, false);
                         }
-                    // }
+                    }
                 });
             });
         }
@@ -860,57 +1086,489 @@
         if (shopItemForm) {
             shopItemForm.addEventListener('submit', async (event) => {
                 event.preventDefault();
-                const itemId = editShopItemId.value;
+                const itemId = shopItemIdInput.value.trim(); // Pobieramy z pola ID, nie z hidden input
+                const isEditing = !!editShopItemId.value; // Sprawdzamy czy to edycja na podstawie ukrytego pola
+
                 const formData = {
+                    id: itemId,
                     name: shopItemNameInput.value,
-                    price: parseInt(shopItemPriceInput.value, 10),
                     description: shopItemDescriptionInput.value,
-                    icon: shopItemIconInput.value,
-                    type: shopItemTypeInput.value,
-                    stock: shopItemStockInput.value ? parseInt(shopItemStockInput.value, 10) : -1 // Domyślnie -1 (nieskończone)
+                    cost_dukaty: shopItemCostDukatyInput.value ? parseInt(shopItemCostDukatyInput.value, 10) : null,
+                    cost_krysztaly: shopItemCostKrysztalyInput.value ? parseInt(shopItemCostKrysztalyInput.value, 10) : null,
+                    emoji: shopItemEmojiInput.value,
+                    item_type: shopItemTypeInput.value,
+                    bonus_value: shopItemBonusValueInput.value ? parseFloat(shopItemBonusValueInput.value) : null,
+                    duration_seconds: shopItemDurationSecondsInput.value ? parseInt(shopItemDurationSecondsInput.value, 10) : null,
+                    role_id_to_grant: shopItemRoleIdToGrantInput.value || null,
+                    stock: shopItemStockInput.value ? parseInt(shopItemStockInput.value, 10) : -1
                 };
 
-                if (isNaN(formData.price) || formData.price < 0) {
-                    displayAdminMessage('Cena musi być liczbą nieujemną.', 'error');
+                if (!formData.id) {
+                    displayAdminMessage('ID Przedmiotu nie może być puste.', 'error');
+                    return;
+                }
+                if (!formData.name) {
+                    displayAdminMessage('Nazwa przedmiotu nie może być pusta.', 'error');
+                    return;
+                }
+                if (!formData.description) {
+                    displayAdminMessage('Opis przedmiotu nie może być pusty.', 'error');
+                    return;
+                }
+                if (!formData.item_type) {
+                    displayAdminMessage('Typ przedmiotu nie może być pusty.', 'error');
+                    return;
+                }
+                if (formData.cost_dukaty === null && formData.cost_krysztaly === null) {
+                    displayAdminMessage('Przedmiot musi mieć cenę w Dukatach lub Kryształach.', 'error');
                     return;
                 }
 
-                const url = itemId ? new URL(`/api/admin/shop-items/${itemId}`, window.location.href).href : new URL('/api/admin/shop-items', window.location.href).href;
-                const method = itemId ? 'PUT' : 'POST';
+                let url;
+                let method;
+
+                if (isEditing) {
+                    url = new URL(`/api/admin/shop-items/${itemId}`, window.location.href).href;
+                    method = 'PUT';
+                } else {
+                    url = new URL('/api/admin/shop-items', window.location.href).href; // POST bez ID w URL
+                    method = 'POST';
+                }
 
                 toggleButtonLoadingState(saveShopItemButton, true);
                 try {
-                    // const response = await fetch(url, {
-                    //     method: method,
-                    //     headers: { 'Content-Type': 'application/json' },
-                    //     body: JSON.stringify(formData)
-                    // });
-                    // if (response.ok) {
-                    //     displayAdminMessage(`Przedmiot "${formData.name}" został ${itemId ? 'zaktualizowany' : 'dodany'} pomyślnie.`, 'success');
-                    //     shopItemForm.reset();
-                    //     editShopItemId.value = '';
-                    //     saveShopItemButton.querySelector('.button-text').textContent = 'Zapisz Przedmiot';
-                    //     await fetchShopItems();
-                    // } else {
-                    //     const errorData = await response.json().catch(() => ({error: 'Nieznany błąd serwera'}));
-                    //     displayAdminMessage(`Błąd zapisu przedmiotu: ${errorData.error || response.status}`, 'error');
-                    // }
-                    // Symulacja zapisu
-                    await new Promise(resolve => setTimeout(resolve, 1000));
-                    displayAdminMessage(`Symulacja: Przedmiot "${formData.name}" został ${itemId ? 'zaktualizowany' : 'dodany'} pomyślnie.`, 'success');
-                    shopItemForm.reset();
-                    editShopItemId.value = '';
-                    saveShopItemButton.querySelector('.button-text').textContent = 'Zapisz Przedmiot';
-                    await fetchShopItems();
-
+                    const response = await fetch(url, {
+                        method: method,
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(formData)
+                    });
+                    if (response.ok) {
+                        displayAdminMessage(`Przedmiot "${formData.name}" został ${isEditing ? 'zaktualizowany' : 'dodany'} pomyślnie.`, 'success');
+                        shopItemForm.reset();
+                        editShopItemId.value = '';
+                        shopItemIdInput.disabled = false; // Odblokuj ID
+                        saveShopItemButton.querySelector('.button-text').textContent = 'Zapisz Przedmiot';
+                        await fetchShopItems();
+                    } else {
+                        const errorData = await response.json().catch(() => ({error: 'Nieznany błąd serwera'}));
+                        displayAdminMessage(`Błąd zapisu przedmiotu: ${errorData.error || response.status}`, 'error');
+                    }
                 } catch (error) {
+                    console.error('Błąd sieci podczas zapisu przedmiotu:', error);
                     displayAdminMessage('Błąd sieci podczas zapisu przedmiotu.', 'error');
                 } finally {
                     toggleButtonLoadingState(saveShopItemButton, false);
                 }
             });
         }
-        
+
+        // --- Warnings Management Functions ---
+        async function addWarning(userId, reason) {
+            if (!userId || !reason) {
+                addWarningStatus.textContent = 'ID użytkownika i powód są wymagane.';
+                addWarningStatus.className = 'text-red-400';
+                return;
+            }
+            const GUILD_ID = "1375477258172502086"; // TODO: ZASTĄP RZECZYWISTYM ID GŁÓWNEGO SERWERA
+            const MODERATOR_ID = "1238814802357387285"; // TODO: ZASTĄP RZECZYWISTYM ID ADMINA (zalogowanego użytkownika)
+
+            if (!GUILD_ID || !/^\d+$/.test(GUILD_ID)) {
+                addWarningStatus.textContent = 'Błąd konfiguracji: ID serwera (GUILD_ID) jest nieprawidłowe.';
+                addWarningStatus.className = 'text-red-400';
+                return;
+            }
+            if (!MODERATOR_ID || !/^\d+$/.test(MODERATOR_ID)) {
+                addWarningStatus.textContent = 'Błąd konfiguracji: ID moderatora (ADMIN_DISCORD_ID) jest nieprawidłowe.';
+                addWarningStatus.className = 'text-red-400';
+                return;
+            }
+
+            toggleButtonLoadingState(addWarningButton, true);
+            addWarningStatus.textContent = 'Dodawanie ostrzeżenia...';
+            addWarningStatus.className = 'text-secondary';
+
+            try {
+                const response = await fetch(new URL('/api/warnings/add', window.location.href).href, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        guild_id: GUILD_ID,
+                        user_id: userId,
+                        moderator_id: MODERATOR_ID,
+                        reason: reason
+                    })
+                });
+                const result = await response.json();
+                if (response.ok) {
+                    addWarningStatus.textContent = result.message || 'Ostrzeżenie dodane pomyślnie!';
+                    addWarningStatus.className = 'text-green-400';
+                    addWarningForm.reset();
+                    // Opcjonalnie: odśwież listę ostrzeżeń dla tego użytkownika, jeśli jest wyświetlana
+                    // await searchWarnings(userId); 
+                } else {
+                    addWarningStatus.textContent = result.error || 'Błąd dodawania ostrzeżenia.';
+                    addWarningStatus.className = 'text-red-400';
+                }
+            } catch (error) {
+                console.error('Błąd sieci podczas dodawania ostrzeżenia:', error);
+                addWarningStatus.textContent = 'Błąd sieci podczas dodawania ostrzeżenia.';
+                addWarningStatus.className = 'text-red-400';
+            } finally {
+                toggleButtonLoadingState(addWarningButton, false);
+            }
+        }
+
+        if (addWarningForm) {
+            addWarningForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+                addWarning(warnUserIdInput.value, warnReasonInput.value);
+            });
+        }
+
+        async function removeWarning(warnId) {
+            if (!warnId) {
+                removeWarningStatus.textContent = 'ID ostrzeżenia jest wymagane.';
+                removeWarningStatus.className = 'text-red-400';
+                return;
+            }
+            toggleButtonLoadingState(removeWarningButton, true);
+            removeWarningStatus.textContent = 'Usuwanie ostrzeżenia...';
+            removeWarningStatus.className = 'text-secondary';
+
+            try {
+                const response = await fetch(new URL('/api/warnings/remove', window.location.href).href, {
+                    method: 'DELETE',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ warn_id: warnId })
+                });
+                const result = await response.json();
+                if (response.ok) {
+                    removeWarningStatus.textContent = result.message || 'Ostrzeżenie usunięte pomyślnie!';
+                    removeWarningStatus.className = 'text-green-400';
+                    removeWarningForm.reset();
+                    // Opcjonalnie: odśwież listę ostrzeżeń, jeśli jest wyświetlana
+                    // if (searchWarnUserIdInput.value) await searchWarnings(searchWarnUserIdInput.value);
+                } else {
+                    removeWarningStatus.textContent = result.error || 'Błąd usuwania ostrzeżenia.';
+                    removeWarningStatus.className = 'text-red-400';
+                }
+            } catch (error) {
+                console.error('Błąd sieci podczas usuwania ostrzeżenia:', error);
+                removeWarningStatus.textContent = 'Błąd sieci podczas usuwania ostrzeżenia.';
+                removeWarningStatus.className = 'text-red-400';
+            } finally {
+                toggleButtonLoadingState(removeWarningButton, false);
+            }
+        }
+
+        if (removeWarningForm) {
+            removeWarningForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+                removeWarning(parseInt(removeWarnIdInput.value, 10));
+            });
+        }
+
+        async function searchWarnings(userId) {
+            if (!userId) {
+                searchWarningsStatus.textContent = 'ID użytkownika jest wymagane do wyszukania ostrzeżeń.';
+                searchWarningsStatus.className = 'text-red-400';
+                userWarningsTableBody.innerHTML = '<tr><td colspan="4" class="text-center py-4 text-secondary">Brak ostrzeżeń do wyświetlenia.</td></tr>';
+                return;
+            }
+            const GUILD_ID = "1375477258172502086"; // TODO: ZASTĄP RZECZYWISTYM ID GŁÓWNEGO SERWERA
+            if (!GUILD_ID || !/^\d+$/.test(GUILD_ID)) {
+                searchWarningsStatus.textContent = 'Błąd konfiguracji: ID serwera (GUILD_ID) jest nieprawidłowe.';
+                searchWarningsStatus.className = 'text-red-400';
+                userWarningsTableBody.innerHTML = '<tr><td colspan="4" class="text-center py-4 text-secondary">Brak ostrzeżeń do wyświetlenia.</td></tr>';
+                return;
+            }
+
+            toggleButtonLoadingState(searchWarningsButton, true);
+            searchWarningsStatus.textContent = 'Wyszukiwanie ostrzeżeń...';
+            searchWarningsStatus.className = 'text-secondary';
+            userWarningsTableBody.innerHTML = '<tr><td colspan="4" class="text-center py-4 text-secondary">Ładowanie... <span class="loading-spinner !ml-2 !mr-0"></span></td></tr>';
+
+            try {
+                const response = await fetch(new URL(`/api/warnings/list/${GUILD_ID}/${userId}`, window.location.href).href);
+                const data = await response.json();
+
+                if (response.ok && data.warnings) {
+                    if (data.warnings.length > 0) {
+                        userWarningsTableBody.innerHTML = data.warnings.map(warn => `
+                            <tr>
+                                <td>${warn.warn_id}</td>
+                                <td>${warn.moderator_username || 'Nieznany'}</td>
+                                <td>${warn.reason}</td>
+                                <td>${new Date(warn.created_at_utc).toLocaleDateString('pl-PL', { year: 'numeric', month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' })}</td>
+                            </tr>
+                        `).join('');
+                        searchWarningsStatus.textContent = `Znaleziono ${data.warnings.length} ostrzeżeń dla użytkownika ${userId}.`;
+                        searchWarningsStatus.className = 'text-green-400';
+                    } else {
+                        userWarningsTableBody.innerHTML = '<tr><td colspan="4" class="text-center py-4 text-secondary">Brak ostrzeżeń dla tego użytkownika.</td></tr>';
+                        searchWarningsStatus.textContent = `Brak ostrzeżeń dla użytkownika ${userId}.`;
+                        searchWarningsStatus.className = 'text-info';
+                    }
+                } else {
+                    userWarningsTableBody.innerHTML = '<tr><td colspan="4" class="text-center py-4 text-red-400">Błąd ładowania ostrzeżeń.</td></tr>';
+                    searchWarningsStatus.textContent = data.error || 'Błąd wyszukiwania ostrzeżeń.';
+                    searchWarningsStatus.className = 'text-red-400';
+                }
+            } catch (error) {
+                console.error('Błąd sieci podczas wyszukiwania ostrzeżeń:', error);
+                userWarningsTableBody.innerHTML = '<tr><td colspan="4" class="text-center py-4 text-red-400">Błąd sieci podczas wyszukiwania.</td></tr>';
+                searchWarningsStatus.textContent = 'Błąd sieci podczas wyszukiwania ostrzeżeń.';
+                searchWarningsStatus.className = 'text-red-400';
+            } finally {
+                toggleButtonLoadingState(searchWarningsButton, false);
+            }
+        }
+
+        if (searchWarningsForm) {
+            searchWarningsForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+                searchWarnings(searchWarnUserIdInput.value);
+            });
+        }
+
+        // --- Bot Config Management Functions ---
+        async function loadBotConfig(guildId) {
+            const statusElements = {
+                xp: xpConfigStatus,
+                channel: channelXpConfigStatus,
+                other: otherConfigStatus
+            };
+
+            for (const key in statusElements) {
+                statusElements[key].textContent = 'Ładowanie konfiguracji...';
+                statusElements[key].className = 'text-secondary';
+            }
+
+            try {
+                const response = await fetch(new URL(`/api/config/${guildId}`, window.location.href).href);
+                const configData = await response.json();
+
+                if (response.ok && configData.success) {
+                    // XP Config
+                    xpBlockedGloballyInput.checked = configData.xp_system.xp_blocked_globally;
+                    xpMultiplierEventInput.value = configData.xp_system.xp_multiplier_event;
+                    xpEventNameInput.value = configData.xp_system.xp_event_name || '';
+                    statusElements.xp.textContent = 'Konfiguracja XP załadowana.';
+                    statusElements.xp.className = 'text-green-400';
+
+                    // Other Config
+                    welcomeChannelIdInput.value = configData.welcome_channel_id || '';
+                    defaultRoleIdInput.value = configData.default_role_id || '';
+                    statusElements.other.textContent = 'Inne ustawienia załadowane.';
+                    statusElements.other.className = 'text-green-400';
+
+                    // Channel XP Config (nie ładujemy do formularza, tylko informacyjnie, bo jest wiele)
+                    // Można by dodać tabelę z listą skonfigurowanych kanałów XP
+                    statusElements.channel.textContent = 'Konfiguracja kanałów XP załadowana (dane dostępne w API).';
+                    statusElements.channel.className = 'text-green-400';
+
+                } else {
+                    for (const key in statusElements) {
+                        statusElements[key].textContent = configData.error || 'Błąd ładowania konfiguracji.';
+                        statusElements[key].className = 'text-red-400';
+                    }
+                }
+            } catch (error) {
+                console.error('Błąd sieci podczas ładowania konfiguracji bota:', error);
+                for (const key in statusElements) {
+                    statusElements[key].textContent = 'Błąd sieci podczas ładowania konfiguracji.';
+                    statusElements[key].className = 'text-red-400';
+                }
+            }
+        }
+
+        async function saveXpConfig() {
+            const GUILD_ID = "1375477258172502086"; // TODO: ZASTĄP RZECZYWISTYM ID GŁÓWNEGO SERWERA
+            if (!GUILD_ID || !/^\d+$/.test(GUILD_ID)) {
+                xpConfigStatus.textContent = 'Błąd konfiguracji: ID serwera (GUILD_ID) jest nieprawidłowe.';
+                xpConfigStatus.className = 'text-red-400';
+                return;
+            }
+
+            toggleButtonLoadingState(saveXpConfigButton, true);
+            xpConfigStatus.textContent = 'Zapisywanie ustawień XP...';
+            xpConfigStatus.className = 'text-secondary';
+
+            const configData = {
+                xp_blocked_globally: xpBlockedGloballyInput.checked,
+                xp_multiplier_event: parseFloat(xpMultiplierEventInput.value),
+                xp_event_name: xpEventNameInput.value || null
+            };
+
+            try {
+                const response = await fetch(new URL(`/api/config/${GUILD_ID}/xp`, window.location.href).href, { 
+                    method: 'PUT', 
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(configData)
+                });
+                const result = await response.json();
+                if (response.ok) {
+                    xpConfigStatus.textContent = result.message || 'Ustawienia XP zapisane pomyślnie.';
+                    xpConfigStatus.className = 'text-green-400';
+                } else {
+                    xpConfigStatus.textContent = result.error || 'Błąd zapisu ustawień XP.';
+                    xpConfigStatus.className = 'text-red-400';
+                }
+            } catch (error) {
+                console.error('Błąd sieci podczas zapisu ustawień XP:', error);
+                xpConfigStatus.textContent = 'Błąd sieci podczas zapisu ustawień XP.';
+                xpConfigStatus.className = 'text-red-400';
+            } finally {
+                toggleButtonLoadingState(saveXpConfigButton, false);
+            }
+        }
+
+        if (xpConfigForm) {
+            xpConfigForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+                saveXpConfig();
+            });
+        }
+
+        async function saveChannelXpConfig() {
+            const GUILD_ID = "1375477258172502086"; // TODO: ZASTĄP RZECZYWISTYM ID GŁÓWNEGO SERWERA
+            const channelId = channelIdToConfigInput.value;
+            if (!GUILD_ID || !/^\d+$/.test(GUILD_ID) || !channelId || !/^\d+$/.test(channelId)) {
+                channelXpConfigStatus.textContent = 'Błąd: ID serwera lub kanału jest nieprawidłowe.';
+                channelXpConfigStatus.className = 'text-red-400';
+                return;
+            }
+
+            toggleButtonLoadingState(saveChannelXpConfigButton, true);
+            channelXpConfigStatus.textContent = 'Zapisywanie konfiguracji kanału...';
+            channelXpConfigStatus.className = 'text-secondary';
+
+            const configData = {
+                channel_id: channelId,
+                xp_blocked: channelXpBlockedInput.checked,
+                xp_multiplier: parseFloat(channelXpMultiplierInput.value)
+            };
+
+            try {
+                const response = await fetch(new URL(`/api/config/${GUILD_ID}/channel_xp`, window.location.href).href, { 
+                    method: 'PUT', 
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(configData)
+                });
+                const result = await response.json();
+                if (response.ok) {
+                    channelXpConfigStatus.textContent = result.message || 'Konfiguracja kanału zapisana pomyślnie.';
+                    channelXpConfigStatus.className = 'text-green-400';
+                } else {
+                    channelXpConfigStatus.textContent = result.error || 'Błąd zapisu konfiguracji kanału.';
+                    channelXpConfigStatus.className = 'text-red-400';
+                }
+            } catch (error) {
+                console.error('Błąd sieci podczas zapisu konfiguracji kanału:', error);
+                channelXpConfigStatus.textContent = 'Błąd sieci podczas zapisu konfiguracji kanału.';
+                channelXpConfigStatus.className = 'text-red-400';
+            } finally {
+                toggleButtonLoadingState(saveChannelXpConfigButton, false);
+            }
+        }
+
+        if (channelXpConfigForm) {
+            channelXpConfigForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+                saveChannelXpConfig();
+            });
+        }
+
+        async function removeChannelXpConfig() {
+            const GUILD_ID = "1375477258172502086"; // TODO: ZASTĄP RZECZYWISTYM ID GŁÓWNEGO SERWERA
+            const channelId = channelIdToConfigInput.value;
+            if (!GUILD_ID || !/^\d+$/.test(GUILD_ID) || !channelId || !/^\d+$/.test(channelId)) {
+                channelXpConfigStatus.textContent = 'Błąd: ID serwera lub kanału jest nieprawidłowe.';
+                channelXpConfigStatus.className = 'text-red-400';
+                return;
+            }
+
+            toggleButtonLoadingState(removeChannelXpConfigButton, true);
+            channelXpConfigStatus.textContent = 'Usuwanie konfiguracji kanału...';
+            channelXpConfigStatus.className = 'text-secondary';
+
+            try {
+                const response = await fetch(new URL(`/api/config/${GUILD_ID}/channel_xp/${channelId}`, window.location.href).href, { 
+                    method: 'DELETE', 
+                });
+                const result = await response.json();
+                if (response.ok) {
+                    channelXpConfigStatus.textContent = result.message || 'Konfiguracja kanału usunięta pomyślnie.';
+                    channelXpConfigStatus.className = 'text-green-400';
+                    channelIdToConfigInput.value = '';
+                    channelXpBlockedInput.checked = false;
+                    channelXpMultiplierInput.value = '';
+                } else {
+                    channelXpConfigStatus.textContent = result.error || 'Błąd usuwania konfiguracji kanału.';
+                    channelXpConfigStatus.className = 'text-red-400';
+                }
+            } catch (error) {
+                console.error('Błąd sieci podczas usuwania konfiguracji kanału:', error);
+                channelXpConfigStatus.textContent = 'Błąd sieci podczas usuwania konfiguracji kanału.';
+                channelXpConfigStatus.className = 'text-red-400';
+            } finally {
+                toggleButtonLoadingState(removeChannelXpConfigButton, false);
+            }
+        }
+
+        if (removeChannelXpConfigButton) {
+            removeChannelXpConfigButton.addEventListener('click', removeChannelXpConfig);
+        }
+
+
+        async function saveOtherConfig() {
+            const GUILD_ID = "1375477258172502086"; // TODO: ZASTĄP RZECZYWISTYM ID GŁÓWNEGO SERWERA
+            if (!GUILD_ID || !/^\d+$/.test(GUILD_ID)) {
+                otherConfigStatus.textContent = 'Błąd konfiguracji: ID serwera (GUILD_ID) jest nieprawidłowe.';
+                otherConfigStatus.className = 'text-red-400';
+                return;
+            }
+
+            toggleButtonLoadingState(saveOtherConfigButton, true);
+            otherConfigStatus.textContent = 'Zapisywanie innych ustawień...';
+            otherConfigStatus.className = 'text-secondary';
+
+            const configData = {
+                welcome_channel_id: welcomeChannelIdInput.value || null,
+                default_role_id: defaultRoleIdInput.value || null
+            };
+
+            try {
+                const response = await fetch(new URL(`/api/config/${GUILD_ID}/other`, window.location.href).href, { 
+                    method: 'PUT', 
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(configData)
+                });
+                const result = await response.json();
+                if (response.ok) {
+                    otherConfigStatus.textContent = result.message || 'Inne ustawienia zapisane pomyślnie.';
+                    otherConfigStatus.className = 'text-green-400';
+                } else {
+                    otherConfigStatus.textContent = result.error || 'Błąd zapisu innych ustawień.';
+                    otherConfigStatus.className = 'text-red-400';
+                }
+            } catch (error) {
+                console.error('Błąd sieci podczas zapisu innych ustawień:', error);
+                otherConfigStatus.textContent = 'Błąd sieci podczas zapisu innych ustawień.';
+                otherConfigStatus.className = 'text-red-400';
+            } finally {
+                toggleButtonLoadingState(saveOtherConfigButton, false);
+            }
+        }
+
+        if (otherConfigForm) {
+            otherConfigForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+                saveOtherConfig();
+            });
+        }
+
+
         document.addEventListener('DOMContentLoaded', async function() {
             document.getElementById('currentYear').textContent = new Date().getFullYear();
             
