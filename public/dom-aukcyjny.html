@@ -3,24 +3,24 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Skarbiec Artefaktów Mocy - kupuj unikalne przedmioty i bonusy za Gwiezdne Dukaty i Kryształy Elary.">
-    <meta name="keywords" content="sklep, bot, discord, kroniki elary, dukaty, kryształy, przedmioty, bonusy">
+    <meta name="description" content="Dom Aukcyjny Kronik Elary - licytuj unikalne przedmioty i wystawiaj własne na sprzedaż.">
+    <meta name="keywords" content="dom aukcyjny, aukcje, licytacje, kroniki elary, dukaty, przedmioty">
     <meta name="author" content="Arcadius & Strażnicy Kronik Elary">
-    <title>Skarbiec Artefaktów Mocy - Kroniki Elary</title>
+    <title>Dom Aukcyjny - Kroniki Elary</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg-primary: #0F172A; 
-            --bg-secondary: #1E293B; 
-            --bg-card: #111827; 
-            --bg-header: rgba(15, 23, 42, 0.92); 
-            --text-primary: #E2E8F0; 
-            --text-secondary: #94A3B8; 
-            --text-accent: #A78BFA; 
-            --text-accent-hover: #8B5CF6; 
+            --bg-primary: #0F172A;
+            --bg-secondary: #1E293B;
+            --bg-card: #111827;
+            --bg-header: rgba(15, 23, 42, 0.92);
+            --text-primary: #E2E8F0;
+            --text-secondary: #94A3B8;
+            --text-accent: #A78BFA;
+            --text-accent-hover: #8B5CF6;
             --border-accent: #8B5CF6;
-            --border-card: rgba(167, 139, 250, 0.15); 
+            --border-card: rgba(167, 139, 250, 0.15);
             --btn-primary-bg: #8B5CF6;
             --btn-primary-hover-bg: #7C3AED;
             --btn-discord-bg: #5865F2;
@@ -28,28 +28,28 @@
             --scrollbar-thumb-bg: #8B5CF6;
             --scrollbar-thumb-hover-bg: #7C3AED;
             --svg-icon-fill: #E2E8F0;
-            --shadow-color: rgba(167, 139, 250, 0.15); 
-            --shadow-strong-color: rgba(167, 139, 250, 0.3); 
+            --shadow-color: rgba(167, 139, 250, 0.15);
+            --shadow-strong-color: rgba(167, 139, 250, 0.3);
             --modal-backdrop: rgba(15, 23, 42, 0.85);
             --rgb-accent: 167, 139, 250;
-            --rgb-purple-400: 167, 139, 250; 
-            --rgb-stone-400: 168, 162, 158; 
-            --rgb-amber-400: 251, 191, 36; 
-            --rgb-cyan-400: 34, 211, 238; 
+            --rgb-purple-400: 167, 139, 250;
+            --rgb-stone-400: 168, 162, 158;
+            --rgb-amber-400: 251, 191, 36;
+            --rgb-cyan-400: 34, 211, 238;
             --text-purple-400: #A78BFA;
             --text-stone-400: #A8A29E;
             --text-amber-400: #FBBF24;
             --text-cyan-400: #22D3EE;
         }
         html.light {
-            --bg-primary: #F9FAFB; 
-            --bg-secondary: #F3F4F6; 
-            --bg-card: #FFFFFF; 
+            --bg-primary: #F9FAFB;
+            --bg-secondary: #F3F4F6;
+            --bg-card: #FFFFFF;
             --bg-header: rgba(255, 255, 255, 0.95);
-            --text-primary: #1F2937; 
-            --text-secondary: #4B5563; 
-            --text-accent: #7C3AED; 
-            --text-accent-hover: #6D28D9; 
+            --text-primary: #1F2937;
+            --text-secondary: #4B5563;
+            --text-accent: #7C3AED;
+            --text-accent-hover: #6D28D9;
             --border-accent: #7C3AED;
             --border-card: rgba(124, 58, 237, 0.1);
             --btn-primary-bg: #7C3AED;
@@ -75,11 +75,11 @@
         body { font-family: 'Inter', sans-serif; background-color: var(--bg-primary); color: var(--text-primary); transition: background-color 0.3s ease, color 0.3s ease; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; line-height: 1.75; }
         h1, h2, h3, h4, h5 { font-family: 'Lora', serif; font-weight: 600; line-height: 1.35; }
         h1 { letter-spacing: -0.025em; font-weight: 700; } h2 { letter-spacing: -0.02em; font-weight: 700; } h3 { font-weight: 600; }
-        .hero-shop-bg { background: linear-gradient(rgba(15, 23, 42, 0.88), rgba(15, 23, 42, 0.98)), url('https://placehold.co/1920x500/0a0f1e/8B5CF6?text=Skarbiec+Artefaktów') center/cover no-repeat; }
+        .hero-auction-bg { background: linear-gradient(rgba(15, 23, 42, 0.88), rgba(15, 23, 42, 0.98)), url('https://placehold.co/1920x500/0a0f1e/A78BFA?text=Dom+Aukcyjny') center/cover no-repeat; }
         .section-bg { background-color: var(--bg-secondary); }
         .card-bg { background-color: var(--bg-card); transition: transform 0.3s cubic-bezier(0.25, 0.1, 0.25, 1), box-shadow 0.3s cubic-bezier(0.25, 0.1, 0.25, 1), background-color 0.3s ease; border: 1px solid var(--border-card); box-shadow: 0 6px 12px -3px var(--shadow-color); overflow: hidden; }
         .card-bg:hover { transform: translateY(-8px) scale(1.02); box-shadow: 0 12px 24px -4px var(--shadow-strong-color); }
-        .btn-primary, .btn-discord, .btn-secondary { color: #FFFFFF; transition: background-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease; box-shadow: 0 4px 8px -2px var(--shadow-color); font-weight: 600; letter-spacing: 0.03em; padding-top: 0.8rem; padding-bottom: 0.8rem; border-radius: 0.375rem; } 
+        .btn-primary, .btn-discord, .btn-secondary { color: #FFFFFF; transition: background-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease; box-shadow: 0 4px 8px -2px var(--shadow-color); font-weight: 600; letter-spacing: 0.03em; padding-top: 0.8rem; padding-bottom: 0.8rem; border-radius: 0.375rem; }
         .btn-primary { background-color: var(--btn-primary-bg); } .btn-primary:hover { background-color: var(--btn-primary-hover-bg); transform: scale(1.04) translateY(-2px); box-shadow: 0 10px 18px -4px var(--shadow-strong-color); }
         .btn-discord { background-color: var(--btn-discord-bg); } .btn-discord:hover { background-color: var(--btn-discord-hover-bg); transform: scale(1.04) translateY(-2px); box-shadow: 0 10px 18px -4px rgba(88, 101, 242, 0.35); }
         .btn-secondary { background-color: transparent; border: 2px solid var(--border-accent); color: var(--text-accent); padding: calc(0.8rem - 2px) calc(1.5rem - 2px); }
@@ -105,13 +105,32 @@
         .dropdown-menu.open { opacity: 1; visibility: visible; transform: translateY(0); transition: opacity 0.15s ease, transform 0.15s ease; }
         .dropdown-menu a, .dropdown-menu button { display: block; width: 100%; text-align: left; padding: 0.7rem 1rem; font-size: 0.875rem; color: var(--text-secondary); transition: background-color 0.1s ease, color 0.1s ease; }
         .dropdown-menu a:hover, .dropdown-menu button:hover { background-color: rgba(var(--rgb-accent), 0.08); color: var(--text-accent); }
-        .dropdown-menu form { margin: 0; } 
+        .dropdown-menu form { margin: 0; }
         .modal { background-color: var(--modal-backdrop); backdrop-filter: blur(6px); }
         .modal-content { background-color: var(--bg-card); max-height: 90vh; }
-        .shop-item-card { display: flex; flex-direction: column; height: 100%; }
-        .shop-item-card .item-icon { font-size: 3rem; line-height: 1; margin-bottom: 0.75rem; }
-        .shop-item-card .item-price { font-size: 1.5rem; font-weight: 700; color: var(--text-accent); margin: 0.5rem 0 1rem 0; }
+        .auction-item-card { display: flex; flex-direction: column; height: 100%; } /* Could be similar to shop-item-card */
         .loading-spinner { border-color: var(--text-accent) transparent var(--text-accent) transparent; }
+        /* Styles for form elements */
+        .form-input, .form-select {
+            background-color: var(--bg-secondary);
+            border: 1px solid var(--border-card);
+            color: var(--text-primary);
+            border-radius: 0.375rem;
+            padding: 0.75rem 1rem;
+            transition: border-color 0.2s ease, box-shadow 0.2s ease;
+            width: 100%;
+        }
+        .form-input:focus, .form-select:focus {
+            outline: none;
+            border-color: var(--border-accent);
+            box-shadow: 0 0 0 2px rgba(var(--rgb-accent), 0.3);
+        }
+        .form-label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            color: var(--text-secondary);
+        }
     </style>
 </head>
 <body class="antialiased">
@@ -124,7 +143,7 @@
             <nav class="hidden md:flex items-center space-x-1 lg:space-x-2">
                 <a href="index.html" class="nav-link">Strona Główna</a>
                 <a href="prezentacja.html" class="nav-link">Prezentacja Serwera</a>
-                <a href="wikipedia.html" class="nav-link">Wikipedia Kronik</a> 
+                <a href="wikipedia.html" class="nav-link">Wikipedia Kronik</a>
                 <a href="ranking-stats.html" class="nav-link">Rankingi</a>
                 <a href="dom-aukcyjny.html" class="nav-link">Dom Aukcyjny</a>
                 <div id="auth-section-nav" class="ml-4 relative">
@@ -146,60 +165,98 @@
                 <a href="ranking-stats.html" class="block py-2.5 px-3 nav-link text-base font-medium">Rankingi</a>
                 <a href="dom-aukcyjny.html" class="block py-2.5 px-3 nav-link text-base font-medium">Dom Aukcyjny</a>
                 <a href="https://discord.gg/TWOJLINKZAPROSZENIOWY" target="_blank" rel="noopener noreferrer" class="block mt-2 py-2.5 px-3 text-base font-medium text-white bg-purple-600 hover:bg-purple-700 rounded-md text-center">Dołącz do Discorda</a>
-                 </div>
+            </div>
         </div>
     </header>
 
     <main>
-        <section class="hero-shop-bg pt-32 pb-16 sm:pt-40 sm:pb-24 text-center reveal">
+        <section class="hero-auction-bg pt-32 pb-16 sm:pt-40 sm:pb-24 text-center reveal">
             <div class="container mx-auto px-4 sm:px-6">
                 <h1 class="text-4xl sm:text-5xl md:text-6xl font-bold text-white mb-6 leading-tight text-shadow-custom">
-                    Skarbiec <span class="text-accent">Artefaktów Mocy</span>
+                    Dom Aukcyjny <span class="text-accent">Kronik Elary</span>
                 </h1>
                 <p class="text-lg md:text-xl text-slate-200 mb-10 max-w-3xl mx-auto text-shadow-custom">
-                    Wymień swoje Gwiezdne Dukaty na potężne artefakty, bonusy XP, unikalne role i inne skarby!
+                    Licytuj cenne przedmioty lub wystaw własne skarby na sprzedaż. Niech najlepszy gracz wygra!
                 </p>
             </div>
         </section>
 
-        <section id="wprowadzenie-shop" class="py-16 sm:py-20 section-bg reveal">
+        <section id="active-auctions-section" class="py-16 sm:py-20 section-bg reveal">
             <div class="container mx-auto px-4 sm:px-6">
                 <div class="text-center mb-14 sm:mb-18">
-                    <h2 class="text-3xl sm:text-4xl font-bold text-primary mb-4">Wybierz Swój <span class="text-accent">Artefakt</span></h2>
+                    <h2 class="text-3xl sm:text-4xl font-bold text-primary mb-4">Aktywne <span class="text-accent">Aukcje</span></h2>
                     <p class="text-lg text-secondary max-w-3xl mx-auto">
-                        Przedmioty w Skarbcu są regularnie uzupełniane. Pamiętaj, aby sprawdzać dostępność i korzystać z okazji!
+                        Przeglądaj aktualnie trwające licytacje. Może znajdziesz coś dla siebie?
                     </p>
-                    <p id="userCurrencyBalance" class="text-xl text-primary mt-4 font-semibold">
+                     <p id="userCurrencyBalance" class="text-xl text-primary mt-4 font-semibold">
                         Twoje Dukaty: Ładowanie... ✨ | Twoje Kryształy: Ładowanie... 💠
                     </p>
+                </div>
+                <div id="activeAuctionsContainer" class="grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <div class="text-center py-10 col-span-full">
+                        <div class="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 loading-spinner mx-auto mb-3"></div>
+                        <p class="text-secondary text-lg">Ładowanie aktywnych aukcji...</p>
+                    </div>
+                </div>
+                <div id="auctionStatus" class="mt-8 text-center text-lg font-semibold"></div>
+            </div>
+        </section>
+
+        <section id="create-auction-section" class="py-16 sm:py-20 reveal">
+            <div class="container mx-auto px-4 sm:px-6">
+                <div class="text-center mb-14 sm:mb-18">
+                    <h2 class="text-3xl sm:text-4xl font-bold text-primary mb-4">Wystaw Przedmiot na <span class="text-accent">Aukcję</span></h2>
+                    <p class="text-lg text-secondary max-w-3xl mx-auto" id="createAuctionPrompt">
+                        Zaloguj się, aby móc wystawiać przedmioty na aukcję.
+                    </p>
+                </div>
+                <div id="createAuctionFormContainer" class="max-w-2xl mx-auto card-bg p-8 rounded-lg hidden">
+                    <form id="createAuctionForm" class="space-y-6">
+                        <div>
+                            <label for="userInventorySelect" class="form-label">Wybierz przedmiot z ekwipunku:</label>
+                            <select id="userInventorySelect" name="itemId" class="form-select">
+                                <option value="">Ładowanie ekwipunku...</option>
+                                <!-- Opcje zostaną załadowane dynamicznie przez JS -->
+                            </select>
+                        </div>
+                        <div>
+                            <label for="startingPrice" class="form-label">Cena wywoławcza (Dukaty):</label>
+                            <input type="number" id="startingPrice" name="startingPrice" class="form-input" placeholder="Np. 100" min="1" required>
+                        </div>
+                        <div>
+                            <label for="bidIncrement" class="form-label">Minimalne przebicie (Dukaty):</label>
+                            <input type="number" id="bidIncrement" name="bidIncrement" class="form-input" placeholder="Np. 10" min="1" required>
+                        </div>
+                        <div>
+                            <label for="auctionDuration" class="form-label">Czas trwania aukcji:</label>
+                            <select id="auctionDuration" name="duration" class="form-select">
+                                <option value="3600">1 godzina</option>
+                                <option value="10800">3 godziny</option>
+                                <option value="21600">6 godzin</option>
+                                <option value="43200">12 godzin</option>
+                                <option value="86400" selected>24 godziny</option>
+                                <option value="172800">2 dni</option>
+                                <option value="259200">3 dni</option>
+                            </select>
+                        </div>
+                        <button type="submit" class="btn-primary w-full">Wystaw na Aukcję</button>
+                    </form>
                 </div>
             </div>
         </section>
 
-        <section id="shop-items" class="py-16 sm:py-20 reveal">
-            <div class="container mx-auto px-4 sm:px-6">
-                <div id="shopItemsContainer" class="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
-                    <div class="text-center py-10 col-span-full">
-                        <div class="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 loading-spinner mx-auto mb-3"></div>
-                        <p class="text-secondary text-lg">Ładowanie przedmiotów sklepu...</p>
-                    </div>
-                </div>
-                <div id="shopStatus" class="mt-8 text-center text-lg font-semibold"></div>
-            </div>
-        </section>
-        
     </main>
 
     <footer class="py-12 text-center" style="background-color: var(--bg-header);">
         <div class="container mx-auto px-4 sm:px-6">
             <div class="flex justify-center space-x-6 mb-6">
-                <a href="#" class="text-secondary hover:text-accent transition-colors duration-200" aria-label="Placeholder Twitter">
+                 <a href="#" class="text-secondary hover:text-accent transition-colors duration-200" aria-label="Placeholder Twitter">
                     <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M22.46 6c-.77.35-1.6.58-2.46.67.9-.53 1.59-1.37 1.92-2.38-.84.5-1.78.86-2.79 1.07C18.28 4.42 17.03 4 15.64 4c-2.94 0-5.32 2.38-5.32 5.32 0 .42.05.83.14 1.22-4.42-.22-8.33-2.34-10.96-5.55-.46.79-.72 1.7-.72 2.67 0 1.84.94 3.47 2.37 4.42-.87-.03-1.69-.27-2.41-.66v.07c0 2.57 1.83 4.72 4.25 5.21-.44.12-.91.18-1.39.18-.34 0-.67-.03-1-.1 0 .67.65 1.37 1.77 1.84-.7.55-1.59.88-2.58.88-.39 0-.77-.02-1.14-.07.91.59 2 1.02 3.19 1.02 3.83 0 5.93-3.18 5.93-5.93 0-.09 0-.18-.01-.27.41-.3.76-.68 1.04-1.09z"/></svg>
                 </a>
                  <a href="#" class="text-secondary hover:text-accent transition-colors duration-200" aria-label="Placeholder Instagram">
-                    <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 1.17.053 1.805.248 2.227.415.562.217.96.477 1.382.896.419.42.679.819.896 1.381.167.422.362 1.056.415 2.227.058 1.266.07 1.646.07 4.85s-.012 3.584-.07 4.85c-.053 1.17-.248 1.805-.415 2.227a3.48 3.48 0 01-.896 1.382c-.42.419-.82.679-1.382.896-.422.167-1.056.362-2.227.415-1.266.058-1.646.07-4.85.07s-3.584-.012-4.85-.07c-1.17-.053-1.805-.248-2.227-.415a3.492 3.492 0 01-1.381-.896 3.492 3.492 0 01-.896-1.381c-.167-.422-.362-1.056-.415-2.227-.058-1.266-.07-1.646-.07-4.85s.012-3.584.07-4.85c.053-1.17.248-1.805.415-2.227.218-.562.477-.96.896-1.381.419-.42.819-.679 1.381-.896.422-.167 1.056-.362 2.227-.415C8.416 2.175 8.796 2.163 12 2.163zm0 1.802c-3.143 0-3.505.012-4.725.068-1.09.05-1.647.235-1.98.378a1.69 1.69 0 00-.755.755c-.143.333-.328.89-.378 1.98C4.082 8.495 4.07 8.857 4.07 12s.012 3.505.068 4.725c.05 1.09.235 1.647.378 1.98.16.373.397.637.755.755.333.143.89.328 1.98.378 1.22.056 1.582.068 4.725.068s3.505-.012 4.725-.068c1.09-.05 1.647.235 1.98-.378.373-.16.637-.397.755-.755.143-.333.328.89.378-1.98.056-1.22.068-1.582.068-4.725s-.012-3.505-.068-4.725c-.05-1.09-.235-1.647-.378-1.98a1.69 1.69 0 00-.755-.755c-.333-.143-.89-.328-1.98-.378C15.505 3.977 15.143 3.965 12 3.965zm0 3.273a4.762 4.762 0 100 9.524 4.762 4.762 0 000-9.524zm0 7.722a3.06 3.06 0 110-6.12 3.06 3.06 0 010 6.12zm4.758-7.868a1.128 1.128 0 100-2.255 1.128 1.128 0 000 2.255z"/></svg>
+                    <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 1.17.053 1.805.248 2.227.415.562.217.96.477 1.382.896.419.42.679.819.896 1.381.167.422.362 1.056.415 2.227.058 1.266.07 1.646.07 4.85s-.012 3.584-.07 4.85c-.053 1.17-.248 1.805-.415 2.227a3.48 3.48 0 01-.896 1.382c-.42.419-.82.679-1.382.896-.422.167-1.056.362-2.227.415-1.266.058-1.646.07-4.85.07s-3.584-.012-4.85-.07c-1.17-.053-1.805-.248-2.227-.415a3.492 3.492 0 01-1.381-.896 3.492 3.492 0 01-.896-1.381c-.167-.422-.362-1.056-.415-2.227-.058-1.266-.07-1.646-.07-4.85s.012-3.584.07-4.85c.053-1.17.248 1.805.415 2.227.218-.562.477-.96.896-1.381.419-.42.819-.679 1.381-.896.422-.167 1.056-.362 2.227-.415C8.416 2.175 8.796 2.163 12 2.163zm0 1.802c-3.143 0-3.505.012-4.725.068-1.09.05-1.647.235-1.98.378a1.69 1.69 0 00-.755.755c-.143.333-.328.89-.378 1.98C4.082 8.495 4.07 8.857 4.07 12s.012 3.505.068 4.725c.05 1.09.235 1.647.378 1.98.16.373.397.637.755.755.333.143.89.328 1.98.378 1.22.056 1.582.068 4.725.068s3.505-.012 4.725-.068c1.09-.05 1.647.235 1.98-.378.373-.16.637-.397.755-.755.143-.333.328.89.378-1.98.056-1.22.068-1.582.068-4.725s-.012-3.505-.068-4.725c-.05-1.09-.235-1.647-.378-1.98a1.69 1.69 0 00-.755-.755c-.333-.143-.89-.328-1.98-.378C15.505 3.977 15.143 3.965 12 3.965zm0 3.273a4.762 4.762 0 100 9.524 4.762 4.762 0 000-9.524zm0 7.722a3.06 3.06 0 110-6.12 3.06 3.06 0 010 6.12zm4.758-7.868a1.128 1.128 0 100-2.255 1.128 1.128 0 000 2.255z"/></svg>
                 </a>
-                 <a href="polityka-prywatnosci.html" class="text-secondary hover:text-accent transition-colors duration-200" aria-label="Polityka Prywatności">
+                <a href="polityka-prywatnosci.html" class="text-secondary hover:text-accent transition-colors duration-200" aria-label="Polityka Prywatności">
                     Polityka Prywatności
                 </a>
             </div>
@@ -214,15 +271,14 @@
 
     <div id="confirmationModal" class="fixed inset-0 z-[70] items-center justify-center hidden p-4 modal">
         <div class="modal-content w-full max-w-md p-6 rounded-lg shadow-xl reveal">
-            <h3 class="text-xl font-semibold text-primary mb-4" id="modalTitle">Potwierdzenie Zakupu</h3>
-            <p class="text-secondary mb-6" id="modalMessage">Czy na pewno chcesz zakupić ten przedmiot?</p>
+            <h3 class="text-xl font-semibold text-primary mb-4" id="modalTitle">Potwierdzenie Akcji</h3>
+            <p class="text-secondary mb-6" id="modalMessage">Czy na pewno chcesz wykonać tę akcję?</p>
             <div class="flex justify-end space-x-3">
                 <button id="cancelButton" class="btn-secondary py-2 px-4 text-sm">Anuluj</button>
-                <button id="confirmButton" class="btn-primary py-2 px-4 text-sm">Potwierdź Zakup</button>
+                <button id="confirmButton" class="btn-primary py-2 px-4 text-sm">Potwierdź</button>
             </div>
         </div>
     </div>
-
 
     <script>
         // Funkcja do obsługi aktywnego linku w nawigacji
@@ -234,10 +290,12 @@
             navLinks.forEach(link => {
                 link.classList.remove('active');
                 const linkPage = link.getAttribute('href').split("/").pop() || "index.html";
-                
+
                 if (linkPage === currentPage) {
                     link.classList.add('active');
                 } else if (linkPage === 'wikipedia.html' && wikipediaSubPages.includes(currentPage)) {
+                    link.classList.add('active');
+                } else if (linkPage === 'dom-aukcyjny.html' && currentPage === 'dom-aukcyjny.html') {
                     link.classList.add('active');
                 }
             });
@@ -246,12 +304,14 @@
         async function updateAuthDisplay() {
             const authSectionNav = document.getElementById('auth-section-nav');
             const authSectionMobileNav = document.getElementById('auth-section-mobile-nav');
-            const mobileMenuLinksContainer = document.querySelector('#mobileMenu > div'); 
+            const mobileMenuLinksContainer = document.querySelector('#mobileMenu > div');
             const ADMIN_DISCORD_ID = "1238814802357387285"; // TODO: ZASTĄP RZECZYWISTYM ID ADMINA
+            const createAuctionFormContainer = document.getElementById('createAuctionFormContainer');
+            const createAuctionPrompt = document.getElementById('createAuctionPrompt');
 
             function createLoginButton(isMobile = false) {
                 const loginButton = document.createElement('a');
-                loginButton.href = '/auth/discord/login?redirect=' + encodeURIComponent(window.location.pathname + window.location.search); 
+                loginButton.href = '/auth/discord/login?redirect=' + encodeURIComponent(window.location.pathname + window.location.search);
                 loginButton.id = isMobile ? 'discordLoginButtonMobileNav' : 'discordLoginButtonNav';
                 loginButton.className = 'btn-discord !text-white px-4 py-2.5 rounded-md text-sm flex items-center' + (isMobile ? ' w-full justify-center mt-2' : '');
                 loginButton.innerHTML = `<svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 24 24"><path d="M20.297 0H3.703C1.658 0 0 1.658 0 3.703V20.297C0 22.342 1.658 24 3.703 24H20.297C22.342 24 24 22.342 24 20.297V3.703C24 1.658 22.342 0 20.297 0ZM8.107 15.232C7.089 15.232 6.241 14.384 6.241 13.366C6.241 12.348 7.089 11.5 8.107 11.5C9.125 11.5 9.973 12.348 9.973 13.366C9.973 14.384 9.125 15.232 8.107 15.232ZM12.000 11.071C10.982 11.071 10.134 10.223 10.134 9.205C10.134 8.188 10.982 7.339 12.000 7.339C13.018 7.339 13.866 8.188 13.866 9.205C13.866 10.223 13.018 11.071 12.000 11.071ZM15.893 15.232C14.875 15.232 14.027 14.384 14.027 13.366C14.027 12.348 14.875 11.5 15.893 11.5C16.911 11.5 17.759 12.348 17.759 13.366C17.759 14.384 16.911 15.232 15.893 15.232Z"/></svg> Zaloguj przez Discord`;
@@ -272,7 +332,7 @@
                 avatarImg.className = 'user-avatar';
                 avatarImg.onerror = () => { avatarImg.src = 'https://placehold.co/32x32/A78BFA/FFFFFF?text=U'; };
                 avatarImg.onclick = (event) => {
-                    event.stopPropagation(); 
+                    event.stopPropagation();
                     const dropdown = document.getElementById(dropdownId);
                     if (dropdown) dropdown.classList.toggle('open');
                 };
@@ -281,7 +341,7 @@
                 const dropdownMenu = document.createElement('div');
                 dropdownMenu.id = dropdownId;
                 dropdownMenu.className = 'dropdown-menu';
-                
+
                 const profileLink = document.createElement('a');
                 profileLink.href = 'profil.html';
                 profileLink.textContent = 'Mój Profil';
@@ -293,29 +353,29 @@
                 dropdownMenu.appendChild(auctionHouseLink);
 
                 const botShopLink = document.createElement('a');
-                botShopLink.href = '/sklep-bota'; 
+                botShopLink.href = '/sklep-bota.html';
                 botShopLink.textContent = 'Sklep Bota (Dukaty)';
                 dropdownMenu.appendChild(botShopLink);
-                
+
                 const premiumShopLink = document.createElement('a');
                 premiumShopLink.href = 'sklep-premium.html';
                 premiumShopLink.textContent = 'Sklep Premium (Kryształy)';
                 dropdownMenu.appendChild(premiumShopLink);
 
                 const supportTicketsLink = document.createElement('a');
-                supportTicketsLink.href = 'support.html'; 
+                supportTicketsLink.href = 'support.html';
                 supportTicketsLink.textContent = 'Centrum Wsparcia';
                 dropdownMenu.appendChild(supportTicketsLink);
 
                 if (user.id === ADMIN_DISCORD_ID) {
-                    const adminLinkElement = document.createElement('a'); 
-                    adminLinkElement.href = 'admin.html'; 
+                    const adminLinkElement = document.createElement('a');
+                    adminLinkElement.href = 'admin.html';
                     adminLinkElement.textContent = 'Panel Admina';
                     dropdownMenu.appendChild(adminLinkElement);
                 }
-                
+
                 const logoutForm = document.createElement('form');
-                logoutForm.action = '/auth/logout'; 
+                logoutForm.action = '/auth/logout';
                 logoutForm.method = 'POST';
                 const logoutButton = document.createElement('button');
                 logoutButton.type = 'submit';
@@ -326,35 +386,35 @@
                 container.appendChild(dropdownMenu);
                 return container;
             }
-            
+
             if (mobileMenuLinksContainer) {
                 const existingMobileAuthElements = mobileMenuLinksContainer.querySelectorAll('#discordLoginButtonMobileNav, #userDropdownContainerMobileMenu, .mobile-auth-item');
                 existingMobileAuthElements.forEach(el => el.remove());
             }
 
             try {
-                const response = await fetch('/api/me'); 
+                const response = await fetch('/api/me');
                 if (response.ok) {
                     const user = await response.json();
                     if (authSectionNav) {
-                        authSectionNav.innerHTML = ''; 
+                        authSectionNav.innerHTML = '';
                         authSectionNav.appendChild(createAvatarDropdown(user, false));
                     }
-                    if (authSectionMobileNav) { 
-                        authSectionMobileNav.innerHTML = ''; 
+                    if (authSectionMobileNav) {
+                        authSectionMobileNav.innerHTML = '';
                         authSectionMobileNav.appendChild(createAvatarDropdown(user, true));
                     }
                      if (mobileMenuLinksContainer) {
-                        const mobileDropdownContainer = createAvatarDropdown(user, true); 
+                        const mobileDropdownContainer = createAvatarDropdown(user, true);
                         mobileDropdownContainer.id = 'userDropdownContainerMobileMenu';
                         mobileDropdownContainer.classList.add('mt-2', 'border-t', 'border-[var(--border-card)]', 'pt-2', 'mobile-auth-item');
-                        
+
                         const mobileAvatar = mobileDropdownContainer.querySelector('.user-avatar');
                         const mobileDropdown = mobileDropdownContainer.querySelector('.dropdown-menu');
-                        
-                        if (mobileAvatar) mobileAvatar.classList.add('hidden'); 
+
+                        if (mobileAvatar) mobileAvatar.classList.add('hidden');
                         if (mobileDropdown) {
-                            mobileDropdown.classList.remove('absolute', 'top-full', 'right-0', 'dropdown-menu'); 
+                            mobileDropdown.classList.remove('absolute', 'top-full', 'right-0', 'dropdown-menu');
                             mobileDropdown.classList.add('space-y-1');
                             Array.from(mobileDropdown.children).forEach(child => {
                                 child.classList.add('block', 'py-2', 'px-3', 'text-base', 'font-medium', 'rounded-md', 'hover:bg-[rgba(var(--rgb-accent),0.1)]', 'hover:text-[var(--text-accent)]');
@@ -362,35 +422,40 @@
                             });
                         }
                     }
-                     // Po pomyślnym załadowaniu danych użytkownika, załaduj jego saldo
                     if (user && user.id) {
                         loadUserCurrencyBalance(user.id);
+                        loadUserInventory(user.id); // Load inventory for auction creation
+                        if (createAuctionFormContainer) createAuctionFormContainer.classList.remove('hidden');
+                        if (createAuctionPrompt) createAuctionPrompt.classList.add('hidden');
                     }
+                    loadActiveAuctions(); // Load auctions for everyone
 
                 } else {
                      if (authSectionNav) {
                         authSectionNav.innerHTML = '';
                         authSectionNav.appendChild(createLoginButton(false));
                     }
-                    if (authSectionMobileNav) { 
+                    if (authSectionMobileNav) {
                         authSectionMobileNav.innerHTML = '';
-                        authSectionMobileNav.appendChild(createLoginButton(true)); 
+                        authSectionMobileNav.appendChild(createLoginButton(true));
                     }
                     if (mobileMenuLinksContainer) {
-                        const mobileLoginButton = createLoginButton(true); 
+                        const mobileLoginButton = createLoginButton(true);
                         mobileLoginButton.classList.add('mt-2', 'border-t', 'border-[var(--border-card)]', 'pt-2', 'mobile-auth-item');
                         mobileMenuLinksContainer.appendChild(mobileLoginButton);
                     }
-                    // Jeśli użytkownik nie jest zalogowany, wyświetl komunikat
-                    document.getElementById('shopItemsContainer').innerHTML = `
+                    document.getElementById('activeAuctionsContainer').innerHTML = `
                         <div class="text-center py-10 col-span-full card-bg p-8 rounded-lg">
                             <h2 class="text-2xl font-semibold text-primary mb-4">Dostęp Wymaga Logowania</h2>
-                            <p class="text-secondary mb-6">Aby przeglądać Skarbiec Artefaktów, musisz być zalogowany.</p>
+                            <p class="text-secondary mb-6">Aby przeglądać Dom Aukcyjny, zaloguj się.</p>
                             <a href="/auth/discord/login?redirect=${encodeURIComponent(window.location.pathname + window.location.search)}" class="btn-discord inline-flex items-center">
                                 <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 24 24"><path d="M20.297 0H3.703C1.658 0 0 1.658 0 3.703V20.297C0 22.342 1.658 24 3.703 24H20.297C22.342 24 24 22.342 24 20.297V3.703C24 1.658 22.342 0 20.297 0ZM8.107 15.232C7.089 15.232 6.241 14.384 6.241 13.366C6.241 12.348 7.089 11.5 8.107 11.5C9.125 11.5 9.973 12.348 9.973 13.366C9.973 14.384 9.125 15.232 8.107 15.232ZM12.000 11.071C10.982 11.071 10.134 10.223 10.134 9.205C10.134 8.188 10.982 7.339 12.000 7.339C13.018 7.339 13.866 8.188 13.866 9.205C13.866 10.223 13.018 11.071 12.000 11.071ZM15.893 15.232C14.875 15.232 14.027 14.384 14.027 13.366C14.027 12.348 14.875 11.5 15.893 11.5C16.911 11.5 17.759 12.348 17.759 13.366C17.759 14.384 16.911 15.232 15.893 15.232Z"/></svg>
                                 Zaloguj się przez Discord
                             </a>
                         </div>`;
+                    if (createAuctionFormContainer) createAuctionFormContainer.classList.add('hidden');
+                    if (createAuctionPrompt) createAuctionPrompt.classList.remove('hidden');
+                    loadActiveAuctions(); // Load auctions for everyone, even if not logged in
                 }
             } catch (error) {
                 console.error('Błąd aktualizacji UI logowania:', error);
@@ -407,21 +472,26 @@
                     mobileLoginButton.classList.add('mt-2', 'border-t', 'border-[var(--border-card)]', 'pt-2', 'mobile-auth-item');
                     mobileMenuLinksContainer.appendChild(mobileLoginButton);
                 }
-                document.getElementById('shopItemsContainer').innerHTML = `<p class="text-center text-red-400 col-span-full py-10">Wystąpił błąd podczas ładowania sklepu. Spróbuj odświeżyć stronę.</p>`;
+                document.getElementById('activeAuctionsContainer').innerHTML = `<p class="text-center text-red-400 col-span-full py-10">Wystąpił błąd podczas ładowania strony. Spróbuj odświeżyć.</p>`;
+                if (createAuctionFormContainer) createAuctionFormContainer.classList.add('hidden');
+                if (createAuctionPrompt) {
+                    createAuctionPrompt.textContent = 'Wystąpił błąd. Spróbuj odświeżyć stronę.';
+                    createAuctionPrompt.classList.remove('hidden');
+                }
             }
         }
-        
+
         function setupMobileMenu() {
             const mobileMenuButton = document.getElementById('mobileMenuButton');
             const mobileMenu = document.getElementById('mobileMenu');
-            
+
             if (mobileMenuButton && mobileMenu) {
                 mobileMenuButton.addEventListener('click', () => {
                     const isExpanded = mobileMenuButton.getAttribute('aria-expanded') === 'true' || false;
                     mobileMenuButton.setAttribute('aria-expanded', String(!isExpanded));
                     mobileMenu.classList.toggle('open');
                 });
-                mobileMenu.querySelectorAll('a').forEach(link => { 
+                mobileMenu.querySelectorAll('a').forEach(link => {
                     link.addEventListener('click', () => {
                         mobileMenuButton.setAttribute('aria-expanded', 'false');
                         mobileMenu.classList.remove('open');
@@ -448,9 +518,9 @@
         function setupDropdownDismiss() {
             window.addEventListener('click', function(e) {
                 const desktopDropdownContainer = document.getElementById('userDropdownContainerNav');
-                const mobileDropdownContainer = document.getElementById('userDropdownContainerMobile'); 
+                const mobileDropdownContainer = document.getElementById('userDropdownContainerMobile');
                 const desktopDropdown = document.getElementById('userDropdownNav');
-                const mobileDropdown = document.getElementById('userDropdownMobile'); 
+                const mobileDropdown = document.getElementById('userDropdownMobile');
 
                 if (desktopDropdownContainer && !desktopDropdownContainer.contains(e.target) && desktopDropdown && desktopDropdown.classList.contains('open')) {
                     desktopDropdown.classList.remove('open');
@@ -461,133 +531,232 @@
             });
         }
 
-        async function loadShopItems() {
-            const container = document.getElementById('shopItemsContainer');
-            const statusDiv = document.getElementById('shopStatus');
+        async function loadActiveAuctions() {
+            const container = document.getElementById('activeAuctionsContainer');
+            const statusDiv = document.getElementById('auctionStatus');
             container.innerHTML = `
                 <div class="text-center py-10 col-span-full">
                     <div class="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 loading-spinner mx-auto mb-3"></div>
-                    <p class="text-secondary text-lg">Ładowanie przedmiotów sklepu...</p>
+                    <p class="text-secondary text-lg">Ładowanie aktywnych aukcji...</p>
                 </div>`;
             statusDiv.innerHTML = '';
 
             try {
-                const response = await fetch('/api/web/shop/items');
-                if (!response.ok) {
-                    throw new Error(`Błąd HTTP: ${response.status}`);
-                }
-                const items = await response.json();
+                // TODO: Zastąpić endpointem API /api/web/auctions
+                // Symulacja odpowiedzi API
+                await new Promise(resolve => setTimeout(resolve, 1500));
+                const auctions = [
+                     { id: '1', name: 'Magiczny Miecz Północy', current_bid: 1500, highest_bidder_name: 'Arcymag Gandalf', end_time: Date.now() + 3600000 * 5, item_image: 'https://placehold.co/100x100/8B5CF6/FFFFFF?text=Miecz', seller_name: 'Kowal Złotko' },
+                     { id: '2', name: 'Amulet Smoczej Krwi', current_bid: 850, highest_bidder_name: 'Łowca Vex', end_time: Date.now() + 3600000 * 12, item_image: 'https://placehold.co/100x100/8B5CF6/FFFFFF?text=Amulet', seller_name: 'Szaman Grok' },
+                     { id: '3', name: 'Rzadka Runa Mocy', current_bid: 2300, highest_bidder_name: 'Elfka Elara', end_time: Date.now() + 3600000 * 23, item_image: 'https://placehold.co/100x100/8B5CF6/FFFFFF?text=Runa', seller_name: 'Mistrz Run Thorek'}
+                ];
+                // const response = await fetch('/api/web/auctions');
+                // if (!response.ok) {
+                //     throw new Error(`Błąd HTTP: ${response.status}`);
+                // }
+                // const auctions = await response.json();
 
-                if (items && items.length > 0) {
-                    container.innerHTML = items.map((item, index) => {
-                        const costDukaty = item.cost_dukaty !== null ? `${item.cost_dukaty} ✨` : '';
-                        const costKrysztaly = item.cost_krysztaly !== null ? `${item.cost_krysztaly} 💠` : '';
-                        const priceString = [costDukaty, costKrysztaly].filter(Boolean).join(' lub ');
-                        const stockInfo = item.stock === -1 ? 'Nieskończony' : `Dostępnych: ${item.stock}`;
-                        
+                if (auctions && auctions.length > 0) {
+                    container.innerHTML = auctions.map((auction, index) => {
+                        const timeLeft = new Date(auction.end_time - Date.now()).toISOString().substr(11, 8); // Format HH:MM:SS
                         return `
-                            <div class="shop-item-card card-bg p-6 rounded-lg text-center flex flex-col items-center reveal" style="transition-delay: ${index * 0.05}s;">
-                                <div class="item-icon">${item.emoji || '🛍️'}</div>
-                                <h3 class="text-xl font-semibold text-primary mb-2">${item.name}</h3>
-                                <p class="text-secondary text-sm mb-3 flex-grow">${item.description}</p>
-                                <p class="item-price">${priceString}</p>
-                                <p class="text-sm text-secondary mb-4">${stockInfo}</p>
-                                <button class="btn-primary w-full purchase-button" 
-                                    data-item-id="${item.id}" 
-                                    data-item-name="${item.name}"
-                                    data-cost-dukaty="${item.cost_dukaty}"
-                                    data-cost-krysztaly="${item.cost_krysztaly}"
-                                    ${item.stock !== -1 && item.stock <= 0 ? 'disabled' : ''}>
-                                    ${item.stock !== -1 && item.stock <= 0 ? 'Wyprzedane' : 'Kup Teraz'}
+                            <div class="auction-item-card card-bg p-6 rounded-lg flex flex-col reveal" style="transition-delay: ${index * 0.05}s;">
+                                <img src="${auction.item_image}" alt="${auction.name}" class="w-full h-48 object-contain rounded-md mb-4 bg-gray-700/30 p-2">
+                                <h3 class="text-xl font-semibold text-primary mb-2">${auction.name}</h3>
+                                <p class="text-sm text-secondary mb-1">Sprzedający: <span class="font-medium text-accent">${auction.seller_name}</span></p>
+                                <p class="text-lg font-bold text-accent my-2">Aktualna oferta: ${auction.current_bid} ✨</p>
+                                <p class="text-sm text-secondary mb-1">Najwyższa oferta: <span class="font-medium text-primary">${auction.highest_bidder_name || 'Brak ofert'}</span></p>
+                                <p class="text-sm text-secondary mb-4">Koniec za: <span class="font-semibold text-amber-400">${timeLeft}</span></p>
+                                <input type="number" placeholder="Twoja oferta" class="form-input mb-3 text-sm py-2" id="bidAmount-${auction.id}" min="${auction.current_bid + (auction.bid_increment || 1)}">
+                                <button class="btn-primary w-full text-sm bid-button" data-auction-id="${auction.id}" data-auction-name="${auction.name}">
+                                    Licytuj
                                 </button>
                             </div>
                         `;
                     }).join('');
-                    
-                    document.querySelectorAll('.purchase-button').forEach(button => {
-                        button.addEventListener('click', async function() {
-                            const itemId = this.dataset.itemId;
-                            const itemName = this.dataset.itemName;
-                            const costDukaty = this.dataset.costDukaty !== 'null' ? parseInt(this.dataset.costDukaty) : null;
-                            const costKrysztaly = this.dataset.costKrysztaly !== 'null' ? parseInt(this.dataset.costKrysztaly) : null;
 
-                            let currencyType = null;
-                            if (costDukaty !== null && costKrysztaly !== null) {
-                                // Jeśli są obie waluty, zapytaj użytkownika lub domyślnie użyj dukatów
-                                if (!confirm(`Przedmiot "${itemName}" kosztuje ${costDukaty} ✨ lub ${costKrysztaly} 💠. Czy chcesz zapłacić Dukatami? (Anuluj dla Kryształów)`)) {
-                                    currencyType = 'krysztaly';
-                                } else {
-                                    currencyType = 'dukaty';
-                                }
-                            } else if (costDukaty !== null) {
-                                currencyType = 'dukaty';
-                            } else if (costKrysztaly !== null) {
-                                currencyType = 'krysztaly';
-                            } else {
-                                alert('Błąd: Przedmiot nie ma ustalonej ceny.');
+                    document.querySelectorAll('.bid-button').forEach(button => {
+                        button.addEventListener('click', function() {
+                            const auctionId = this.dataset.auctionId;
+                            const auctionName = this.dataset.auctionName;
+                            const bidAmountInput = document.getElementById(`bidAmount-${auctionId}`);
+                            const bidAmount = parseInt(bidAmountInput.value);
+                            // TODO: Walidacja kwoty oferty
+                            if (isNaN(bidAmount) || bidAmount <= 0) {
+                                alert("Wprowadź poprawną kwotę oferty.");
                                 return;
                             }
-
-                            // Pokaż modal potwierdzenia
-                            const modal = document.getElementById('confirmationModal');
-                            const modalTitle = document.getElementById('modalTitle'); // Dodano pobieranie modalTitle
-                            const modalMessage = document.getElementById('modalMessage');
-                            const confirmBtn = document.getElementById('confirmButton');
-                            const cancelBtn = document.getElementById('cancelButton');
-
-                            modalTitle.textContent = `Potwierdzenie Zakupu: ${itemName}`;
-                            modalMessage.textContent = `Czy na pewno chcesz zakupić "${itemName}" za ${cost} ${currencySymbol} ${currencyName}?`;
-                            modal.classList.remove('hidden');
-                            modal.classList.add('flex');
-
-                            const newConfirmBtn = confirmBtn.cloneNode(true);
-                            confirmBtn.parentNode.replaceChild(newConfirmBtn, confirmBtn);
-                            
-                            const newCancelBtn = cancelBtn.cloneNode(true);
-                            cancelBtn.parentNode.replaceChild(newCancelBtn, cancelBtn);
-
-                            newConfirmBtn.addEventListener('click', async () => {
-                                modal.classList.add('hidden');
-                                modal.classList.remove('flex');
-                                statusDiv.innerHTML = '<p class="text-secondary">Przetwarzanie zakupu...</p>';
-                                try {
-                                    const purchaseResponse = await fetch(`/api/web/shop/buy/${itemId}`, {
-                                        method: 'POST',
-                                        headers: { 'Content-Type': 'application/json' },
-                                        body: JSON.stringify({ currency_type: currencyType })
-                                    });
-                                    const result = await purchaseResponse.json();
-                                    if (purchaseResponse.ok && result.message) {
-                                        statusDiv.innerHTML = `<p class="text-green-400">${result.message}</p>`;
-                                        loadShopItems(); // Odśwież listę, aby zaktualizować stan magazynowy
-                                        loadUserCurrencyBalance(); // Odśwież saldo użytkownika
-                                    } else {
-                                        statusDiv.innerHTML = `<p class="text-red-400">${result.error || 'Wystąpił błąd podczas zakupu.'}</p>`;
-                                    }
-                                } catch (err) {
-                                    console.error('Błąd zakupu:', err);
-                                    statusDiv.innerHTML = `<p class="text-red-400">Wystąpił błąd sieciowy podczas zakupu.</p>`;
-                                }
-                            });
-                            newCancelBtn.addEventListener('click', () => {
-                                modal.classList.add('hidden');
-                                modal.classList.remove('flex');
-                                statusDiv.innerHTML = '<p class="text-secondary">Zakup anulowany.</p>';
-                            });
+                            handlePlaceBid(auctionId, auctionName, bidAmount);
                         });
                     });
 
-                    document.querySelectorAll('#shopItemsContainer .reveal').forEach(el => {
+                    document.querySelectorAll('#activeAuctionsContainer .reveal').forEach(el => {
                         setTimeout(() => el.classList.add('visible'), 10);
                     });
 
                 } else {
-                    container.innerHTML = '<p class="text-center text-secondary col-span-full py-10">Skarbiec jest obecnie pusty. Runa pracuje nad nowymi magicznymi przedmiotami!</p>';
+                    container.innerHTML = '<p class="text-center text-secondary col-span-full py-10 card-bg p-8 rounded-lg">Obecnie nie ma żadnych aktywnych aukcji. Sprawdź później!</p>';
                 }
             } catch (error) {
-                console.error('Błąd ładowania przedmiotów sklepu:', error);
-                container.innerHTML = `<p class="text-center text-red-400 col-span-full py-10">Wystąpił błąd podczas ładowania przedmiotów. Spróbuj odświeżyć stronę.</p>`;
+                console.error('Błąd ładowania aktywnych aukcji:', error);
+                container.innerHTML = `<p class="text-center text-red-400 col-span-full py-10 card-bg p-8 rounded-lg">Wystąpił błąd podczas ładowania aukcji. Spróbuj odświeżyć stronę.</p>`;
             }
+        }
+
+        async function loadUserInventory(discordUserId) {
+            const selectElement = document.getElementById('userInventorySelect');
+            if (!selectElement) return;
+            selectElement.innerHTML = '<option value="">Ładowanie ekwipunku...</option>';
+
+            try {
+                // TODO: Zastąpić endpointem API /api/bot-inventory/:discordUserId
+                // Symulacja odpowiedzi API
+                await new Promise(resolve => setTimeout(resolve, 1000));
+                const inventory = [
+                    { id: 'item1', name: 'Stary Pierścień', quantity: 1, emoji: '💍' },
+                    { id: 'item2', name: 'Mikstura Zdrowia', quantity: 5, emoji: '🧪' },
+                    { id: 'item3', name: 'Mapa Skarbów', quantity: 1, emoji: '🗺️' },
+                ];
+                // const response = await fetch(`/api/bot-inventory/${discordUserId}`);
+                // if (!response.ok) {
+                //     throw new Error(`Błąd HTTP: ${response.status}`);
+                // }
+                // const inventory = await response.json();
+
+                if (inventory && inventory.length > 0) {
+                    selectElement.innerHTML = '<option value="">-- Wybierz przedmiot --</option>';
+                    inventory.forEach(item => {
+                        const option = document.createElement('option');
+                        option.value = item.id;
+                        option.textContent = `${item.emoji || '📦'} ${item.name} (Ilość: ${item.quantity})`;
+                        selectElement.appendChild(option);
+                    });
+                } else {
+                    selectElement.innerHTML = '<option value="">Twój ekwipunek jest pusty.</option>';
+                }
+            } catch (error) {
+                console.error('Błąd ładowania ekwipunku użytkownika:', error);
+                selectElement.innerHTML = '<option value="">Błąd ładowania ekwipunku.</option>';
+            }
+        }
+
+        async function handleCreateAuction(event) {
+            event.preventDefault();
+            const statusDiv = document.getElementById('auctionStatus');
+            const form = document.getElementById('createAuctionForm');
+            const formData = new FormData(form);
+            const auctionData = Object.fromEntries(formData.entries());
+
+            // TODO: Walidacja danych formularza
+            if (!auctionData.itemId || !auctionData.startingPrice || !auctionData.bidIncrement || !auctionData.duration) {
+                statusDiv.innerHTML = `<p class="text-red-400">Wypełnij wszystkie pola formularza.</p>`;
+                return;
+            }
+
+            const itemName = form.userInventorySelect.options[form.userInventorySelect.selectedIndex].text;
+
+            const modal = document.getElementById('confirmationModal');
+            const modalTitle = document.getElementById('modalTitle');
+            const modalMessage = document.getElementById('modalMessage');
+            const confirmBtn = document.getElementById('confirmButton');
+            const cancelBtn = document.getElementById('cancelButton');
+
+            modalTitle.textContent = `Potwierdzenie Wystawienia Aukcji`;
+            modalMessage.textContent = `Czy na pewno chcesz wystawić "${itemName}" na aukcję za cenę wywoławczą ${auctionData.startingPrice} ✨?`;
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+
+            const newConfirmBtn = confirmBtn.cloneNode(true);
+            confirmBtn.parentNode.replaceChild(newConfirmBtn, confirmBtn);
+
+            const newCancelBtn = cancelBtn.cloneNode(true);
+            cancelBtn.parentNode.replaceChild(newCancelBtn, cancelBtn);
+
+            newConfirmBtn.addEventListener('click', async () => {
+                modal.classList.add('hidden');
+                modal.classList.remove('flex');
+                statusDiv.innerHTML = '<p class="text-secondary">Przetwarzanie tworzenia aukcji...</p>';
+                try {
+                    // TODO: Zastąpić endpointem API /api/web/auctions/create
+                    console.log('Tworzenie aukcji:', auctionData);
+                    await new Promise(resolve => setTimeout(resolve, 1000)); // Symulacja API
+                    // const response = await fetch('/api/web/auctions/create', {
+                    //     method: 'POST',
+                    //     headers: { 'Content-Type': 'application/json' },
+                    //     body: JSON.stringify(auctionData)
+                    // });
+                    // const result = await response.json();
+                    // if (response.ok && result.message) {
+                    statusDiv.innerHTML = `<p class="text-green-400">Aukcja dla "${itemName}" została pomyślnie utworzona!</p>`;
+                    form.reset();
+                    loadActiveAuctions(); // Odśwież listę aukcji
+                    // loadUserInventory(); // Odśwież ekwipunek (jeśli przedmiot jest usuwany po wystawieniu)
+                    // } else {
+                    //     statusDiv.innerHTML = `<p class="text-red-400">${result.error || 'Wystąpił błąd podczas tworzenia aukcji.'}</p>`;
+                    // }
+                } catch (err) {
+                    console.error('Błąd tworzenia aukcji:', err);
+                    statusDiv.innerHTML = `<p class="text-red-400">Wystąpił błąd sieciowy podczas tworzenia aukcji.</p>`;
+                }
+            });
+             newCancelBtn.addEventListener('click', () => {
+                modal.classList.add('hidden');
+                modal.classList.remove('flex');
+                statusDiv.innerHTML = '<p class="text-secondary">Tworzenie aukcji anulowane.</p>';
+            });
+        }
+
+        async function handlePlaceBid(auctionId, auctionName, amount) {
+            const statusDiv = document.getElementById('auctionStatus');
+
+            const modal = document.getElementById('confirmationModal');
+            const modalTitle = document.getElementById('modalTitle');
+            const modalMessage = document.getElementById('modalMessage');
+            const confirmBtn = document.getElementById('confirmButton');
+            const cancelBtn = document.getElementById('cancelButton');
+
+            modalTitle.textContent = `Potwierdzenie Licytacji`;
+            modalMessage.textContent = `Czy na pewno chcesz zalicytować ${amount} ✨ na przedmiot "${auctionName}"?`;
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+
+            const newConfirmBtn = confirmBtn.cloneNode(true);
+            confirmBtn.parentNode.replaceChild(newConfirmBtn, confirmBtn);
+
+            const newCancelBtn = cancelBtn.cloneNode(true);
+            cancelBtn.parentNode.replaceChild(newCancelBtn, cancelBtn);
+
+            newConfirmBtn.addEventListener('click', async () => {
+                modal.classList.add('hidden');
+                modal.classList.remove('flex');
+                statusDiv.innerHTML = '<p class="text-secondary">Przetwarzanie licytacji...</p>';
+                try {
+                    // TODO: Zastąpić endpointem API /api/web/auctions/:auctionId/bid
+                    console.log(`Licytowanie ${amount} na aukcję ${auctionId}`);
+                    await new Promise(resolve => setTimeout(resolve, 1000)); // Symulacja API call
+                    // const response = await fetch(`/api/web/auctions/${auctionId}/bid`, {
+                    //     method: 'POST',
+                    //     headers: { 'Content-Type': 'application/json' },
+                    //     body: JSON.stringify({ amount: amount })
+                    // });
+                    // const result = await response.json();
+                    // if (response.ok && result.message) {
+                    statusDiv.innerHTML = `<p class="text-green-400">Pomyślnie zalicytowano ${amount} ✨ na aukcję "${auctionName}"!</p>`;
+                    loadActiveAuctions(); // Odśwież listę aukcji
+                    loadUserCurrencyBalance(); // Odśwież saldo użytkownika
+                    // } else {
+                    //     statusDiv.innerHTML = `<p class="text-red-400">${result.error || 'Wystąpił błąd podczas licytacji.'}</p>`;
+                    // }
+                } catch (err) {
+                    console.error('Błąd licytacji:', err);
+                    statusDiv.innerHTML = `<p class="text-red-400">Wystąpił błąd sieciowy podczas licytacji.</p>`;
+                }
+            });
+            newCancelBtn.addEventListener('click', () => {
+                modal.classList.add('hidden');
+                modal.classList.remove('flex');
+                statusDiv.innerHTML = '<p class="text-secondary">Licytacja anulowana.</p>';
+            });
         }
 
         async function loadUserCurrencyBalance(discordUserId = null) {
@@ -611,6 +780,12 @@
                 }
             }
 
+            if (!discordUserId) { // If still no discordUserId (e.g. user not logged in)
+                 balanceElement.innerHTML = 'Zaloguj się, aby zobaczyć saldo i wystawić aukcje.';
+                 return;
+            }
+
+
             try {
                 const statsResponse = await fetch(`/api/bot-stats/${discordUserId}`);
                 if (statsResponse.ok) {
@@ -625,20 +800,23 @@
             }
         }
 
-
         document.addEventListener('DOMContentLoaded', function() {
             document.getElementById('currentYear').textContent = new Date().getFullYear();
-            
+
             if (!document.documentElement.classList.contains('light') && !document.documentElement.classList.contains('dark')) {
                  document.documentElement.classList.add('dark');
             }
 
             setActiveNavLink();
-            updateAuthDisplay(); // To wywoła loadUserCurrencyBalance jeśli użytkownik jest zalogowany
+            updateAuthDisplay();
             setupMobileMenu();
             setupRevealAnimations();
             setupDropdownDismiss();
-            loadShopItems(); // Załaduj przedmioty sklepu
+
+            const createAuctionForm = document.getElementById('createAuctionForm');
+            if (createAuctionForm) {
+                createAuctionForm.addEventListener('submit', handleCreateAuction);
+            }
         });
     </script>
 </body>

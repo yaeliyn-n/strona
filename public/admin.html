@@ -663,6 +663,11 @@
                 profileLink.href = new URL('profil.html', window.location.href).href;
                 profileLink.textContent = 'Mój Profil';
                 dropdownMenu.appendChild(profileLink);
+
+                const auctionHouseLink = document.createElement('a');
+                auctionHouseLink.href = new URL('dom-aukcyjny.html', window.location.href).href;
+                auctionHouseLink.textContent = 'Dom Aukcyjny';
+                dropdownMenu.appendChild(auctionHouseLink);
                 
                 const logoutForm = document.createElement('form');
                 logoutForm.action = new URL('/auth/logout', window.location.href).href;
