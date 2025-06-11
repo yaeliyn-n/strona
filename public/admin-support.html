@@ -366,6 +366,16 @@
                 siteLink.textContent = 'Strona Główna Serwisu';
                 dropdownMenu.appendChild(siteLink);
 
+                const profileLink = document.createElement('a');
+                profileLink.href = 'profil.html';
+                profileLink.textContent = 'Mój Profil';
+                dropdownMenu.appendChild(profileLink);
+
+                const auctionHouseLink = document.createElement('a');
+                auctionHouseLink.href = 'dom-aukcyjny.html';
+                auctionHouseLink.textContent = 'Dom Aukcyjny';
+                dropdownMenu.appendChild(auctionHouseLink);
+
                 const logoutForm = document.createElement('form');
                 logoutForm.action = '/auth/logout';
                 logoutForm.method = 'POST';
