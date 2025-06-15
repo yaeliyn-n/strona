@@ -214,6 +214,62 @@
 
         <section id="profile-details" class="py-16 sm:py-20 reveal">
             <div class="container mx-auto px-4 sm:px-6">
+
+                <section id="user-profile-details" class="mb-12 p-6 bg-bg-card rounded-xl shadow-xl">
+                    <div class="flex justify-between items-center mb-4">
+                        <h2 class="text-2xl font-semibold text-accent">Mój Profil Użytkownika</h2>
+                        <button id="editProfileButton" class="btn-secondary text-sm py-2 px-4" style="display: none;">Edytuj Profil</button>
+                    </div>
+
+                    {/* View Mode Div */}
+                    <div id="profileViewMode">
+                        <div class="mb-3"><strong class="text-secondary">Bio:</strong> <p id="viewBio" class="text-primary whitespace-pre-wrap">-</p></div>
+                        <div class="mb-3"><strong class="text-secondary">Ulubione Anime:</strong> <p id="viewFavoriteAnime" class="text-primary">-</p></div>
+                        <div class="mb-3"><strong class="text-secondary">Ulubiona Manga:</strong> <p id="viewFavoriteManga" class="text-primary">-</p></div>
+                        <div class="mb-3"><strong class="text-secondary">Strona WWW:</strong> <a id="viewWebsiteLink" href="#" class="text-accent hover:underline" target="_blank" rel="noopener noreferrer">-</a></div>
+                        <div class="mb-3"><strong class="text-secondary">Twitter:</strong> <a id="viewTwitterLink" href="#" class="text-accent hover:underline" target="_blank" rel="noopener noreferrer">-</a></div>
+                        <div class="mb-3"><strong class="text-secondary">Twitch:</strong> <a id="viewTwitchLink" href="#" class="text-accent hover:underline" target="_blank" rel="noopener noreferrer">-</a></div>
+                        <div class="mb-3"><strong class="text-secondary">YouTube:</strong> <a id="viewYouTubeLink" href="#" class="text-accent hover:underline" target="_blank" rel="noopener noreferrer">-</a></div>
+                    </div>
+
+                    {/* Edit Mode Form (initially hidden) */}
+                    <form id="profileEditForm" style="display: none;" class="space-y-4">
+                        <div>
+                            <label for="editBio" class="block text-sm font-medium text-secondary mb-1">Bio:</label>
+                            <textarea id="editBio" class="w-full p-2.5 rounded-md bg-bg-secondary border border-[var(--border-card)] focus:ring-2 focus:ring-[var(--text-accent)] focus:border-[var(--text-accent)] outline-none transition-colors text-primary placeholder-text-secondary" rows="4"></textarea>
+                        </div>
+                        <div>
+                            <label for="editFavoriteAnime" class="block text-sm font-medium text-secondary mb-1">Ulubione Anime:</label>
+                            <input type="text" id="editFavoriteAnime" class="w-full p-2.5 rounded-md bg-bg-secondary border border-[var(--border-card)] focus:ring-2 focus:ring-[var(--text-accent)] focus:border-[var(--text-accent)] outline-none transition-colors text-primary placeholder-text-secondary">
+                        </div>
+                        <div>
+                            <label for="editFavoriteManga" class="block text-sm font-medium text-secondary mb-1">Ulubiona Manga:</label>
+                            <input type="text" id="editFavoriteManga" class="w-full p-2.5 rounded-md bg-bg-secondary border border-[var(--border-card)] focus:ring-2 focus:ring-[var(--text-accent)] focus:border-[var(--text-accent)] outline-none transition-colors text-primary placeholder-text-secondary">
+                        </div>
+                        <div>
+                            <label for="editWebsiteLink" class="block text-sm font-medium text-secondary mb-1">Strona WWW (URL):</label>
+                            <input type="url" id="editWebsiteLink" class="w-full p-2.5 rounded-md bg-bg-secondary border border-[var(--border-card)] focus:ring-2 focus:ring-[var(--text-accent)] focus:border-[var(--text-accent)] outline-none transition-colors text-primary placeholder-text-secondary" placeholder="https://example.com">
+                        </div>
+                        <div>
+                            <label for="editTwitterLink" class="block text-sm font-medium text-secondary mb-1">Twitter URL (opcjonalnie):</label>
+                            <input type="url" id="editTwitterLink" class="w-full p-2.5 rounded-md bg-bg-secondary border border-[var(--border-card)] focus:ring-2 focus:ring-[var(--text-accent)] focus:border-[var(--text-accent)] outline-none transition-colors text-primary placeholder-text-secondary" placeholder="https://twitter.com/username">
+                        </div>
+                        <div>
+                            <label for="editTwitchLink" class="block text-sm font-medium text-secondary mb-1">Twitch URL (opcjonalnie):</label>
+                            <input type="url" id="editTwitchLink" class="w-full p-2.5 rounded-md bg-bg-secondary border border-[var(--border-card)] focus:ring-2 focus:ring-[var(--text-accent)] focus:border-[var(--text-accent)] outline-none transition-colors text-primary placeholder-text-secondary" placeholder="https://twitch.tv/username">
+                        </div>
+                        <div>
+                            <label for="editYouTubeLink" class="block text-sm font-medium text-secondary mb-1">YouTube URL (opcjonalnie):</label>
+                            <input type="url" id="editYouTubeLink" class="w-full p-2.5 rounded-md bg-bg-secondary border border-[var(--border-card)] focus:ring-2 focus:ring-[var(--text-accent)] focus:border-[var(--text-accent)] outline-none transition-colors text-primary placeholder-text-secondary" placeholder="https://youtube.com/channel/...">
+                        </div>
+                        <div class="flex space-x-3 justify-end">
+                            <button type="button" id="cancelEditProfileButton" class="btn-secondary text-sm py-2 px-4">Anuluj</button>
+                            <button type="submit" id="saveProfileButton" class="btn-primary text-sm py-2 px-4">Zapisz Zmiany</button>
+                        </div>
+                    </form>
+                    <div id="profileUpdateStatus" class="text-sm mt-3"></div>
+                </section>
+
                 <div class="mb-12">
                     <h2 class="text-2xl sm:text-3xl font-semibold text-primary mb-6 text-center sm:text-left">Twoje <span class="text-accent">Statystyki</span> w Kronikach</h2>
                     <div id="statsContainer" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 sm:gap-6">
@@ -317,11 +373,16 @@
             });
         }
 
+        let loggedInUser = null; // Store logged-in user data globally for convenience
+        let currentProfileData = {}; // Store the profile data of the user being viewed
+        let isOwnProfile = false; // Flag to indicate if viewing own profile
+        const GUILD_ID = "1375477258172502086"; // TODO: Move to a config if possible
+
         async function updateAuthDisplay() {
             const authSectionNav = document.getElementById('auth-section-nav');
             const authSectionMobileNav = document.getElementById('auth-section-mobile-nav');
             const mobileMenuLinksContainer = document.querySelector('#mobileMenu > div'); 
-            const ADMIN_DISCORD_ID = "1238814802357387285"; // TODO: ZASTĄP RZECZYWISTYM ID ADMINA
+            const ADMIN_DISCORD_ID = "1238814802357387285";
 
             function createLoginButton(isMobile = false) {
                 const loginButton = document.createElement('a');
@@ -407,19 +468,19 @@
             }
 
             try {
-                const response = await fetch('/api/me'); 
+                const response = await fetch('/api/me');
                 if (response.ok) {
-                    const user = await response.json();
+                    loggedInUser = await response.json();
                     if (authSectionNav) {
                         authSectionNav.innerHTML = ''; 
-                        authSectionNav.appendChild(createAvatarDropdown(user, false));
+                        authSectionNav.appendChild(createAvatarDropdown(loggedInUser, false));
                     }
                     if (authSectionMobileNav) { 
                         authSectionMobileNav.innerHTML = ''; 
-                        authSectionMobileNav.appendChild(createAvatarDropdown(user, true));
+                        authSectionMobileNav.appendChild(createAvatarDropdown(loggedInUser, true));
                     }
                      if (mobileMenuLinksContainer) {
-                        const mobileDropdownContainer = createAvatarDropdown(user, true); 
+                        const mobileDropdownContainer = createAvatarDropdown(loggedInUser, true);
                         mobileDropdownContainer.id = 'userDropdownContainerMobileMenu';
                         mobileDropdownContainer.classList.add('mt-2', 'border-t', 'border-[var(--border-card)]', 'pt-2', 'mobile-auth-item');
                         
@@ -436,41 +497,9 @@
                             });
                         }
                     }
-                     // Po pomyślnym załadowaniu danych użytkownika, załaduj jego statystyki i ekwipunek
-                    if (user && user.id) {
-                        loadUserStats(user.id);
-                        loadUserInventory(user.id);
-                        
-                        // Użyj tutaj RZECZYWISTEGO ID swojego serwera Discord
-                        const GUILD_ID = "1375477258172502086"; 
-                        
-                        // Sprawdzenie, czy GUILD_ID jest poprawnie ustawione
-                        if (!GUILD_ID || !/^\d+$/.test(GUILD_ID)) {
-                            document.getElementById('missionsLoadingError').innerHTML = '<p class="text-center text-red-400 py-6">Błąd konfiguracji: ID serwera (GUILD_ID) jest nieprawidłowe. Upewnij się, że jest ustawione w kodzie profil.html.</p>';
-                            document.getElementById('missionsLoadingError').classList.remove('hidden');
-                            document.getElementById('achievementsLoadingError').innerHTML = '<p class="text-center text-red-400 col-span-full py-6">Błąd konfiguracji: ID serwera (GUILD_ID) jest nieprawidłowe. Upewnij się, że jest ustawione w kodzie profil.html.</p>';
-                            document.getElementById('achievementsLoadingError').classList.remove('hidden');
-                            document.getElementById('warningsLoadingError').innerHTML = '<p class="text-center text-red-400 py-6">Błąd konfiguracji: ID serwera (GUILD_ID) jest nieprawidłowe. Upewnij się, że jest ustawione w kodzie profil.html.</p>';
-                            document.getElementById('warningsLoadingError').classList.remove('hidden');
-                            console.error("Błąd: GUILD_ID jest nieprawidłowe. Sprawdź profil.html.");
-                        } else {
-                            console.log(`Ładowanie danych dla użytkownika ${user.id} na serwerze ${GUILD_ID}`);
-                            loadUserMissions(user.id, GUILD_ID); 
-                            loadUserAchievements(user.id, GUILD_ID); 
-                            loadUserWarnings(user.id, GUILD_ID); 
-                        }
-
-                        document.getElementById('profileUsername').textContent = user.username || 'Brak nazwy użytkownika';
-                        document.getElementById('profileEmail').textContent = user.email || 'Brak adresu email';
-                        const largeAvatar = document.getElementById('profileAvatarLarge');
-                        if (largeAvatar) {
-                            largeAvatar.src = user.avatar ? `https://cdn.discordapp.com/avatars/${user.id}/${user.avatar}.png?size=128` : 'https://placehold.co/128x128/A78BFA/FFFFFF?text=U';
-                            largeAvatar.onerror = () => { largeAvatar.src = 'https://placehold.co/128x128/A78BFA/FFFFFF?text=U'; };
-                        }
-                    }
-
                 } else {
-                     if (authSectionNav) {
+                    loggedInUser = null;
+                    if (authSectionNav) {
                         authSectionNav.innerHTML = '';
                         authSectionNav.appendChild(createLoginButton(false));
                     }
@@ -483,37 +512,178 @@
                         mobileLoginButton.classList.add('mt-2', 'border-t', 'border-[var(--border-card)]', 'pt-2', 'mobile-auth-item');
                         mobileMenuLinksContainer.appendChild(mobileLoginButton);
                     }
-                    // Jeśli użytkownik nie jest zalogowany, wyświetl komunikat
-                    document.getElementById('profileUsername').textContent = 'Nie jesteś zalogowany';
-                    document.getElementById('profileEmail').textContent = 'Zaloguj się, aby zobaczyć swój profil.';
-                    document.getElementById('statsContainer').innerHTML = '<p class="text-center text-secondary col-span-full py-6">Zaloguj się, aby zobaczyć swoje statystyki.</p>';
-                    document.getElementById('inventoryContainer').innerHTML = '<p class="text-center text-secondary col-span-full py-6">Zaloguj się, aby zobaczyć swój ekwipunek.</p>';
-                    document.getElementById('missionsContainer').innerHTML = '<p class="text-center text-secondary py-6">Zaloguj się, aby zobaczyć swoje misje.</p>';
-                    document.getElementById('achievementsContainer').innerHTML = '<p class="text-center text-secondary col-span-full py-6">Zaloguj się, aby zobaczyć swoje osiągnięcia.</p>';
-                    document.getElementById('warningsContainer').innerHTML = '<p class="text-center text-secondary py-6">Zaloguj się, aby zobaczyć swoje ostrzeżenia.</p>'; 
                 }
             } catch (error) {
                 console.error('Błąd aktualizacji UI logowania:', error);
-                 if (authSectionNav) {
-                    authSectionNav.innerHTML = '';
-                    authSectionNav.appendChild(createLoginButton(false));
-                }
-                if (authSectionMobileNav) {
-                    authSectionMobileNav.innerHTML = '';
-                    authSectionMobileNav.appendChild(createLoginButton(true));
-                }
-                if (mobileMenuLinksContainer) {
+                loggedInUser = null;
+                if (authSectionNav) { authSectionNav.innerHTML = ''; authSectionNav.appendChild(createLoginButton(false)); }
+                if (authSectionMobileNav) { authSectionMobileNav.innerHTML = ''; authSectionMobileNav.appendChild(createLoginButton(true)); }
+                 if (mobileMenuLinksContainer) {
                     const mobileLoginButton = createLoginButton(true);
                     mobileLoginButton.classList.add('mt-2', 'border-t', 'border-[var(--border-card)]', 'pt-2', 'mobile-auth-item');
                     mobileMenuLinksContainer.appendChild(mobileLoginButton);
                 }
-                 document.getElementById('profileUsername').textContent = 'Błąd ładowania profilu';
-                 document.getElementById('profileLoadingError').textContent = 'Nie udało się załadować danych profilu. Spróbuj odświeżyć stronę.';
-                 document.getElementById('profileLoadingError').classList.remove('hidden');
             }
         }
         
-        async function loadUserStats(discordUserId) {
+        async function initializeProfilePage() {
+            await updateAuthDisplay(); // First, update auth elements and fetch loggedInUser
+
+            const params = new URLSearchParams(window.location.search);
+            const targetDiscordUserId = params.get('userId');
+            let userIdToFetch = null;
+
+            if (targetDiscordUserId) {
+                userIdToFetch = targetDiscordUserId;
+            } else if (loggedInUser && loggedInUser.id) {
+                userIdToFetch = loggedInUser.id;
+            }
+
+            const profileErrorDiv = document.getElementById('profileLoadingError');
+            const profileDetailsSection = document.getElementById('user-profile-details');
+            const editProfileButton = document.getElementById('editProfileButton');
+
+            if (!userIdToFetch) {
+                document.getElementById('profileUsername').textContent = 'Nie określono profilu';
+                document.getElementById('profileEmail').textContent = 'Podaj ID użytkownika w URL (np. profil.html?userId=DISCORD_ID) lub zaloguj się, aby zobaczyć swój profil.';
+                profileErrorDiv.textContent = 'Nie można załadować profilu. Brak ID użytkownika.';
+                profileErrorDiv.classList.remove('hidden');
+                if (profileDetailsSection) profileDetailsSection.style.display = 'none';
+                if (editProfileButton) editProfileButton.style.display = 'none';
+                // Clear other sections
+                document.getElementById('statsContainer').innerHTML = '<p class="text-center text-secondary col-span-full py-6">Nie określono profilu do wyświetlenia statystyk.</p>';
+                document.getElementById('inventoryContainer').innerHTML = '<p class="text-center text-secondary col-span-full py-6">Nie określono profilu do wyświetlenia ekwipunku.</p>';
+                document.getElementById('missionsContainer').innerHTML = '<p class="text-center text-secondary py-6">Nie określono profilu do wyświetlenia misji.</p>';
+                document.getElementById('achievementsContainer').innerHTML = '<p class="text-center text-secondary col-span-full py-6">Nie określono profilu do wyświetlenia osiągnięć.</p>';
+                document.getElementById('warningsContainer').innerHTML = '<p class="text-center text-secondary py-6">Nie określono profilu do wyświetlenia ostrzeżeń.</p>';
+                return;
+            }
+
+            isOwnProfile = loggedInUser && loggedInUser.id === userIdToFetch;
+            if (editProfileButton) {
+                editProfileButton.style.display = isOwnProfile ? 'inline-block' : 'none';
+            }
+
+            // Adjust title for user profile details section
+            const userProfileDetailsTitle = profileDetailsSection.querySelector('h2.text-2xl');
+            if (userProfileDetailsTitle) {
+                 userProfileDetailsTitle.textContent = isOwnProfile ? 'Mój Profil Użytkownika' : 'Profil Użytkownika';
+            }
+
+
+            try {
+                const profileApiResponse = await fetch(`/api/profile/${userIdToFetch}`);
+                if (profileApiResponse.ok) {
+                    const fullUserData = await profileApiResponse.json(); // Contains User model with 'profile' (UserProfile)
+
+                    document.title = `Profil: ${fullUserData.username || 'Nieznany'} - Kroniki Elary`;
+                    currentProfileData = fullUserData.profile || {}; // Store for editing form if it's own profile
+
+                    displayFullUserProfile(fullUserData, currentProfileData);
+
+                    // Load other user-specific data
+                    loadUserStats(userIdToFetch);
+                    loadUserInventory(userIdToFetch);
+                    if (!GUILD_ID || !/^\d+$/.test(GUILD_ID)) {
+                        console.error("Błąd: GUILD_ID jest nieprawidłowe.");
+                        // Display error for sections requiring GUILD_ID
+                        const errorMsg = '<p class="text-center text-red-400 py-6">Błąd konfiguracji: ID serwera jest nieprawidłowe.</p>';
+                        document.getElementById('missionsContainer').innerHTML = errorMsg;
+                        document.getElementById('achievementsContainer').innerHTML = errorMsg.replace('py-6', 'col-span-full py-6');
+                        document.getElementById('warningsContainer').innerHTML = errorMsg;
+                    } else {
+                        loadUserMissions(userIdToFetch, GUILD_ID);
+                        loadUserAchievements(userIdToFetch, GUILD_ID);
+                        loadUserWarnings(userIdToFetch, GUILD_ID);
+                    }
+                    profileErrorDiv.classList.add('hidden');
+                    if (profileDetailsSection) profileDetailsSection.style.display = 'block';
+
+
+                } else {
+                    const errorData = await profileApiResponse.json().catch(() => ({ message: 'Nie udało się odczytać błędu serwera' }));
+                    document.title = 'Profil Nie Znaleziony - Kroniki Elary';
+                    document.getElementById('profileUsername').textContent = 'Profil nie znaleziony';
+                    document.getElementById('profileEmail').textContent = `Nie można załadować profilu dla ID: ${userIdToFetch}.`;
+                    profileErrorDiv.textContent = `Błąd ładowania profilu: ${profileApiResponse.status} - ${errorData.message || errorData.error || 'Nieznany błąd'}`;
+                    profileErrorDiv.classList.remove('hidden');
+                    if (profileDetailsSection) profileDetailsSection.style.display = 'none';
+                     if (editProfileButton) editProfileButton.style.display = 'none';
+                }
+            } catch (error) {
+                console.error('Błąd ładowania danych profilu:', error);
+                document.title = 'Błąd Profilu - Kroniki Elary';
+                document.getElementById('profileUsername').textContent = 'Błąd ładowania';
+                profileErrorDiv.textContent = `Wystąpił błąd: ${error.message}. Spróbuj odświeżyć stronę.`;
+                profileErrorDiv.classList.remove('hidden');
+                if (profileDetailsSection) profileDetailsSection.style.display = 'none';
+                if (editProfileButton) editProfileButton.style.display = 'none';
+            }
+        }
+
+        function displayFullUserProfile(userData, profileDetails) {
+            // Update main user info (avatar, username, email)
+            document.getElementById('profileUsername').textContent = userData.username || 'Brak nazwy użytkownika';
+            document.getElementById('profileEmail').textContent = userData.email || ''; // Email might be sensitive, ensure it's okay to display for others
+            const largeAvatar = document.getElementById('profileAvatarLarge');
+            if (largeAvatar) {
+                largeAvatar.src = userData.avatar || 'https://placehold.co/128x128/A78BFA/FFFFFF?text=U';
+                largeAvatar.onerror = () => { largeAvatar.src = 'https://placehold.co/128x128/A78BFA/FFFFFF?text=U'; };
+            }
+
+            // Update profile-specific details section (bio, links, etc.)
+            document.getElementById('viewBio').textContent = profileDetails.bio || '-';
+            document.getElementById('viewFavoriteAnime').textContent = profileDetails.favoriteAnime || '-';
+            document.getElementById('viewFavoriteManga').textContent = profileDetails.favoriteManga || '-';
+
+            updateLinkElement(document.getElementById('viewWebsiteLink'), profileDetails.websiteLink);
+            updateLinkElement(document.getElementById('viewTwitterLink'), profileDetails.twitterLink);
+            updateLinkElement(document.getElementById('viewTwitchLink'), profileDetails.twitchLink);
+            updateLinkElement(document.getElementById('viewYouTubeLink'), profileDetails.youtubeLink);
+        }
+
+        function updateLinkElement(element, linkUrl) {
+            if (linkUrl) {
+                element.href = linkUrl;
+                element.textContent = linkUrl;
+                element.classList.remove('hidden'); // Ensure not hidden if URL exists
+                element.style.pointerEvents = 'auto';
+                element.style.opacity = '1';
+            } else {
+                element.textContent = '-';
+                element.href = '#'; // Prevent navigation for placeholder
+                element.style.pointerEvents = 'none'; // Make non-interactive
+                element.style.opacity = '0.6'; // Visually indicate disabled/empty
+            }
+        }
+
+        function toggleProfileEditMode(isEditing) {
+            const viewModeDiv = document.getElementById('profileViewMode');
+            const editForm = document.getElementById('profileEditForm');
+            const editButton = document.getElementById('editProfileButton'); // Main edit button
+
+            if (isEditing) {
+                viewModeDiv.style.display = 'none';
+                editForm.style.display = 'block';
+                if (editButton) editButton.style.display = 'none';
+
+                // Populate with currentProfileData (which should be the logged-in user's profile)
+                document.getElementById('editBio').value = currentProfileData.bio || '';
+                document.getElementById('editFavoriteAnime').value = currentProfileData.favoriteAnime || '';
+                document.getElementById('editFavoriteManga').value = currentProfileData.favoriteManga || '';
+                document.getElementById('editWebsiteLink').value = currentProfileData.websiteLink || '';
+                document.getElementById('editTwitterLink').value = currentProfileData.twitterLink || '';
+                document.getElementById('editTwitchLink').value = currentProfileData.twitchLink || '';
+                document.getElementById('editYouTubeLink').value = currentProfileData.youtubeLink || '';
+            } else {
+                viewModeDiv.style.display = 'block';
+                editForm.style.display = 'none';
+                if (editButton && isOwnProfile) editButton.style.display = 'inline-block';
+            }
+            document.getElementById('profileUpdateStatus').textContent = '';
+        }
+
+        async function loadUserStats(discordUserId) { // Renamed from currentUserProfile to currentProfileData for clarity
             const statsContainer = document.getElementById('statsContainer');
             const statsErrorContainer = document.getElementById('statsLoadingError');
             statsContainer.innerHTML = `
@@ -931,11 +1101,76 @@
                  document.documentElement.classList.add('dark');
             }
 
-            setActiveNavLink(); // Najpierw ustawiamy aktywne linki
-            updateAuthDisplay(); // Następnie aktualizujemy UI logowania, co może załadować dane profilu
+            setActiveNavLink();
+            initializeProfilePage(); // Main function to load profile data
             setupMobileMenu();
             setupRevealAnimations();
             setupDropdownDismiss();
+
+            // Event Listeners for Profile Editing
+            const editProfileButton = document.getElementById('editProfileButton');
+            const cancelEditProfileButton = document.getElementById('cancelEditProfileButton');
+            const profileEditForm = document.getElementById('profileEditForm');
+
+            if (editProfileButton) {
+                editProfileButton.addEventListener('click', () => toggleProfileEditMode(true));
+            }
+            if (cancelEditProfileButton) {
+                cancelEditProfileButton.addEventListener('click', () => {
+                    // Re-populate view with original data before toggling
+                    if (loggedInUser && currentProfileData) { // Ensure data is available
+                         displayFullUserProfile(loggedInUser, currentProfileData);
+                    }
+                    toggleProfileEditMode(false);
+                });
+            }
+            if (profileEditForm) {
+                profileEditForm.addEventListener('submit', async function(event) {
+                    event.preventDefault();
+                    const statusDiv = document.getElementById('profileUpdateStatus');
+                    statusDiv.textContent = 'Zapisywanie...';
+                    statusDiv.className = 'text-sm mt-3 text-amber-400';
+
+                    const profileDataToSubmit = {
+                        bio: document.getElementById('editBio').value.trim(),
+                        favoriteAnime: document.getElementById('editFavoriteAnime').value.trim(),
+                        favoriteManga: document.getElementById('editFavoriteManga').value.trim(),
+                        websiteLink: document.getElementById('editWebsiteLink').value.trim() || null,
+                        twitterLink: document.getElementById('editTwitterLink').value.trim() || null,
+                        twitchLink: document.getElementById('editTwitchLink').value.trim() || null,
+                        youtubeLink: document.getElementById('editYouTubeLink').value.trim() || null,
+                    };
+
+                    try {
+                        // Always PUT to /api/profile/me as only own profile can be edited via this form
+                        const response = await fetch('/api/profile/me', {
+                            method: 'PUT',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify(profileDataToSubmit)
+                        });
+
+                        if (response.ok) {
+                            const savedProfile = await response.json();
+                            currentProfileData = savedProfile; // Update global store for the viewed profile
+                            if(loggedInUser) { // loggedInUser should exist if they are editing
+                               displayFullUserProfile(loggedInUser, currentProfileData); // Update view
+                            }
+                            toggleProfileEditMode(false);
+                            statusDiv.textContent = 'Profil zaktualizowany pomyślnie!';
+                            statusDiv.className = 'text-sm mt-3 text-green-400';
+                        } else {
+                            const errorResult = await response.json().catch(() => ({error: "Nieznany błąd zapisu."}));
+                            statusDiv.textContent = `Błąd zapisu: ${errorResult.error}`;
+                            statusDiv.className = 'text-sm mt-3 text-red-400';
+                        }
+                    } catch (error) {
+                        console.error('Błąd zapisu profilu:', error);
+                        statusDiv.textContent = 'Wystąpił błąd sieciowy podczas zapisu.';
+                        statusDiv.className = 'text-sm mt-3 text-red-400';
+                    }
+                     setTimeout(() => { statusDiv.textContent = ''; }, 5000);
+                });
+            }
         });
     </script>
 </body>

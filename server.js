@@ -26,6 +26,8 @@
     const Category = require('./models/Category');
     const ArticleCategory = require('./models/ArticleCategory');
     const Comment = require('./models/Comment'); // Import Comment model
+    const User = require('./models/User'); // Import User model
+    const UserProfile = require('./models/UserProfile'); // Import UserProfile model
     const sequelize = require('./config/database');
 
 
@@ -57,6 +59,20 @@
     if (Article && Comment) {
         Article.hasMany(Comment, { foreignKey: 'articleId', as: 'comments' });
         Comment.belongsTo(Article, { foreignKey: 'articleId', as: 'article' });
+    }
+
+    // Associations for User and UserProfile
+    if (User && UserProfile) {
+        User.hasOne(UserProfile, {
+            foreignKey: 'discordUserId', // This will be the column name in UserProfile table
+            sourceKey: 'discordUserId',   // This is the column name in User table
+            as: 'profile',
+            onDelete: 'CASCADE' // If a User is deleted, their profile is also deleted
+        });
+        UserProfile.belongsTo(User, {
+            foreignKey: 'discordUserId', // This will be the column name in UserProfile table
+            targetKey: 'discordUserId'    // This is the column name in User table
+        });
     }
 
 
@@ -321,13 +337,29 @@
             console.error("Błąd pobierania danych użytkownika Discord:", userData);
             return res.status(500).send(`Błąd podczas pobierania danych użytkownika Discord: ${userData.message}`);
         }
-        req.session.user = {
-          id: userData.id,
-          username: `${userData.username}${userData.discriminator === "0" || userData.discriminator === null ? "" : `#${userData.discriminator}`}`,
-          email: userData.email,
-          avatar: userData.avatar
+
+        const userToStore = {
+            discordUserId: userData.id,
+            username: `${userData.username}${userData.discriminator === "0" || userData.discriminator === null ? "" : `#${userData.discriminator}`}`,
+            email: userData.email,
+            avatar: userData.avatar ? `https://cdn.discordapp.com/avatars/${userData.id}/${userData.avatar}.png` : null
         };
-        console.log("Użytkownik zalogowany:", req.session.user);
+
+        try {
+            await User.upsert(userToStore);
+            console.log("Użytkownik zapisany/zaktualizowany w bazie danych:", userToStore.discordUserId);
+        } catch (dbError) {
+            console.error("Błąd zapisu użytkownika w bazie danych:", dbError);
+            // Kontynuuj nawet jeśli jest błąd DB, sesja jest ważniejsza dla działania strony
+        }
+
+        req.session.user = { // Store same structure in session for consistency
+          id: userData.id, // discordUserId is stored as 'id' in session for legacy compatibility with isAdmin etc.
+          username: userToStore.username,
+          email: userToStore.email,
+          avatar: userToStore.avatar
+        };
+        console.log("Użytkownik zalogowany (sesja):", req.session.user);
 
         const redirectTo = req.session.redirectTo || (isAdmin(req) ? '/admin.html' : '/profil.html');
         delete req.session.redirectTo;
@@ -622,26 +654,292 @@
     });
 
     app.delete('/api/admin/articles/:id', async (req, res) => {
-        // ... (istniejąca implementacja)
+      if (!isAdmin(req)) return res.status(403).json({ error: 'Forbidden' });
+      const { id } = req.params;
+      try {
+        const article = await Article.findByPk(id);
+        if (!article) return res.status(404).json({ error: 'Artykuł nie znaleziony.' });
+
+        // Usuń powiązania z kategoriami przed usunięciem artykułu
+        await article.setCategories([]);
+
+        await article.destroy();
+        res.status(200).json({ message: 'Artykuł został usunięty.' });
+      } catch (error) {
+        console.error(`Błąd podczas usuwania artykułu ID ${id}:`, error);
+        res.status(500).json({ error: 'Błąd serwera.' });
+      }
     });
 
     // API Kategorii Artykułów (Admin)
     app.post('/api/admin/categories', async (req, res) => {
-        // ... (istniejąca implementacja)
+        if (!isAdmin(req)) return res.status(403).json({ error: 'Forbidden' });
+        const { name, slug: providedSlug } = req.body;
+        if (!name || name.trim() === '') {
+            return res.status(400).json({ error: 'Nazwa kategorii jest wymagana.' });
+        }
+        try {
+            let slug = providedSlug ? await generateUniqueCategorySlug(providedSlug) : await generateUniqueCategorySlug(name);
+            if (providedSlug && providedSlug !== slug) {
+                console.warn(`Podany slug kategorii "${providedSlug}" nie był unikalny. Zmieniono na "${slug}".`);
+            }
+            const newCategory = await Category.create({ name, slug });
+            res.status(201).json(newCategory);
+        } catch (error) {
+            console.error('Błąd podczas tworzenia nowej kategorii:', error);
+            if (error.name === 'SequelizeValidationError' || error.name === 'SequelizeUniqueConstraintError') {
+                return res.status(400).json({ error: 'Błąd walidacji: ' + error.errors.map(e => e.message).join(', ') });
+            }
+            res.status(500).json({ error: 'Błąd serwera podczas tworzenia kategorii.' });
+        }
     });
     app.get('/api/admin/categories', async (req, res) => {
-        // ... (istniejąca implementacja)
+        if (!isAdmin(req)) return res.status(403).json({ error: 'Forbidden' });
+        try {
+            const categories = await Category.findAll({ order: [['name', 'ASC']] });
+            res.json(categories);
+        } catch (error) {
+            console.error('Błąd pobierania kategorii dla admina:', error);
+            res.status(500).json({ error: 'Błąd serwera.' });
+        }
     });
     app.put('/api/admin/categories/:categoryId', async (req, res) => {
-        // ... (istniejąca implementacja)
+        if (!isAdmin(req)) return res.status(403).json({ error: 'Forbidden' });
+        const { categoryId } = req.params;
+        const { name, slug: newSlug } = req.body;
+        if (!name || name.trim() === '') {
+            return res.status(400).json({ error: 'Nazwa kategorii jest wymagana.' });
+        }
+        try {
+            const category = await Category.findByPk(categoryId);
+            if (!category) {
+                return res.status(404).json({ error: 'Kategoria nie została znaleziona.' });
+            }
+            category.name = name;
+            if (newSlug && newSlug !== category.slug) {
+                category.slug = await generateUniqueCategorySlug(newSlug, category.id);
+            } else if (!newSlug && name !== category.name) { // Regenerate slug if name changed and no new slug provided
+                category.slug = await generateUniqueCategorySlug(name, category.id);
+            }
+            await category.save();
+            res.json(category);
+        } catch (error) {
+            console.error(`Błąd aktualizacji kategorii ID ${categoryId}:`, error);
+            if (error.name === 'SequelizeValidationError' || error.name === 'SequelizeUniqueConstraintError') {
+                return res.status(400).json({ error: 'Błąd walidacji: ' + error.errors.map(e => e.message).join(', ') });
+            }
+            res.status(500).json({ error: 'Błąd serwera.' });
+        }
     });
     app.delete('/api/admin/categories/:categoryId', async (req, res) => {
-        // ... (istniejąca implementacja)
+        if (!isAdmin(req)) return res.status(403).json({ error: 'Forbidden' });
+        const { categoryId } = req.params;
+        try {
+            const category = await Category.findByPk(categoryId);
+            if (!category) {
+                return res.status(404).json({ error: 'Kategoria nie została znaleziona.' });
+            }
+            // Before deleting a category, we must remove its associations with articles.
+            // This prevents foreign key constraint errors if articles are linked to this category.
+            await category.setArticles([]); // Assuming 'setArticles' is the method from belongsToMany association
+
+            await category.destroy();
+            res.status(200).json({ message: 'Kategoria została usunięta.' });
+        } catch (error) {
+            console.error(`Błąd podczas usuwania kategorii ID ${categoryId}:`, error);
+             // Detailed error logging for FK constraint
+            if (error.name === 'SequelizeForeignKeyConstraintError') {
+                console.error('SequelizeForeignKeyConstraintError details:', error.parent || error);
+                return res.status(400).json({
+                    error: 'Nie można usunąć kategorii, ponieważ istnieją artykuły do niej przypisane. Usuń lub zmień kategorię tych artykułów najpierw.',
+                    details: error.message
+                });
+            }
+            res.status(500).json({ error: 'Błąd serwera podczas usuwania kategorii.' });
+        }
     });
 
     // API Admina dla Komentarzy
     app.delete('/api/admin/comments/:commentId', async (req, res) => {
-        // ... (istniejąca implementacja)
+        if (!isAdmin(req)) return res.status(403).json({ error: 'Forbidden' });
+        const { commentId } = req.params;
+        try {
+            const comment = await Comment.findByPk(commentId);
+            if (!comment) {
+                return res.status(404).json({ error: 'Komentarz nie został znaleziony.' });
+            }
+            await comment.destroy();
+            res.status(200).json({ message: 'Komentarz został usunięty.' });
+        } catch (error) {
+            console.error(`Błąd podczas usuwania komentarza ID ${commentId}:`, error);
+            res.status(500).json({ error: 'Błąd serwera podczas usuwania komentarza.' });
+        }
+    });
+
+    // --- API Profilu Użytkownika ---
+    app.get('/api/profile/me', async (req, res) => {
+        if (!req.session.user || !req.session.user.id) {
+            return res.status(401).json({ error: 'Unauthorized - Musisz być zalogowany.' });
+        }
+        try {
+            const user = await User.findOne({
+                where: { discordUserId: req.session.user.id },
+                include: [{ model: UserProfile, as: 'profile' }]
+            });
+
+            if (!user) {
+                // This case should ideally not happen if a session exists for a user ID
+                // that was previously validated and stored/looked up in User table.
+                console.warn(`User with session ID ${req.session.user.id} not found in database for /api/profile/me.`);
+                return res.status(404).json({ error: 'Użytkownik nie znaleziony w bazie danych.' });
+            }
+            res.json(user); // user object will include 'profile' if associated, or it will be null.
+        } catch (error) {
+            console.error(`Błąd podczas pobierania własnego profilu dla ${req.session.user.id}:`, error);
+            res.status(500).json({ error: 'Błąd serwera podczas pobierania profilu.' });
+        }
+    });
+
+    app.get('/api/profile/:discordUserId', async (req, res) => {
+        const { discordUserId } = req.params;
+        try {
+            const user = await User.findOne({
+                where: { discordUserId: discordUserId },
+                include: [{
+                    model: UserProfile,
+                    as: 'profile' // Verified this alias
+                }]
+            });
+
+            if (!user) {
+                return res.status(404).json({ error: 'Użytkownik nie znaleziony.' });
+            }
+            res.json(user);
+        } catch (error) {
+            console.error(`Błąd podczas pobierania profilu dla ${discordUserId}:`, error);
+            res.status(500).json({ error: 'Błąd serwera podczas pobierania profilu.' });
+        }
+    });
+
+    app.put('/api/profile/:discordUserId', async (req, res) => {
+        const { discordUserId } = req.params;
+
+        if (!req.session.user || (req.session.user.id !== discordUserId && !isAdmin(req))) {
+            return res.status(403).json({ error: 'Forbidden - Brak uprawnień do edycji tego profilu.' });
+        }
+
+        // Fields to update, ensure these match UserProfile model definition
+        const { bio, favoriteAnime, favoriteManga, websiteLink, twitterLink, twitchLink, youtubeLink } = req.body;
+        const profileDataToUpdate = {};
+
+        // Only add fields to update if they are provided in the request body
+        if (req.body.hasOwnProperty('bio')) profileDataToUpdate.bio = bio;
+        if (req.body.hasOwnProperty('favoriteAnime')) profileDataToUpdate.favoriteAnime = favoriteAnime;
+        if (req.body.hasOwnProperty('favoriteManga')) profileDataToUpdate.favoriteManga = favoriteManga;
+        if (req.body.hasOwnProperty('websiteLink')) profileDataToUpdate.websiteLink = websiteLink;
+        if (req.body.hasOwnProperty('twitterLink')) profileDataToUpdate.twitterLink = twitterLink;
+        if (req.body.hasOwnProperty('twitchLink')) profileDataToUpdate.twitchLink = twitchLink;
+        if (req.body.hasOwnProperty('youtubeLink')) profileDataToUpdate.youtubeLink = youtubeLink;
+
+        // If no valid fields to update are provided
+        if (Object.keys(profileDataToUpdate).length === 0) {
+            return res.status(400).json({ error: 'Brak danych do aktualizacji.' });
+        }
+
+        try {
+            const user = await User.findByPk(discordUserId);
+            if (!user) {
+                return res.status(404).json({ error: 'Użytkownik (User) nie znaleziony. Nie można utworzyć/zaktualizować profilu.' });
+            }
+
+            // Upsert the profile. This will create if not exists, or update if exists.
+            // The 'defaults' option in findOrCreate is good for creation,
+            // but for partial updates on existing records, findOne then update or manual upsert logic is better.
+            // UserProfile.upsert() is simpler if all fields are set or have defaults in model.
+            // For partial updates, find or create then selectively update is safer.
+
+            let profile = await UserProfile.findOne({ where: { discordUserId: discordUserId } });
+            let httpStatus = 200;
+
+            if (profile) {
+                // Update existing profile
+                await profile.update(profileDataToUpdate);
+            } else {
+                // Create new profile
+                // Ensure discordUserId is part of the creation data
+                profileDataToUpdate.discordUserId = discordUserId;
+                profile = await UserProfile.create(profileDataToUpdate);
+                httpStatus = 201;
+            }
+
+            // Fetch the parent User model again to include the (potentially new/updated) profile
+            const userWithProfile = await User.findOne({
+                where: { discordUserId: discordUserId },
+                include: [{ model: UserProfile, as: 'profile' }]
+            });
+
+            res.status(httpStatus).json(userWithProfile.profile); // Return only the profile part
+        } catch (error) {
+            console.error(`Błąd podczas aktualizacji/tworzenia profilu dla ${discordUserId}:`, error);
+            if (error.name === 'SequelizeValidationError') {
+                return res.status(400).json({ error: 'Błąd walidacji: ' + error.errors.map(e => e.message).join(', ') });
+            }
+            res.status(500).json({ error: 'Błąd serwera podczas aktualizacji/tworzenia profilu.' });
+        }
+    });
+
+    app.put('/api/profile/me', async (req, res) => {
+        if (!req.session.user || !req.session.user.id) {
+            return res.status(401).json({ error: 'Unauthorized - Musisz być zalogowany.' });
+        }
+        const discordUserId = req.session.user.id;
+
+        const { bio, favoriteAnime, favoriteManga, websiteLink, twitterLink, twitchLink, youtubeLink } = req.body;
+        const profileDataToUpdate = {};
+
+        if (req.body.hasOwnProperty('bio')) profileDataToUpdate.bio = bio;
+        if (req.body.hasOwnProperty('favoriteAnime')) profileDataToUpdate.favoriteAnime = favoriteAnime;
+        if (req.body.hasOwnProperty('favoriteManga')) profileDataToUpdate.favoriteManga = favoriteManga;
+        if (req.body.hasOwnProperty('websiteLink')) profileDataToUpdate.websiteLink = websiteLink;
+        if (req.body.hasOwnProperty('twitterLink')) profileDataToUpdate.twitterLink = twitterLink;
+        if (req.body.hasOwnProperty('twitchLink')) profileDataToUpdate.twitchLink = twitchLink;
+        if (req.body.hasOwnProperty('youtubeLink')) profileDataToUpdate.youtubeLink = youtubeLink;
+
+        if (Object.keys(profileDataToUpdate).length === 0) {
+            return res.status(400).json({ error: 'Brak danych do aktualizacji.' });
+        }
+
+        try {
+            const user = await User.findByPk(discordUserId);
+            if (!user) {
+                // Should not happen if session is valid
+                return res.status(404).json({ error: 'Użytkownik (User) nie znaleziony.' });
+            }
+
+            let profile = await UserProfile.findOne({ where: { discordUserId: discordUserId } });
+            let httpStatus = 200;
+
+            if (profile) {
+                await profile.update(profileDataToUpdate);
+            } else {
+                profileDataToUpdate.discordUserId = discordUserId;
+                profile = await UserProfile.create(profileDataToUpdate);
+                httpStatus = 201;
+            }
+
+            const userWithProfile = await User.findOne({
+                where: { discordUserId: discordUserId },
+                include: [{ model: UserProfile, as: 'profile' }]
+            });
+
+            res.status(httpStatus).json(userWithProfile.profile); // Return only the profile part
+        } catch (error) {
+            console.error(`Błąd podczas aktualizacji/tworzenia własnego profilu dla ${discordUserId}:`, error);
+            if (error.name === 'SequelizeValidationError') {
+                return res.status(400).json({ error: 'Błąd walidacji: ' + error.errors.map(e => e.message).join(', ') });
+            }
+            res.status(500).json({ error: 'Błąd serwera podczas aktualizacji/tworzenia profilu.' });
+        }
     });
 
     // ENDPOINTY ADMINA DLA SKLEPU (proxy do API bota)
