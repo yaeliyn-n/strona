@@ -128,15 +128,23 @@
         </section>
         
         <section id="dolacz-wiki" class="py-16 sm:py-20 reveal">
-            {/* ... existing content ... */}
+            <div class="container mx-auto px-4 sm:px-6 text-center">
+                <h2 class="text-3xl sm:text-4xl font-bold text-primary mb-6">Masz Pytania lub Chcesz Coś Dodać?</h2>
+                <p class="text-lg text-secondary mb-10 max-w-xl mx-auto">
+                    Nasza społeczność i Strażnicy są zawsze gotowi pomóc. Dołącz do dyskusji na Discordzie! Możesz także <a href="submit-wiki-page.html" class="text-accent hover:underline font-semibold">zaproponować własną stronę</a> do Wikipedii.
+                </p>
+                <a href="https://discord.gg/TWOJLINKZAPROSZENIOWY" target="_blank" rel="noopener noreferrer" class="btn-discord font-semibold py-3.5 px-8 text-lg inline-flex items-center shadow-xl">
+                    <svg class="w-6 h-6 mr-3" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20.297 0H3.703C1.658 0 0 1.658 0 3.703V20.297C0 22.342 1.658 24 3.703 24H20.297C22.342 24 24 22.342 24 20.297V3.703C24 1.658 22.342 0 20.297 0ZM8.107 15.232C7.089 15.232 6.241 14.384 6.241 13.366C6.241 12.348 7.089 11.5 8.107 11.5C9.125 11.5 9.973 12.348 9.973 13.366C9.973 14.384 9.125 15.232 8.107 15.232ZM12.000 11.071C10.982 11.071 10.134 10.223 10.134 9.205C10.134 8.188 10.982 7.339 12.000 7.339C13.018 7.339 13.866 8.188 13.866 9.205C13.866 10.223 13.018 11.071 12.000 11.071ZM15.893 15.232C14.875 15.232 14.027 14.384 14.027 13.366C14.027 12.348 14.875 11.5 15.893 11.5C16.911 11.5 17.759 12.348 17.759 13.366C17.759 14.384 16.911 15.232 15.893 15.232Z"/></svg>
+                    Przejdź na Discord
+                </a>
+            </div>
         </section>
     </main>
 
     <footer class="py-12 text-center" style="background-color: var(--bg-header);">
        </footer>
 
-    <div id="eventModal" class="fixed inset-0 z-[60] items-center justify-center hidden p-4 modal">
-    </div>
+    <div id="eventModal" class="fixed inset-0 z-[60] items-center justify-center hidden p-4 modal"></div>
 
     <script src="js/main.js" defer></script>
     <script>
@@ -214,8 +222,7 @@
             let apiUrl = '/api/wiki/pages';
             if (categorySlug) {
                 apiUrl += `?category=${categorySlug}`;
-                // Update title/subtitle
-                await fetchAllWikiCategories(); // Ensure categories are loaded
+                await fetchAllWikiCategories();
                 const currentCategory = allWikiCategories.find(c => c.slug === categorySlug);
                 if (currentCategory) {
                     mainTitleEl.textContent = `Kategoria Wiki: ${currentCategory.name}`;
@@ -269,12 +276,11 @@
 
         function handleStateChange() {
             fetchAndDisplayWikiPages();
-            fetchAndDisplayWikiCategoriesFilterList(); // Also update active state of category list
+            fetchAndDisplayWikiCategoriesFilterList();
         }
 
         document.addEventListener('DOMContentLoaded', () => {
-            handleStateChange(); // Initial load
-            // The main.js script will handle common elements like header/footer population
+            handleStateChange();
         });
 
         window.addEventListener('popstate', handleStateChange);

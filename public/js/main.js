@@ -47,6 +47,8 @@ function setActiveNavLink() {
             link.classList.add('active');
         } else if (linkPage === 'blog.html' && (currentPage === 'blog.html' || currentPage === 'article-view.html')) {
             link.classList.add('active');
+        } else if (linkPage === 'gallery.html' && currentPage === 'gallery.html') { // Added for Gallery
+            link.classList.add('active');
         }
     });
 }

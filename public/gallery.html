@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="pl" class="scroll-smooth dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Galeria fan artów stworzonych przez społeczność Kronik Elary. Przeglądaj i podziwiaj twórczość naszych graczy.">
+    <meta name="keywords" content="kroniki elary, fan art, galeria, grafika, rysunki, twórczość społeczności, discord, anime, manga">
+    <meta name="author" content="Arcadius & Strażnicy Kronik Elary">
+    <title>Galeria Fan Art - Kroniki Elary</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-primary: #0F172A;
+            --bg-secondary: #1E293B;
+            --bg-card: #111827;
+            --bg-header: rgba(15, 23, 42, 0.92);
+            --text-primary: #E2E8F0;
+            --text-secondary: #94A3B8;
+            --text-accent: #A78BFA;
+            --text-accent-hover: #8B5CF6;
+            --border-accent: #8B5CF6;
+            --border-card: rgba(167, 139, 250, 0.15);
+            --btn-primary-bg: #8B5CF6;
+            --btn-primary-hover-bg: #7C3AED;
+            --modal-backdrop: rgba(15, 23, 42, 0.85); /* Semi-transparent dark backdrop */
+        }
+        html.light {
+            --bg-primary: #F9FAFB;
+            --bg-secondary: #F3F4F6;
+            --bg-card: #FFFFFF;
+            --bg-header: rgba(255, 255, 255, 0.95);
+            --text-primary: #1F2937;
+            --text-secondary: #4B5563;
+            --text-accent: #7C3AED;
+            --text-accent-hover: #6D28D9;
+            --border-accent: #7C3AED;
+            --border-card: rgba(124, 58, 237, 0.1);
+            --btn-primary-bg: #7C3AED;
+            --btn-primary-hover-bg: #6D28D9;
+            --modal-backdrop: rgba(243, 244, 246, 0.85); /* Semi-transparent light backdrop */
+        }
+        body { font-family: 'Inter', sans-serif; background-color: var(--bg-primary); color: var(--text-primary); }
+        h1, h2, h3 { font-family: 'Lora', serif; font-weight: 600; }
+        .btn-primary { background-color: var(--btn-primary-bg); color: white; padding: 0.65rem 1.25rem; border-radius: 0.5rem; font-weight: 500; transition: background-color 0.2s ease; text-decoration: none; }
+        .btn-primary:hover { background-color: var(--btn-primary-hover-bg); }
+        .btn-secondary { background-color: transparent; border: 2px solid var(--border-accent); color: var(--text-accent); padding: calc(0.65rem - 2px) calc(1.25rem - 2px); border-radius: 0.5rem; font-weight: 500; transition: background-color 0.2s ease, color 0.2s ease; text-decoration: none;}
+        .btn-secondary:hover { background-color: var(--border-accent); color: white; }
+        .loading-spinner { border-color: var(--text-accent) transparent var(--text-accent) transparent; width: 2.5rem; height: 2.5rem; border-width: 3px; }
+        .gallery-item-full img { transition: transform 0.3s ease-out, filter 0.3s ease-out; }
+        .gallery-item-full a:hover img { transform: scale(1.05); filter: brightness(1.1); }
+        .card-bg { background-color: var(--bg-card); border: 1px solid var(--border-card); }
+        .modal { background-color: var(--modal-backdrop); backdrop-filter: blur(6px); } /* Ensure modal class applies backdrop */
+    </style>
+</head>
+<body class="antialiased">
+
+    <header id="navbar" class="fixed top-0 left-0 right-0 z-50 py-3">
+        </header>
+
+    <main class="pt-24 sm:pt-28 pb-16">
+        <div class="container mx-auto px-4 sm:px-6">
+            <div class="text-center mb-12 sm:mb-16">
+                <h1 class="text-4xl sm:text-5xl font-bold text-primary mb-4">Galeria Fan Art</h1>
+                <p class="text-lg text-secondary max-w-2xl mx-auto">Przeglądaj twórczość naszej utalentowanej społeczności! Kliknij na obrazek, aby zobaczyć go w pełnym rozmiarze.</p>
+                <a href="submit-fanart.html" class="mt-6 inline-block btn-primary px-6 py-3 text-md rounded-lg shadow-lg hover:shadow-xl transition-shadow">Zgłoś Swój Fan Art</a>
+            </div>
+
+            <div id="full-fanart-gallery-grid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+                {/* Fan art items will be injected here */}
+            </div>
+
+            <div id="gallery-loading" class="text-center py-10 text-secondary">
+                <div class="animate-spin rounded-full loading-spinner mx-auto mb-3"></div>
+                Ładowanie galerii...
+            </div>
+            <div id="gallery-error" class="hidden text-center py-10 text-red-400 bg-red-900/20 p-4 rounded-md">
+                Nie udało się załadować prac. Spróbuj ponownie później.
+            </div>
+            <div id="gallery-empty" class="hidden text-center py-10 text-secondary">
+                Brak prac w galerii. Może dodasz coś swojego? <a href="submit-fanart.html" class="text-accent hover:underline">Zgłoś pracę!</a>
+            </div>
+
+            <div id="fanart-gallery-pagination" class="mt-12 flex justify-center items-center space-x-3">
+                {/* Pagination controls will be injected here */}
+            </div>
+        </div>
+    </main>
+
+    <footer class="py-12 text-center" style="background-color: var(--bg-header);">
+       </footer>
+
+    <div id="eventModal" class="fixed inset-0 z-[60] items-center justify-center hidden p-4 modal"></div>
+
+    <div id="fanArtLightbox" class="fixed inset-0 z-[70] items-center justify-center p-4 modal hidden" style="background-color: var(--modal-backdrop);">
+        <div class="bg-bg-card p-4 sm:p-6 rounded-lg shadow-2xl max-w-3xl max-h-[90vh] w-full flex flex-col relative">
+            <button id="closeLightboxButton" class="absolute top-3 right-3 text-text-secondary hover:text-text-primary text-3xl leading-none p-1" aria-label="Zamknij">&times;</button>
+            <h3 id="lightboxTitle" class="text-xl font-semibold text-primary mb-3 text-center"></h3>
+            <div class="flex-grow overflow-auto flex items-center justify-center min-h-[200px]"> {/* Added min-h for very tall narrow images */}
+                <img id="lightboxImage" src="" alt="Powiększony fan art" class="max-w-full max-h-[70vh] sm:max-h-[75vh] object-contain rounded">
+            </div>
+            <p id="lightboxArtist" class="text-sm text-secondary mt-3 text-center"></p>
+        </div>
+    </div>
+
+
+    <script src="js/main.js" defer></script>
+    <script>
+        const galleryGrid = document.getElementById('full-fanart-gallery-grid');
+        const galleryLoading = document.getElementById('gallery-loading');
+        const galleryError = document.getElementById('gallery-error');
+        const galleryEmpty = document.getElementById('gallery-empty');
+        const galleryPagination = document.getElementById('fanart-gallery-pagination');
+
+        // Lightbox Elements
+        const lightbox = document.getElementById('fanArtLightbox');
+        const lightboxImage = document.getElementById('lightboxImage');
+        const lightboxTitle = document.getElementById('lightboxTitle');
+        const lightboxArtist = document.getElementById('lightboxArtist');
+        const closeLightboxButton = document.getElementById('closeLightboxButton');
+
+        let currentPageGallery = 1;
+        const galleryItemsPerPage = 12;
+
+        async function loadFullGallery(page = 1) {
+            currentPageGallery = page;
+            // Update URL only if page is different from current URL to avoid duplicate history entries on initial load
+            const currentUrlPage = new URLSearchParams(window.location.search).get('page');
+            if (String(currentPageGallery) !== currentUrlPage) {
+                 history.pushState({page: currentPageGallery}, `Strona ${currentPageGallery}`, `?page=${currentPageGallery}`);
+            }
+
+
+            galleryLoading.classList.remove('hidden');
+            galleryError.classList.add('hidden');
+            galleryEmpty.classList.add('hidden');
+            galleryGrid.innerHTML = '';
+            galleryPagination.innerHTML = '';
+
+            try {
+                const response = await fetch(`/api/gallery/images?page=${page}&limit=${galleryItemsPerPage}`);
+                if (!response.ok) {
+                    const errorData = await response.json().catch(() => ({}));
+                    throw new Error(errorData.error || `HTTP error! status: ${response.status}`);
+                }
+                const data = await response.json();
+                const fanArts = Array.isArray(data) ? data : (data.images || data.fanArts || []);
+
+
+                if (fanArts.length > 0) {
+                    fanArts.forEach(item => {
+                        const galleryItemHTML = `
+                            <div class="gallery-item-full card-bg rounded-lg overflow-hidden shadow-lg flex flex-col">
+                                <a href="${item.imageUrl}" class="gallery-lightbox-trigger block aspect-w-1 aspect-h-1"
+                                   data-imageurl="${item.imageUrl}"
+                                   data-title="${item.title || 'Fan Art'}"
+                                   data-artist="${item.discordUserName || 'Anonim'}">
+                                    <img src="${item.imageUrl}" alt="${item.title || 'Fan Art'}" class="w-full h-64 object-cover">
+                                </a>
+                                <div class="p-4 flex-grow flex flex-col">
+                                    <h3 class="text-md font-semibold text-primary truncate mb-1" title="${item.title}">${item.title || 'Bez Tytułu'}</h3>
+                                    <p class="text-xs text-secondary mb-2">Autor: ${item.discordUserName || 'Anonim'}</p>
+                                    ${item.description ? `<p class="text-xs text-gray-400 flex-grow description-truncate" title="${item.description}">${item.description.substring(0,70)}${item.description.length > 70 ? '...' : ''}</p>` : '<p class="text-xs text-gray-500 italic flex-grow">Brak opisu.</p>'}
+                                </div>
+                            </div>
+                        `;
+                        galleryGrid.insertAdjacentHTML('beforeend', galleryItemHTML);
+                    });
+                    if (data.totalPages && data.currentPage) {
+                        renderGalleryPagination(data.totalPages, parseInt(data.currentPage));
+                    }
+                } else {
+                    galleryEmpty.classList.remove('hidden');
+                }
+            } catch (error) {
+                console.error('Błąd ładowania galerii fan art:', error);
+                galleryError.textContent = `Nie udało się załadować prac: ${error.message}. Spróbuj ponownie później.`;
+                galleryError.classList.remove('hidden');
+            } finally {
+                galleryLoading.classList.add('hidden');
+            }
+        }
+
+        function renderGalleryPagination(totalPages, currentPage) {
+            if (totalPages <= 1) {
+                galleryPagination.innerHTML = '';
+                return;
+            }
+            let paginationHTML = '';
+            paginationHTML += `<button class="btn-secondary text-sm px-4 py-2 ${currentPage === 1 ? 'opacity-50 cursor-not-allowed' : ''}" ${currentPage === 1 ? 'disabled' : ''} onclick="loadFullGalleryAndUpdateURL(${currentPage - 1})">Poprzednia</button>`;
+            paginationHTML += `<span class="text-sm text-secondary">Strona ${currentPage} z ${totalPages}</span>`;
+            paginationHTML += `<button class="btn-secondary text-sm px-4 py-2 ${currentPage === totalPages ? 'opacity-50 cursor-not-allowed' : ''}" ${currentPage === totalPages ? 'disabled' : ''} onclick="loadFullGalleryAndUpdateURL(${currentPage + 1})">Następna</button>`;
+            galleryPagination.innerHTML = paginationHTML;
+        }
+
+        // Make it global for inline onclick
+        window.loadFullGalleryAndUpdateURL = (page) => {
+            loadFullGallery(page);
+        };
+
+        window.addEventListener('popstate', (event) => {
+            const page = event.state && event.state.page ? event.state.page : 1;
+            loadFullGallery(page);
+        });
+
+        function openFanArtLightbox(imageUrl, title, artist) {
+            if (lightboxImage) lightboxImage.src = imageUrl;
+            if (lightboxImage) lightboxImage.alt = title;
+            if (lightboxTitle) lightboxTitle.textContent = title;
+            if (lightboxArtist) lightboxArtist.textContent = `Autor: ${artist}`;
+            if (lightbox) {
+                lightbox.classList.remove('hidden');
+                lightbox.classList.add('flex');
+            }
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeFanArtLightbox() {
+            if (lightbox) {
+                lightbox.classList.add('hidden');
+                lightbox.classList.remove('flex');
+            }
+            if (lightboxImage) lightboxImage.src = ''; // Clear image src to free memory and stop loading if in progress
+            document.body.style.overflow = '';
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const params = new URLSearchParams(window.location.search);
+            const initialPage = parseInt(params.get('page')) || 1;
+            loadFullGallery(initialPage);
+
+            galleryGrid.addEventListener('click', function(event) {
+                const trigger = event.target.closest('.gallery-lightbox-trigger');
+                if (trigger) {
+                    event.preventDefault();
+                    openFanArtLightbox(trigger.dataset.imageurl, trigger.dataset.title, trigger.dataset.artist);
+                }
+            });
+
+            if (closeLightboxButton) {
+                closeLightboxButton.addEventListener('click', closeFanArtLightbox);
+            }
+            if (lightbox) {
+                lightbox.addEventListener('click', function(event) {
+                    if (event.target === lightbox) { // Only close if overlay (lightbox itself) is clicked
+                        closeFanArtLightbox();
+                    }
+                });
+            }
+            // Close lightbox with Escape key
+            document.addEventListener('keydown', function (event) {
+                if (event.key === 'Escape' && lightbox && !lightbox.classList.contains('hidden')) {
+                    closeFanArtLightbox();
+                }
+            });
+        });
+    </script>
+</body>
+</html>

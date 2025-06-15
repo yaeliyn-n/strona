@@ -116,8 +116,7 @@
     <footer class="py-12 text-center" style="background-color: var(--bg-header);">
        </footer>
 
-    <div id="eventModal" class="fixed inset-0 z-[60] items-center justify-center hidden p-4 modal">
-    </div>
+    <div id="eventModal" class="fixed inset-0 z-[60] items-center justify-center hidden p-4 modal"></div>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/dompurify/3.0.8/purify.min.js" integrity="sha512-H+rglffZ6f5JvnrFnbqwkdnKOBK6I99CfA6EED2PYG0i2XfHPDhOBW9JWW2NfW9pdUqCwhKSoLgImY1hD/x77g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/marked/9.1.5/marked.min.js" integrity="sha512-Q3K7ZgbB5KzEh0F9S4vN2QGg/1/6gL8bZj7n3D0l5PjBwW03R/0Bf1u/EIsHjk6WlT4fNlP7LXZgA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
@@ -168,8 +167,8 @@
                 titleEl.textContent = page.title;
 
                 let metaParts = [];
-                metaParts.push(`Autor: ${page.authorName}`);
-                if (page.lastEditorName && page.lastEditorName !== page.authorName) {
+                metaParts.push(`Autor: ${page.authorName || page.submittedByUserName || 'Nieznany'}`); // Prioritize official author
+                if (page.lastEditorName && page.lastEditorName !== (page.authorName || page.submittedByUserName)) {
                     metaParts.push(`Ostatnia edycja: ${page.lastEditorName}`);
                 }
                 metaParts.push(`Zaktualizowano: ${new Date(page.updatedAt).toLocaleDateString('pl-PL', { day: 'numeric', month: 'long', year: 'numeric' })}`);
@@ -177,13 +176,13 @@
                 if (page.wikiCategory && page.wikiCategory.name && page.wikiCategory.slug) {
                     metaParts.push(`Kategoria: <a href="wikipedia.html?category=${page.wikiCategory.slug}" class="text-accent hover:underline">${page.wikiCategory.name}</a>`);
                 }
-                metaEl.innerHTML = metaParts.join(' | '); // Use innerHTML because of the link
+                metaEl.innerHTML = metaParts.join(' | ');
 
-                if (typeof DOMPurify !== 'undefined') { // Marked.js is no longer needed here for main content
-                    contentEl.innerHTML = DOMPurify.sanitize(page.content);
+                if (typeof DOMPurify !== 'undefined') {
+                    contentEl.innerHTML = DOMPurify.sanitize(page.content); // Assuming page.content is HTML from TinyMCE
                 } else {
                     console.warn('DOMPurify not loaded. Displaying raw content, this might be unsafe.');
-                    contentEl.innerHTML = page.content; // Fallback to raw HTML, less safe
+                    contentEl.innerHTML = page.content;
                 }
 
                 loadingDiv.classList.add('hidden');
@@ -199,7 +198,6 @@
 
         document.addEventListener('DOMContentLoaded', () => {
             fetchAndDisplaySingleWikiPage();
-            // The main.js script will handle common elements like header/footer population
         });
     </script>
 </body>

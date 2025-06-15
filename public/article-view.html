@@ -32,21 +32,9 @@
         h1 { letter-spacing: -0.025em; font-weight: 700; } h2 { letter-spacing: -0.02em; font-weight: 700; } h3 { font-weight: 600; }
         .text-accent { color: var(--text-accent); }
         header#navbar { background-color: var(--bg-header); backdrop-filter: blur(18px); transition: background-color 0.3s ease, box-shadow 0.3s ease; box-shadow: 0 5px 15px -4px rgba(15,23,42,0.2); }
-        .nav-link { position: relative; color: var(--text-secondary); transition: color 0.2s ease, background-color 0.2s ease, transform 0.2s ease; padding: 0.65rem 1.1rem; border-radius: 0.6rem; font-weight: 500; }
-        .nav-link:hover { transform: translateY(-1px); }
-        .nav-link::after { content: ''; position: absolute; width: 0; height: 3px; bottom: 5px; left: 50%; transform: translateX(-50%); background-color: var(--text-accent); transition: width 0.35s cubic-bezier(0.25, 0.8, 0.25, 1); border-radius: 1.5px; }
-        .nav-link:hover, .nav-link.active { color: var(--text-accent); background-color: rgba(var(--rgb-accent), 0.12); }
-        .nav-link:hover::after, .nav-link.active::after { width: 60%; }
-        #mobileMenu { transition: transform 0.4s cubic-bezier(0.25, 0.8, 0.25, 1), opacity 0.4s cubic-bezier(0.25, 0.8, 0.25, 1); transform: translateY(-100%); opacity: 0; pointer-events: none; }
-        #mobileMenu.open { transform: translateY(0); opacity: 1; pointer-events: auto; }
-        .user-avatar { width: 32px; height: 32px; border-radius: 50%; border: 2px solid var(--border-accent); cursor: pointer; transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out; }
-        .user-avatar:hover { transform: scale(1.1); box-shadow: 0 0 10px var(--shadow-strong-color); }
-        .dropdown-menu { position: absolute; top: calc(100% + 0.5rem); right: 0; background-color: var(--bg-card); border: 1px solid var(--border-card); border-radius: 0.5rem; box-shadow: 0 10px 25px -5px var(--shadow-strong-color), 0 8px 10px -6px var(--shadow-color); z-index: 50; min-width: 220px; opacity: 0; visibility: hidden; transform: translateY(-10px); transition: opacity 0.2s ease, transform 0.2s ease, visibility 0s linear 0.2s; }
-        .dropdown-menu.open { opacity: 1; visibility: visible; transform: translateY(0); transition: opacity 0.2s ease, transform 0.2s ease; }
-        .dropdown-menu a, .dropdown-menu button { display: block; width: 100%; text-align: left; padding: 0.75rem 1rem; font-size: 0.875rem; color: var(--text-secondary); transition: background-color 0.15s ease, color 0.15s ease; }
-        .dropdown-menu a:hover, .dropdown-menu button:hover { background-color: rgba(var(--rgb-accent), 0.1); color: var(--text-accent); }
-        .dropdown-menu form { margin: 0; }
+        /* Styles for nav-link, mobileMenu, user-avatar, dropdown-menu are in js/main.js or inherited */
         .loading-spinner { border-color: var(--text-accent) transparent var(--text-accent) transparent; }
+        .article-content { line-height: 1.75; }
         .article-content h2 { font-size: 1.75rem; margin-top: 2rem; margin-bottom: 1rem; color: var(--text-primary); }
         .article-content h3 { font-size: 1.5rem; margin-top: 1.75rem; margin-bottom: 0.75rem; color: var(--text-primary); }
         .article-content p { margin-bottom: 1.25rem; font-size: 1.05rem; line-height: 1.8; color: var(--text-secondary); }
@@ -60,6 +48,13 @@
         .article-content pre code { background-color: transparent; padding: 0; margin: 0; }
         .article-content img { max-width: 100%; height: auto; border-radius: 0.5rem; margin: 1.5rem 0; box-shadow: 0 4px 12px var(--shadow-color); }
         .article-content hr { border-top: 1px solid var(--border-card); margin: 2.5rem 0; }
+        .prose { color: var(--text-secondary); }
+        .prose h1, .prose h2, .prose h3, .prose h4, .prose h5, .prose h6 { color: var(--text-primary); }
+        .prose a { color: var(--text-accent); } .prose strong { color: var(--text-primary); }
+        .prose code { background-color: var(--bg-secondary); color: var(--text-accent); }
+        .prose blockquote { border-left-color: var(--border-accent); color: var(--text-secondary); }
+        html.dark .prose-invert { /* Tailwind typically handles this, but we can add specifics if needed */ }
+
     </style>
 </head>
 <body class="antialiased">
@@ -74,6 +69,7 @@
                 <a href="prezentacja.html" class="nav-link">Prezentacja Serwera</a>
                 <a href="wikipedia.html" class="nav-link">Wikipedia Kronik</a>
                 <a href="blog.html" class="nav-link active">Blog</a>
+                <a href="gallery.html" class="nav-link">Galeria</a>
                 <a href="ranking-stats.html" class="nav-link">Rankingi</a>
                 <a href="dom-aukcyjny.html" class="nav-link">Dom Aukcyjny</a>
                 <div id="auth-section-nav" class="ml-4 relative"></div>
@@ -91,6 +87,7 @@
                 <a href="prezentacja.html" class="block py-2.5 px-3 nav-link text-base font-medium">Prezentacja Serwera</a>
                 <a href="wikipedia.html" class="block py-2.5 px-3 nav-link text-base font-medium">Wikipedia Kronik</a>
                 <a href="blog.html" class="block py-2.5 px-3 nav-link text-base font-medium active">Blog</a>
+                <a href="gallery.html" class="block py-2.5 px-3 nav-link text-base font-medium">Galeria</a>
                 <a href="ranking-stats.html" class="block py-2.5 px-3 nav-link text-base font-medium">Rankingi</a>
                 <a href="dom-aukcyjny.html" class="block py-2.5 px-3 nav-link text-base font-medium">Dom Aukcyjny</a>
                 <a href="https://discord.gg/TWOJLINKZAPROSZENIOWY" target="_blank" rel="noopener noreferrer" class="block mt-2 py-2.5 px-3 text-base font-medium text-white bg-purple-600 hover:bg-purple-700 rounded-md text-center">Dołącz do Discorda</a>
@@ -195,15 +192,15 @@
                     loggedInUser = await response.json();
                     if (postCommentFormContainer) postCommentFormContainer.style.display = 'block';
                     if (commentLoginPrompt) commentLoginPrompt.style.display = 'none';
-                    // Update the href for the login link in the comment prompt dynamically
-                    const loginLink = commentLoginPrompt.querySelector('a');
-                    if (loginLink) {
-                        loginLink.href = `/auth/discord/login?redirect=${encodeURIComponent(window.location.pathname + window.location.search)}`;
-                    }
                 } else {
                     loggedInUser = null;
                     if (postCommentFormContainer) postCommentFormContainer.style.display = 'none';
                     if (commentLoginPrompt) commentLoginPrompt.style.display = 'block';
+                     // Update the href for the login link in the comment prompt dynamically
+                    const loginLink = commentLoginPrompt.querySelector('a');
+                    if (loginLink) {
+                        loginLink.href = `/auth/discord/login?redirect=${encodeURIComponent(window.location.pathname + window.location.search)}`;
+                    }
                 }
             } catch (error) {
                 console.error('Error checking login status:', error);
@@ -218,7 +215,7 @@
 
 
         async function fetchComments(articleSlug, page = 1) {
-            if (!commentsSection) return; // Do nothing if comments section elements are not on this page
+            if (!commentsSection) return;
             currentCommentsPage = page;
             commentsLoading.style.display = 'block';
             commentsError.style.display = 'none';
@@ -229,10 +226,10 @@
             try {
                 const response = await fetch(`/api/articles/${articleSlug}/comments?page=${page}&limit=${commentsLimit}`);
                 if (!response.ok) {
-                    if (response.status === 404 && commentsError) { // Article not found for comments
+                    if (response.status === 404 && commentsError) {
                          commentsError.textContent = 'Nie można załadować komentarzy, artykuł nie istnieje.';
                          commentsError.style.display = 'block';
-                         return; // Stop further processing for comments if article itself is not found
+                         return;
                     }
                     throw new Error(`HTTP error! status: ${response.status}`);
                 }
@@ -246,7 +243,7 @@
                         commentDiv.className = 'comment-item p-4 mb-4 bg-[var(--bg-primary)] border border-[var(--border-card)] rounded-lg shadow-sm';
 
                         let adminDeleteButton = '';
-                        if (loggedInUser && loggedInUser.id === ADMIN_DISCORD_ID_CACHE) { // ADMIN_DISCORD_ID_CACHE from main.js
+                        if (loggedInUser && loggedInUser.id === ADMIN_DISCORD_ID_CACHE) {
                             adminDeleteButton = `<button class="text-xs text-red-400 hover:text-red-600 transition-colors delete-comment-btn" data-comment-id="${comment.id}">Usuń</button>`;
                         }
 
@@ -258,7 +255,7 @@
                                     ${adminDeleteButton}
                                 </div>
                             </div>
-                            <p class="text-sm text-text-primary whitespace-pre-wrap">${comment.content}</p>
+                            <p class="text-sm text-text-primary whitespace-pre-wrap">${DOMPurify.sanitize(comment.content)}</p>
                         `;
                         commentsListContainer.appendChild(commentDiv);
                     });
@@ -294,12 +291,14 @@
             commentsPagination.innerHTML = paginationHTML;
         }
 
-        window.changeCommentsPage = (page, articleSlug) => { // Make it global for inline onclick
+        window.changeCommentsPage = (page, articleSlug) => {
             if (page < 1) return;
             const totalPagesElement = commentsPagination.querySelector('span');
             if (!totalPagesElement) return;
+
             const totalPagesMatch = totalPagesElement.textContent.match(/z (\d+)/);
             if (!totalPagesMatch || totalPagesMatch.length < 2) return;
+
             const totalPages = parseInt(totalPagesMatch[1], 10);
             if (page > totalPages) return;
 
@@ -334,7 +333,7 @@
                     commentPostStatus.textContent = 'Komentarz opublikowany!';
                     commentPostStatus.className = 'text-sm mt-3 text-green-400';
                     commentContentTextarea.value = '';
-                    fetchComments(articleDataForComments.slug, 1); // Refresh and go to first page
+                    fetchComments(articleDataForComments.slug, 1);
                 } else {
                     commentPostStatus.textContent = result.error || 'Nie udało się opublikować komentarza.';
                     commentPostStatus.className = 'text-sm mt-3 text-red-400';
@@ -352,22 +351,18 @@
         async function deleteComment(commentId) {
             if (!confirm('Czy na pewno chcesz usunąć ten komentarz?')) return;
 
-            // Można dodać wizualny wskaźnik ładowania przy przycisku usuwania, jeśli chcemy
             try {
                 const response = await fetch(`/api/admin/comments/${commentId}`, { method: 'DELETE' });
-                if (response.ok) { // 204 No Content
-                    displayAdminMessage('Komentarz usunięty pomyślnie.', 'success'); // Funkcja z admin.html, może nie być tu dostępna
-                                                                             // Lepsza byłaby lokalna funkcja do powiadomień
-                    console.log("Komentarz usunięty, odświeżam listę.");
+                if (response.ok) {
+                    // displayAdminMessage('Komentarz usunięty pomyślnie.', 'success'); // This would be ideal if admin page had this global func
+                    alert('Komentarz usunięty pomyślnie.'); // Simple alert for now
                     fetchComments(articleDataForComments.slug, currentCommentsPage);
                 } else {
                     const result = await response.json().catch(() => ({ error: 'Nieznany błąd serwera' }));
-                    // displayAdminMessage(`Błąd usuwania komentarza: ${result.error || response.status}`, 'error');
                     alert(`Błąd usuwania komentarza: ${result.error || response.status}`);
                 }
             } catch (error) {
                 console.error("Błąd sieci podczas usuwania komentarza:", error);
-                // displayAdminMessage('Błąd sieci podczas usuwania komentarza.', 'error');
                 alert('Błąd sieci podczas usuwania komentarza.');
             }
         }
@@ -381,6 +376,7 @@
                 loadingMessageArticle.style.display = 'none';
                 errorMessageArticle.querySelector('p').textContent = 'Brak identyfikatora artykułu (slug) w adresie URL.';
                 errorMessageArticle.style.display = 'block';
+                commentsSection.style.display = 'none';
                 return;
             }
 
@@ -396,37 +392,43 @@
                     }
                     throw new Error(`HTTP error! status: ${response.status}`);
                 }
-                const article = await response.json();
+                articleDataForComments = await response.json(); // Store for comment submission
 
                 loadingMessageArticle.style.display = 'none';
-                document.title = `${article.title} - Kroniki Elary`;
+                document.title = `${articleDataForComments.title} - Kroniki Elary`;
                 const metaDesc = document.querySelector('meta[name="description"]');
                 if (metaDesc) {
-                    metaDesc.setAttribute('content', article.content.substring(0, 160).replace(/<[^>]*>?/gm, '') + '...');
+                    // For HTML content, stripping tags for meta description
+                    const tempDiv = document.createElement('div');
+                    tempDiv.innerHTML = articleDataForComments.content;
+                    const textContentForMeta = tempDiv.textContent || tempDiv.innerText || "";
+                    metaDesc.setAttribute('content', textContentForMeta.substring(0, 160) + (textContentForMeta.length > 160 ? '...' : ''));
                 }
 
                 let categoriesHTML = '';
-                if (article.Categories && article.Categories.length > 0) {
+                if (articleDataForComments.Categories && articleDataForComments.Categories.length > 0) {
                     categoriesHTML = `
                         <div class="mb-4 text-sm">
                             <strong>Kategorie:</strong>
-                            ${article.Categories.map(cat => `<a href="blog.html?category=${cat.slug}" class="text-accent hover:underline mr-2">${cat.name}</a>`).join('')}
+                            ${articleDataForComments.Categories.map(cat => `<a href="blog.html?category=${cat.slug}" class="text-accent hover:underline mr-2">${cat.name}</a>`).join('')}
                         </div>
                     `;
                 }
 
                 const articleHTML = `
-                    <img src="https://placehold.co/800x400/101A2B/A78BFA?text=${encodeURIComponent(article.title.substring(0,30))}" alt="Baner artykułu: ${article.title}" class="rounded-lg mb-6 sm:mb-8 w-full max-h-[400px] object-cover" onerror="this.onerror=null;this.src='https://placehold.co/800x400/0F172A/94A3B8?text=Brak+obrazka';">
-                    <h1 class="text-3xl sm:text-4xl md:text-5xl font-bold text-primary mb-3">${article.title}</h1>
-                    <p class="text-sm text-secondary mb-1">Autor: <span class="font-medium text-accent">${article.authorName}</span></p>
-                    <p class="text-sm text-secondary mb-2">Opublikowano: ${new Date(article.publishedAt || article.createdAt).toLocaleDateString('pl-PL', { year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit' })}</p>
+                    <img src="https://placehold.co/800x400/101A2B/A78BFA?text=${encodeURIComponent(articleDataForComments.title.substring(0,30))}" alt="Baner artykułu: ${articleDataForComments.title}" class="rounded-lg mb-6 sm:mb-8 w-full max-h-[400px] object-cover" onerror="this.onerror=null;this.src='https://placehold.co/800x400/0F172A/94A3B8?text=Brak+obrazka';">
+                    <h1 class="text-3xl sm:text-4xl md:text-5xl font-bold text-primary mb-3">${articleDataForComments.title}</h1>
+                    <p class="text-sm text-secondary mb-1">Autor: <span class="font-medium text-accent">${articleDataForComments.authorName}</span></p>
+                    <p class="text-sm text-secondary mb-2">Opublikowano: ${new Date(articleDataForComments.publishedAt || articleDataForComments.createdAt).toLocaleDateString('pl-PL', { year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit' })}</p>
                     ${categoriesHTML}
                     <hr class="border-t border-[var(--border-card)] my-6 sm:my-8">
                     <div class="article-content prose prose-invert max-w-none text-lg leading-relaxed">
-                        ${ DOMPurify.sanitize(article.content) }
+                        ${ DOMPurify.sanitize(articleDataForComments.content) }
                     </div>
                 `;
                 articleContainer.innerHTML = articleHTML;
+                commentsSection.style.display = 'block';
+                fetchComments(slug, 1); // Load comments for the current article
 
             } catch (error) {
                 console.error('Błąd podczas pobierania artykułu:', error);
@@ -437,18 +439,28 @@
                     errorMessageArticle.querySelector('p').textContent = 'Wystąpił błąd podczas ładowania artykułu. Spróbuj ponownie później.';
                 }
                 errorMessageArticle.style.display = 'block';
-                 document.title = "Nie znaleziono artykułu - Kroniki Elary";
+                commentsSection.style.display = 'none';
+                document.title = "Nie znaleziono artykułu - Kroniki Elary";
             }
         }
 
-        document.addEventListener('DOMContentLoaded', function() {
+        document.addEventListener('DOMContentLoaded', async function() {
              if (typeof DOMPurify === 'undefined' || typeof marked === 'undefined') {
-                console.warn("DOMPurify or Marked.js not loaded from CDN. Content rendering might be unsafe or incorrect if these are not globally available otherwise.");
+                // DOMPurify is essential, Marked might be used by other parts of main.js or for comments if they were MD
+                console.warn("DOMPurify or Marked.js not loaded from CDN. Content rendering might be unsafe or incorrect.");
                 window.DOMPurify = window.DOMPurify || { sanitize: (html) => html };
-                window.marked = window.marked || { parse: (markdown) => markdown };
+                // window.marked = window.marked || { parse: (markdown) => markdown }; // Not strictly needed for article content here
             }
-            fetchArticle();
+            await fetchAdminDiscordId(); // Ensure ADMIN_DISCORD_ID_CACHE is populated for comment deletion logic
+            await checkUserLoginStatusForComments(); // Check login status for comment form
+            fetchArticle(); // Fetch article content
+
+            if(postCommentForm) {
+                postCommentForm.addEventListener('submit', handlePostComment);
+            }
         });
     </script>
 </body>
 </html>
+
+[end of public/article-view.html]
