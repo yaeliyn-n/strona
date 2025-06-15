@@ -21,7 +21,9 @@
     const SupportRequest = require('./models/SupportRequest');
     const SupportReply = require('./models/SupportReply');
     const Content = require('./models/Content');
-    const Article = require('./models/Article'); // Import nowego modelu Article
+    const Article = require('./models/Article');
+    const Category = require('./models/Category'); // Import Category model
+    const ArticleCategory = require('./models/ArticleCategory'); // Import ArticleCategory join table model
     const sequelize = require('./config/database');
 
 
@@ -43,6 +45,12 @@
             foreignKey: 'ticketId',
             as: 'ticket'
         });
+    }
+
+    // Article and Category Associations
+    if (Article && Category && ArticleCategory) {
+        Article.belongsToMany(Category, { through: ArticleCategory });
+        Category.belongsToMany(Article, { through: ArticleCategory });
     }
 
 
@@ -212,64 +220,123 @@
       return slug;
     }
 
+    async function generateUniqueCategorySlug(name, currentId = null) {
+      if (!name) return '';
+      let slug = name
+        .toLowerCase()
+        .trim()
+        .replace(/\s+/g, '-')
+        .replace(/[^\wąćęłńóśźż-]+/g, '') // Allow Polish characters
+        .replace(/--+/g, '-');
+
+      let count = 0;
+      let originalSlug = slug;
+      while (true) {
+        const whereClause = { slug: slug };
+        if (currentId) {
+          whereClause.id = { [require('sequelize').Op.ne]: currentId };
+        }
+        const existingCategory = await Category.findOne({ where: whereClause });
+        if (!existingCategory) {
+          break;
+        }
+        count++;
+        slug = `${originalSlug}-${count}`;
+      }
+      return slug;
+    }
+
 
     // --- Ścieżki API (powinny być zdefiniowane przed ogólnymi handlerami plików statycznych) ---
 
     // --- API Artykułów (Publiczne) ---
     app.get('/api/articles', async (req, res) => {
-      const page = parseInt(req.query.page, 10) || 1;
-      const limit = parseInt(req.query.limit, 10) || 10;
-      const offset = (page - 1) * limit;
+        const page = parseInt(req.query.page, 10) || 1;
+        const limit = parseInt(req.query.limit, 10) || 10;
+        const offset = (page - 1) * limit;
+        const categorySlug = req.query.category;
 
-      try {
-        const { count, rows } = await Article.findAndCountAll({
-          where: { status: 'published' },
-          order: [
-            ['publishedAt', 'DESC'],
-            ['createdAt', 'DESC']
-          ],
-          limit: limit,
-          offset: offset,
-          attributes: ['title', 'slug', 'authorName', 'publishedAt', 'content', 'createdAt']
-        });
+        let queryOptions = {
+            where: { status: 'published' },
+            order: [
+                ['publishedAt', 'DESC'],
+                ['createdAt', 'DESC']
+            ],
+            limit: limit,
+            offset: offset,
+            attributes: ['title', 'slug', 'authorName', 'publishedAt', 'content', 'createdAt'],
+            include: [{
+                model: Category,
+                attributes: ['id', 'name', 'slug'],
+                through: { attributes: [] } // Nie pobieraj danych z tabeli pośredniczącej
+            }]
+        };
 
-        const articles = rows.map(article => ({
-          title: article.title,
-          slug: article.slug,
-          authorName: article.authorName,
-          publishedAt: article.publishedAt || article.createdAt, // Fallback do createdAt jeśli publishedAt null
-          snippet: article.content.substring(0, 200) + (article.content.length > 200 ? '...' : '')
-        }));
+        if (categorySlug) {
+            queryOptions.include[0].where = { slug: categorySlug };
+            queryOptions.include[0].required = true; // INNER JOIN
+        }
 
-        res.json({
-          totalPages: Math.ceil(count / limit),
-          currentPage: page,
-          totalArticles: count,
-          articles: articles
-        });
-      } catch (error) {
-        console.error('Błąd podczas pobierania opublikowanych artykułów:', error);
-        res.status(500).json({ error: 'Błąd serwera podczas pobierania artykułów.' });
-      }
+        try {
+            const { count, rows } = await Article.findAndCountAll(queryOptions);
+
+            const articles = rows.map(article => ({
+                title: article.title,
+                slug: article.slug,
+                authorName: article.authorName,
+                publishedAt: article.publishedAt || article.createdAt,
+                snippet: article.content.substring(0, 200) + (article.content.length > 200 ? '...' : ''),
+                Categories: article.Categories // Kategorie są teraz dołączane
+            }));
+
+            res.json({
+                totalPages: Math.ceil(count / limit),
+                currentPage: page,
+                totalArticles: count,
+                articles: articles
+            });
+        } catch (error) {
+            console.error('Błąd podczas pobierania opublikowanych artykułów:', error);
+            res.status(500).json({ error: 'Błąd serwera podczas pobierania artykułów.' });
+        }
     });
 
     app.get('/api/articles/:slug', async (req, res) => {
-      try {
-        const article = await Article.findOne({
-          where: {
-            slug: req.params.slug,
-            status: 'published'
-          }
-        });
+        try {
+            const article = await Article.findOne({
+                where: {
+                    slug: req.params.slug,
+                    status: 'published'
+                },
+                include: [{ // Dołącz kategorie do pojedynczego artykułu
+                    model: Category,
+                    attributes: ['id', 'name', 'slug'],
+                    through: { attributes: [] }
+                }]
+            });
 
-        if (!article) {
-          return res.status(404).json({ error: 'Artykuł nie został znaleziony lub nie jest opublikowany.' });
+            if (!article) {
+                return res.status(404).json({ error: 'Artykuł nie został znaleziony lub nie jest opublikowany.' });
+            }
+            res.json(article);
+        } catch (error) {
+            console.error(`Błąd podczas pobierania artykułu o slugu ${req.params.slug}:`, error);
+            res.status(500).json({ error: 'Błąd serwera podczas pobierania artykułu.' });
         }
-        res.json(article);
-      } catch (error) {
-        console.error(`Błąd podczas pobierania artykułu o slugu ${req.params.slug}:`, error);
-        res.status(500).json({ error: 'Błąd serwera podczas pobierania artykułu.' });
-      }
+    });
+
+    // --- API Kategorii (Publiczne) ---
+    app.get('/api/categories', async (req, res) => {
+        try {
+            const categories = await Category.findAll({
+                order: [['name', 'ASC']],
+                attributes: ['id', 'name', 'slug']
+            });
+            res.json(categories);
+        } catch (error) {
+            console.error('Błąd pobierania publicznej listy kategorii:', error);
+            res.status(500).json({ error: 'Błąd serwera podczas pobierania kategorii.' });
+        }
     });
 
 
@@ -703,7 +770,18 @@
         }
 
         const newArticle = await Article.create(articleData);
-        res.status(201).json(newArticle);
+
+        // Associate categories if provided
+        if (req.body.categoryIds && Array.isArray(req.body.categoryIds)) {
+            await newArticle.setCategories(req.body.categoryIds.map(id => parseInt(id, 10)));
+        }
+
+        // Fetch the article again to include categories in the response
+        const articleWithCategories = await Article.findByPk(newArticle.id, {
+            include: [{ model: Category, attributes: ['id', 'name'], through: { attributes: [] } }]
+        });
+
+        res.status(201).json(articleWithCategories);
       } catch (error) {
         console.error('Błąd podczas tworzenia nowego artykułu:', error);
         if (error.name === 'SequelizeValidationError' || error.name === 'SequelizeUniqueConstraintError') {
@@ -744,7 +822,9 @@
       if (!isAdmin(req)) return res.status(403).json({ error: 'Forbidden - Brak uprawnień administratora.' });
       const { id } = req.params;
       try {
-        const article = await Article.findByPk(id);
+        const article = await Article.findByPk(id, {
+            include: [{ model: Category, attributes: ['id', 'name'], through: { attributes: [] } }]
+        });
         if (!article) {
           return res.status(404).json({ error: 'Artykuł nie został znaleziony.' });
         }
@@ -758,7 +838,7 @@
     app.put('/api/admin/articles/:id', async (req, res) => {
       if (!isAdmin(req)) return res.status(403).json({ error: 'Forbidden - Brak uprawnień administratora.' });
       const { id } = req.params;
-      const { title, content, slug: newSlug, status } = req.body;
+      const { title, content, slug: newSlug, status, categoryIds } = req.body; // Added categoryIds
 
       try {
         const article = await Article.findByPk(id);
@@ -787,7 +867,21 @@
         // Jeśli status zmieniono na 'draft', publishedAt pozostaje (oznacza kiedy był ostatnio opublikowany)
 
         await article.save();
-        res.json(article);
+
+        // Update categories if categoryIds is provided
+        if (categoryIds && Array.isArray(categoryIds)) {
+            await article.setCategories(categoryIds.map(catId => parseInt(catId, 10)));
+        } else if (categoryIds === null || (Array.isArray(categoryIds) && categoryIds.length === 0)) {
+            // If categoryIds is explicitly null or an empty array, remove all categories
+            await article.setCategories([]);
+        }
+
+        // Fetch the article again to include categories in the response
+        const updatedArticleWithCategories = await Article.findByPk(id, {
+            include: [{ model: Category, attributes: ['id', 'name'], through: { attributes: [] } }]
+        });
+
+        res.json(updatedArticleWithCategories);
       } catch (error) {
         console.error(`Błąd podczas aktualizacji artykułu o ID ${id}:`, error);
         if (error.name === 'SequelizeValidationError' || error.name === 'SequelizeUniqueConstraintError') {
@@ -800,17 +894,106 @@
     app.delete('/api/admin/articles/:id', async (req, res) => {
       if (!isAdmin(req)) return res.status(403).json({ error: 'Forbidden - Brak uprawnień administratora.' });
       const { id } = req.params;
+
+      const article = await Article.findByPk(id);
+      if (!article) {
+        return res.status(404).json({ error: 'Artykuł nie został znaleziony.' });
+      }
+      // Also remove associations in ArticleCategory table
+      await article.setCategories([]); // This removes all associations for this article
+
       try {
-        const article = await Article.findByPk(id);
-        if (!article) {
-          return res.status(404).json({ error: 'Artykuł nie został znaleziony.' });
-        }
         await article.destroy();
         res.status(204).send(); // 204 No Content
       } catch (error) {
         console.error(`Błąd podczas usuwania artykułu o ID ${id}:`, error);
         res.status(500).json({ error: 'Błąd serwera podczas usuwania artykułu.' });
       }
+    });
+
+    // --- API Kategorii Artykułów (Admin) ---
+    app.post('/api/admin/categories', async (req, res) => {
+        if (!isAdmin(req)) return res.status(403).json({ error: 'Forbidden' });
+        const { name } = req.body;
+        if (!name || name.trim() === '') {
+            return res.status(400).json({ error: 'Nazwa kategorii jest wymagana.' });
+        }
+        try {
+            const slug = await generateUniqueCategorySlug(name);
+            const newCategory = await Category.create({ name, slug });
+            res.status(201).json(newCategory);
+        } catch (error) {
+            console.error('Błąd tworzenia kategorii:', error);
+            if (error.name === 'SequelizeValidationError' || error.name === 'SequelizeUniqueConstraintError') {
+                return res.status(400).json({ error: 'Błąd walidacji: ' + error.errors.map(e => e.message).join(', ') });
+            }
+            res.status(500).json({ error: 'Błąd serwera podczas tworzenia kategorii.' });
+        }
+    });
+
+    app.get('/api/admin/categories', async (req, res) => {
+        if (!isAdmin(req)) return res.status(403).json({ error: 'Forbidden' });
+        try {
+            const categories = await Category.findAll({ order: [['name', 'ASC']] });
+            res.json(categories);
+        } catch (error) {
+            console.error('Błąd pobierania kategorii:', error);
+            res.status(500).json({ error: 'Błąd serwera podczas pobierania kategorii.' });
+        }
+    });
+
+    app.put('/api/admin/categories/:categoryId', async (req, res) => {
+        if (!isAdmin(req)) return res.status(403).json({ error: 'Forbidden' });
+        const { categoryId } = req.params;
+        const { name, slug: newSlug } = req.body;
+
+        try {
+            const category = await Category.findByPk(categoryId);
+            if (!category) {
+                return res.status(404).json({ error: 'Kategoria nie została znaleziona.' });
+            }
+
+            if (name) category.name = name;
+
+            if (newSlug && newSlug !== category.slug) {
+                category.slug = await generateUniqueCategorySlug(newSlug, category.id);
+            } else if (name && (!newSlug || newSlug === category.slug)) {
+                // If name changed and slug wasn't provided OR slug is the same as old one but name implies change
+                const generatedSlugFromName = await generateUniqueCategorySlug(name, category.id);
+                if (generatedSlugFromName !== category.slug) {
+                    category.slug = generatedSlugFromName;
+                }
+            }
+
+            await category.save();
+            res.json(category);
+        } catch (error) {
+            console.error(`Błąd aktualizacji kategorii ID ${categoryId}:`, error);
+            if (error.name === 'SequelizeValidationError' || error.name === 'SequelizeUniqueConstraintError') {
+                 return res.status(400).json({ error: 'Błąd walidacji: ' + error.errors.map(e => e.message).join(', ') });
+            }
+            res.status(500).json({ error: 'Błąd serwera podczas aktualizacji kategorii.' });
+        }
+    });
+
+    app.delete('/api/admin/categories/:categoryId', async (req, res) => {
+        if (!isAdmin(req)) return res.status(403).json({ error: 'Forbidden' });
+        const { categoryId } = req.params;
+        try {
+            const category = await Category.findByPk(categoryId);
+            if (!category) {
+                return res.status(404).json({ error: 'Kategoria nie została znaleziona.' });
+            }
+            // Sequelize handles removing associations in ArticleCategory through `onDelete: 'CASCADE'`
+            // in the ArticleCategory model definition for foreign keys.
+            // If onDelete: 'CASCADE' was not set, we would need:
+            // await ArticleCategory.destroy({ where: { CategoryId: categoryId } });
+            await category.destroy();
+            res.status(204).send();
+        } catch (error) {
+            console.error(`Błąd usuwania kategorii ID ${categoryId}:`, error);
+            res.status(500).json({ error: 'Błąd serwera podczas usuwania kategorii.' });
+        }
     });
 
 

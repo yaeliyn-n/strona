@@ -1660,6 +1660,7 @@
         // --- Article Management Specific Logic (will be filled in next step) ---
         let currentAdminArticlePage = 1;
         let editingArticleId = null;
+        let editingCategoryId = null; // Global for category editing state
 
         const adminArticleListContainer = document.getElementById('adminArticleListContainer');
         const adminArticleFormContainer = document.getElementById('adminArticleFormContainer');
@@ -1681,15 +1682,25 @@
 
         const togglePreviewButton = document.getElementById('togglePreviewButton');
         const articlePreview = document.getElementById('articlePreview');
+        const articleCategoriesSelect = document.getElementById('articleCategoriesSelect');
+
+        // Category Management Elements
+        const adminCategoryManagementSection = document.getElementById('adminCategoryManagementSection');
+        const adminCategoryForm = document.getElementById('adminCategoryForm');
+        const editingCategoryIdInput = document.getElementById('editingCategoryId'); // Hidden input
+        const categoryNameInput = document.getElementById('categoryName');
+        const categorySlugInput = document.getElementById('categorySlug');
+        const saveCategoryButton = document.getElementById('saveCategoryButton');
+        const clearCategoryFormButton = document.getElementById('clearCategoryFormButton');
+        const adminCategoriesListContainer = document.getElementById('adminCategoriesListContainer');
+
 
         // Markdown Preview (basic)
         if (togglePreviewButton && articleContentInput && articlePreview) {
-            // Load marked.js if not already available (e.g. via CDN)
             if (typeof marked === 'undefined') {
                 const markedScript = document.createElement('script');
                 markedScript.src = "https://cdnjs.cloudflare.com/ajax/libs/marked/9.1.5/marked.min.js";
                 document.head.appendChild(markedScript);
-                // Note: This is a simplified way to load. Production apps should bundle or load more robustly.
             }
              if (typeof DOMPurify === 'undefined') {
                 const domPurifyScript = document.createElement('script');

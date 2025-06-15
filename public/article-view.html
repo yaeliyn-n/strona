@@ -3,13 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Zobacz artykuł na blogu Kronik Elary."> {/* Description will be updated by JS */}
+    <meta name="description" content="Zobacz artykuł na blogu Kronik Elary.">
     <meta name="author" content="Arcadius & Strażnicy Kronik Elary">
-    <title>Artykuł - Kroniki Elary</title> {/* Title will be updated by JS */}
+    <title>Artykuł - Kroniki Elary</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600&display=swap" rel="stylesheet">
     <style>
-        /* Minimal styles from index.html for consistency - theme variables, body, headings */
         :root {
             --bg-primary: #0F172A; --bg-secondary: rgba(30, 41, 59, 0.8); --bg-card: #1E293B; --bg-header: rgba(15, 23, 42, 0.92);
             --text-primary: #E2E8F0; --text-secondary: #94A3B8; --text-accent: #A78BFA; --text-accent-hover: #8B5CF6;
@@ -48,10 +47,9 @@
         .dropdown-menu a:hover, .dropdown-menu button:hover { background-color: rgba(var(--rgb-accent), 0.1); color: var(--text-accent); }
         .dropdown-menu form { margin: 0; }
         .loading-spinner { border-color: var(--text-accent) transparent var(--text-accent) transparent; }
-        /* Styles for article content */
         .article-content h2 { font-size: 1.75rem; margin-top: 2rem; margin-bottom: 1rem; color: var(--text-primary); }
         .article-content h3 { font-size: 1.5rem; margin-top: 1.75rem; margin-bottom: 0.75rem; color: var(--text-primary); }
-        .article-content p { margin-bottom: 1.25rem; font-size: 1.05rem; line-height: 1.8; color: var(--text-secondary); } /* Slightly increased font size for readability */
+        .article-content p { margin-bottom: 1.25rem; font-size: 1.05rem; line-height: 1.8; color: var(--text-secondary); }
         .article-content ul, .article-content ol { margin-left: 1.5rem; margin-bottom: 1.25rem; color: var(--text-secondary); }
         .article-content li { margin-bottom: 0.5rem; }
         .article-content a { color: var(--text-accent); text-decoration: underline; transition: color 0.2s ease; }
@@ -62,7 +60,6 @@
         .article-content pre code { background-color: transparent; padding: 0; margin: 0; }
         .article-content img { max-width: 100%; height: auto; border-radius: 0.5rem; margin: 1.5rem 0; box-shadow: 0 4px 12px var(--shadow-color); }
         .article-content hr { border-top: 1px solid var(--border-card); margin: 2.5rem 0; }
-
     </style>
 </head>
 <body class="antialiased">
@@ -102,7 +99,7 @@
     </header>
 
     <main class="pt-24 sm:pt-28 pb-16">
-        <div class="container mx-auto px-4 sm:px-6 max-w-4xl"> {/* Max width for readability */}
+        <div class="container mx-auto px-4 sm:px-6 max-w-4xl">
             <div id="article-container" class="bg-bg-card p-6 sm:p-8 md:p-10 rounded-xl shadow-xl">
                 {/* Artykuł będzie tutaj wstawiany przez JavaScript */}
             </div>
@@ -129,12 +126,11 @@
                 </a>
             </div>
             <p class="text-secondary text-sm">
-                &copy; <span id="currentYear">2024</span> Kroniki Elary. Wszelkie prawa zastrzeżone.
+                &copy; <span id="currentYear"></span> Kroniki Elary. Wszelkie prawa zastrzeżone.
             </p>
         </div>
     </footer>
     <script src="js/main.js" defer></script>
-    <!-- Include DOMPurify and Marked.js for safe HTML rendering from Markdown -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/dompurify/3.0.8/purify.min.js" integrity="sha512-H+rglffZ6f5JvnrFnbqwkdnKOBK6I99CfA6EED2PYG0i2XfHPDhOBW9JWW2NfW9pdUqCwhKSoLgImY1hD/x77g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/marked/9.1.5/marked.min.js" integrity="sha512-Q3K7ZgbB5KzEh0F9S4vN2QGg/1/6gL8bZj7n3D0l5PjBwW03R/0Bf1u/EIsHjk6WlT4fNlP7LXZgA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script>
@@ -175,11 +171,22 @@
                     metaDesc.setAttribute('content', article.content.substring(0, 160).replace(/<[^>]*>?/gm, '') + '...');
                 }
 
+                let categoriesHTML = '';
+                if (article.Categories && article.Categories.length > 0) {
+                    categoriesHTML = `
+                        <div class="mb-4 text-sm">
+                            <strong>Kategorie:</strong>
+                            ${article.Categories.map(cat => `<a href="blog.html?category=${cat.slug}" class="text-accent hover:underline mr-2">${cat.name}</a>`).join('')}
+                        </div>
+                    `;
+                }
+
                 const articleHTML = `
                     <img src="https://placehold.co/800x400/101A2B/A78BFA?text=${encodeURIComponent(article.title.substring(0,30))}" alt="Baner artykułu: ${article.title}" class="rounded-lg mb-6 sm:mb-8 w-full max-h-[400px] object-cover" onerror="this.onerror=null;this.src='https://placehold.co/800x400/0F172A/94A3B8?text=Brak+obrazka';">
                     <h1 class="text-3xl sm:text-4xl md:text-5xl font-bold text-primary mb-3">${article.title}</h1>
                     <p class="text-sm text-secondary mb-1">Autor: <span class="font-medium text-accent">${article.authorName}</span></p>
-                    <p class="text-sm text-secondary mb-6">Opublikowano: ${new Date(article.publishedAt || article.createdAt).toLocaleDateString('pl-PL', { year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit' })}</p>
+                    <p class="text-sm text-secondary mb-2">Opublikowano: ${new Date(article.publishedAt || article.createdAt).toLocaleDateString('pl-PL', { year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit' })}</p>
+                    ${categoriesHTML}
                     <hr class="border-t border-[var(--border-card)] my-6 sm:my-8">
                     <div class="article-content prose prose-invert max-w-none text-lg leading-relaxed">
                         ${ DOMPurify.sanitize(marked.parse(article.content)) }
@@ -201,11 +208,8 @@
         }
 
         document.addEventListener('DOMContentLoaded', function() {
-            // Common script initialization is now handled by js/main.js
-            // Specific logic for article-view page:
              if (typeof DOMPurify === 'undefined' || typeof marked === 'undefined') {
                 console.warn("DOMPurify or Marked.js not loaded from CDN. Content rendering might be unsafe or incorrect if these are not globally available otherwise.");
-                // Provide dummy functions if not loaded to prevent errors, though content won't be processed.
                 window.DOMPurify = window.DOMPurify || { sanitize: (html) => html };
                 window.marked = window.marked || { parse: (markdown) => markdown };
             }
