@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="pl" class="scroll-smooth dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Blog Kronik Elary - Aktualności, poradniki i opowieści ze świata Aethelgard.">
+    <meta name="keywords" content="blog, aktualności, artykuły, kroniki elary, anime, manga, discord">
+    <meta name="author" content="Arcadius & Strażnicy Kronik Elary">
+    <title>Blog - Kroniki Elary</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600&display=swap" rel="stylesheet">
+    <style>
+        /* Minimal styles from index.html for consistency - theme variables, body, headings */
+        :root {
+            --bg-primary: #0F172A; --bg-secondary: rgba(30, 41, 59, 0.8); --bg-card: #1E293B; --bg-header: rgba(15, 23, 42, 0.92);
+            --text-primary: #E2E8F0; --text-secondary: #94A3B8; --text-accent: #A78BFA; --text-accent-hover: #8B5CF6;
+            --border-accent: #8B5CF6; --border-card: rgba(167, 139, 250, 0.25);
+            --btn-primary-bg: #8B5CF6; --btn-primary-hover-bg: #7C3AED; --btn-discord-bg: #5865F2; --btn-discord-hover-bg: #4752C4;
+            --scrollbar-thumb-bg: #8B5CF6; --scrollbar-thumb-hover-bg: #7C3AED; --svg-icon-fill: #E2E8F0;
+            --shadow-color: rgba(167, 139, 250, 0.25); --shadow-strong-color: rgba(167, 139, 250, 0.4);
+            --modal-backdrop: rgba(15, 23, 42, 0.85); --rgb-accent: 167, 139, 250;
+        }
+        html.light {
+            --bg-primary: #F9FAFB; --bg-secondary: rgba(243, 244, 246, 0.9); --bg-card: #FFFFFF; --bg-header: rgba(255, 255, 255, 0.95);
+            --text-primary: #1F2937; --text-secondary: #4B5563; --text-accent: #7C3AED; --text-accent-hover: #6D28D9;
+            --border-accent: #7C3AED; --border-card: rgba(124, 58, 237, 0.1);
+            --btn-primary-bg: #7C3AED; --btn-primary-hover-bg: #6D28D9; --btn-discord-bg: #5865F2; --btn-discord-hover-bg: #4752C4;
+            --scrollbar-thumb-bg: #A78BFA; --scrollbar-thumb-hover-bg: #8B5CF6; --svg-icon-fill: #374151;
+            --shadow-color: rgba(124, 58, 237, 0.08); --shadow-strong-color: rgba(124, 58, 237, 0.15);
+            --modal-backdrop: rgba(249, 250, 251, 0.85); --rgb-accent: 124, 58, 237;
+        }
+        body { font-family: 'Inter', sans-serif; background-color: var(--bg-primary); color: var(--text-primary); transition: background-color 0.3s ease, color 0.3s ease; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; line-height: 1.75; }
+        h1, h2, h3, h4, h5 { font-family: 'Lora', serif; font-weight: 600; line-height: 1.35; }
+        h1 { letter-spacing: -0.025em; font-weight: 700; } h2 { letter-spacing: -0.02em; font-weight: 700; } h3 { font-weight: 600; }
+        .card-bg { background-color: var(--bg-card); transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), background-color 0.3s ease; border: 1px solid var(--border-card); box-shadow: 0 7px 18px -4px var(--shadow-color); overflow: hidden; }
+        .card-bg:hover { transform: translateY(-6px) scale(1.02); box-shadow: 0 12px 24px -5px var(--shadow-strong-color); }
+        .btn-primary { color: #FFFFFF; background-color: var(--btn-primary-bg); transition: background-color 0.25s ease; padding: 0.6rem 1.2rem; border-radius: 0.375rem; font-weight: 500; }
+        .btn-primary:hover { background-color: var(--btn-primary-hover-bg); }
+        .btn-secondary { background-color: transparent; border: 1px solid var(--border-accent); color: var(--text-accent); padding: calc(0.6rem - 1px) calc(1.2rem - 1px); border-radius: 0.375rem; font-weight: 500; }
+        .btn-secondary:hover { background-color: rgba(var(--rgb-accent), 0.1); }
+        .btn-disabled { background-color: var(--text-secondary); opacity: 0.6; cursor: not-allowed; }
+        .text-accent { color: var(--text-accent); }
+        header#navbar { background-color: var(--bg-header); backdrop-filter: blur(18px); transition: background-color 0.3s ease, box-shadow 0.3s ease; box-shadow: 0 5px 15px -4px rgba(15,23,42,0.2); }
+        .nav-link { position: relative; color: var(--text-secondary); transition: color 0.2s ease, background-color 0.2s ease, transform 0.2s ease; padding: 0.65rem 1.1rem; border-radius: 0.6rem; font-weight: 500; }
+        .nav-link:hover { transform: translateY(-1px); }
+        .nav-link::after { content: ''; position: absolute; width: 0; height: 3px; bottom: 5px; left: 50%; transform: translateX(-50%); background-color: var(--text-accent); transition: width 0.35s cubic-bezier(0.25, 0.8, 0.25, 1); border-radius: 1.5px; }
+        .nav-link:hover, .nav-link.active { color: var(--text-accent); background-color: rgba(var(--rgb-accent), 0.12); }
+        .nav-link:hover::after, .nav-link.active::after { width: 60%; }
+        #mobileMenu { transition: transform 0.4s cubic-bezier(0.25, 0.8, 0.25, 1), opacity 0.4s cubic-bezier(0.25, 0.8, 0.25, 1); transform: translateY(-100%); opacity: 0; pointer-events: none; }
+        #mobileMenu.open { transform: translateY(0); opacity: 1; pointer-events: auto; }
+        .user-avatar { width: 32px; height: 32px; border-radius: 50%; border: 2px solid var(--border-accent); cursor: pointer; transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out; }
+        .user-avatar:hover { transform: scale(1.1); box-shadow: 0 0 10px var(--shadow-strong-color); }
+        .dropdown-menu { position: absolute; top: calc(100% + 0.5rem); right: 0; background-color: var(--bg-card); border: 1px solid var(--border-card); border-radius: 0.5rem; box-shadow: 0 10px 25px -5px var(--shadow-strong-color), 0 8px 10px -6px var(--shadow-color); z-index: 50; min-width: 220px; opacity: 0; visibility: hidden; transform: translateY(-10px); transition: opacity 0.2s ease, transform 0.2s ease, visibility 0s linear 0.2s; }
+        .dropdown-menu.open { opacity: 1; visibility: visible; transform: translateY(0); transition: opacity 0.2s ease, transform 0.2s ease; }
+        .dropdown-menu a, .dropdown-menu button { display: block; width: 100%; text-align: left; padding: 0.75rem 1rem; font-size: 0.875rem; color: var(--text-secondary); transition: background-color 0.15s ease, color 0.15s ease; }
+        .dropdown-menu a:hover, .dropdown-menu button:hover { background-color: rgba(var(--rgb-accent), 0.1); color: var(--text-accent); }
+        .dropdown-menu form { margin: 0; }
+        .loading-spinner { border-color: var(--text-accent) transparent var(--text-accent) transparent; }
+         /* Dodatkowe style specyficzne dla blog.html */
+        .article-card-content { -webkit-mask-image: linear-gradient(to bottom, black 80%, transparent 100%); mask-image: linear-gradient(to bottom, black 80%, transparent 100%); }
+
+    </style>
+</head>
+<body class="antialiased">
+
+    <header id="navbar" class="fixed top-0 left-0 right-0 z-50 py-3">
+        <div class="container mx-auto px-4 sm:px-6 flex justify-between items-center">
+            <a href="index.html" class="text-3xl font-bold" aria-label="Strona główna Kronik Elary">
+                <span class="text-accent">Kroniki</span> <span class="text-primary">Elary</span>
+            </a>
+            <nav class="hidden md:flex items-center space-x-1 lg:space-x-2">
+                <a href="index.html" class="nav-link">Strona Główna</a>
+                <a href="prezentacja.html" class="nav-link">Prezentacja Serwera</a>
+                <a href="wikipedia.html" class="nav-link">Wikipedia Kronik</a>
+                <a href="blog.html" class="nav-link active">Blog</a> {/* Dodano link do bloga */}
+                <a href="ranking-stats.html" class="nav-link">Rankingi</a>
+                <a href="dom-aukcyjny.html" class="nav-link">Dom Aukcyjny</a>
+                <div id="auth-section-nav" class="ml-4 relative"></div>
+            </nav>
+            <div class="md:hidden flex items-center">
+                <div id="auth-section-mobile-nav" class="mr-2 relative"></div>
+                <button id="mobileMenuButton" class="p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-[var(--bg-header)] focus:ring-[var(--text-accent)]" aria-expanded="false" aria-controls="mobileMenu" aria-label="Otwórz menu nawigacyjne">
+                    <svg class="w-6 h-6" fill="none" stroke="var(--svg-icon-fill)" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
+                </button>
+            </div>
+        </div>
+        <div id="mobileMenu" class="absolute top-full left-0 right-0 md:hidden shadow-lg" style="background-color: var(--bg-header);">
+            <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+                <a href="index.html" class="block py-2.5 px-3 nav-link text-base font-medium">Strona Główna</a>
+                <a href="prezentacja.html" class="block py-2.5 px-3 nav-link text-base font-medium">Prezentacja Serwera</a>
+                <a href="wikipedia.html" class="block py-2.5 px-3 nav-link text-base font-medium">Wikipedia Kronik</a>
+                <a href="blog.html" class="block py-2.5 px-3 nav-link text-base font-medium active">Blog</a> {/* Dodano link do bloga */}
+                <a href="ranking-stats.html" class="block py-2.5 px-3 nav-link text-base font-medium">Rankingi</a>
+                <a href="dom-aukcyjny.html" class="block py-2.5 px-3 nav-link text-base font-medium">Dom Aukcyjny</a>
+                <a href="https://discord.gg/TWOJLINKZAPROSZENIOWY" target="_blank" rel="noopener noreferrer" class="block mt-2 py-2.5 px-3 text-base font-medium text-white bg-purple-600 hover:bg-purple-700 rounded-md text-center">Dołącz do Discorda</a>
+            </div>
+        </div>
+    </header>
+
+    <main class="pt-24 sm:pt-28 pb-16">
+        <section id="blog-header" class="py-12 sm:py-16 text-center" style="background: linear-gradient(rgba(15, 23, 42, 0.85), rgba(15, 23, 42, 0.95)), url('https://placehold.co/1920x400/0a0f1e/a78bfa?text=Blog+Kronik+Elary') center/cover no-repeat;">
+            <div class="container mx-auto px-4 sm:px-6">
+                <h1 class="text-4xl sm:text-5xl md:text-6xl font-bold text-white mb-4">Aktualności Kronik Elary</h1>
+                <p class="text-lg md:text-xl text-slate-300 max-w-2xl mx-auto">
+                    Najnowsze wpisy, poradniki i opowieści ze świata Aethelgard i naszej społeczności.
+                </p>
+            </div>
+        </section>
+
+        <section id="article-list-section" class="py-12 sm:py-16">
+            <div class="container mx-auto px-4 sm:px-6">
+                <div id="article-list-container" class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    {/* Artykuły będą tutaj wstawiane przez JavaScript */}
+                </div>
+                <div id="loading-message" class="text-center py-10 text-secondary">
+                    <div class="animate-spin rounded-full h-10 w-10 border-t-2 border-b-2 loading-spinner mx-auto mb-3"></div>
+                    Ładowanie artykułów...
+                </div>
+                <div id="error-message" class="hidden text-center py-10 text-red-400 bg-red-900/50 p-4 rounded-md">
+                    Nie udało się załadować artykułów. Spróbuj ponownie później.
+                </div>
+                <div id="empty-message" class="hidden text-center py-10 text-secondary">
+                    Brak dostępnych artykułów. Zajrzyj tu później!
+                </div>
+
+                <div id="pagination-controls" class="mt-12 flex justify-center items-center space-x-4">
+                    {/* Kontrolki paginacji będą tutaj */}
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="py-12 text-center" style="background-color: var(--bg-header);">
+        <div class="container mx-auto px-4 sm:px-6">
+             <div class="flex justify-center space-x-6 mb-6">
+                 <a href="polityka-prywatnosci.html" class="text-secondary hover:text-accent transition-colors duration-200" aria-label="Polityka Prywatności">
+                    Polityka Prywatności
+                </a>
+            </div>
+            <p class="text-secondary text-sm">
+                &copy; <span id="currentYear">2024</span> Kroniki Elary. Wszelkie prawa zastrzeżone.
+            </p>
+        </div>
+    </footer>
+    <script src="js/main.js" defer></script>
+    <script>
+        // Specific script for blog.html
+        const articleListContainer = document.getElementById('article-list-container');
+        const paginationControls = document.getElementById('pagination-controls');
+        const loadingMessage = document.getElementById('loading-message');
+        const errorMessage = document.getElementById('error-message');
+        const emptyMessage = document.getElementById('empty-message');
+
+        let currentPage = 1;
+        const limit = 9; // Liczba artykułów na stronę
+
+        async function fetchArticles(page = 1) {
+            loadingMessage.style.display = 'block';
+            errorMessage.style.display = 'none';
+            emptyMessage.style.display = 'none';
+            articleListContainer.innerHTML = ''; // Wyczyść poprzednie artykuły
+            paginationControls.innerHTML = '';
+
+            try {
+                const response = await fetch(`/api/articles?page=${page}&limit=${limit}`);
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                const data = await response.json();
+
+                loadingMessage.style.display = 'none';
+
+                if (data.articles && data.articles.length > 0) {
+                    data.articles.forEach(article => {
+                        const articleCard = `
+                            <div class="card-bg p-6 rounded-xl flex flex-col">
+                                <img src="https://placehold.co/600x350/101A2B/A78BFA?text=${encodeURIComponent(article.title.substring(0,20))}" alt="Miniatura artykułu: ${article.title}" class="rounded-lg mb-4 w-full h-48 object-cover" onerror="this.onerror=null;this.src='https://placehold.co/600x350/0F172A/94A3B8?text=Brak+obrazka';">
+                                <h3 class="text-xl font-semibold text-primary mb-2">
+                                    <a href="article-view.html?slug=${article.slug}" class="hover:text-accent transition-colors">${article.title}</a>
+                                </h3>
+                                <p class="text-xs text-secondary mb-1">Autor: ${article.authorName}</p>
+                                <p class="text-xs text-secondary mb-3">Opublikowano: ${new Date(article.publishedAt).toLocaleDateString('pl-PL', { year: 'numeric', month: 'long', day: 'numeric' })}</p>
+                                <div class="text-sm text-secondary mb-4 flex-grow article-card-content overflow-hidden" style="max-height: 100px;">
+                                    ${article.snippet}
+                                </div>
+                                <a href="article-view.html?slug=${article.slug}" class="text-accent hover:text-accent-hover font-semibold text-sm self-start mt-auto">Czytaj więcej &rarr;</a>
+                            </div>
+                        `;
+                        articleListContainer.insertAdjacentHTML('beforeend', articleCard);
+                    });
+                    renderPagination(data.totalPages, data.currentPage);
+                } else {
+                    emptyMessage.style.display = 'block';
+                }
+            } catch (error) {
+                console.error('Błąd podczas pobierania artykułów:', error);
+                loadingMessage.style.display = 'none';
+                errorMessage.style.display = 'block';
+            }
+        }
+
+        function renderPagination(totalPages, currentPage) {
+            if (totalPages <= 1) {
+                paginationControls.innerHTML = '';
+                return;
+            }
+
+            let paginationHTML = '';
+
+            paginationHTML += `
+                <button
+                    onclick="changePage(${currentPage - 1})"
+                    class="btn-secondary px-4 py-2 text-sm ${currentPage === 1 ? 'btn-disabled' : ''}"
+                    ${currentPage === 1 ? 'disabled' : ''}>
+                    Poprzednia
+                </button>
+            `;
+            paginationHTML += `<span class="text-sm text-secondary">Strona ${currentPage} z ${totalPages}</span>`;
+            paginationHTML += `
+                <button
+                    onclick="changePage(${currentPage + 1})"
+                    class="btn-secondary px-4 py-2 text-sm ${currentPage === totalPages ? 'btn-disabled' : ''}"
+                    ${currentPage === totalPages ? 'disabled' : ''}>
+                    Następna
+                </button>
+            `;
+            paginationControls.innerHTML = paginationHTML;
+        }
+
+        function changePage(page) {
+            if (page < 1) return;
+            const totalPages = parseInt(paginationControls.querySelector('span').textContent.split('z ')[1], 10);
+            if (page > totalPages) return;
+
+            currentPage = page;
+            fetchArticles(currentPage);
+            window.scrollTo({ top: document.getElementById('article-list-section').offsetTop - 100, behavior: 'smooth' });
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            // Common script initialization is now handled by js/main.js
+            // Specific logic for blog page:
+            fetchArticles(currentPage);
+        });
+    </script>
+</body>
+</html>

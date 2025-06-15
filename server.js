@@ -21,6 +21,7 @@
     const SupportRequest = require('./models/SupportRequest');
     const SupportReply = require('./models/SupportReply');
     const Content = require('./models/Content');
+    const Article = require('./models/Article'); // Import nowego modelu Article
     const sequelize = require('./config/database');
 
 
@@ -184,7 +185,95 @@
         }
     }
 
+    // --- Funkcja do generowania sluga (zapewniająca unikalność) ---
+    async function generateUniqueSlug(title, currentId = null) {
+      if (!title) return '';
+      let slug = title
+        .toLowerCase()
+        .trim()
+        .replace(/\s+/g, '-')
+        .replace(/[^\w-]+/g, '')
+        .replace(/--+/g, '-');
+
+      let count = 0;
+      let originalSlug = slug;
+      while (true) {
+        const whereClause = { slug: slug };
+        if (currentId) { // Jeśli aktualizujemy, wyklucz bieżący artykuł z wyszukiwania
+          whereClause.id = { [require('sequelize').Op.ne]: currentId };
+        }
+        const existingArticle = await Article.findOne({ where: whereClause });
+        if (!existingArticle) {
+          break;
+        }
+        count++;
+        slug = `${originalSlug}-${count}`;
+      }
+      return slug;
+    }
+
+
     // --- Ścieżki API (powinny być zdefiniowane przed ogólnymi handlerami plików statycznych) ---
+
+    // --- API Artykułów (Publiczne) ---
+    app.get('/api/articles', async (req, res) => {
+      const page = parseInt(req.query.page, 10) || 1;
+      const limit = parseInt(req.query.limit, 10) || 10;
+      const offset = (page - 1) * limit;
+
+      try {
+        const { count, rows } = await Article.findAndCountAll({
+          where: { status: 'published' },
+          order: [
+            ['publishedAt', 'DESC'],
+            ['createdAt', 'DESC']
+          ],
+          limit: limit,
+          offset: offset,
+          attributes: ['title', 'slug', 'authorName', 'publishedAt', 'content', 'createdAt']
+        });
+
+        const articles = rows.map(article => ({
+          title: article.title,
+          slug: article.slug,
+          authorName: article.authorName,
+          publishedAt: article.publishedAt || article.createdAt, // Fallback do createdAt jeśli publishedAt null
+          snippet: article.content.substring(0, 200) + (article.content.length > 200 ? '...' : '')
+        }));
+
+        res.json({
+          totalPages: Math.ceil(count / limit),
+          currentPage: page,
+          totalArticles: count,
+          articles: articles
+        });
+      } catch (error) {
+        console.error('Błąd podczas pobierania opublikowanych artykułów:', error);
+        res.status(500).json({ error: 'Błąd serwera podczas pobierania artykułów.' });
+      }
+    });
+
+    app.get('/api/articles/:slug', async (req, res) => {
+      try {
+        const article = await Article.findOne({
+          where: {
+            slug: req.params.slug,
+            status: 'published'
+          }
+        });
+
+        if (!article) {
+          return res.status(404).json({ error: 'Artykuł nie został znaleziony lub nie jest opublikowany.' });
+        }
+        res.json(article);
+      } catch (error) {
+        console.error(`Błąd podczas pobierania artykułu o slugu ${req.params.slug}:`, error);
+        res.status(500).json({ error: 'Błąd serwera podczas pobierania artykułu.' });
+      }
+    });
+
+
+    // --- Pozostałe ścieżki API ---
     app.get('/auth/discord/login', (req, res) => {
       const redirectPath = req.query.redirect || '/profil.html';
       req.session.redirectTo = redirectPath;
@@ -576,6 +665,155 @@
       }
     });
 
+    // --- API Artykułów (Admin) ---
+    app.post('/api/admin/articles', async (req, res) => {
+      if (!isAdmin(req)) return res.status(403).json({ error: 'Forbidden - Brak uprawnień administratora.' });
+      if (!req.session.user || !req.session.user.id || !req.session.user.username) {
+        return res.status(401).json({ error: 'Unauthorized - Sesja użytkownika nieprawidłowa lub brak danych użytkownika.' });
+      }
+
+      const { title, content, status, slug: providedSlug } = req.body;
+
+      if (!title || title.trim() === '') {
+        return res.status(400).json({ error: 'Tytuł jest wymagany.' });
+      }
+      if (!content || content.trim() === '') {
+        return res.status(400).json({ error: 'Treść jest wymagana.' });
+      }
+
+      try {
+        let slug = providedSlug ? await generateUniqueSlug(providedSlug) : await generateUniqueSlug(title);
+        if (providedSlug && providedSlug !== slug) {
+            console.warn(`Podany slug "${providedSlug}" nie był unikalny. Zmieniono na "${slug}".`);
+            // Można by zwrócić informację do użytkownika, że slug został zmodyfikowany
+        }
+
+
+        const articleData = {
+          title,
+          slug,
+          content,
+          authorId: req.session.user.id,
+          authorName: req.session.user.username,
+          status: status || 'draft', // Domyślnie 'draft'
+        };
+
+        if (articleData.status === 'published' && !articleData.publishedAt) {
+          articleData.publishedAt = new Date();
+        }
+
+        const newArticle = await Article.create(articleData);
+        res.status(201).json(newArticle);
+      } catch (error) {
+        console.error('Błąd podczas tworzenia nowego artykułu:', error);
+        if (error.name === 'SequelizeValidationError' || error.name === 'SequelizeUniqueConstraintError') {
+          return res.status(400).json({ error: 'Błąd walidacji danych: ' + error.errors.map(e => e.message).join(', ') });
+        }
+        res.status(500).json({ error: 'Błąd serwera podczas tworzenia artykułu.' });
+      }
+    });
+
+    app.get('/api/admin/articles', async (req, res) => {
+      if (!isAdmin(req)) return res.status(403).json({ error: 'Forbidden - Brak uprawnień administratora.' });
+
+      const page = parseInt(req.query.page, 10) || 1;
+      const limit = parseInt(req.query.limit, 10) || 10;
+      const offset = (page - 1) * limit;
+
+      try {
+        const { count, rows } = await Article.findAndCountAll({
+          order: [['createdAt', 'DESC']],
+          limit: limit,
+          offset: offset,
+          attributes: ['id', 'title', 'slug', 'status', 'authorName', 'createdAt', 'updatedAt', 'publishedAt']
+        });
+
+        res.json({
+          totalPages: Math.ceil(count / limit),
+          currentPage: page,
+          totalArticles: count,
+          articles: rows
+        });
+      } catch (error) {
+        console.error('Błąd podczas pobierania wszystkich artykułów dla admina:', error);
+        res.status(500).json({ error: 'Błąd serwera podczas pobierania artykułów.' });
+      }
+    });
+
+    app.get('/api/admin/articles/:id', async (req, res) => {
+      if (!isAdmin(req)) return res.status(403).json({ error: 'Forbidden - Brak uprawnień administratora.' });
+      const { id } = req.params;
+      try {
+        const article = await Article.findByPk(id);
+        if (!article) {
+          return res.status(404).json({ error: 'Artykuł nie został znaleziony.' });
+        }
+        res.json(article);
+      } catch (error) {
+        console.error(`Błąd podczas pobierania artykułu o ID ${id} dla admina:`, error);
+        res.status(500).json({ error: 'Błąd serwera podczas pobierania artykułu.' });
+      }
+    });
+
+    app.put('/api/admin/articles/:id', async (req, res) => {
+      if (!isAdmin(req)) return res.status(403).json({ error: 'Forbidden - Brak uprawnień administratora.' });
+      const { id } = req.params;
+      const { title, content, slug: newSlug, status } = req.body;
+
+      try {
+        const article = await Article.findByPk(id);
+        if (!article) {
+          return res.status(404).json({ error: 'Artykuł nie został znaleziony.' });
+        }
+
+        if (title) article.title = title;
+        if (content) article.content = content;
+        if (status) article.status = status;
+
+        if (newSlug && newSlug !== article.slug) {
+          article.slug = await generateUniqueSlug(newSlug, article.id);
+           if (newSlug !== article.slug) {
+             console.warn(`Podany nowy slug "${newSlug}" dla artykułu ID ${id} nie był unikalny lub wymagał normalizacji. Zmieniono na "${article.slug}".`);
+             // Można by dodać informację zwrotną do odpowiedzi JSON
+           }
+        } else if (title && !newSlug && title !== article.title) { // Jeśli zmieniono tytuł, a nie podano nowego sluga, wygeneruj nowy slug z tytułu
+            article.slug = await generateUniqueSlug(title, article.id);
+        }
+
+
+        if (article.status === 'published' && !article.publishedAt) {
+          article.publishedAt = new Date();
+        }
+        // Jeśli status zmieniono na 'draft', publishedAt pozostaje (oznacza kiedy był ostatnio opublikowany)
+
+        await article.save();
+        res.json(article);
+      } catch (error) {
+        console.error(`Błąd podczas aktualizacji artykułu o ID ${id}:`, error);
+        if (error.name === 'SequelizeValidationError' || error.name === 'SequelizeUniqueConstraintError') {
+          return res.status(400).json({ error: 'Błąd walidacji danych: ' + error.errors.map(e => e.message).join(', ') });
+        }
+        res.status(500).json({ error: 'Błąd serwera podczas aktualizacji artykułu.' });
+      }
+    });
+
+    app.delete('/api/admin/articles/:id', async (req, res) => {
+      if (!isAdmin(req)) return res.status(403).json({ error: 'Forbidden - Brak uprawnień administratora.' });
+      const { id } = req.params;
+      try {
+        const article = await Article.findByPk(id);
+        if (!article) {
+          return res.status(404).json({ error: 'Artykuł nie został znaleziony.' });
+        }
+        await article.destroy();
+        res.status(204).send(); // 204 No Content
+      } catch (error) {
+        console.error(`Błąd podczas usuwania artykułu o ID ${id}:`, error);
+        res.status(500).json({ error: 'Błąd serwera podczas usuwania artykułu.' });
+      }
+    });
+
+
     // ENDPOINTY ADMINA DLA SKLEPU (proxy do API bota)
     app.get('/api/admin/shop-items', (req, res) => {
         if (!isAdmin(req)) return res.status(403).json({ error: 'Forbidden' });
@@ -674,6 +912,7 @@
       try {
         await sequelize.authenticate();
         console.log('Połączono z bazą danych strony (support.sqlite) pomyślnie.');
+        // Synchronizacja wszystkich modeli, w tym Article
         await sequelize.sync({ alter: process.env.NODE_ENV !== 'production' });
         console.log(`Modele bazy danych strony zsynchronizowane (alter: ${process.env.NODE_ENV !== 'production'}).`);
         console.log(`Serwer strony Kronik Elary działa na http://localhost:${PORT}`);

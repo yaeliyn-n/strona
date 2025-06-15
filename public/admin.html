@@ -282,8 +282,9 @@
     <main class="flex-grow container mx-auto px-4 sm:px-6 py-8">
         <div id="admin-panel-container">
             <div class="mb-6 border-b border-[var(--border-card)]">
-                <nav class="flex -mb-px space-x-1" aria-label="Tabs">
+                <nav class="flex -mb-px space-x-1 flex-wrap" aria-label="Tabs">
                     <button data-tab="contentManagement" class="tab-button active">Zarządzanie Treścią</button>
+                    <button data-tab="articleManagement" class="tab-button">Zarządzanie Artykułami</button> {/* Nowa zakładka */}
                     <button data-tab="supportManagement" class="tab-button">Zarządzanie Wsparciem</button>
                     <button data-tab="shopManagement" class="tab-button">Zarządzanie Sklepem</button>
                     <button data-tab="warningsManagement" class="tab-button">Zarządzanie Ostrzeżeniami</button>
@@ -331,6 +332,65 @@
                             <span class="loading-spinner hidden"></span>
                         </button>
                     </div>
+                </div>
+            </div>
+
+            <div id="articleManagement" class="tab-content">
+                <h1 class="text-3xl font-bold text-primary mb-8 text-center">Panel Zarządzania Artykułami</h1>
+                <div id="adminArticleListContainer" class="bg-bg-card p-6 sm:p-8 rounded-xl shadow-xl">
+                    <div class="flex justify-between items-center mb-6">
+                        <h2 class="text-2xl font-semibold text-accent">Lista Artykułów</h2>
+                        <button id="showCreateArticleFormButton" class="btn btn-success">Utwórz Nowy Artykuł</button>
+                    </div>
+                    <div id="articlesTableContainer" class="overflow-x-auto">
+                        {/* Tabela artykułów zostanie wstawiona tutaj przez JS */}
+                    </div>
+                    <div id="articleListPaginationControls" class="mt-6 flex justify-center items-center space-x-3">
+                        {/* Paginacja dla listy artykułów */}
+                    </div>
+                    <div id="articleListLoading" class="text-center py-6 text-secondary hidden">
+                        <span class="loading-spinner !w-8 !h-8"></span> Ładowanie artykułów...
+                    </div>
+                     <div id="articleListError" class="text-center py-6 text-red-400 hidden"></div>
+                     <div id="articleListEmpty" class="text-center py-6 text-secondary hidden">Brak artykułów do wyświetlenia.</div>
+                </div>
+
+                <div id="adminArticleFormContainer" style="display:none;" class="bg-bg-card p-6 sm:p-8 rounded-xl shadow-xl mt-8">
+                    <h2 id="articleFormTitle" class="text-2xl font-semibold text-accent mb-6">Utwórz Nowy Artykuł</h2>
+                    <form id="adminArticleForm" class="space-y-6">
+                        <div>
+                            <label for="articleTitle" class="form-label">Tytuł Artykułu:</label>
+                            <input type="text" id="articleTitle" name="title" class="form-input" required>
+                        </div>
+                        <div>
+                            <label for="articleSlug" class="form-label">Slug (URL):</label>
+                            <input type="text" id="articleSlug" name="slug" class="form-input" placeholder="Pozostaw puste, aby wygenerować automatycznie">
+                            <p class="text-xs text-secondary mt-1">Unikalny identyfikator w URL, np. 'moj-pierwszy-artykul'.</p>
+                        </div>
+                        <div>
+                            <label for="articleContent" class="form-label">Treść Artykułu (Markdown):</label>
+                            <textarea id="articleContent" name="content" rows="15" class="form-textarea" placeholder="Wpisz treść artykułu używając składni Markdown..."></textarea>
+                            <div class="mt-2 text-xs text-secondary">
+                                Podgląd (uproszczony):
+                                <button type="button" id="togglePreviewButton" class="ml-2 text-accent text-xs underline">Pokaż/Ukryj Podgląd</button>
+                            </div>
+                            <div id="articlePreview" class="mt-2 p-4 border border-[var(--border-card)] rounded-md bg-[var(--bg-primary)] min-h-[100px] prose prose-sm max-w-none hidden"></div>
+                        </div>
+                        <div>
+                            <label for="articleStatus" class="form-label">Status:</label>
+                            <select id="articleStatus" name="status" class="form-select">
+                                <option value="draft">Szkic (Draft)</option>
+                                <option value="published">Opublikowany (Published)</option>
+                            </select>
+                        </div>
+                        <div class="flex flex-col sm:flex-row justify-end space-y-3 sm:space-y-0 sm:space-x-4">
+                            <button type="button" id="backToArticleListButton" class="btn btn-secondary w-full sm:w-auto">Wróć do Listy</button>
+                            <button type="submit" id="saveArticleButton" class="btn btn-primary w-full sm:w-auto">
+                                <span class="button-text">Utwórz Artykuł</span>
+                                <span class="loading-spinner hidden"></span>
+                            </button>
+                        </div>
+                    </form>
                 </div>
             </div>
 
@@ -1595,6 +1655,290 @@
             // Ustawienie domyślnej zakładki (jeśli użytkownik jest adminem)
             // Ta logika jest już w updateAuthDisplay, które wywołuje setActiveTab
         });
+
+
+        // --- Article Management Specific Logic (will be filled in next step) ---
+        let currentAdminArticlePage = 1;
+        let editingArticleId = null;
+
+        const adminArticleListContainer = document.getElementById('adminArticleListContainer');
+        const adminArticleFormContainer = document.getElementById('adminArticleFormContainer');
+        const articlesTableContainer = document.getElementById('articlesTableContainer');
+        const articleListPaginationControls = document.getElementById('articleListPaginationControls');
+        const articleListLoading = document.getElementById('articleListLoading');
+        const articleListError = document.getElementById('articleListError');
+        const articleListEmpty = document.getElementById('articleListEmpty');
+
+        const showCreateArticleFormButton = document.getElementById('showCreateArticleFormButton');
+        const articleFormTitle = document.getElementById('articleFormTitle'); // Element h2 dla tytułu formularza
+        const adminArticleForm = document.getElementById('adminArticleForm');
+        const articleTitleInput = document.getElementById('articleTitle');
+        const articleSlugInput = document.getElementById('articleSlug');
+        const articleContentInput = document.getElementById('articleContent');
+        const articleStatusInput = document.getElementById('articleStatus');
+        const saveArticleButton = document.getElementById('saveArticleButton');
+        const backToArticleListButton = document.getElementById('backToArticleListButton');
+
+        const togglePreviewButton = document.getElementById('togglePreviewButton');
+        const articlePreview = document.getElementById('articlePreview');
+
+        // Markdown Preview (basic)
+        if (togglePreviewButton && articleContentInput && articlePreview) {
+            // Load marked.js if not already available (e.g. via CDN)
+            if (typeof marked === 'undefined') {
+                const markedScript = document.createElement('script');
+                markedScript.src = "https://cdnjs.cloudflare.com/ajax/libs/marked/9.1.5/marked.min.js";
+                document.head.appendChild(markedScript);
+                // Note: This is a simplified way to load. Production apps should bundle or load more robustly.
+            }
+             if (typeof DOMPurify === 'undefined') {
+                const domPurifyScript = document.createElement('script');
+                domPurifyScript.src = "https://cdnjs.cloudflare.com/ajax/libs/dompurify/3.0.8/purify.min.js";
+                document.head.appendChild(domPurifyScript);
+            }
+
+            togglePreviewButton.addEventListener('click', () => {
+                articlePreview.classList.toggle('hidden');
+                if (!articlePreview.classList.contains('hidden') && typeof marked !== 'undefined' && typeof DOMPurify !== 'undefined') {
+                    articlePreview.innerHTML = DOMPurify.sanitize(marked.parse(articleContentInput.value));
+                }
+            });
+            articleContentInput.addEventListener('input', () => {
+                 if (!articlePreview.classList.contains('hidden') && typeof marked !== 'undefined' && typeof DOMPurify !== 'undefined') {
+                    articlePreview.innerHTML = DOMPurify.sanitize(marked.parse(articleContentInput.value));
+                }
+            });
+        }
+
+
+        function showArticleListScreen() {
+            if(adminArticleFormContainer) adminArticleFormContainer.style.display = 'none';
+            if(adminArticleListContainer) adminArticleListContainer.style.display = 'block';
+            editingArticleId = null;
+            fetchAdminArticles(currentAdminArticlePage);
+            if (articlePreview && !articlePreview.classList.contains('hidden')) { // Schowaj podgląd jeśli był otwarty
+                articlePreview.classList.add('hidden');
+            }
+        }
+
+        async function showArticleFormScreen(articleId = null) {
+            if(adminArticleListContainer) adminArticleListContainer.style.display = 'none';
+            if(adminArticleFormContainer) adminArticleFormContainer.style.display = 'block';
+            if(adminArticleForm) adminArticleForm.reset();
+            editingArticleId = articleId;
+
+            const formTitleEl = document.getElementById('articleFormTitle');
+            const saveButtonTextSpan = saveArticleButton.querySelector('.button-text');
+
+            if (articleId) {
+                if(formTitleEl) formTitleEl.textContent = 'Edytuj Artykuł';
+                if(saveButtonTextSpan) saveButtonTextSpan.textContent = 'Zaktualizuj Artykuł';
+
+                toggleButtonLoadingState(saveArticleButton, true); // Pokaż spinner na głównym przycisku podczas ładowania
+                try {
+                    const response = await fetch(new URL(`/api/admin/articles/${articleId}`, window.location.href).href);
+                    if (!response.ok) {
+                        throw new Error(`Błąd ładowania artykułu: ${response.status}`);
+                    }
+                    const article = await response.json();
+                    if(articleTitleInput) articleTitleInput.value = article.title;
+                    if(articleSlugInput) articleSlugInput.value = article.slug;
+                    if(articleContentInput) articleContentInput.value = article.content;
+                    if(articleStatusInput) articleStatusInput.value = article.status;
+                    if (articlePreview && !articlePreview.classList.contains('hidden') && typeof marked !== 'undefined' && typeof DOMPurify !== 'undefined') {
+                         articlePreview.innerHTML = DOMPurify.sanitize(marked.parse(article.content));
+                    }
+                } catch (error) {
+                    console.error("Błąd ładowania artykułu do edycji:", error);
+                    displayAdminMessage(`Nie udało się załadować artykułu: ${error.message}`, 'error');
+                    showArticleListScreen(); // Wróć do listy jeśli błąd
+                } finally {
+                    toggleButtonLoadingState(saveArticleButton, false);
+                }
+            } else {
+                if(formTitleEl) formTitleEl.textContent = 'Utwórz Nowy Artykuł';
+                if(saveButtonTextSpan) saveButtonTextSpan.textContent = 'Utwórz Artykuł';
+                if (articlePreview && !articlePreview.classList.contains('hidden')) { // Schowaj podgląd dla nowego art.
+                    articlePreview.classList.add('hidden');
+                }
+            }
+        }
+
+        async function fetchAdminArticles(page = 1) {
+            currentAdminArticlePage = page;
+            if (!articlesTableContainer || !articleListLoading || !articleListError || !articleListEmpty || !articleListPaginationControls) return;
+
+            articleListLoading.classList.remove('hidden');
+            articlesTableContainer.innerHTML = '';
+            articleListError.classList.add('hidden');
+            articleListEmpty.classList.add('hidden');
+            articleListPaginationControls.innerHTML = '';
+
+            try {
+                const response = await fetch(new URL(`/api/admin/articles?page=${page}&limit=10`, window.location.href).href);
+                if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+                const data = await response.json();
+
+                if (data.articles && data.articles.length > 0) {
+                    const table = document.createElement('table');
+                    table.className = 'shop-item-table w-full'; // Użyjemy tych samych stylów co dla sklepu
+                    table.innerHTML = `
+                        <thead>
+                            <tr>
+                                <th class="w-3/12">Tytuł</th>
+                                <th class="w-2/12">Autor</th>
+                                <th class="w-1/12">Status</th>
+                                <th class="w-2/12">Slug</th>
+                                <th class="w-2/12">Ostatnia modyfikacja</th>
+                                <th class="w-2/12">Akcje</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            ${data.articles.map(article => `
+                                <tr>
+                                    <td class="font-medium text-primary">${article.title}</td>
+                                    <td>${article.authorName}</td>
+                                    <td><span class="px-2 py-1 text-xs font-semibold rounded-full ${article.status === 'published' ? 'bg-green-500/20 text-green-400' : 'bg-yellow-500/20 text-yellow-400'}">${article.status}</span></td>
+                                    <td>${article.slug}</td>
+                                    <td>${new Date(article.updatedAt).toLocaleString('pl-PL')}</td>
+                                    <td class="whitespace-nowrap">
+                                        <button class="btn btn-secondary btn-action-sm edit-article-btn" data-id="${article.id}">Edytuj</button>
+                                        <button class="btn btn-danger btn-action-sm delete-article-btn" data-id="${article.id}" data-title="${article.title}">Usuń</button>
+                                    </td>
+                                </tr>
+                            `).join('')}
+                        </tbody>
+                    `;
+                    articlesTableContainer.appendChild(table);
+                    renderArticlePaginationControls(data.totalPages, data.currentPage);
+
+                    document.querySelectorAll('.edit-article-btn').forEach(btn => {
+                        btn.addEventListener('click', () => showArticleFormScreen(btn.dataset.id));
+                    });
+                    document.querySelectorAll('.delete-article-btn').forEach(btn => {
+                        btn.addEventListener('click', () => deleteArticle(btn.dataset.id, btn.dataset.title));
+                    });
+
+                } else {
+                    articleListEmpty.classList.remove('hidden');
+                }
+            } catch (error) {
+                console.error('Błąd ładowania listy artykułów:', error);
+                articleListError.textContent = `Nie udało się załadować listy artykułów: ${error.message}`;
+                articleListError.classList.remove('hidden');
+            } finally {
+                articleListLoading.classList.add('hidden');
+            }
+        }
+
+        function renderArticlePaginationControls(totalPages, page) {
+            if (totalPages <= 1) {
+                articleListPaginationControls.innerHTML = '';
+                return;
+            }
+            let paginationHTML = '';
+            // Previous Button
+            paginationHTML += `<button class="btn btn-secondary btn-action-sm ${page === 1 ? 'opacity-50 cursor-not-allowed' : ''}" ${page === 1 ? 'disabled' : ''} onclick="changeAdminArticlePage(${page - 1})">Poprzednia</button>`;
+            // Page Info
+            paginationHTML += `<span class="text-sm text-secondary">Strona ${page} z ${totalPages}</span>`;
+            // Next Button
+            paginationHTML += `<button class="btn btn-secondary btn-action-sm ${page === totalPages ? 'opacity-50 cursor-not-allowed' : ''}" ${page === totalPages ? 'disabled' : ''} onclick="changeAdminArticlePage(${page + 1})">Następna</button>`;
+            articleListPaginationControls.innerHTML = paginationHTML;
+        }
+
+        function changeAdminArticlePage(newPage) {
+            fetchAdminArticles(newPage);
+        }
+
+        async function handleArticleFormSubmit(event) {
+            event.preventDefault();
+            if (!saveArticleButton) return;
+            toggleButtonLoadingState(saveArticleButton, true);
+
+            const articleData = {
+                title: articleTitleInput.value,
+                content: articleContentInput.value,
+                slug: articleSlugInput.value.trim() === '' ? null : articleSlugInput.value.trim(), // Wyślij null jeśli puste, serwer wygeneruje
+                status: articleStatusInput.value
+            };
+
+            let url, method;
+            if (editingArticleId) {
+                url = new URL(`/api/admin/articles/${editingArticleId}`, window.location.href).href;
+                method = 'PUT';
+            } else {
+                url = new URL('/api/admin/articles', window.location.href).href;
+                method = 'POST';
+            }
+
+            try {
+                const response = await fetch(url, {
+                    method: method,
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(articleData)
+                });
+                const result = await response.json();
+                if (response.ok) {
+                    displayAdminMessage(`Artykuł "${result.title}" ${editingArticleId ? 'zaktualizowany' : 'utworzony'} pomyślnie!`, 'success');
+                    showArticleListScreen();
+                } else {
+                    displayAdminMessage(`Błąd: ${result.error || 'Nieznany błąd serwera'}`, 'error');
+                }
+            } catch (error) {
+                console.error('Błąd zapisu artykułu:', error);
+                displayAdminMessage(`Błąd sieci: ${error.message}`, 'error');
+            } finally {
+                toggleButtonLoadingState(saveArticleButton, false);
+            }
+        }
+
+        async function deleteArticle(articleId, articleTitle) {
+            if (!confirm(`Czy na pewno chcesz usunąć artykuł "${articleTitle}" (ID: ${articleId})? Tej operacji nie można cofnąć.`)) {
+                return;
+            }
+            // Znajdź przycisk usuwania, aby pokazać na nim stan ładowania (opcjonalne, ale dobre UX)
+            const deleteButton = document.querySelector(`.delete-article-btn[data-id="${articleId}"]`);
+            if(deleteButton) toggleButtonLoadingState(deleteButton, true);
+
+            try {
+                const response = await fetch(new URL(`/api/admin/articles/${articleId}`, window.location.href).href, { method: 'DELETE' });
+                if (response.ok) { // Status 204 No Content też jest OK
+                    displayAdminMessage(`Artykuł "${articleTitle}" usunięty pomyślnie.`, 'success');
+                    fetchAdminArticles(currentAdminArticlePage); // Odśwież listę
+                } else {
+                    const result = await response.json().catch(() => ({error: 'Nieznany błąd serwera'}));
+                    displayAdminMessage(`Błąd usuwania artykułu: ${result.error || response.status}`, 'error');
+                }
+            } catch (error) {
+                console.error('Błąd sieci podczas usuwania artykułu:', error);
+                displayAdminMessage(`Błąd sieci: ${error.message}`, 'error');
+            } finally {
+                 if(deleteButton) toggleButtonLoadingState(deleteButton, false);
+            }
+        }
+
+        // Event Listeners for Article Management
+        if (showCreateArticleFormButton) {
+            showCreateArticleFormButton.addEventListener('click', () => showArticleFormScreen());
+        }
+        if (backToArticleListButton) {
+            backToArticleListButton.addEventListener('click', showArticleListScreen);
+        }
+        if (adminArticleForm) {
+            adminArticleForm.addEventListener('submit', handleArticleFormSubmit);
+        }
+
+        // Modify existing tab switching logic to include article management
+        const originalSetActiveTab = setActiveTab;
+        setActiveTab = (tabName) => {
+            originalSetActiveTab(tabName); // Call the original function
+            if (tabName === 'articleManagement') {
+                showArticleListScreen(); // Show list when article tab is clicked
+            }
+        };
+
+
+
     </script>
 </body>
 </html>

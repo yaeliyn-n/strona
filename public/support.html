@@ -126,7 +126,8 @@
             <nav class="hidden md:flex items-center space-x-1 lg:space-x-2">
                 <a href="index.html" class="nav-link">Strona Główna</a>
                 <a href="prezentacja.html" class="nav-link">Prezentacja Serwera</a>
-                <a href="wikipedia.html" class="nav-link">Wikipedia Kronik</a> 
+                <a href="wikipedia.html" class="nav-link">Wikipedia Kronik</a>
+                <a href="blog.html" class="nav-link">Blog</a> {/* Dodany link */}
                 <a href="ranking-stats.html" class="nav-link">Rankingi</a>
                 <a href="dom-aukcyjny.html" class="nav-link">Dom Aukcyjny</a>
                 <div id="auth-section-nav" class="ml-4 relative">
@@ -145,6 +146,7 @@
                 <a href="index.html" class="block py-2.5 px-3 nav-link text-base font-medium">Strona Główna</a>
                 <a href="prezentacja.html" class="block py-2.5 px-3 nav-link text-base font-medium">Prezentacja Serwera</a>
                 <a href="wikipedia.html" class="block py-2.5 px-3 nav-link text-base font-medium">Wikipedia Kronik</a>
+                <a href="blog.html" class="block py-2.5 px-3 nav-link text-base font-medium">Blog</a> {/* Dodany link */}
                 <a href="ranking-stats.html" class="block py-2.5 px-3 nav-link text-base font-medium">Rankingi</a>
                 <a href="dom-aukcyjny.html" class="block py-2.5 px-3 nav-link text-base font-medium">Dom Aukcyjny</a>
                 <a href="https://discord.gg/TWOJLINKZAPROSZENIOWY" target="_blank" rel="noopener noreferrer" class="block mt-2 py-2.5 px-3 text-base font-medium text-white bg-purple-600 hover:bg-purple-700 rounded-md text-center">Dołącz do Discorda</a>
@@ -259,472 +261,265 @@
                 Stworzone z pasji do anime i mangi przez Arcadiusa i jego Strażników.
             </p>
         </div>
-    </footer>
-
+    <script src="js/main.js" defer></script>
     <script>
-        // Funkcja do obsługi aktywnego linku w nawigacji
-        function setActiveNavLink() {
-            const currentPage = window.location.pathname.split("/").pop() || "index.html";
-            const navLinks = document.querySelectorAll('header nav > a.nav-link, #mobileMenu > div > a.nav-link');
-            const wikipediaSubPages = ["lore-postaci.html", "systemy-botow.html", "rangi-i-role.html", "lore-aethelgard.html", "komendy.html"];
+        // Skrypt specyficzny dla support.html
+        document.addEventListener('DOMContentLoaded', function() {
+            // Common scripts are initialized by main.js
+            // Specific logic for support.html:
 
-            navLinks.forEach(link => {
-                link.classList.remove('active');
-                const linkPage = link.getAttribute('href').split("/").pop() || "index.html";
-                
-                if (linkPage === currentPage) {
-                    link.classList.add('active');
-                } else if (linkPage === 'wikipedia.html' && wikipediaSubPages.includes(currentPage)) {
-                    link.classList.add('active');
-                }
-            });
-        }
+            const supportForm = document.getElementById('supportForm');
+            const formStatus = document.getElementById('formStatus');
+            const myTicketsSection = document.getElementById('myTicketsSection'); // Upewnij się, że ten kontener istnieje
+            const myTicketsList = document.getElementById('userTicketsContainer'); // Użyj poprawnego ID dla listy zgłoszeń
+            const ticketDetailsModal = document.getElementById('ticketDetailsModal');
+            const ticketDetailsContent = document.getElementById('modalTicketContent'); // Poprawione ID
+            const closeTicketModalButton = document.getElementById('closeModalButton'); // Poprawione ID
+            const replyForm = document.getElementById('replyForm');
+            const replyTextarea = document.getElementById('replyText');
+            const currentTicketIdInput = document.getElementById('replyTicketId'); // Poprawione ID
+            const attachmentInput = document.getElementById('attachment');
+            // const fileNameDisplay = document.getElementById('fileName'); // Zakładając, że nie ma tego elementu
+            const charCount = document.getElementById('charCount'); // Zakładając, że nie ma tego elementu
+            const descriptionTextarea = document.getElementById('description');
+            const userTicketsError = document.getElementById('userTicketsError'); // Upewnij się, że ten element istnieje
 
-        async function updateAuthDisplay() {
-            const authSectionNav = document.getElementById('auth-section-nav');
-            const authSectionMobileNav = document.getElementById('auth-section-mobile-nav');
-            const mobileMenuLinksContainer = document.querySelector('#mobileMenu > div'); 
-            const ADMIN_DISCORD_ID = "1238814802357387285"; 
-            const supportFormSection = document.getElementById('support-form-section');
-            const userTicketsContainer = document.getElementById('userTicketsContainer');
-
-
-            function createLoginButton(isMobile = false) {
-                const loginButton = document.createElement('a');
-                loginButton.href = '/auth/discord/login?redirect=' + encodeURIComponent(window.location.pathname + window.location.search); 
-                loginButton.id = isMobile ? 'discordLoginButtonMobileNav' : 'discordLoginButtonNav';
-                loginButton.className = 'btn-discord !text-white px-4 py-2.5 rounded-md text-sm flex items-center' + (isMobile ? ' w-full justify-center mt-2' : '');
-                loginButton.innerHTML = `<svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 24 24"><path d="M20.297 0H3.703C1.658 0 0 1.658 0 3.703V20.297C0 22.342 1.658 24 3.703 24H20.297C22.342 24 24 22.342 24 20.297V3.703C24 1.658 22.342 0 20.297 0ZM8.107 15.232C7.089 15.232 6.241 14.384 6.241 13.366C6.241 12.348 7.089 11.5 8.107 11.5C9.125 11.5 9.973 12.348 9.973 13.366C9.973 14.384 9.125 15.232 8.107 15.232ZM12.000 11.071C10.982 11.071 10.134 10.223 10.134 9.205C10.134 8.188 10.982 7.339 12.000 7.339C13.018 7.339 13.866 8.188 13.866 9.205C13.866 10.223 13.018 11.071 12.000 11.071ZM15.893 15.232C14.875 15.232 14.027 14.384 14.027 13.366C14.027 12.348 14.875 11.5 15.893 11.5C16.911 11.5 17.759 12.348 17.759 13.366C17.759 14.384 16.911 15.232 15.893 15.232Z"/></svg> Zaloguj przez Discord`;
-                return loginButton;
-            }
-
-            function createAvatarDropdown(user, isMobile = false) {
-                const containerId = isMobile ? 'userDropdownContainerMobile' : 'userDropdownContainerNav';
-                const dropdownId = isMobile ? 'userDropdownMobile' : 'userDropdownNav';
-
-                const container = document.createElement('div');
-                container.id = containerId;
-                container.className = 'relative';
-
-                const avatarImg = document.createElement('img');
-                avatarImg.src = user.avatar ? `https://cdn.discordapp.com/avatars/${user.id}/${user.avatar}.png?size=32` : 'https://placehold.co/32x32/A78BFA/FFFFFF?text=U';
-                avatarImg.alt = 'Awatar użytkownika';
-                avatarImg.className = 'user-avatar';
-                avatarImg.onerror = () => { avatarImg.src = 'https://placehold.co/32x32/A78BFA/FFFFFF?text=U'; };
-                avatarImg.onclick = (event) => {
-                    event.stopPropagation(); 
-                    const dropdown = document.getElementById(dropdownId);
-                    if (dropdown) dropdown.classList.toggle('open');
-                };
-                container.appendChild(avatarImg);
-
-                const dropdownMenu = document.createElement('div');
-                dropdownMenu.id = dropdownId;
-                dropdownMenu.className = 'dropdown-menu';
-                
-                const profileLink = document.createElement('a');
-                profileLink.href = 'profil.html'; 
-                profileLink.textContent = 'Mój Profil';
-                dropdownMenu.appendChild(profileLink);
-
-                const auctionHouseLink = document.createElement('a');
-                auctionHouseLink.href = 'dom-aukcyjny.html';
-                auctionHouseLink.textContent = 'Dom Aukcyjny';
-                dropdownMenu.appendChild(auctionHouseLink);
-
-                const botShopLink = document.createElement('a');
-                botShopLink.href = '/sklep-bota'; 
-                botShopLink.textContent = 'Sklep Bota (Dukaty)';
-                dropdownMenu.appendChild(botShopLink);
-                
-                const premiumShopLink = document.createElement('a');
-                premiumShopLink.href = 'sklep-premium.html';
-                premiumShopLink.textContent = 'Sklep Premium (Kryształy)';
-                dropdownMenu.appendChild(premiumShopLink);
-
-                const supportTicketsLink = document.createElement('a');
-                supportTicketsLink.href = 'support.html'; 
-                supportTicketsLink.textContent = 'Centrum Wsparcia';
-                dropdownMenu.appendChild(supportTicketsLink);
-
-                if (user.id === ADMIN_DISCORD_ID) {
-                    const adminLinkElement = document.createElement('a'); 
-                    adminLinkElement.href = 'admin.html'; 
-                    adminLinkElement.textContent = 'Panel Admina';
-                    dropdownMenu.appendChild(adminLinkElement);
-                }
-                
-                const logoutForm = document.createElement('form');
-                logoutForm.action = '/auth/logout'; 
-                logoutForm.method = 'POST';
-                const logoutButton = document.createElement('button');
-                logoutButton.type = 'submit';
-                logoutButton.textContent = 'Wyloguj';
-                logoutForm.appendChild(logoutButton);
-                dropdownMenu.appendChild(logoutForm);
-
-                container.appendChild(dropdownMenu);
-                return container;
+            // Logika dla licznika znaków i nazwy pliku, jeśli elementy istnieją
+            if (descriptionTextarea && charCount) {
+                descriptionTextarea.addEventListener('input', function() {
+                    const currentLength = this.value.length;
+                    charCount.textContent = `${currentLength} / 2000`;
+                    charCount.className = currentLength > 2000 ? 'text-xs text-red-500' : 'text-xs text-text-secondary';
+                });
             }
             
-            if (mobileMenuLinksContainer) {
-                const existingMobileAuthElements = mobileMenuLinksContainer.querySelectorAll('#discordLoginButtonMobileNav, #userDropdownContainerMobileMenu, .mobile-auth-item');
-                existingMobileAuthElements.forEach(el => el.remove());
-            }
+            // if (attachmentInput && fileNameDisplay) { // Zakomentowane, jeśli fileNameDisplay nie istnieje
+            //     attachmentInput.addEventListener('change', function() {
+            //         fileNameDisplay.textContent = this.files && this.files.length > 0 ? `Wybrany plik: ${this.files[0].name}` : '';
+            //     });
+            // }
 
-            try {
-                const response = await fetch('/api/me'); 
-                if (response.ok) {
-                    const user = await response.json();
-                    if (authSectionNav) {
-                        authSectionNav.innerHTML = ''; 
-                        authSectionNav.appendChild(createAvatarDropdown(user, false));
-                    }
-                    if (authSectionMobileNav) { 
-                        authSectionMobileNav.innerHTML = ''; 
-                        authSectionMobileNav.appendChild(createAvatarDropdown(user, true));
-                    }
-                     if (mobileMenuLinksContainer) {
-                        const mobileDropdownContainer = createAvatarDropdown(user, true); 
-                        mobileDropdownContainer.id = 'userDropdownContainerMobileMenu';
-                        mobileDropdownContainer.classList.add('mt-2', 'border-t', 'border-[var(--border-card)]', 'pt-2', 'mobile-auth-item');
-                        
-                        const mobileAvatar = mobileDropdownContainer.querySelector('.user-avatar');
-                        const mobileDropdown = mobileDropdownContainer.querySelector('.dropdown-menu');
-                        
-                        if (mobileAvatar) mobileAvatar.classList.add('hidden'); 
-                        if (mobileDropdown) {
-                            mobileDropdown.classList.remove('absolute', 'top-full', 'right-0', 'dropdown-menu'); 
-                            mobileDropdown.classList.add('space-y-1');
-                            Array.from(mobileDropdown.children).forEach(child => {
-                                child.classList.add('block', 'py-2', 'px-3', 'text-base', 'font-medium', 'rounded-md', 'hover:bg-[rgba(var(--rgb-accent),0.1)]', 'hover:text-[var(--text-accent)]');
-                                mobileMenuLinksContainer.appendChild(child);
-                            });
-                        }
-                    }
-                    if (user && user.id && userTicketsContainer) {
-                        loadUserTickets();
-                    }
-                } else {
-                     if (authSectionNav) {
-                        authSectionNav.innerHTML = '';
-                        authSectionNav.appendChild(createLoginButton(false));
-                    }
-                    if (authSectionMobileNav) { 
-                        authSectionMobileNav.innerHTML = '';
-                        authSectionMobileNav.appendChild(createLoginButton(true)); 
-                    }
-                    if (mobileMenuLinksContainer) {
-                        const mobileLoginButton = createLoginButton(true); 
-                        mobileLoginButton.classList.add('mt-2', 'border-t', 'border-[var(--border-card)]', 'pt-2', 'mobile-auth-item');
-                        mobileMenuLinksContainer.appendChild(mobileLoginButton);
-                    }
-                    if (supportFormSection) {
-                        supportFormSection.innerHTML = `
-                            <div class="text-center card-bg p-8 rounded-lg">
-                                <h2 class="text-2xl font-semibold text-primary mb-4">Dostęp Wymaga Logowania</h2>
-                                <p class="text-secondary mb-6">Aby zgłosić nową sprawę lub zobaczyć swoje zgłoszenia, musisz być zalogowany.</p>
-                                <a href="/auth/discord/login?redirect=${encodeURIComponent(window.location.pathname + window.location.search)}" class="btn-discord inline-flex items-center">
-                                    <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 24 24"><path d="M20.297 0H3.703C1.658 0 0 1.658 0 3.703V20.297C0 22.342 1.658 24 3.703 24H20.297C22.342 24 24 22.342 24 20.297V3.703C24 1.658 22.342 0 20.297 0ZM8.107 15.232C7.089 15.232 6.241 14.384 6.241 13.366C6.241 12.348 7.089 11.5 8.107 11.5C9.125 11.5 9.973 12.348 9.973 13.366C9.973 14.384 9.125 15.232 8.107 15.232ZM12.000 11.071C10.982 11.071 10.134 10.223 10.134 9.205C10.134 8.188 10.982 7.339 12.000 7.339C13.018 7.339 13.866 8.188 13.866 9.205C13.866 10.223 13.018 11.071 12.000 11.071ZM15.893 15.232C14.875 15.232 14.027 14.384 14.027 13.366C14.027 12.348 14.875 11.5 15.893 11.5C16.911 11.5 17.759 12.348 17.759 13.366C17.759 14.384 16.911 15.232 15.893 15.232Z"/></svg>
-                                    Zaloguj się przez Discord
-                                </a>
-                            </div>`;
-                    }
-                }
-            } catch (error) {
-                console.error('Błąd aktualizacji UI logowania:', error);
-                 if (authSectionNav) {
-                    authSectionNav.innerHTML = '';
-                    authSectionNav.appendChild(createLoginButton(false));
-                }
-                if (authSectionMobileNav) {
-                    authSectionMobileNav.innerHTML = '';
-                    authSectionMobileNav.appendChild(createLoginButton(true));
-                }
-                if (mobileMenuLinksContainer) {
-                    const mobileLoginButton = createLoginButton(true);
-                    mobileLoginButton.classList.add('mt-2', 'border-t', 'border-[var(--border-card)]', 'pt-2', 'mobile-auth-item');
-                    mobileMenuLinksContainer.appendChild(mobileLoginButton);
-                }
-                 if (supportFormSection) {
-                    supportFormSection.innerHTML = `<p class="text-center text-red-400 col-span-full py-6">Wystąpił błąd podczas sprawdzania statusu logowania. Spróbuj odświeżyć stronę.</p>`;
-                }
-            }
-        }
-        
-        function setupMobileMenu() {
-            const mobileMenuButton = document.getElementById('mobileMenuButton');
-            const mobileMenu = document.getElementById('mobileMenu');
-            
-            if (mobileMenuButton && mobileMenu) {
-                mobileMenuButton.addEventListener('click', () => {
-                    const isExpanded = mobileMenuButton.getAttribute('aria-expanded') === 'true' || false;
-                    mobileMenuButton.setAttribute('aria-expanded', String(!isExpanded));
-                    mobileMenu.classList.toggle('open');
-                });
-                mobileMenu.querySelectorAll('a').forEach(link => { 
-                    link.addEventListener('click', () => {
-                        mobileMenuButton.setAttribute('aria-expanded', 'false');
-                        mobileMenu.classList.remove('open');
-                    });
-                });
-            }
-        }
+            if (supportForm) {
+                supportForm.addEventListener('submit', async function(event) {
+                    event.preventDefault();
+                    formStatus.textContent = 'Wysyłanie zgłoszenia...';
+                    formStatus.className = 'text-center text-sm text-secondary mt-4';
+                    document.getElementById('submitTicketButton').disabled = true;
 
-        function setupRevealAnimations() {
-            const revealObserver = new IntersectionObserver((entries, observer) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        entry.target.classList.add('visible');
-                        observer.unobserve(entry.target);
-                    }
-                });
-            }, { threshold: 0.1 });
-
-            document.querySelectorAll('.reveal').forEach(el => {
-                revealObserver.observe(el);
-            });
-        }
-
-        function setupDropdownDismiss() {
-            window.addEventListener('click', function(e) {
-                const desktopDropdownContainer = document.getElementById('userDropdownContainerNav');
-                const mobileDropdownContainer = document.getElementById('userDropdownContainerMobile'); 
-                const desktopDropdown = document.getElementById('userDropdownNav');
-                const mobileDropdown = document.getElementById('userDropdownMobile'); 
-
-                if (desktopDropdownContainer && !desktopDropdownContainer.contains(e.target) && desktopDropdown && desktopDropdown.classList.contains('open')) {
-                    desktopDropdown.classList.remove('open');
-                }
-                if (mobileDropdownContainer && !mobileDropdownContainer.contains(e.target) && mobileDropdown && mobileDropdown.classList.contains('open')) {
-                     mobileDropdown.classList.remove('open');
-                }
-            });
-        }
-
-        const supportForm = document.getElementById('supportForm');
-        const formStatus = document.getElementById('formStatus');
-        const userTicketsContainer = document.getElementById('userTicketsContainer');
-        const userTicketsError = document.getElementById('userTicketsError');
-        const modal = document.getElementById('ticketDetailsModal');
-        const modalTicketContent = document.getElementById('modalTicketContent');
-        const closeModalButton = document.getElementById('closeModalButton');
-        const replyForm = document.getElementById('replyForm');
-        const replyTicketIdInput = document.getElementById('replyTicketId');
-        const replyTextarea = document.getElementById('replyText');
-        const replyStatus = document.getElementById('replyStatus');
-
-        if (supportForm) {
-            supportForm.addEventListener('submit', async function(event) {
-                event.preventDefault();
-                formStatus.textContent = 'Wysyłanie zgłoszenia...';
-                formStatus.className = 'text-secondary';
-                document.getElementById('submitTicketButton').disabled = true;
-
-                const formData = new FormData(this);
-                try {
-                    const response = await fetch('/api/support/submit', {
-                        method: 'POST',
-                        body: formData,
-                    });
-                    const result = await response.json();
-                    if (response.ok) {
-                        formStatus.textContent = result.message || 'Zgłoszenie wysłane pomyślnie!';
-                        formStatus.className = 'text-green-400';
-                        supportForm.reset();
-                        loadUserTickets(); // Odśwież listę zgłoszeń
-                    } else {
-                        formStatus.textContent = result.error || 'Wystąpił błąd podczas wysyłania zgłoszenia.';
-                        formStatus.className = 'text-red-400';
-                    }
-                } catch (error) {
-                    console.error('Błąd wysyłania formularza:', error);
-                    formStatus.textContent = 'Wystąpił błąd sieciowy. Spróbuj ponownie.';
-                    formStatus.className = 'text-red-400';
-                } finally {
-                     document.getElementById('submitTicketButton').disabled = false;
-                }
-            });
-        }
-        
-        function formatDate(dateString) {
-            if (!dateString) return 'Brak danych';
-            const options = { year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit' };
-            return new Date(dateString).toLocaleDateString('pl-PL', options);
-        }
-
-        function getStatusClass(status) {
-            // Normalizuj status do formatu bez spacji i z małych liter dla klasy CSS
-            const normalizedStatus = (status || '').toLowerCase().replace(/\s+/g, '-').replace(/[^\w-]/g, '');
-            // Mapuj znormalizowany status na konkretne klasy CSS
-            if (normalizedStatus.includes('otwarte')) return 'ticket-status-Otwarte';
-            if (normalizedStatus.includes('w-trakcie')) return 'ticket-status-W-trakcie';
-            if (normalizedStatus.includes('oczekuje')) return 'ticket-status-Oczekuje'; // Używamy 'Oczekuje' dla "Oczekuje na odpowiedź"
-            if (normalizedStatus.includes('rozwiązane')) return 'ticket-status-Rozwiązane';
-            if (normalizedStatus.includes('zamknięte')) return 'ticket-status-Zamknięte';
-            return 'bg-gray-700 text-gray-300'; // Domyślny styl
-        }
-
-
-        async function loadUserTickets() {
-            if (!userTicketsContainer) return;
-            userTicketsContainer.innerHTML = '<p class="text-secondary text-center py-6">Ładowanie Twoich zgłoszeń...</p>';
-            userTicketsError.classList.add('hidden');
-
-            try {
-                const response = await fetch('/api/support/my-tickets');
-                if (!response.ok) {
-                    if (response.status === 401) { // Niezalogowany
-                        userTicketsContainer.innerHTML = `<p class="text-secondary text-center py-6">Musisz być zalogowany, aby zobaczyć swoje zgłoszenia. <a href="/auth/discord/login?redirect=${encodeURIComponent(window.location.pathname + window.location.search)}" class="text-accent hover:underline">Zaloguj się</a></p>`;
+                    const formData = new FormData(this);
+                    // Walidacja długości opisu (jeśli element istnieje)
+                    if (descriptionTextarea && descriptionTextarea.value.length > 2000) {
+                        formStatus.textContent = 'Opis nie może przekraczać 2000 znaków.';
+                        formStatus.className = 'text-center text-sm text-red-400 mt-4';
+                        document.getElementById('submitTicketButton').disabled = false;
                         return;
                     }
-                    throw new Error(`Błąd serwera: ${response.status}`);
-                }
-                const tickets = await response.json();
 
-                if (tickets && tickets.length > 0) {
-                    userTicketsContainer.innerHTML = tickets.map(ticket => `
-                        <div class="card-bg p-4 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-200 cursor-pointer" data-ticket-id="${ticket.id}">
-                            <div class="flex justify-between items-start">
-                                <h4 class="text-lg font-semibold text-primary mb-1">Zgłoszenie #${ticket.id} - ${ticket.reportType}</h4>
-                                <span class="text-xs px-2 py-1 rounded-full ${getStatusClass(ticket.status)}">${ticket.status}</span>
-                            </div>
-                            <p class="text-xs text-secondary mb-2">Utworzono: ${formatDate(ticket.createdAt)}</p>
-                            <p class="text-sm text-secondary truncate">${ticket.description}</p>
-                        </div>
-                    `).join('');
-
-                    userTicketsContainer.querySelectorAll('.card-bg').forEach(card => {
-                        card.addEventListener('click', () => openTicketModal(card.dataset.ticketId));
-                    });
-
-                } else if (tickets && tickets.error) {
-                     userTicketsContainer.innerHTML = `<p class="text-red-400 text-center py-6">${tickets.error}</p>`;
-                }
-                else {
-                    userTicketsContainer.innerHTML = '<p class="text-secondary text-center py-6">Nie masz jeszcze żadnych zgłoszeń.</p>';
-                }
-            } catch (error) {
-                console.error('Błąd ładowania zgłoszeń użytkownika:', error);
-                userTicketsError.textContent = 'Nie udało się załadować Twoich zgłoszeń. Spróbuj odświeżyć stronę.';
-                userTicketsError.classList.remove('hidden');
-                userTicketsContainer.innerHTML = '';
+                    try {
+                        const response = await fetch('/api/support/submit', { method: 'POST', body: formData });
+                        const result = await response.json();
+                        if (response.ok) {
+                            formStatus.textContent = result.message || 'Zgłoszenie wysłane pomyślnie!';
+                            formStatus.className = 'text-center text-sm text-green-400 mt-4';
+                            supportForm.reset();
+                            // if(fileNameDisplay) fileNameDisplay.textContent = ''; // Jeśli istnieje
+                            if(charCount) charCount.textContent = '0 / 2000'; // Jeśli istnieje
+                            loadUserTickets();
+                        } else {
+                            formStatus.textContent = result.error || 'Błąd wysyłania zgłoszenia.';
+                            formStatus.className = 'text-center text-sm text-red-400 mt-4';
+                        }
+                    } catch (error) {
+                        console.error('Błąd sieci:', error);
+                        formStatus.textContent = 'Błąd sieci. Spróbuj ponownie.';
+                        formStatus.className = 'text-center text-sm text-red-400 mt-4';
+                    } finally {
+                        document.getElementById('submitTicketButton').disabled = false;
+                    }
+                });
             }
-        }
 
-        async function openTicketModal(ticketId) {
-            if (!modal || !modalTicketContent) return;
-            modalTicketContent.innerHTML = '<p class="text-secondary text-center py-6">Ładowanie szczegółów zgłoszenia...</p>';
-            modal.classList.remove('hidden');
-            modal.classList.add('flex');
-            document.getElementById('modalTicketTitle').textContent = `Zgłoszenie #${ticketId}`;
-            replyTicketIdInput.value = ticketId;
-            replyTextarea.value = '';
-            replyStatus.textContent = '';
-
-
-            try {
-                const response = await fetch(`/api/support/ticket/${ticketId}`);
-                if (!response.ok) throw new Error(`Błąd serwera: ${response.status}`);
-                const ticket = await response.json();
-
-                let repliesHTML = '';
-                if (ticket.replies && ticket.replies.length > 0) {
-                    repliesHTML = ticket.replies.map(reply => `
-                        <div class="p-3 rounded-md ${reply.isAdminReply ? 'bg-accent/10 ml-4' : 'bg-bg-secondary mr-4'}">
-                            <p class="text-xs font-semibold ${reply.isAdminReply ? 'text-accent' : 'text-primary'}">${reply.discordUsername} (${reply.isAdminReply ? 'Admin' : 'Ty'}) - ${formatDate(reply.createdAt)}:</p>
-                            <p class="text-sm whitespace-pre-wrap">${reply.replyText}</p>
-                        </div>
-                    `).join('');
-                } else {
-                    repliesHTML = '<p class="text-sm text-secondary italic">Brak odpowiedzi.</p>';
-                }
-                
-                const attachmentHTML = ticket.attachment ? 
-                    `<p class="text-sm"><strong>Załącznik:</strong> <a href="/uploads/${ticket.attachment}" target="_blank" class="text-accent hover:underline">${ticket.attachment}</a></p>` : 
-                    '<p class="text-sm text-secondary italic">Brak załącznika.</p>';
-
-                modalTicketContent.innerHTML = `
-                    <p class="text-sm"><strong>Typ zgłoszenia:</strong> ${ticket.reportType}</p>
-                    <p class="text-sm"><strong>Status:</strong> <span class="px-2 py-0.5 rounded-full text-xs ${getStatusClass(ticket.status)}">${ticket.status}</span></p>
-                    <p class="text-sm"><strong>Opis:</strong></p>
-                    <div class="bg-bg-secondary p-3 rounded-md whitespace-pre-wrap text-sm">${ticket.description}</div>
-                    ${attachmentHTML}
-                    <h5 class="text-md font-semibold text-primary mt-4 pt-4 border-t border-border-card">Historia Odpowiedzi:</h5>
-                    <div class="space-y-3 max-h-60 overflow-y-auto pr-2">${repliesHTML}</div>
-                `;
-            } catch (error) {
-                console.error('Błąd ładowania szczegółów zgłoszenia:', error);
-                modalTicketContent.innerHTML = '<p class="text-red-400 text-center py-6">Nie udało się załadować szczegółów zgłoszenia.</p>';
-            }
-        }
-        
-        if (closeModalButton) {
-            closeModalButton.addEventListener('click', () => {
-                if (modal) {
-                    modal.classList.add('hidden');
-                    modal.classList.remove('flex');
-                }
-            });
-        }
-        
-        if (replyForm) {
-            replyForm.addEventListener('submit', async function(event) {
-                event.preventDefault();
-                const ticketId = replyTicketIdInput.value;
-                const replyText = replyTextarea.value.trim();
-                if (!replyText) {
-                    replyStatus.textContent = 'Treść odpowiedzi nie może być pusta.';
-                    replyStatus.className = 'text-red-400 text-sm';
-                    return;
-                }
-
-                replyStatus.textContent = 'Wysyłanie odpowiedzi...';
-                replyStatus.className = 'text-secondary text-sm';
-                document.getElementById('submitReplyButton').disabled = true;
+            async function loadUserTickets() {
+                if (!myTicketsList) return;
+                myTicketsList.innerHTML = '<p class="text-secondary text-center py-6">Ładowanie Twoich zgłoszeń...</p>';
+                if(userTicketsError) userTicketsError.classList.add('hidden');
 
                 try {
-                    const response = await fetch(`/api/support/ticket/${ticketId}/reply`, {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify({ replyText })
-                    });
-                    const result = await response.json();
-                    if (response.ok) {
-                        replyStatus.textContent = result.message || 'Odpowiedź wysłana!';
-                        replyStatus.className = 'text-green-400 text-sm';
-                        replyTextarea.value = '';
-                        // Odśwież szczegóły zgłoszenia w modalu, aby pokazać nową odpowiedź
-                        await openTicketModal(ticketId); 
-                        // Odśwież listę zgłoszeń na stronie głównej supportu
-                        await loadUserTickets(); 
-                    } else {
-                        replyStatus.textContent = result.error || 'Błąd wysyłania odpowiedzi.';
-                        replyStatus.className = 'text-red-400 text-sm';
+                    const response = await fetch('/api/support/my-tickets');
+                    if (!response.ok) {
+                        if (response.status === 401) {
+                            myTicketsList.innerHTML = `<p class="text-secondary text-center py-6">Musisz być zalogowany, aby zobaczyć swoje zgłoszenia. <a href="/auth/discord/login?redirect=${encodeURIComponent(window.location.pathname + window.location.search)}" class="text-accent hover:underline">Zaloguj się</a></p>`;
+                            if(myTicketsSection) myTicketsSection.classList.remove('hidden');
+                            return;
+                        }
+                        throw new Error(`Błąd serwera: ${response.status}`);
                     }
+                    const tickets = await response.json();
+
+                    if (tickets && tickets.length > 0) {
+                        myTicketsList.innerHTML = tickets.map(ticket => `
+                            <div class="card-bg p-4 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-200 cursor-pointer" data-ticket-id="${ticket.id}">
+                                <div class="flex justify-between items-start">
+                                    <h4 class="text-lg font-semibold text-primary mb-1">Zgłoszenie #${ticket.id} - ${ticket.reportType}</h4>
+                                    <span class="text-xs px-2 py-0.5 rounded-full ${getStatusClass(ticket.status)}">${ticket.status}</span>
+                                </div>
+                                <p class="text-xs text-secondary mb-2">Utworzono: ${formatDate(ticket.createdAt)}</p>
+                                <p class="text-sm text-secondary truncate">${ticket.description}</p>
+                            </div>
+                        `).join('');
+                        myTicketsList.querySelectorAll('.card-bg').forEach(card => {
+                            card.addEventListener('click', () => openTicketModal(card.dataset.ticketId));
+                        });
+                    } else if (tickets && tickets.error) {
+                         myTicketsList.innerHTML = `<p class="text-red-400 text-center py-6">${tickets.error}</p>`;
+                    } else {
+                        myTicketsList.innerHTML = '<p class="text-secondary text-center py-6">Nie masz jeszcze żadnych zgłoszeń.</p>';
+                    }
+                    if(myTicketsSection) myTicketsSection.classList.remove('hidden');
                 } catch (error) {
-                    console.error('Błąd wysyłania odpowiedzi:', error);
-                    replyStatus.textContent = 'Błąd sieciowy. Spróbuj ponownie.';
-                    replyStatus.className = 'text-red-400 text-sm';
-                } finally {
-                    document.getElementById('submitReplyButton').disabled = false;
+                    console.error('Błąd ładowania zgłoszeń użytkownika:', error);
+                    if(userTicketsError) {
+                        userTicketsError.textContent = 'Nie udało się załadować Twoich zgłoszeń. Spróbuj odświeżyć stronę.';
+                        userTicketsError.classList.remove('hidden');
+                    }
+                    myTicketsList.innerHTML = '';
+                    if(myTicketsSection) myTicketsSection.classList.remove('hidden'); // Nadal pokaż sekcję, aby błąd był widoczny
                 }
-            });
-        }
-
-
-        document.addEventListener('DOMContentLoaded', function() {
-            document.getElementById('currentYear').textContent = new Date().getFullYear();
-            
-            if (!document.documentElement.classList.contains('light') && !document.documentElement.classList.contains('dark')) {
-                 document.documentElement.classList.add('dark');
             }
 
-            setActiveNavLink();
-            updateAuthDisplay(); // To wywoła loadUserTickets jeśli użytkownik jest zalogowany
-            setupMobileMenu();
-            setupRevealAnimations();
-            setupDropdownDismiss();
+            function formatDate(dateString) {
+                if (!dateString) return 'Brak danych';
+                const options = { year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit' };
+                return new Date(dateString).toLocaleDateString('pl-PL', options);
+            }
+
+            function getStatusClass(status) {
+                const normalizedStatus = (status || '').toLowerCase().replace(/\s+/g, '-').replace(/[^\w-]/g, '');
+                if (normalizedStatus.includes('otwarte')) return 'ticket-status-Otwarte';
+                if (normalizedStatus.includes('w-trakcie')) return 'ticket-status-W-trakcie';
+                if (normalizedStatus.includes('oczekuje')) return 'ticket-status-Oczekuje';
+                if (normalizedStatus.includes('rozwiązane')) return 'ticket-status-Rozwiązane';
+                if (normalizedStatus.includes('zamknięte')) return 'ticket-status-Zamknięte';
+                return 'bg-gray-700 text-gray-300';
+            }
+
+            async function openTicketModal(ticketId) {
+                if (!ticketDetailsModal || !modalTicketContent) return;
+                modalTicketContent.innerHTML = '<p class="text-secondary text-center py-6">Ładowanie szczegółów zgłoszenia...</p>';
+                modalTicketContent.scrollTop = 0; // Reset scroll position
+                ticketDetailsModal.classList.remove('hidden');
+                ticketDetailsModal.classList.add('flex');
+                document.getElementById('modalTicketTitle').textContent = `Zgłoszenie #${ticketId}`;
+                if(replyTicketIdInput) replyTicketIdInput.value = ticketId;
+                if(replyTextarea) replyTextarea.value = '';
+                if(replyStatus) replyStatus.textContent = '';
+
+                try {
+                    const response = await fetch(`/api/support/ticket/${ticketId}`);
+                    if (!response.ok) throw new Error(`Błąd serwera: ${response.status}`);
+                    const ticket = await response.json();
+
+                    let repliesHTML = '';
+                    if (ticket.replies && ticket.replies.length > 0) {
+                        repliesHTML = ticket.replies.map(reply => `
+                            <div class="p-3 rounded-md ${reply.isAdminReply ? 'bg-accent/10 ml-4' : 'bg-bg-secondary mr-4'} my-2">
+                                <p class="text-xs font-semibold ${reply.isAdminReply ? 'text-accent' : 'text-primary'}">${reply.discordUsername} (${reply.isAdminReply ? 'Admin' : 'Ty'}) - ${formatDate(reply.createdAt)}:</p>
+                                <p class="text-sm whitespace-pre-wrap">${reply.replyText}</p>
+                            </div>
+                        `).join('');
+                    } else {
+                        repliesHTML = '<p class="text-sm text-secondary italic">Brak odpowiedzi.</p>';
+                    }
+
+                    const attachmentHTML = ticket.attachment ?
+                        `<p class="text-sm"><strong>Załącznik:</strong> <a href="/uploads/${ticket.attachment}" target="_blank" class="text-accent hover:underline">${ticket.attachment}</a></p>` :
+                        '<p class="text-sm text-secondary italic">Brak załącznika.</p>';
+
+                    modalTicketContent.innerHTML = `
+                        <p class="text-sm"><strong>Typ zgłoszenia:</strong> ${ticket.reportType}</p>
+                        <p class="text-sm"><strong>Status:</strong> <span class="px-2 py-0.5 rounded-full text-xs ${getStatusClass(ticket.status)}">${ticket.status}</span></p>
+                        <p class="text-sm mt-2"><strong>Opis:</strong></p>
+                        <div class="bg-bg-secondary p-3 rounded-md whitespace-pre-wrap text-sm mb-2">${ticket.description}</div>
+                        ${attachmentHTML}
+                        <h5 class="text-md font-semibold text-primary mt-4 pt-4 border-t border-border-card">Historia Odpowiedzi:</h5>
+                        <div class="space-y-3 max-h-60 overflow-y-auto pr-2 mt-2">${repliesHTML}</div>
+                    `;
+                } catch (error) {
+                    console.error('Błąd ładowania szczegółów zgłoszenia:', error);
+                    modalTicketContent.innerHTML = '<p class="text-red-400 text-center py-6">Nie udało się załadować szczegółów zgłoszenia.</p>';
+                }
+            }
+            
+            if (closeModalButton) {
+                closeModalButton.addEventListener('click', () => {
+                    if (ticketDetailsModal) {
+                        ticketDetailsModal.classList.add('hidden');
+                        ticketDetailsModal.classList.remove('flex');
+                    }
+                });
+            }
+
+            if (replyForm) {
+                replyForm.addEventListener('submit', async function(event) {
+                    event.preventDefault();
+                    const ticketId = replyTicketIdInput.value;
+                    const replyText = replyTextarea.value.trim();
+                    if (!replyText) {
+                        if(replyStatus) {
+                            replyStatus.textContent = 'Treść odpowiedzi nie może być pusta.';
+                            replyStatus.className = 'text-red-400 text-sm mt-2';
+                        }
+                        return;
+                    }
+
+                    if(replyStatus) {
+                        replyStatus.textContent = 'Wysyłanie odpowiedzi...';
+                        replyStatus.className = 'text-secondary text-sm mt-2';
+                    }
+                    document.getElementById('submitReplyButton').disabled = true;
+
+                    try {
+                        const response = await fetch(`/api/support/ticket/${ticketId}/reply`, {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify({ replyText })
+                        });
+                        const result = await response.json();
+                        if (response.ok) {
+                            if(replyStatus) {
+                                replyStatus.textContent = result.message || 'Odpowiedź wysłana!';
+                                replyStatus.className = 'text-green-400 text-sm mt-2';
+                            }
+                            replyTextarea.value = '';
+                            await openTicketModal(ticketId);
+                            await loadUserTickets();
+                        } else {
+                            if(replyStatus) {
+                                replyStatus.textContent = result.error || 'Błąd wysyłania odpowiedzi.';
+                                replyStatus.className = 'text-red-400 text-sm mt-2';
+                            }
+                        }
+                    } catch (error) {
+                        console.error('Błąd wysyłania odpowiedzi:', error);
+                        if(replyStatus) {
+                            replyStatus.textContent = 'Błąd sieciowy. Spróbuj ponownie.';
+                            replyStatus.className = 'text-red-400 text-sm mt-2';
+                        }
+                    } finally {
+                        document.getElementById('submitReplyButton').disabled = false;
+                        if(replyStatus) setTimeout(() => replyStatus.textContent = '', 4000);
+                    }
+                });
+            }
+
+            // Inicjalizacja - `initializeCommonScripts` z main.js obsłuży podstawy.
+            // LoadUserTickets jest specyficzne dla tej strony i powinno być wywołane po updateAuthDisplay,
+            // ale updateAuthDisplay w main.js nie wie o loadUserTickets.
+            // Rozwiązanie: updateAuthDisplay może zwracać promise, a po jego rozwiązaniu możemy wywołać loadUserTickets.
+            // Lub, prostsze dla tego zadania: main.js's initializeCommonScripts wywoła updateAuthDisplay.
+            // Tutaj, jeśli userTicketsContainer istnieje, po prostu wywołujemy loadUserTickets.
+            // updateAuthDisplay w main.js powinno samo decydować czy pokazać sekcję zgłoszeń.
+            if(userTicketsContainer) loadUserTickets();
         });
     </script>
 </body>
