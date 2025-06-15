@@ -159,19 +159,25 @@
                     if (response.status === 404) {
                         throw new Error(`Strona wiki o slugu "${slug}" nie została znaleziona.`);
                     }
-                    throw new Error(`HTTP error! status: ${response.status}`);
+                    const errorData = await response.json().catch(() => ({ message: 'Nieznany błąd serwera' }));
+                    throw new Error(`Błąd serwera: ${response.status} - ${errorData.message || errorData.error || 'Nie udało się pobrać strony.'}`);
                 }
                 const page = await response.json();
 
                 document.title = `${page.title} - Wikipedia Kronik Elary`;
                 titleEl.textContent = page.title;
 
-                let metaInfo = `Autor: ${page.authorName}`;
+                let metaParts = [];
+                metaParts.push(`Autor: ${page.authorName}`);
                 if (page.lastEditorName && page.lastEditorName !== page.authorName) {
-                    metaInfo += ` | Ostatnia edycja: ${page.lastEditorName}`;
+                    metaParts.push(`Ostatnia edycja: ${page.lastEditorName}`);
                 }
-                metaInfo += ` | Zaktualizowano: ${new Date(page.updatedAt).toLocaleDateString('pl-PL', { day: 'numeric', month: 'long', year: 'numeric' })}`;
-                metaEl.textContent = metaInfo;
+                metaParts.push(`Zaktualizowano: ${new Date(page.updatedAt).toLocaleDateString('pl-PL', { day: 'numeric', month: 'long', year: 'numeric' })}`);
+
+                if (page.wikiCategory && page.wikiCategory.name && page.wikiCategory.slug) {
+                    metaParts.push(`Kategoria: <a href="wikipedia.html?category=${page.wikiCategory.slug}" class="text-accent hover:underline">${page.wikiCategory.name}</a>`);
+                }
+                metaEl.innerHTML = metaParts.join(' | '); // Use innerHTML because of the link
 
                 if (typeof marked !== 'undefined' && typeof DOMPurify !== 'undefined') {
                     contentEl.innerHTML = DOMPurify.sanitize(marked.parse(page.content));

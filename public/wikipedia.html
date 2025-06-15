@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Encyklopedia wiedzy o świecie Kronik Elary. Odkryj lore, postacie, systemy i mechaniki naszego serwera Discord.">
-    <meta name="keywords" content="kroniki elary, wikipedia, lore, aethelgard, postacie, systemy rpg, boty, discord, anime, manga, przewodniki">
+    <meta name="keywords" content="kroniki elary, wikipedia, lore, aethelgard, postacie, systemy rpg, boty, discord, anime, manga, przewodniki, kategorie">
     <meta name="author" content="Arcadius & Strażnicy Kronik Elary">
     <title>Wikipedia Kronik Elary</title>
     <script src="https://cdn.tailwindcss.com"></script>
@@ -63,15 +63,11 @@
         .section-bg { background-color: var(--bg-secondary); }
         .card-bg { background-color: var(--bg-card); transition: transform 0.3s cubic-bezier(0.25, 0.1, 0.25, 1), box-shadow 0.3s cubic-bezier(0.25, 0.1, 0.25, 1), background-color 0.3s ease; border: 1px solid var(--border-card); box-shadow: 0 6px 12px -3px var(--shadow-color); overflow: hidden; }
         .card-bg:hover { transform: translateY(-8px) scale(1.02); box-shadow: 0 12px 24px -4px var(--shadow-strong-color); }
-        .btn-primary, .btn-discord, .btn-secondary { color: #FFFFFF; transition: background-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease; box-shadow: 0 4px 8px -2px var(--shadow-color); font-weight: 600; letter-spacing: 0.03em; padding-top: 0.8rem; padding-bottom: 0.8rem; border-radius: 0.375rem; } 
-        .btn-primary { background-color: var(--btn-primary-bg); } .btn-primary:hover { background-color: var(--btn-primary-hover-bg); transform: scale(1.04) translateY(-2px); box-shadow: 0 10px 18px -4px var(--shadow-strong-color); }
-        .btn-discord { background-color: var(--btn-discord-bg); } .btn-discord:hover { background-color: var(--btn-discord-hover-bg); transform: scale(1.04) translateY(-2px); box-shadow: 0 10px 18px -4px rgba(88, 101, 242, 0.35); }
-        .btn-secondary { background-color: transparent; border: 2px solid var(--border-accent); color: var(--text-accent); padding: calc(0.8rem - 2px) calc(1.5rem - 2px); }
-        .btn-secondary:hover { background-color: var(--border-accent); color: white; transform: scale(1.04) translateY(-2px); box-shadow: 0 6px 12px -2px var(--shadow-color); }
         .text-accent { color: var(--text-accent); }
         .reveal { opacity: 0; transform: translateY(50px); transition: opacity 0.8s cubic-bezier(0.645, 0.045, 0.355, 1), transform 0.8s cubic-bezier(0.645, 0.045, 0.355, 1); }
         .reveal.visible { opacity: 1; transform: translateY(0); }
         .loading-spinner { border-color: var(--text-accent) transparent var(--text-accent) transparent; }
+        .category-link.active { font-weight: bold; color: var(--text-accent); }
     </style>
 </head>
 <body class="antialiased">
@@ -86,48 +82,53 @@
                     Wikipedia <span class="text-accent">Kronik Elary</span>
                 </h1>
                 <p class="text-lg md:text-xl text-slate-200 mb-10 max-w-3xl mx-auto text-shadow-custom">
-                    Twoje kompendium wiedzy o magicznym świecie Aethelgardu, jego mieszkańcach, systemach i historiach. Przeglądaj oficjalne strony i przewodniki tworzone przez społeczność.
+                    Twoje kompendium wiedzy o magicznym świecie Aethelgardu. Przeglądaj oficjalne strony i przewodniki tworzone przez społeczność.
                 </p>
             </div>
         </section>
 
         <section id="dynamic-wiki-content" class="py-16 sm:py-20 section-bg reveal">
             <div class="container mx-auto px-4 sm:px-6">
-                <div class="text-center mb-14 sm:mb-18">
-                    <h2 class="text-3xl sm:text-4xl font-bold text-primary mb-4">Wszystkie Strony Wiki i Przewodniki</h2>
-                    <p class="text-lg text-secondary max-w-3xl mx-auto">
-                        Poniżej znajdziesz listę wszystkich dostępnych stron informacyjnych i przewodników. Kliknij tytuł, aby przeczytać więcej.
-                    </p>
-                </div>
+                <div class="flex flex-col lg:flex-row gap-8">
+                    <aside class="lg:w-1/4">
+                        <div id="wiki-category-filter-container" class="p-6 bg-bg-card rounded-lg shadow-lg sticky top-28">
+                            <h3 class="text-xl font-semibold text-accent mb-4">Kategorie Wiki</h3>
+                            <div id="wiki-category-list-loading" class="text-center py-4 text-secondary">
+                                <div class="animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 loading-spinner mx-auto mb-2"></div>
+                                Ładowanie kategorii...
+                            </div>
+                            <div id="wiki-category-list-error" class="text-red-400 hidden">Nie udało się załadować kategorii.</div>
+                            <nav id="wiki-category-links" class="space-y-2"></nav>
+                        </div>
+                    </aside>
+                    <div class="lg:w-3/4">
+                        <div class="text-center mb-10">
+                            <h2 id="wiki-list-main-title" class="text-3xl sm:text-4xl font-bold text-primary mb-3">Wszystkie Strony Wiki</h2>
+                            <p id="wiki-list-subtitle" class="text-lg text-secondary max-w-2xl mx-auto">
+                                Poniżej znajdziesz listę wszystkich dostępnych stron informacyjnych i przewodników. Kliknij tytuł, aby przeczytać więcej.
+                            </p>
+                        </div>
 
-                <div id="wiki-pages-list-container" class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-                    {/* Dynamic content will be injected here */}
+                        <div id="wiki-pages-list-container" class="grid md:grid-cols-2 gap-6">
+                            {/* Dynamic content will be injected here */}
+                        </div>
+                        <div id="wiki-list-loading" class="text-center py-10 text-secondary">
+                            <div class="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 loading-spinner mx-auto mb-3"></div>
+                            Ładowanie stron wiki...
+                        </div>
+                        <div id="wiki-list-error" class="text-center py-10 text-red-400 hidden">
+                            Nie udało się załadować spisu stron. Spróbuj ponownie później.
+                        </div>
+                        <div id="wiki-list-empty" class="text-center py-10 text-secondary hidden">
+                            Brak dostępnych stron wiki lub przewodników w tej kategorii.
+                        </div>
+                    </div>
                 </div>
-                <div id="wiki-list-loading" class="text-center py-10 text-secondary">
-                    <div class="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 loading-spinner mx-auto mb-3"></div>
-                    Ładowanie stron wiki...
-                </div>
-                <div id="wiki-list-error" class="text-center py-10 text-red-400 hidden">
-                    Nie udało się załadować spisu stron. Spróbuj ponownie później.
-                </div>
-                <div id="wiki-list-empty" class="text-center py-10 text-secondary hidden">
-                    Brak dostępnych stron wiki lub przewodników.
-                </div>
-
             </div>
         </section>
         
         <section id="dolacz-wiki" class="py-16 sm:py-20 reveal">
-            <div class="container mx-auto px-4 sm:px-6 text-center">
-                <h2 class="text-3xl sm:text-4xl font-bold text-primary mb-6">Masz Pytania lub Chcesz Coś Dodać?</h2>
-                <p class="text-lg text-secondary mb-10 max-w-xl mx-auto">
-                    Nasza społeczność i Strażnicy są zawsze gotowi pomóc. Dołącz do dyskusji na Discordzie!
-                </p>
-                <a href="https://discord.gg/TWOJLINKZAPROSZENIOWY" target="_blank" rel="noopener noreferrer" class="btn-discord font-semibold py-3.5 px-8 text-lg inline-flex items-center shadow-xl">
-                    <svg class="w-6 h-6 mr-3" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20.297 0H3.703C1.658 0 0 1.658 0 3.703V20.297C0 22.342 1.658 24 3.703 24H20.297C22.342 24 24 22.342 24 20.297V3.703C24 1.658 22.342 0 20.297 0ZM8.107 15.232C7.089 15.232 6.241 14.384 6.241 13.366C6.241 12.348 7.089 11.5 8.107 11.5C9.125 11.5 9.973 12.348 9.973 13.366C9.973 14.384 9.125 15.232 8.107 15.232ZM12.000 11.071C10.982 11.071 10.134 10.223 10.134 9.205C10.134 8.188 10.982 7.339 12.000 7.339C13.018 7.339 13.866 8.188 13.866 9.205C13.866 10.223 13.018 11.071 12.000 11.071ZM15.893 15.232C14.875 15.232 14.027 14.384 14.027 13.366C14.027 12.348 14.875 11.5 15.893 11.5C16.911 11.5 17.759 12.348 17.759 13.366C17.759 14.384 16.911 15.232 15.893 15.232Z"/></svg>
-                    Przejdź na Discord
-                </a>
-            </div>
+            {/* ... existing content ... */}
         </section>
     </main>
 
@@ -139,13 +140,65 @@
 
     <script src="js/main.js" defer></script>
     <script>
+        let allWikiCategories = []; // Cache for category names
+
+        async function fetchAllWikiCategories() {
+            if (allWikiCategories.length > 0) return allWikiCategories;
+            try {
+                const response = await fetch('/api/wiki/categories');
+                if (!response.ok) throw new Error('Nie udało się pobrać kategorii wiki.');
+                allWikiCategories = await response.json();
+                return allWikiCategories;
+            } catch (error) {
+                console.error("Błąd pobierania wszystkich kategorii wiki:", error);
+                return []; // Return empty on error
+            }
+        }
+
+        async function fetchAndDisplayWikiCategoriesFilterList() {
+            const container = document.getElementById('wiki-category-links');
+            const loadingDiv = document.getElementById('wiki-category-list-loading');
+            const errorDiv = document.getElementById('wiki-category-list-error');
+
+            if (!container || !loadingDiv || !errorDiv) return;
+
+            loadingDiv.classList.remove('hidden');
+            errorDiv.classList.add('hidden');
+            container.innerHTML = '';
+
+            const params = new URLSearchParams(window.location.search);
+            const currentCategorySlug = params.get('category');
+
+            try {
+                const categories = await fetchAllWikiCategories(); // Use cached or fetch
+                loadingDiv.classList.add('hidden');
+
+                let listHtml = `<a href="wikipedia.html" class="block py-1.5 text-secondary hover:text-accent category-link ${!currentCategorySlug ? 'active' : ''}">Wszystkie Strony</a>`;
+                if (categories && categories.length > 0) {
+                    categories.forEach(cat => {
+                        listHtml += `<a href="wikipedia.html?category=${cat.slug}" class="block py-1.5 text-secondary hover:text-accent category-link ${currentCategorySlug === cat.slug ? 'active' : ''}">${cat.name}</a>`;
+                    });
+                } else {
+                    listHtml += '<p class="text-sm text-secondary">Brak kategorii.</p>';
+                }
+                container.innerHTML = listHtml;
+            } catch (error) {
+                console.error('Error fetching wiki categories for filter list:', error);
+                loadingDiv.classList.add('hidden');
+                errorDiv.classList.remove('hidden');
+                errorDiv.textContent = error.message;
+            }
+        }
+
         async function fetchAndDisplayWikiPages() {
             const container = document.getElementById('wiki-pages-list-container');
             const loadingDiv = document.getElementById('wiki-list-loading');
             const errorDiv = document.getElementById('wiki-list-error');
             const emptyDiv = document.getElementById('wiki-list-empty');
+            const mainTitleEl = document.getElementById('wiki-list-main-title');
+            const subtitleEl = document.getElementById('wiki-list-subtitle');
 
-            if (!container || !loadingDiv || !errorDiv || !emptyDiv) {
+            if (!container || !loadingDiv || !errorDiv || !emptyDiv || !mainTitleEl || !subtitleEl) {
                 console.error('Missing required elements for wiki page display.');
                 return;
             }
@@ -155,8 +208,30 @@
             emptyDiv.classList.add('hidden');
             container.innerHTML = '';
 
+            const params = new URLSearchParams(window.location.search);
+            const categorySlug = params.get('category');
+
+            let apiUrl = '/api/wiki/pages';
+            if (categorySlug) {
+                apiUrl += `?category=${categorySlug}`;
+                // Update title/subtitle
+                await fetchAllWikiCategories(); // Ensure categories are loaded
+                const currentCategory = allWikiCategories.find(c => c.slug === categorySlug);
+                if (currentCategory) {
+                    mainTitleEl.textContent = `Kategoria Wiki: ${currentCategory.name}`;
+                    subtitleEl.textContent = `Strony i przewodniki w kategorii "${currentCategory.name}".`;
+                } else {
+                    mainTitleEl.textContent = 'Nieznana Kategoria';
+                    subtitleEl.textContent = `Strony dla kategorii o slugu "${categorySlug}".`;
+                }
+            } else {
+                mainTitleEl.textContent = 'Wszystkie Strony Wiki i Przewodniki';
+                subtitleEl.textContent = 'Poniżej znajdziesz listę wszystkich dostępnych stron informacyjnych i przewodników.';
+            }
+
+
             try {
-                const response = await fetch('/api/wiki/pages');
+                const response = await fetch(apiUrl);
                 if (!response.ok) {
                     throw new Error(`HTTP error! status: ${response.status}`);
                 }
@@ -166,12 +241,18 @@
 
                 if (pages && pages.length > 0) {
                     pages.forEach(page => {
+                        let categoryLinkHTML = '';
+                        if (page.wikiCategory && page.wikiCategory.name && page.wikiCategory.slug) {
+                            categoryLinkHTML = `<p class="text-sm text-secondary mt-1">Kategoria: <a href="wikipedia.html?category=${page.wikiCategory.slug}" class="text-accent hover:underline">${page.wikiCategory.name}</a></p>`;
+                        }
+
                         const pageCard = `
                             <a href="wiki-page-view.html?slug=${page.slug}" class="card-bg block p-6 rounded-lg hover:no-underline focus:outline-none focus:ring-2 focus:ring-[var(--border-accent)]">
                                 <h3 class="text-xl font-semibold text-accent mb-2">${page.title}</h3>
                                 <p class="text-sm text-secondary mb-1">Autor: ${page.authorName}</p>
-                                ${page.lastEditorName ? `<p class="text-sm text-secondary mb-3">Ostatnia edycja: ${page.lastEditorName}</p>` : ''}
-                                <p class="text-xs text-secondary">Ostatnia aktualizacja: ${new Date(page.updatedAt).toLocaleDateString('pl-PL', { year: 'numeric', month: 'long', day: 'numeric' })}</p>
+                                ${page.lastEditorName && page.lastEditorName !== page.authorName ? `<p class="text-sm text-secondary mb-1">Ostatnia edycja: ${page.lastEditorName}</p>` : ''}
+                                ${categoryLinkHTML}
+                                <p class="text-xs text-secondary mt-2">Ostatnia aktualizacja: ${new Date(page.updatedAt).toLocaleDateString('pl-PL', { year: 'numeric', month: 'long', day: 'numeric' })}</p>
                             </a>
                         `;
                         container.innerHTML += pageCard;
@@ -186,10 +267,18 @@
             }
         }
 
-        document.addEventListener('DOMContentLoaded', () => {
+        function handleStateChange() {
             fetchAndDisplayWikiPages();
+            fetchAndDisplayWikiCategoriesFilterList(); // Also update active state of category list
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            handleStateChange(); // Initial load
             // The main.js script will handle common elements like header/footer population
         });
+
+        window.addEventListener('popstate', handleStateChange);
+
     </script>
 </body>
 </html>

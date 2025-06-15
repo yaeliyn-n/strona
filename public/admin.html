@@ -188,7 +188,7 @@
                             <div id="articlePreview" class="mt-2 p-4 border border-[var(--border-card)] rounded-md bg-[var(--bg-primary)] min-h-[100px] prose prose-sm max-w-none hidden"></div>
                         </div>
                         <div>
-                            <label for="articleCategoriesSelect" class="form-label">Kategorie:</label>
+                            <label for="articleCategoriesSelect" class="form-label">Kategorie Artykułu:</label>
                             <select multiple id="articleCategoriesSelect" class="form-select h-32"></select>
                             <p class="text-xs text-secondary mt-1">Przytrzymaj Ctrl (lub Cmd na Mac), aby wybrać wiele.</p>
                         </div>
@@ -216,15 +216,15 @@
                 </div>
 
                 <div id="adminCategoryManagementSection" class="mt-12 bg-bg-card p-6 sm:p-8 rounded-xl shadow-xl">
-                    <h2 class="text-2xl font-semibold text-accent mb-6">Zarządzanie Kategoriami</h2>
+                    <h2 class="text-2xl font-semibold text-accent mb-6">Zarządzanie Kategoriami Artykułów</h2>
                     <form id="adminCategoryForm" class="mb-8 space-y-4 md:space-y-0 md:flex md:items-end md:space-x-3">
                         <input type="hidden" id="editingCategoryId">
                         <div class="flex-grow">
-                            <label for="categoryName" class="form-label">Nazwa Kategorii:</label>
+                            <label for="categoryName" class="form-label">Nazwa Kategorii Artykułu:</label>
                             <input type="text" id="categoryName" name="name" class="form-input" required>
                         </div>
                         <div class="flex-grow">
-                            <label for="categorySlug" class="form-label">Slug Kategorii:</label>
+                            <label for="categorySlug" class="form-label">Slug Kategorii Artykułu:</label>
                             <input type="text" id="categorySlug" name="slug" class="form-input" placeholder="Automatycznie z nazwy">
                         </div>
                         <div class="flex space-x-2 pt-4 md:pt-0">
@@ -277,6 +277,12 @@
                             </div>
                             <div id="wikiPagePreview" class="mt-2 p-4 border border-[var(--border-card)] rounded-md bg-[var(--bg-primary)] min-h-[100px] prose prose-sm max-w-none hidden"></div>
                         </div>
+                        <div>
+                            <label for="wikiPageCategoryIdSelect" class="form-label">Kategoria Wiki:</label>
+                            <select id="wikiPageCategoryIdSelect" class="form-select">
+                                <option value="">-- Brak Kategorii --</option>
+                            </select>
+                        </div>
                         <div class="flex flex-col sm:flex-row justify-end space-y-3 sm:space-y-0 sm:space-x-4">
                             <button type="button" id="backToWikiPageListButton" class="btn btn-secondary w-full sm:w-auto">Wróć do Listy</button>
                             <button type="submit" id="saveWikiPageButton" class="btn btn-primary w-full sm:w-auto">
@@ -287,7 +293,34 @@
                     </form>
                     <div id="wikiPageUpdateStatus" class="text-sm mt-3"></div>
                 </div>
+
+                <div id="adminWikiCategoryManagementSection" class="mt-12 bg-bg-card p-6 sm:p-8 rounded-xl shadow-xl">
+                    <h3 class="text-xl font-semibold text-accent mb-4">Zarządzanie Kategoriami Wiki</h3>
+                    <form id="adminWikiCategoryForm" class="mb-8 space-y-4 md:space-y-0 md:flex md:items-end md:space-x-3">
+                        <input type="hidden" id="editingWikiCategoryId">
+                        <div class="flex-grow">
+                            <label for="wikiCategoryName" class="form-label">Nazwa Kategorii Wiki:</label>
+                            <input type="text" id="wikiCategoryName" class="form-input" required>
+                        </div>
+                        <div class="flex-grow">
+                            <label for="wikiCategorySlug" class="form-label">Slug Kategorii Wiki:</label>
+                            <input type="text" id="wikiCategorySlug" class="form-input" placeholder="Automatycznie z nazwy">
+                        </div>
+                        <div class="flex space-x-2 pt-4 md:pt-0">
+                            <button type="submit" id="saveWikiCategoryButton" class="btn btn-success whitespace-nowrap">
+                                <span class="button-text">Dodaj Kategorię Wiki</span>
+                                <span class="loading-spinner hidden"></span>
+                            </button>
+                            <button type="button" id="clearWikiCategoryFormButton" class="btn btn-secondary whitespace-nowrap">Wyczyść</button>
+                        </div>
+                    </form>
+                    <div id="adminWikiCategoriesListContainer" class="overflow-x-auto"></div>
+                    <div id="wikiCategoryListLoading" class="text-center py-4 text-secondary hidden"><span class="loading-spinner"></span> Ładowanie kategorii wiki...</div>
+                    <div id="wikiCategoryListError" class="text-center py-4 text-red-400 hidden"></div>
+                    <div id="wikiCategoryListEmpty" class="text-center py-4 text-secondary hidden">Brak kategorii wiki.</div>
+                </div>
             </div>
+
 
             <div id="supportManagement" class="tab-content">
                  {/* ... (existing supportManagement content) ... */}
@@ -359,10 +392,12 @@
         // --- Article Management Specific Logic ---
         let currentAdminArticlePage = 1;
         let editingArticleId = null;
-        let editingCategoryId = null;
+        let editingCategoryId = null; // For Article Categories
+
         // Wiki Management State
         let currentAdminWikiPage = 1;
         let editingWikiPageId = null;
+        let editingWikiCategoryId = null; // For Wiki Categories
 
 
         const adminArticleListContainer = document.getElementById('adminArticleListContainer');
@@ -388,7 +423,7 @@
         const togglePreviewButton = document.getElementById('togglePreviewButton');
         const articlePreview = document.getElementById('articlePreview');
 
-        // Category Management Elements
+        // Article Category Management Elements
         const adminCategoryManagementSection = document.getElementById('adminCategoryManagementSection');
         const adminCategoryForm = document.getElementById('adminCategoryForm');
         const editingCategoryIdInput = document.getElementById('editingCategoryId');
@@ -415,11 +450,25 @@
         const wikiPageTitleInput = document.getElementById('wikiPageTitle');
         const wikiPageSlugInput = document.getElementById('wikiPageSlug');
         const wikiPageContentInput = document.getElementById('wikiPageContent');
+        const wikiPageCategoryIdSelect = document.getElementById('wikiPageCategoryIdSelect'); // New select for wiki page category
         const saveWikiPageButton = document.getElementById('saveWikiPageButton');
         const backToWikiPageListButton = document.getElementById('backToWikiPageListButton');
         const toggleWikiPreviewButton = document.getElementById('toggleWikiPreviewButton');
         const wikiPagePreview = document.getElementById('wikiPagePreview');
         const wikiPageUpdateStatus = document.getElementById('wikiPageUpdateStatus');
+
+        // Wiki Category Management Elements
+        const adminWikiCategoryManagementSection = document.getElementById('adminWikiCategoryManagementSection');
+        const adminWikiCategoryForm = document.getElementById('adminWikiCategoryForm');
+        const editingWikiCategoryIdInput = document.getElementById('editingWikiCategoryId');
+        const wikiCategoryNameInput = document.getElementById('wikiCategoryName');
+        const wikiCategorySlugInput = document.getElementById('wikiCategorySlug');
+        const saveWikiCategoryButton = document.getElementById('saveWikiCategoryButton');
+        const clearWikiCategoryFormButton = document.getElementById('clearWikiCategoryFormButton');
+        const adminWikiCategoriesListContainer = document.getElementById('adminWikiCategoriesListContainer');
+        const wikiCategoryListLoading = document.getElementById('wikiCategoryListLoading');
+        const wikiCategoryListError = document.getElementById('wikiCategoryListError');
+        const wikiCategoryListEmpty = document.getElementById('wikiCategoryListEmpty');
 
 
         if (togglePreviewButton && articleContentInput && articlePreview) {
@@ -454,7 +503,7 @@
         function showArticleListScreen() {
             if(adminArticleFormContainer) adminArticleFormContainer.style.display = 'none';
             if(adminArticleListContainer) adminArticleListContainer.style.display = 'block';
-            if(adminCategoryManagementSection) adminCategoryManagementSection.style.display = 'block';
+            if(adminCategoryManagementSection) adminCategoryManagementSection.style.display = 'block'; // Show article categories
             editingArticleId = null;
             fetchAdminArticles(currentAdminArticlePage);
             fetchAdminCategories();
@@ -466,12 +515,12 @@
 
         async function showArticleFormScreen(articleId = null) {
             if(adminArticleListContainer) adminArticleListContainer.style.display = 'none';
-            if(adminCategoryManagementSection) adminCategoryManagementSection.style.display = 'none';
+            if(adminCategoryManagementSection) adminCategoryManagementSection.style.display = 'none'; // Hide article categories
             if(adminArticleFormContainer) adminArticleFormContainer.style.display = 'block';
             if(adminArticleForm) adminArticleForm.reset();
             editingArticleId = articleId;
 
-            await populateArticleCategorySelect();
+            await populateArticleCategorySelect(); // For articles
             if (articleCategoriesSelect) {
                 Array.from(articleCategoriesSelect.options).forEach(opt => opt.selected = false);
             }
@@ -649,14 +698,14 @@
             }
         }
 
-        async function fetchAdminCategories() {
+        async function fetchAdminCategories() { // For Article Categories
             if (!adminCategoriesListContainer || !categoryListLoading || !categoryListError || !categoryListEmpty) return;
             categoryListLoading.classList.remove('hidden');
             adminCategoriesListContainer.innerHTML = '';
             categoryListError.classList.add('hidden');
             categoryListEmpty.classList.add('hidden');
             try {
-                const response = await fetch(new URL('/api/admin/categories', window.location.href).href);
+                const response = await fetch(new URL('/api/admin/categories', window.location.href).href); // Article categories endpoint
                 if (!response.ok) throw new Error(`HTTP error! ${response.status}`);
                 const categories = await response.json();
                 if (categories && categories.length > 0) {
@@ -677,21 +726,21 @@
                     categoryListEmpty.classList.remove('hidden');
                 }
             } catch (error) {
-                console.error("Błąd ładowania kategorii:", error);
-                categoryListError.textContent = `Nie udało się załadować kategorii: ${error.message}`;
+                console.error("Błąd ładowania kategorii artykułów:", error);
+                categoryListError.textContent = `Nie udało się załadować kategorii artykułów: ${error.message}`;
                 categoryListError.classList.remove('hidden');
             } finally {
                 categoryListLoading.classList.add('hidden');
             }
         }
 
-        async function handleCategoryFormSubmit(event) {
+        async function handleCategoryFormSubmit(event) { // For Article Categories
             event.preventDefault();
             if (!saveCategoryButton) return;
             toggleButtonLoadingState(saveCategoryButton, true);
             const categoryData = { name: categoryNameInput.value, slug: categorySlugInput.value.trim() === '' ? null : categorySlugInput.value.trim() };
             let url, method;
-            if (editingCategoryId) {
+            if (editingCategoryId) { // Uses article editingCategoryId
                 url = new URL(`/api/admin/categories/${editingCategoryId}`, window.location.href).href;
                 method = 'PUT';
             } else {
@@ -702,22 +751,22 @@
                 const response = await fetch(url, { method: method, headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(categoryData) });
                 const result = await response.json();
                 if (response.ok) {
-                    displayAdminMessage(`Kategoria "${result.name}" ${editingCategoryId ? 'zaktualizowana' : 'utworzona'}!`, 'success');
+                    displayAdminMessage(`Kategoria artykułu "${result.name}" ${editingCategoryId ? 'zaktualizowana' : 'utworzona'}!`, 'success');
                     clearCategoryForm();
-                    await fetchAdminCategories();
+                    await fetchAdminCategories(); // Refresh article categories
                     await populateArticleCategorySelect();
                 } else {
                     displayAdminMessage(`Błąd: ${result.error || 'Nieznany błąd serwera'}`, 'error');
                 }
             } catch (error) {
-                console.error('Błąd zapisu kategorii:', error);
+                console.error('Błąd zapisu kategorii artykułu:', error);
                 displayAdminMessage(`Błąd sieci: ${error.message}`, 'error');
             } finally {
                 toggleButtonLoadingState(saveCategoryButton, false);
             }
         }
 
-        function editCategory(category) {
+        function editCategory(category) { // For Article Categories
             if(editingCategoryIdInput) editingCategoryIdInput.value = category.id;
             editingCategoryId = category.id;
             if(categoryNameInput) categoryNameInput.value = category.name;
@@ -726,7 +775,7 @@
             if(categoryNameInput) categoryNameInput.focus();
         }
 
-        function clearCategoryForm() {
+        function clearCategoryForm() { // For Article Categories
             if(adminCategoryForm) adminCategoryForm.reset();
             if(editingCategoryIdInput) editingCategoryIdInput.value = '';
             editingCategoryId = null;
@@ -735,28 +784,28 @@
 
         if(clearCategoryFormButton) clearCategoryFormButton.addEventListener('click', clearCategoryForm);
 
-        async function deleteCategory(categoryId, categoryName) {
-            if (!confirm(`Czy na pewno chcesz usunąć kategorię "${categoryName}" (ID: ${categoryId})? Spowoduje to usunięcie jej powiązań z artykułami.`)) return;
+        async function deleteCategory(categoryId, categoryName) { // For Article Categories
+            if (!confirm(`Czy na pewno chcesz usunąć kategorię artykułu "${categoryName}" (ID: ${categoryId})? Spowoduje to usunięcie jej powiązań z artykułami.`)) return;
             try {
                 const response = await fetch(new URL(`/api/admin/categories/${categoryId}`, window.location.href).href, { method: 'DELETE' });
                 if (response.ok) {
-                    displayAdminMessage(`Kategoria "${categoryName}" usunięta.`, 'success');
-                    await fetchAdminCategories();
+                    displayAdminMessage(`Kategoria artykułu "${categoryName}" usunięta.`, 'success');
+                    await fetchAdminCategories(); // Refresh article categories
                     await populateArticleCategorySelect();
                 } else {
                     const result = await response.json().catch(()=>({error: 'Nieznany błąd serwera'}));
-                    displayAdminMessage(`Błąd usuwania kategorii: ${result.error || response.status}`, 'error');
+                    displayAdminMessage(`Błąd usuwania kategorii artykułu: ${result.error || response.status}`, 'error');
                 }
             } catch (error) {
-                console.error('Błąd sieci podczas usuwania kategorii:', error);
+                console.error('Błąd sieci podczas usuwania kategorii artykułu:', error);
                 displayAdminMessage(`Błąd sieci: ${error.message}`, 'error');
             }
         }
 
-        async function populateArticleCategorySelect() {
+        async function populateArticleCategorySelect() { // For Article form
             if (!articleCategoriesSelect) return;
             try {
-                const response = await fetch(new URL('/api/admin/categories', window.location.href).href);
+                const response = await fetch(new URL('/api/admin/categories', window.location.href).href); // Article categories
                 if (!response.ok) throw new Error('Nie udało się załadować kategorii dla formularza artykułu.');
                 const categories = await response.json();
                 articleCategoriesSelect.innerHTML = '';
@@ -771,7 +820,7 @@
                     articleCategoriesSelect.innerHTML = '<option value="" disabled>Brak kategorii. Dodaj je poniżej.</option>';
                 }
             } catch (error) {
-                console.error("Błąd populowania selektora kategorii:", error);
+                console.error("Błąd populowania selektora kategorii artykułów:", error);
                 articleCategoriesSelect.innerHTML = '<option value="" disabled>Błąd ładowania kategorii.</option>';
             }
         }
@@ -779,25 +828,17 @@
         if (showCreateArticleFormButton) showCreateArticleFormButton.addEventListener('click', () => showArticleFormScreen());
         if (backToArticleListButton) backToArticleListButton.addEventListener('click', showArticleListScreen);
         if (adminArticleForm) adminArticleForm.addEventListener('submit', handleArticleFormSubmit);
-        if (adminCategoryForm) adminCategoryForm.addEventListener('submit', handleCategoryFormSubmit);
-
-        const originalSetActiveTab = setActiveTab;
-        setActiveTab = (tabName) => {
-            originalSetActiveTab(tabName);
-            if (tabName === 'articleManagement') {
-                showArticleListScreen();
-            } else if (tabName === 'wikiManagement') {
-                showWikiPageListScreen();
-            }
-            // Add other else if for new tabs as needed
-        };
+        if (adminCategoryForm) adminCategoryForm.addEventListener('submit', handleCategoryFormSubmit); // For Article Categories
 
         // --- Wiki Management Specific Logic ---
         function showWikiPageListScreen() {
             if(adminWikiPageFormContainer) adminWikiPageFormContainer.style.display = 'none';
+            if(adminWikiCategoryManagementSection) adminWikiCategoryManagementSection.style.display = 'block'; // Show Wiki Categories
             if(adminWikiPageListContainer) adminWikiPageListContainer.style.display = 'block';
             editingWikiPageId = null;
             fetchAdminWikiPages(currentAdminWikiPage);
+            fetchAdminWikiCategories(); // Fetch Wiki Categories
+            populateWikiPageCategorySelect(); // Populate select in Wiki Page form
             if (wikiPagePreview && !wikiPagePreview.classList.contains('hidden')) {
                 wikiPagePreview.classList.add('hidden');
             }
@@ -805,9 +846,16 @@
 
         async function showWikiPageFormScreen(pageId = null) {
             if(adminWikiPageListContainer) adminWikiPageListContainer.style.display = 'none';
+            if(adminWikiCategoryManagementSection) adminWikiCategoryManagementSection.style.display = 'none'; // Hide Wiki Categories
             if(adminWikiPageFormContainer) adminWikiPageFormContainer.style.display = 'block';
             if(adminWikiPageForm) adminWikiPageForm.reset();
             editingWikiPageId = pageId;
+
+            await populateWikiPageCategorySelect(); // For Wiki Pages
+             if (wikiPageCategoryIdSelect) { // Reset select
+                wikiPageCategoryIdSelect.value = "";
+            }
+
 
             const formTitleEl = document.getElementById('wikiPageFormTitle');
             const saveBtnText = saveWikiPageButton.querySelector('.button-text');
@@ -823,6 +871,12 @@
                     if(wikiPageTitleInput) wikiPageTitleInput.value = pageData.title;
                     if(wikiPageSlugInput) wikiPageSlugInput.value = pageData.slug;
                     if(wikiPageContentInput) wikiPageContentInput.value = pageData.content;
+                    if(wikiPageCategoryIdSelect && pageData.wikiCategory) {
+                        wikiPageCategoryIdSelect.value = pageData.wikiCategory.id;
+                    } else if (wikiPageCategoryIdSelect) {
+                        wikiPageCategoryIdSelect.value = ""; // No category
+                    }
+
                     if (wikiPagePreview && !wikiPagePreview.classList.contains('hidden') && typeof marked !== 'undefined' && typeof DOMPurify !== 'undefined') {
                         wikiPagePreview.innerHTML = DOMPurify.sanitize(marked.parse(pageData.content));
                     }
@@ -860,7 +914,7 @@
                     table.innerHTML = `
                         <thead>
                             <tr>
-                                <th>ID</th><th>Tytuł</th><th>Slug</th><th>Autor</th><th>Ost. Edytor</th><th>Ost. Aktualizacja</th><th>Akcje</th>
+                                <th>ID</th><th>Tytuł</th><th>Kategoria</th><th>Slug</th><th>Autor</th><th>Ost. Edytor</th><th>Ost. Aktualizacja</th><th>Akcje</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -868,6 +922,7 @@
                                 <tr>
                                     <td>${p.id}</td>
                                     <td class="font-medium text-primary">${p.title}</td>
+                                    <td>${p.wikiCategory ? p.wikiCategory.name : '-'}</td>
                                     <td>${p.slug}</td>
                                     <td>${p.authorName}</td>
                                     <td>${p.lastEditorName || '-'}</td>
@@ -910,10 +965,12 @@
             event.preventDefault();
             if (!saveWikiPageButton) return;
             toggleButtonLoadingState(saveWikiPageButton, true);
+            const selectedWikiCategoryId = document.getElementById('wikiPageCategoryIdSelect').value;
             const wikiPageData = {
                 title: wikiPageTitleInput.value,
                 content: wikiPageContentInput.value,
                 slug: wikiPageSlugInput.value.trim() === '' ? null : wikiPageSlugInput.value.trim(),
+                wikiCategoryId: selectedWikiCategoryId ? parseInt(selectedWikiCategoryId, 10) : null
             };
             let url, method;
             if (editingWikiPageId) {
@@ -965,6 +1022,146 @@
         if(backToWikiPageListButton) backToWikiPageListButton.addEventListener('click', showWikiPageListScreen);
         if(adminWikiPageForm) adminWikiPageForm.addEventListener('submit', handleWikiPageFormSubmit);
 
+        // Wiki Category CRUD JS
+        async function fetchAdminWikiCategories() {
+            if (!adminWikiCategoriesListContainer || !wikiCategoryListLoading || !wikiCategoryListError || !wikiCategoryListEmpty) return;
+            wikiCategoryListLoading.classList.remove('hidden');
+            adminWikiCategoriesListContainer.innerHTML = '';
+            wikiCategoryListError.classList.add('hidden');
+            wikiCategoryListEmpty.classList.add('hidden');
+            try {
+                const response = await fetch(new URL('/api/admin/wiki/categories', window.location.href).href);
+                if (!response.ok) throw new Error(`HTTP error! ${response.status}`);
+                const categories = await response.json();
+                if (categories && categories.length > 0) {
+                    adminWikiCategoriesListContainer.innerHTML = `
+                        <table class="admin-table w-full text-sm">
+                            <thead><tr><th>ID</th><th>Nazwa</th><th>Slug</th><th>Akcje</th></tr></thead>
+                            <tbody>
+                                ${categories.map(cat => `
+                                    <tr><td>${cat.id}</td><td>${cat.name}</td><td>${cat.slug}</td>
+                                    <td class="whitespace-nowrap">
+                                        <button class="btn btn-secondary btn-action-sm edit-wikicategory-btn" data-id="${cat.id}" data-name="${cat.name}" data-slug="${cat.slug}">Edytuj</button>
+                                        <button class="btn btn-danger btn-action-sm delete-wikicategory-btn" data-id="${cat.id}" data-name="${cat.name}">Usuń</button>
+                                    </td></tr>`).join('')}
+                            </tbody></table>`;
+                    adminWikiCategoriesListContainer.querySelectorAll('.edit-wikicategory-btn').forEach(btn => btn.addEventListener('click', () => editWikiCategory({id: btn.dataset.id, name: btn.dataset.name, slug: btn.dataset.slug})));
+                    adminWikiCategoriesListContainer.querySelectorAll('.delete-wikicategory-btn').forEach(btn => btn.addEventListener('click', () => deleteWikiCategory(btn.dataset.id, btn.dataset.name)));
+                } else {
+                    wikiCategoryListEmpty.classList.remove('hidden');
+                }
+            } catch (error) {
+                console.error("Błąd ładowania kategorii wiki:", error);
+                wikiCategoryListError.textContent = `Nie udało się załadować kategorii wiki: ${error.message}`;
+                wikiCategoryListError.classList.remove('hidden');
+            } finally {
+                wikiCategoryListLoading.classList.add('hidden');
+            }
+        }
+
+        async function handleWikiCategoryFormSubmit(event) {
+            event.preventDefault();
+            if (!saveWikiCategoryButton) return;
+            toggleButtonLoadingState(saveWikiCategoryButton, true);
+            const categoryData = { name: wikiCategoryNameInput.value, slug: wikiCategorySlugInput.value.trim() === '' ? null : wikiCategorySlugInput.value.trim() };
+            let url, method;
+            if (editingWikiCategoryId) {
+                url = new URL(`/api/admin/wiki/categories/${editingWikiCategoryId}`, window.location.href).href;
+                method = 'PUT';
+            } else {
+                url = new URL('/api/admin/wiki/categories', window.location.href).href;
+                method = 'POST';
+            }
+            try {
+                const response = await fetch(url, { method: method, headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(categoryData) });
+                const result = await response.json();
+                if (response.ok) {
+                    displayAdminMessage(`Kategoria Wiki "${result.name}" ${editingWikiCategoryId ? 'zaktualizowana' : 'utworzona'}!`, 'success');
+                    clearWikiCategoryForm();
+                    await fetchAdminWikiCategories();
+                    await populateWikiPageCategorySelect(); // Refresh dropdown in Wiki Page form
+                } else {
+                    displayAdminMessage(`Błąd: ${result.error || 'Nieznany błąd serwera'}`, 'error');
+                }
+            } catch (error) {
+                console.error('Błąd zapisu kategorii wiki:', error);
+                displayAdminMessage(`Błąd sieci: ${error.message}`, 'error');
+            } finally {
+                toggleButtonLoadingState(saveWikiCategoryButton, false);
+            }
+        }
+
+        function editWikiCategory(category) {
+            if(editingWikiCategoryIdInput) editingWikiCategoryIdInput.value = category.id;
+            editingWikiCategoryId = category.id;
+            if(wikiCategoryNameInput) wikiCategoryNameInput.value = category.name;
+            if(wikiCategorySlugInput) wikiCategorySlugInput.value = category.slug;
+            if(saveWikiCategoryButton) saveWikiCategoryButton.querySelector('.button-text').textContent = 'Zaktualizuj Kategorię Wiki';
+            if(wikiCategoryNameInput) wikiCategoryNameInput.focus();
+        }
+
+        function clearWikiCategoryForm() {
+            if(adminWikiCategoryForm) adminWikiCategoryForm.reset();
+            if(editingWikiCategoryIdInput) editingWikiCategoryIdInput.value = '';
+            editingWikiCategoryId = null;
+            if(saveWikiCategoryButton) saveWikiCategoryButton.querySelector('.button-text').textContent = 'Dodaj Kategorię Wiki';
+        }
+        if(clearWikiCategoryFormButton) clearWikiCategoryFormButton.addEventListener('click', clearWikiCategoryForm);
+
+        async function deleteWikiCategory(categoryId, categoryName) {
+            if (!confirm(`Czy na pewno chcesz usunąć kategorię wiki "${categoryName}" (ID: ${categoryId})? Strony wiki w tej kategorii staną się nieprzypisane.`)) return;
+            try {
+                const response = await fetch(new URL(`/api/admin/wiki/categories/${categoryId}`, window.location.href).href, { method: 'DELETE' });
+                if (response.ok) {
+                    displayAdminMessage(`Kategoria wiki "${categoryName}" usunięta.`, 'success');
+                    await fetchAdminWikiCategories();
+                    await populateWikiPageCategorySelect(); // Refresh dropdown
+                } else {
+                    const result = await response.json().catch(()=>({error: 'Nieznany błąd serwera'}));
+                    displayAdminMessage(`Błąd usuwania kategorii wiki: ${result.error || response.status}`, 'error');
+                }
+            } catch (error) {
+                console.error('Błąd sieci podczas usuwania kategorii wiki:', error);
+                displayAdminMessage(`Błąd sieci: ${error.message}`, 'error');
+            }
+        }
+
+        async function populateWikiPageCategorySelect() { // For Wiki Page form
+            if (!wikiPageCategoryIdSelect) return;
+            try {
+                const response = await fetch(new URL('/api/admin/wiki/categories', window.location.href).href);
+                if (!response.ok) throw new Error('Nie udało się załadować kategorii dla formularza strony wiki.');
+                const categories = await response.json();
+                const currentValue = wikiPageCategoryIdSelect.value; // Preserve current selection if possible
+                wikiPageCategoryIdSelect.innerHTML = '<option value="">-- Brak Kategorii --</option>';
+                if (categories && categories.length > 0) {
+                    categories.forEach(cat => {
+                        const option = document.createElement('option');
+                        option.value = cat.id;
+                        option.textContent = cat.name;
+                        wikiPageCategoryIdSelect.appendChild(option);
+                    });
+                }
+                 wikiPageCategoryIdSelect.value = currentValue; // Restore selection
+            } catch (error) {
+                console.error("Błąd populowania selektora kategorii wiki:", error);
+                wikiPageCategoryIdSelect.innerHTML = '<option value="">Błąd ładowania kategorii</option>';
+            }
+        }
+        if(adminWikiCategoryForm) adminWikiCategoryForm.addEventListener('submit', handleWikiCategoryFormSubmit);
+
+
+        const originalSetActiveTab = setActiveTab;
+        setActiveTab = (tabName) => {
+            originalSetActiveTab(tabName);
+            if (tabName === 'articleManagement') {
+                showArticleListScreen();
+            } else if (tabName === 'wikiManagement') {
+                showWikiPageListScreen(); // This will now also call fetchAdminWikiCategories & populateWikiPageCategorySelect
+            }
+            // Add other else if for new tabs as needed
+        };
+
         // --- Document Ready ---
         document.addEventListener('DOMContentLoaded', async function() {
             document.getElementById('currentYear').textContent = new Date().getFullYear();
@@ -975,7 +1172,7 @@
             setupMobileMenu();
             setupDropdownDismiss();
             const initialAdminTab = localStorage.getItem('activeAdminTab') || 'contentManagement';
-            setActiveTab(initialAdminTab);
+            setActiveTab(initialAdminTab); // This will trigger the correct data loading for the active tab
             const tabButtons = document.querySelectorAll('.tab-button');
             tabButtons.forEach(button => {
                 button.addEventListener('click', () => setActiveTab(button.dataset.tab));

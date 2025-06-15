@@ -29,6 +29,7 @@
     const User = require('./models/User'); // Import User model
     const UserProfile = require('./models/UserProfile'); // Import UserProfile model
     const WikiPage = require('./models/WikiPage'); // Import WikiPage model
+    const WikiCategory = require('./models/WikiCategory'); // Import WikiCategory model
     const sequelize = require('./config/database');
 
 
@@ -76,6 +77,17 @@
         });
     }
 
+    // Associations for WikiCategory and WikiPage
+    if (WikiCategory && WikiPage) {
+        WikiCategory.hasMany(WikiPage, {
+            foreignKey: 'wikiCategoryId',
+            as: 'wikiPages'
+        });
+        WikiPage.belongsTo(WikiCategory, {
+            foreignKey: 'wikiCategoryId',
+            as: 'wikiCategory'
+        });
+    }
 
     // --- Middleware podstawowe ---
     app.use(session({
@@ -159,6 +171,30 @@
             count++;
             uniqueSlug = `${slug}-${count}`;
             whereClause.slug = uniqueSlug; // Update slug in whereClause for next check
+        }
+        return uniqueSlug;
+    }
+
+    async function generateUniqueWikiCategorySlug(name, currentId = null) {
+        let slug = name.toLowerCase()
+            .replace(/[^\w\s-]/g, '') // Remove non-word characters
+            .replace(/\s+/g, '-')    // Replace spaces with hyphens
+            .replace(/--+/g, '-')     // Replace multiple hyphens with single hyphen
+            .trim();
+
+        if (!slug) slug = 'kategoria';
+
+        let count = 0;
+        let uniqueSlug = slug;
+        const whereClause = { slug: uniqueSlug };
+        if (currentId) {
+            whereClause.id = { [Op.ne]: currentId };
+        }
+
+        while (await WikiCategory.findOne({ where: whereClause })) {
+            count++;
+            uniqueSlug = `${slug}-${count}`;
+            whereClause.slug = uniqueSlug;
         }
         return uniqueSlug;
     }
@@ -1022,11 +1058,42 @@
     });
 
     // --- API Stron Wiki (Publiczne) ---
+    app.get('/api/wiki/categories', async (req, res) => {
+        try {
+            const categories = await WikiCategory.findAll({
+                attributes: ['id', 'name', 'slug'],
+                order: [['name', 'ASC']]
+            });
+            res.json(categories);
+        } catch (error) {
+            console.error('Błąd podczas pobierania kategorii wiki:', error);
+            res.status(500).json({ error: 'Błąd serwera podczas pobierania kategorii wiki.' });
+        }
+    });
+
     app.get('/api/wiki/pages', async (req, res) => {
+        const categorySlug = req.query.category;
+        let whereClause = {};
+        let includeOptions = [{
+            model: WikiCategory,
+            as: 'wikiCategory',
+            attributes: ['name', 'slug']
+        }];
+
+        if (categorySlug) {
+            // To filter by category slug, we need to query through the association
+            // This requires a slightly different structure for include if the category is mandatory
+            includeOptions[0].where = { slug: categorySlug };
+            includeOptions[0].required = true; // Makes it an INNER JOIN for filtering
+        }
+
         try {
             const pages = await WikiPage.findAll({
                 attributes: ['title', 'slug', 'updatedAt', 'authorName', 'lastEditorName'],
-                order: [['updatedAt', 'DESC']]
+                include: includeOptions,
+                order: [['updatedAt', 'DESC']],
+                // `where` clause on WikiPage itself, if any, would go here:
+                // where: whereClause
             });
             res.json(pages);
         } catch (error) {
@@ -1039,7 +1106,8 @@
         try {
             const page = await WikiPage.findOne({
                 where: { slug: req.params.slug },
-                attributes: ['title', 'slug', 'content', 'authorName', 'lastEditorName', 'updatedAt', 'createdAt']
+                attributes: ['title', 'slug', 'content', 'authorName', 'lastEditorName', 'updatedAt', 'createdAt'],
+                include: [{ model: WikiCategory, as: 'wikiCategory', attributes: ['id', 'name', 'slug'] }]
             });
             if (!page) {
                 return res.status(404).json({ error: 'Strona wiki nie została znaleziona.' });
@@ -1051,12 +1119,86 @@
         }
     });
 
+    // --- API Kategorii Wiki (Admin) ---
+    app.post('/api/admin/wiki/categories', async (req, res) => {
+        if (!isAdmin(req)) return res.status(403).json({ error: 'Forbidden' });
+        const { name, slug: providedSlug } = req.body;
+        if (!name) {
+            return res.status(400).json({ error: 'Nazwa kategorii jest wymagana.' });
+        }
+        try {
+            const slug = providedSlug ? await generateUniqueWikiCategorySlug(providedSlug) : await generateUniqueWikiCategorySlug(name);
+            const newCategory = await WikiCategory.create({ name, slug });
+            res.status(201).json(newCategory);
+        } catch (error) {
+            console.error('Błąd tworzenia kategorii wiki:', error);
+            if (error.name === 'SequelizeValidationError' || error.name === 'SequelizeUniqueConstraintError') {
+                return res.status(400).json({ error: 'Błąd walidacji: ' + error.errors.map(e => e.message).join(', ') });
+            }
+            res.status(500).json({ error: 'Błąd serwera.' });
+        }
+    });
+
+    app.get('/api/admin/wiki/categories', async (req, res) => {
+        if (!isAdmin(req)) return res.status(403).json({ error: 'Forbidden' });
+        try {
+            const categories = await WikiCategory.findAll({ order: [['name', 'ASC']] });
+            res.json(categories);
+        } catch (error) {
+            console.error('Błąd pobierania kategorii wiki dla admina:', error);
+            res.status(500).json({ error: 'Błąd serwera.' });
+        }
+    });
+
+    app.put('/api/admin/wiki/categories/:id', async (req, res) => {
+        if (!isAdmin(req)) return res.status(403).json({ error: 'Forbidden' });
+        const { id } = req.params;
+        const { name, slug: newSlug } = req.body;
+        try {
+            const category = await WikiCategory.findByPk(id);
+            if (!category) {
+                return res.status(404).json({ error: 'Kategoria wiki nie znaleziona.' });
+            }
+            if (name) category.name = name;
+            if (newSlug && newSlug !== category.slug) {
+                category.slug = await generateUniqueWikiCategorySlug(newSlug, category.id);
+            } else if (name && name !== category.name && !newSlug) {
+                category.slug = await generateUniqueWikiCategorySlug(name, category.id);
+            }
+            await category.save();
+            res.json(category);
+        } catch (error) {
+            console.error(`Błąd aktualizacji kategorii wiki ID ${id}:`, error);
+            if (error.name === 'SequelizeValidationError' || error.name === 'SequelizeUniqueConstraintError') {
+                return res.status(400).json({ error: 'Błąd walidacji: ' + error.errors.map(e => e.message).join(', ') });
+            }
+            res.status(500).json({ error: 'Błąd serwera.' });
+        }
+    });
+
+    app.delete('/api/admin/wiki/categories/:id', async (req, res) => {
+        if (!isAdmin(req)) return res.status(403).json({ error: 'Forbidden' });
+        const { id } = req.params;
+        try {
+            const category = await WikiCategory.findByPk(id);
+            if (!category) {
+                return res.status(404).json({ error: 'Kategoria wiki nie znaleziona.' });
+            }
+            // onDelete: 'SET NULL' w modelu WikiPage zajmie się odpięciem stron.
+            await category.destroy();
+            res.status(200).json({ message: 'Kategoria wiki została usunięta.' });
+        } catch (error) {
+            console.error(`Błąd usuwania kategorii wiki ID ${id}:`, error);
+            res.status(500).json({ error: 'Błąd serwera.' });
+        }
+    });
+
     // --- API Stron Wiki (Admin) ---
     app.post('/api/admin/wiki/pages', async (req, res) => {
         if (!isAdmin(req)) return res.status(403).json({ error: 'Forbidden' });
         if (!req.session.user) return res.status(401).json({ error: 'Unauthorized - Sesja nieprawidłowa' });
 
-        const { title, content, slug: providedSlug } = req.body;
+        const { title, content, slug: providedSlug, wikiCategoryId } = req.body; // Added wikiCategoryId
         if (!title || !content) {
             return res.status(400).json({ error: 'Tytuł i treść są wymagane.' });
         }
@@ -1067,14 +1209,22 @@
                 console.warn(`Podany slug strony wiki "${providedSlug}" nie był unikalny. Zmieniono na "${slug}".`);
             }
 
-            const newPage = await WikiPage.create({
+            const newPageData = {
                 title,
                 slug,
                 content,
                 authorId: req.session.user.id,
                 authorName: req.session.user.username
+            };
+            if (wikiCategoryId !== undefined) { // Allow setting to null or a specific ID
+                newPageData.wikiCategoryId = wikiCategoryId;
+            }
+
+            const newPage = await WikiPage.create(newPageData);
+            const pageWithCategory = await WikiPage.findByPk(newPage.id, {
+                include: [{ model: WikiCategory, as: 'wikiCategory', attributes: ['id', 'name', 'slug'] }]
             });
-            res.status(201).json(newPage);
+            res.status(201).json(pageWithCategory);
         } catch (error) {
             console.error('Błąd podczas tworzenia strony wiki:', error);
             if (error.name === 'SequelizeValidationError' || error.name === 'SequelizeUniqueConstraintError') {
@@ -1093,6 +1243,7 @@
         try {
             const { count, rows } = await WikiPage.findAndCountAll({
                 attributes: ['id', 'title', 'slug', 'authorName', 'lastEditorName', 'updatedAt', 'createdAt'],
+                include: [{ model: WikiCategory, as: 'wikiCategory', attributes: ['id', 'name', 'slug'] }],
                 order: [['updatedAt', 'DESC']],
                 limit: limit,
                 offset: offset
@@ -1100,8 +1251,8 @@
             res.json({
                 totalPages: Math.ceil(count / limit),
                 currentPage: page,
-                totalEntries: count, // Renamed from totalArticles for clarity
-                entries: rows // Renamed from articles for clarity
+                totalEntries: count,
+                entries: rows
             });
         } catch (error) {
             console.error('Błąd podczas pobierania stron wiki dla admina:', error);
@@ -1112,7 +1263,9 @@
     app.get('/api/admin/wiki/pages/:id', async (req, res) => {
         if (!isAdmin(req)) return res.status(403).json({ error: 'Forbidden' });
         try {
-            const page = await WikiPage.findByPk(req.params.id);
+            const page = await WikiPage.findByPk(req.params.id, {
+                 include: [{ model: WikiCategory, as: 'wikiCategory', attributes: ['id', 'name', 'slug'] }]
+            });
             if (!page) {
                 return res.status(404).json({ error: 'Strona wiki nie została znaleziona.' });
             }
@@ -1128,10 +1281,10 @@
         if (!req.session.user) return res.status(401).json({ error: 'Unauthorized - Sesja nieprawidłowa' });
 
         const { id } = req.params;
-        const { title, content, slug: newSlug } = req.body;
+        const { title, content, slug: newSlug, wikiCategoryId } = req.body; // Added wikiCategoryId
 
-        if (!title && !content && !newSlug) {
-            return res.status(400).json({ error: 'Brak danych do aktualizacji. Podaj tytuł, treść lub slug.' });
+        if (!title && !content && !newSlug && wikiCategoryId === undefined) { // Check if wikiCategoryId is undefined too
+            return res.status(400).json({ error: 'Brak danych do aktualizacji. Podaj tytuł, treść, slug lub kategorię.' });
         }
 
         try {
@@ -1142,20 +1295,24 @@
 
             if (title) page.title = title;
             if (content) page.content = content;
+            if (wikiCategoryId !== undefined) { // Allows setting to null
+                page.wikiCategoryId = wikiCategoryId;
+            }
 
             if (newSlug && newSlug !== page.slug) {
                 page.slug = await generateUniqueWikiPageSlug(newSlug, page.id);
             } else if (title && title !== page.title && !newSlug) {
-                // If title changed and no new slug was provided, regenerate slug based on new title
                 page.slug = await generateUniqueWikiPageSlug(title, page.id);
             }
 
             page.lastEditorId = req.session.user.id;
             page.lastEditorName = req.session.user.username;
-            // updatedAt will be handled automatically by Sequelize due to timestamps: true and model.save()
 
             await page.save();
-            res.json(page);
+            const updatedPageWithCategory = await WikiPage.findByPk(page.id, {
+                include: [{ model: WikiCategory, as: 'wikiCategory', attributes: ['id', 'name', 'slug'] }]
+            });
+            res.json(updatedPageWithCategory);
         } catch (error) {
             console.error(`Błąd aktualizacji strony wiki ID ${id}:`, error);
             if (error.name === 'SequelizeValidationError' || error.name === 'SequelizeUniqueConstraintError') {

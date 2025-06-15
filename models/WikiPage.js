@@ -51,6 +51,17 @@ const WikiPage = sequelize.define('WikiPage', {
     allowNull: false,
     defaultValue: Sequelize.NOW,
     field: 'updated_at'
+  },
+  wikiCategoryId: {
+    type: DataTypes.INTEGER,
+    allowNull: true,
+    references: {
+      model: 'wiki_categories', // Name of the table for WikiCategory
+      key: 'id'
+    },
+    onDelete: 'SET NULL',
+    onUpdate: 'CASCADE',
+    field: 'wiki_category_id'
   }
 }, {
   tableName: 'wiki_pages',
