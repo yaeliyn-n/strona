@@ -130,6 +130,17 @@
       return req.session?.user?.id === ADMIN_DISCORD_ID;
     }
 
+    function isWikiContributor(req) {
+        if (isAdmin(req)) { // Admins are always contributors
+            return true;
+        }
+        if (req.session && req.session.user && req.session.user.id) {
+            const trustedIds = (process.env.TRUSTED_WIKI_CONTRIBUTOR_IDS || '').split(',');
+            return trustedIds.includes(req.session.user.id);
+        }
+        return false;
+    }
+
     async function proxyToBotApi(req, res, botApiPath, method = 'GET', body = null, queryParams = {}) {
         // ... (istniejąca implementacja)
     }
@@ -1073,28 +1084,24 @@
 
     app.get('/api/wiki/pages', async (req, res) => {
         const categorySlug = req.query.category;
-        let whereClause = {};
-        let includeOptions = [{
-            model: WikiCategory,
-            as: 'wikiCategory',
-            attributes: ['name', 'slug']
-        }];
+        let queryOptions = {
+            attributes: ['title', 'slug', 'updatedAt', 'authorName', 'lastEditorName', 'submittedByUserName'], // Added submittedByUserName
+            where: { status: 'published' }, // Default to only published pages
+            include: [{
+                model: WikiCategory,
+                as: 'wikiCategory',
+                attributes: ['name', 'slug']
+            }],
+            order: [['updatedAt', 'DESC']]
+        };
 
         if (categorySlug) {
-            // To filter by category slug, we need to query through the association
-            // This requires a slightly different structure for include if the category is mandatory
-            includeOptions[0].where = { slug: categorySlug };
-            includeOptions[0].required = true; // Makes it an INNER JOIN for filtering
+            queryOptions.include[0].where = { slug: categorySlug };
+            queryOptions.include[0].required = true; // Ensures INNER JOIN if category is specified
         }
 
         try {
-            const pages = await WikiPage.findAll({
-                attributes: ['title', 'slug', 'updatedAt', 'authorName', 'lastEditorName'],
-                include: includeOptions,
-                order: [['updatedAt', 'DESC']],
-                // `where` clause on WikiPage itself, if any, would go here:
-                // where: whereClause
-            });
+            const pages = await WikiPage.findAll(queryOptions);
             res.json(pages);
         } catch (error) {
             console.error('Błąd podczas pobierania stron wiki:', error);
@@ -1105,12 +1112,15 @@
     app.get('/api/wiki/pages/:slug', async (req, res) => {
         try {
             const page = await WikiPage.findOne({
-                where: { slug: req.params.slug },
-                attributes: ['title', 'slug', 'content', 'authorName', 'lastEditorName', 'updatedAt', 'createdAt'],
+                where: {
+                    slug: req.params.slug,
+                    status: 'published' // Only fetch published pages by slug
+                },
+                attributes: ['title', 'slug', 'content', 'authorName', 'lastEditorName', 'updatedAt', 'createdAt', 'submittedByUserName', 'wikiCategoryId'],
                 include: [{ model: WikiCategory, as: 'wikiCategory', attributes: ['id', 'name', 'slug'] }]
             });
             if (!page) {
-                return res.status(404).json({ error: 'Strona wiki nie została znaleziona.' });
+                return res.status(404).json({ error: 'Strona wiki nie została znaleziona lub nie jest opublikowana.' });
             }
             res.json(page);
         } catch (error) {
@@ -1194,11 +1204,55 @@
     });
 
     // --- API Stron Wiki (Admin) ---
+    // Endpoint for users to submit wiki pages
+    app.post('/api/wiki/pages/submit', async (req, res) => {
+        if (!req.session.user) {
+            return res.status(401).json({ error: 'Musisz być zalogowany, aby przesłać stronę wiki.' });
+        }
+        // Authorization: For now, any logged-in user can submit.
+        // Later, could add: if (!isWikiContributor(req)) return res.status(403).json({ error: 'Forbidden' });
+
+        const { title, content, wikiCategoryId } = req.body;
+        if (!title || title.trim() === '') {
+            return res.status(400).json({ error: 'Tytuł jest wymagany.' });
+        }
+        if (!content || content.trim() === '') {
+            return res.status(400).json({ error: 'Treść jest wymagana.' });
+        }
+
+        try {
+            const slug = await generateUniqueWikiPageSlug(title); // Always generate new slug for submission
+
+            const newPageData = {
+                title: title.trim(),
+                slug,
+                content: content, // Assuming content is HTML from TinyMCE
+                status: 'pending_approval',
+                submittedByUserId: req.session.user.id,
+                submittedByUserName: req.session.user.username,
+                wikiCategoryId: wikiCategoryId || null,
+                authorId: req.session.user.id, // Temporarily set submitter as authorId
+                authorName: req.session.user.username // Temporarily set submitter as authorName
+            };
+            // Admin will become the author upon approval. If not, these initial values will remain.
+
+            const submittedPage = await WikiPage.create(newPageData);
+            res.status(201).json(submittedPage);
+        } catch (error) {
+            console.error('Błąd podczas przesyłania strony wiki przez użytkownika:', error);
+            if (error.name === 'SequelizeValidationError') {
+                return res.status(400).json({ error: 'Błąd walidacji: ' + error.errors.map(e => e.message).join(', ') });
+            }
+            res.status(500).json({ error: 'Błąd serwera podczas przesyłania strony wiki.' });
+        }
+    });
+
+    // --- API Stron Wiki (Admin) ---
     app.post('/api/admin/wiki/pages', async (req, res) => {
         if (!isAdmin(req)) return res.status(403).json({ error: 'Forbidden' });
         if (!req.session.user) return res.status(401).json({ error: 'Unauthorized - Sesja nieprawidłowa' });
 
-        const { title, content, slug: providedSlug, wikiCategoryId } = req.body; // Added wikiCategoryId
+        const { title, content, slug: providedSlug, wikiCategoryId, status } = req.body;
         if (!title || !content) {
             return res.status(400).json({ error: 'Tytuł i treść są wymagane.' });
         }
@@ -1213,12 +1267,19 @@
                 title,
                 slug,
                 content,
-                authorId: req.session.user.id,
-                authorName: req.session.user.username
+                authorId: req.session.user.id, // Admin is the author
+                authorName: req.session.user.username,
+                status: status || 'draft' // Admin can set status directly
             };
-            if (wikiCategoryId !== undefined) { // Allow setting to null or a specific ID
+            if (wikiCategoryId !== undefined) {
                 newPageData.wikiCategoryId = wikiCategoryId;
             }
+            // If admin creates as 'pending_approval', they are also the submitter initially
+            if (newPageData.status === 'pending_approval') {
+                newPageData.submittedByUserId = req.session.user.id;
+                newPageData.submittedByUserName = req.session.user.username;
+            }
+
 
             const newPage = await WikiPage.create(newPageData);
             const pageWithCategory = await WikiPage.findByPk(newPage.id, {
@@ -1236,13 +1297,20 @@
 
     app.get('/api/admin/wiki/pages', async (req, res) => {
         if (!isAdmin(req)) return res.status(403).json({ error: 'Forbidden' });
-        const page = parseInt(req.query.page, 10) || 1;
+        const pageQuery = parseInt(req.query.page, 10) || 1; // Renamed to avoid conflict
         const limit = parseInt(req.query.limit, 10) || 15;
-        const offset = (page - 1) * limit;
+        const offset = (pageQuery - 1) * limit;
+        const statusFilter = req.query.status;
+
+        let whereConditions = {};
+        if (statusFilter) {
+            whereConditions.status = statusFilter;
+        }
 
         try {
             const { count, rows } = await WikiPage.findAndCountAll({
-                attributes: ['id', 'title', 'slug', 'authorName', 'lastEditorName', 'updatedAt', 'createdAt'],
+                where: whereConditions,
+                attributes: ['id', 'title', 'slug', 'authorName', 'lastEditorName', 'submittedByUserName', 'status', 'updatedAt', 'createdAt'],
                 include: [{ model: WikiCategory, as: 'wikiCategory', attributes: ['id', 'name', 'slug'] }],
                 order: [['updatedAt', 'DESC']],
                 limit: limit,
@@ -1250,7 +1318,7 @@
             });
             res.json({
                 totalPages: Math.ceil(count / limit),
-                currentPage: page,
+                currentPage: pageQuery,
                 totalEntries: count,
                 entries: rows
             });
@@ -1281,10 +1349,11 @@
         if (!req.session.user) return res.status(401).json({ error: 'Unauthorized - Sesja nieprawidłowa' });
 
         const { id } = req.params;
-        const { title, content, slug: newSlug, wikiCategoryId } = req.body; // Added wikiCategoryId
+        const { title, content, slug: newSlug, wikiCategoryId, status } = req.body;
 
-        if (!title && !content && !newSlug && wikiCategoryId === undefined) { // Check if wikiCategoryId is undefined too
-            return res.status(400).json({ error: 'Brak danych do aktualizacji. Podaj tytuł, treść, slug lub kategorię.' });
+        // Allow updating status, or other fields.
+        if (!title && !content && !newSlug && wikiCategoryId === undefined && !status) {
+            return res.status(400).json({ error: 'Brak danych do aktualizacji.' });
         }
 
         try {
@@ -1294,9 +1363,17 @@
             }
 
             if (title) page.title = title;
-            if (content) page.content = content;
-            if (wikiCategoryId !== undefined) { // Allows setting to null
+            if (content) page.content = content; // Assuming HTML from TinyMCE
+            if (wikiCategoryId !== undefined) {
                 page.wikiCategoryId = wikiCategoryId;
+            }
+            if (status) page.status = status;
+
+            // If admin sets status to 'published' and authorId is currently null (e.g., was pending)
+            // or if the original author was the submitter, the admin becomes the author.
+            if (status === 'published' && (!page.authorId || page.authorId === page.submittedByUserId)) {
+                page.authorId = req.session.user.id;
+                page.authorName = req.session.user.username;
             }
 
             if (newSlug && newSlug !== page.slug) {
@@ -1331,7 +1408,7 @@
                 return res.status(404).json({ error: 'Strona wiki nie została znaleziona.' });
             }
             await page.destroy();
-            res.status(200).json({ message: 'Strona wiki została usunięta.' }); // Or 204
+            res.status(200).json({ message: 'Strona wiki została usunięta.' });
         } catch (error) {
             console.error(`Błąd podczas usuwania strony wiki ID ${id}:`, error);
             res.status(500).json({ error: 'Błąd serwera.' });
@@ -1340,6 +1417,40 @@
 
     // --- Obsługa stron statycznych i React App ---
     // ... (istniejąca implementacja)
+
+    app.put('/api/admin/wiki/pages/:id/approve', async (req, res) => {
+        if (!isAdmin(req)) return res.status(403).json({ error: 'Forbidden' });
+        if (!req.session.user) return res.status(401).json({ error: 'Unauthorized' });
+
+        const { id } = req.params;
+        try {
+            const page = await WikiPage.findByPk(id);
+            if (!page) {
+                return res.status(404).json({ error: 'Strona wiki nie została znaleziona.' });
+            }
+            if (page.status !== 'pending_approval') {
+                return res.status(400).json({ error: 'Ta strona nie oczekuje na zatwierdzenie.' });
+            }
+
+            page.status = 'published';
+            page.authorId = req.session.user.id; // Approving admin becomes the author
+            page.authorName = req.session.user.username;
+            // page.publishedAt = new Date(); // If you add a publishedAt field
+            page.lastEditorId = req.session.user.id; // Also mark admin as last editor
+            page.lastEditorName = req.session.user.username;
+
+            await page.save();
+
+            const approvedPage = await WikiPage.findByPk(page.id, {
+                 include: [{ model: WikiCategory, as: 'wikiCategory', attributes: ['id', 'name', 'slug'] }]
+            });
+            res.json(approvedPage);
+        } catch (error) {
+            console.error(`Błąd podczas zatwierdzania strony wiki ID ${id}:`, error);
+            res.status(500).json({ error: 'Błąd serwera podczas zatwierdzania strony.' });
+        }
+    });
+
     app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
     app.use('/assets', express.static(path.join(__dirname, 'client/dist/assets')));
     app.get('/sklep-bota', (req, res, next) => {

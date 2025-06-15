@@ -20,7 +20,22 @@ const WikiPage = sequelize.define('WikiPage', {
     type: DataTypes.TEXT, // For Markdown content
     allowNull: false
   },
-  authorId: {
+  status: {
+    type: DataTypes.ENUM('published', 'pending_approval', 'draft'),
+    defaultValue: 'draft',
+    allowNull: false
+  },
+  submittedByUserId: {
+    type: DataTypes.STRING,
+    allowNull: true, // Could be null if admin creates directly as published/draft
+    field: 'submitted_by_user_id'
+  },
+  submittedByUserName: {
+    type: DataTypes.STRING,
+    allowNull: true,
+    field: 'submitted_by_user_name'
+  },
+  authorId: { // This will now typically be the admin who publishes or last edits in an official capacity
     type: DataTypes.STRING, // Discord User ID
     allowNull: false,
     field: 'author_id'
