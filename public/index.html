@@ -127,40 +127,7 @@
 <body class="antialiased">
 
     <header id="navbar" class="fixed top-0 left-0 right-0 z-50 py-3">
-        <div class="container mx-auto px-4 sm:px-6 flex justify-between items-center">
-            <a href="index.html" class="text-3xl font-bold" aria-label="Strona główna Kronik Elary">
-                <span class="text-accent">Kroniki</span> <span class="text-primary">Elary</span>
-            </a>
-            <nav class="hidden md:flex items-center space-x-1 lg:space-x-2">
-                <a href="index.html" class="nav-link">Strona Główna</a>
-                <a href="prezentacja.html" class="nav-link">Prezentacja Serwera</a>
-                <a href="wikipedia.html" class="nav-link">Wikipedia Kronik</a>
-                <a href="blog.html" class="nav-link">Blog</a> {/* Dodany link do bloga */}
-                <a href="ranking-stats.html" class="nav-link">Rankingi</a>
-                <a href="dom-aukcyjny.html" class="nav-link">Dom Aukcyjny</a>
-                <div id="auth-section-nav" class="ml-4 relative">
-                    </div>
-            </nav>
-            <div class="md:hidden flex items-center">
-                 <div id="auth-section-mobile-nav" class="mr-2 relative">
-                    </div>
-                <button id="mobileMenuButton" class="p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-[var(--bg-header)] focus:ring-[var(--text-accent)]" aria-expanded="false" aria-controls="mobileMenu" aria-label="Otwórz menu nawigacyjne">
-                    <svg class="w-6 h-6" fill="none" stroke="var(--svg-icon-fill)" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
-                </button>
-            </div>
-        </div>
-        <div id="mobileMenu" class="absolute top-full left-0 right-0 md:hidden shadow-lg" style="background-color: var(--bg-header);">
-            <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
-                <a href="index.html" class="block py-2.5 px-3 nav-link text-base font-medium">Strona Główna</a>
-                <a href="prezentacja.html" class="block py-2.5 px-3 nav-link text-base font-medium">Prezentacja Serwera</a>
-                <a href="wikipedia.html" class="block py-2.5 px-3 nav-link text-base font-medium">Wikipedia Kronik</a>
-                <a href="blog.html" class="block py-2.5 px-3 nav-link text-base font-medium">Blog</a> {/* Dodany link do bloga */}
-                <a href="ranking-stats.html" class="block py-2.5 px-3 nav-link text-base font-medium">Rankingi</a>
-                <a href="dom-aukcyjny.html" class="block py-2.5 px-3 nav-link text-base font-medium">Dom Aukcyjny</a>
-                <a href="https://discord.gg/TWOJLINKZAPROSZENIOWY" target="_blank" rel="noopener noreferrer" class="block mt-2 py-2.5 px-3 text-base font-medium text-white bg-purple-600 hover:bg-purple-700 rounded-md text-center">Dołącz do Discorda</a>
-                 </div>
-        </div>
-    </header>
+        </header>
 
     <main>
         <section class="hero-main-bg min-h-screen flex items-center justify-center text-center pt-24 sm:pt-20 reveal">
@@ -183,103 +150,15 @@
         </section>
 
         <section id="co-nas-wyroznia" class="py-16 sm:py-24 reveal">
-            <div class="container mx-auto px-4 sm:px-6">
-                <div class="text-center mb-12 sm:mb-16">
-                    <h2 class="text-3xl sm:text-4xl font-bold text-primary mb-4">Co Nas <span class="text-accent">Wyróżnia?</span></h2>
-                    <p class="text-lg text-secondary max-w-3xl mx-auto">
-                        Kroniki Elary to więcej niż serwer Discord. To unikalne uniwersum, które wspólnie tworzymy każdego dnia.
-                    </p>
-                </div>
-                <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-                    <div class="card-bg p-6 rounded-xl reveal flex flex-col items-center text-center">
-                        <div class="feature-icon text-purple-400 mb-4">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" fill="currentColor" class="bi bi-stars" viewBox="0 0 16 16">
-                                <path d="M7.657 6.247c.11-.33.576-.33.686 0l.645 1.937a2.89 2.89 0 0 0 1.829 1.828l1.936.645c.33.11.33.576 0 .686l-1.937.645a2.89 2.89 0 0 0-1.828 1.829l-.645 1.936a.361.361 0 0 1-.686 0l-.645-1.937a2.89 2.89 0 0 0-1.828-1.828l-1.937-.645a.361.361 0 0 1 0-.686l1.937-.645a2.89 2.89 0 0 0 1.828-1.828zM11.543 1.232c.1-.3.55-.3.65 0l.374 1.12a2.625 2.625 0 0 0 1.663 1.664l1.12.373a.33.33 0 0 1 0 .65l-1.12.373a2.625 2.625 0 0 0-1.663 1.664l-.374 1.12a.33.33 0 0 1-.65 0l-.374-1.12a2.625 2.625 0 0 0-1.663-1.664L8.43 3.367a.33.33 0 0 1 0-.65l1.12-.374a2.625 2.625 0 0 0 1.663-1.664zM3.632 9.03c.1-.3.55-.3.65 0l.374 1.12a2.625 2.625 0 0 0 1.663 1.664l1.12.373a.33.33 0 0 1 0 .65l-1.12.373a2.625 2.625 0 0 0-1.663 1.664l-.374 1.12a.33.33 0 0 1-.65 0l-.374-1.12a2.625 2.625 0 0 0-1.663-1.664L.43 12.133a.33.33 0 0 1 0-.65l1.12-.374a2.625 2.625 0 0 0 1.663-1.664z"/>
-                            </svg>
-                        </div>
-                        <h3 class="text-xl font-semibold text-primary mb-2">Autorskie Uniwersum Fabularne</h3>
-                        <p class="text-sm text-secondary">Zanurz się w bogatej historii Aethelgardu, poznaj jego bohaterów i twórz własne opowieści w naszym świecie roleplay.</p>
-                    </div>
-                    <div class="card-bg p-6 rounded-xl reveal flex flex-col items-center text-center" style="transition-delay: 0.1s;">
-                        <div class="feature-icon text-cyan-400 mb-4">
-                             <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" fill="currentColor" class="bi bi-robot" viewBox="0 0 16 16">
-                                <path d="M6 12.5a.5.5 0 0 1 .5-.5h3a.5.5 0 0 1 0 1h-3a.5.5 0 0 1-.5-.5M3 8.062C3 6.76 4.235 5.765 5.53 5.5H6.5v1H5.53c-.817.178-1.03 1.03-1.03 1.562v.062H5V10H3.5v-.938H3z"/>
-                                <path d="M0 1.5A.5.5 0 0 1 .5 1h15a.5.5 0 0 1 0 1H.5A.5.5 0 0 1 0 1.5M3 13.5V10h1v3.5a.5.5 0 0 1-1 0M13 13.5V10h1v3.5a.5.5 0 0 1-1 0M10.5 5.5c1.295.235 2.53.235 2.53.235V7.5h1V5.5s1.235 0 2.53-.235A2.5 2.5 0 0 0 15.5 3H14v-.5a.5.5 0 0 0-1 0V3H4v-.5a.5.5 0 0 0-1 0V3H1.5A2.5 2.5 0 0 0 .52 5.265C1.765 5.5 3 5.5 3 5.5V7.5h1V5.5s1.235 0 2.53-.235A2.5 2.5 0 0 0 7.5 3H8v2.5H6.5z"/>
-                            </svg>
-                        </div>
-                        <h3 class="text-xl font-semibold text-primary mb-2">Zaawansowane Boty Pomocnicze</h3>
-                        <p class="text-sm text-secondary">Nasze autorskie boty, jak Lyra czy Runa, oferują unikalne funkcje, systemy ekonomii, gry i wiele więcej, wzbogacając doświadczenie na serwerze.</p>
-                    </div>
-                    <div class="card-bg p-6 rounded-xl reveal flex flex-col items-center text-center" style="transition-delay: 0.2s;">
-                        <div class="feature-icon text-amber-400 mb-4">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" fill="currentColor" class="bi bi-people-fill" viewBox="0 0 16 16">
-                                <path d="M7 14s-1 0-1-1 1-4 5-4 5 3 5 4-1 1-1 1zM4-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6m-5.784 6A2.24 2.24 0 0 1 5 13c0-1.355.68-2.75 1.936-3.72A6.3 6.3 0 0 0 5 9c-4 0-5 3-5 4s1 1 1 1zM4.5 8a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5"/>
-                            </svg>
-                        </div>
-                        <h3 class="text-xl font-semibold text-primary mb-2">Przyjazna i Zaangażowana Społeczność</h3>
-                        <p class="text-sm text-secondary">Przede wszystkim cenimy sobie atmosferę wzajemnego szacunku, otwartości i pasji, którą dzielimy z każdym nowym członkiem Kronik.</p>
-                    </div>
-                </div>
-            </div>
+             {/* ... existing content ... */}
         </section>
 
         <section id="featured-articles-section" class="py-16 sm:py-24 section-bg reveal">
-            <div class="container mx-auto px-4 sm:px-6">
-                <div class="text-center mb-12 sm:mb-16">
-                    <h2 class="text-3xl sm:text-4xl font-bold text-primary mb-4">Polecane <span class="text-accent">Artykuły</span></h2>
-                    <p class="text-lg text-secondary max-w-2xl mx-auto">
-                        Najciekawsze wpisy i historie, które warto przeczytać.
-                    </p>
-                </div>
-                <div id="featured-articles-container" class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-                    {/* Featured articles will be loaded here */}
-                </div>
-                <div id="featured-articles-loading" class="text-center py-10 text-secondary hidden">
-                    <div class="animate-spin rounded-full h-10 w-10 border-t-2 border-b-2 loading-spinner mx-auto mb-3"></div>
-                    Ładowanie polecanych artykułów...
-                </div>
-                <div id="featured-articles-error" class="hidden text-center py-10 text-red-400 bg-red-900/50 p-4 rounded-md"></div>
-                <div id="featured-articles-empty" class="hidden text-center py-10 text-secondary">
-                    Obecnie brak polecanych artykułów.
-                </div>
-                 <div class="text-center mt-12 sm:mt-16">
-                    <a href="blog.html" class="btn-primary font-semibold py-3 px-6 text-md">Zobacz Wszystkie Artykuły</a>
-                </div>
-            </div>
+             {/* ... existing content ... */}
         </section>
 
         <section id="aktualnosci" class="py-16 sm:py-24 section-bg reveal">
-            <div class="container mx-auto px-4 sm:px-6">
-                <div class="text-center mb-12 sm:mb-16">
-                    <h2 class="text-3xl sm:text-4xl font-bold text-primary mb-4">Najnowsze <span class="text-accent">Aktualności</span></h2>
-                    <p class="text-lg text-secondary max-w-2xl mx-auto">
-                        Bądź na bieżąco z tym, co dzieje się w świecie Kronik Elary i naszej społeczności!
-                    </p>
-                </div>
-                <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-                    <div class="card-bg p-6 rounded-xl reveal">
-                        <img src="https://placehold.co/600x400/1E293B/a78bfa?text=Nowy+Event" alt="Grafika aktualności 1" class="rounded-lg mb-4 w-full h-48 object-cover" onerror="this.onerror=null;this.src='https://placehold.co/600x400/0F172A/94A3B8?text=Brak+obrazka';">
-                        <h3 class="text-xl font-semibold text-primary mb-2">Wielki Turniej Fanartów Rozpoczęty!</h3>
-                        <p class="text-xs text-secondary mb-3">Opublikowano: 25 maja 2025</p>
-                        <p class="text-sm text-secondary mb-4">Przygotujcie swoje tablety i kredki! Ruszył nasz coroczny konkurs na najlepszy fanart inspirowany Kronikami Elary. Nagrody czekają!</p>
-                        <a href="#" class="text-accent hover:text-accent-hover font-semibold text-sm">Czytaj więcej &rarr;</a>
-                    </div>
-                    <div class="card-bg p-6 rounded-xl reveal" style="transition-delay: 0.1s;">
-                        <img src="https://placehold.co/600x400/1E293B/8B5CF6?text=Aktualizacja+Bota" alt="Grafika aktualności 2" class="rounded-lg mb-4 w-full h-48 object-cover" onerror="this.onerror=null;this.src='https://placehold.co/600x400/0F172A/94A3B8?text=Brak+obrazka';">
-                        <h3 class="text-xl font-semibold text-primary mb-2">Nowe Funkcje Bota Runa!</h3>
-                        <p class="text-xs text-secondary mb-3">Opublikowano: 20 maja 2025</p>
-                        <p class="text-sm text-secondary mb-4">Nasza Techno-Zaklinaczka Runa nie próżnuje! Wprowadziliśmy nowe komendy i ulepszenia dla naszego głównego bota. Sprawdźcie koniecznie!</p>
-                        <a href="wikipedia.html#systemy-botow" class="text-accent hover:text-accent-hover font-semibold text-sm">Zobacz zmiany &rarr;</a>
-                    </div>
-                    <div class="card-bg p-6 rounded-xl reveal" style="transition-delay: 0.2s;">
-                         <img src="https://placehold.co/600x400/1E293B/7C3AED?text=Spotkanie+Społeczności" alt="Grafika aktualności 3" class="rounded-lg mb-4 w-full h-48 object-cover" onerror="this.onerror=null;this.src='https://placehold.co/600x400/0F172A/94A3B8?text=Brak+obrazka';">
-                        <h3 class="text-xl font-semibold text-primary mb-2">Podsumowanie Majowego Spotkania</h3>
-                        <p class="text-xs text-secondary mb-3">Opublikowano: 15 maja 2025</p>
-                        <p class="text-sm text-secondary mb-4">Dziękujemy wszystkim za udział w ostatnim spotkaniu społeczności! Omówiliśmy wiele ciekawych pomysłów. Zobaczcie podsumowanie i plany na przyszłość.</p>
-                        <a href="#" class="text-accent hover:text-accent-hover font-semibold text-sm">Przeczytaj podsumowanie &rarr;</a>
-                    </div>
-                </div>
-            </div>
+            {/* ... existing content ... */}
         </section>
 
         <section id="galeria-tworczosci" class="py-16 sm:py-24 reveal">
@@ -287,134 +166,46 @@
                 <div class="text-center mb-12 sm:mb-16">
                     <h2 class="text-3xl sm:text-4xl font-bold text-primary mb-4">Galeria <span class="text-accent">Twórczości Społeczności</span></h2>
                     <p class="text-lg text-secondary max-w-2xl mx-auto">
-                        Zobaczcie, jakie niesamowite dzieła powstają w Kronikach Elary dzięki talentom naszych członków!
+                        Zobaczcie, jakie niesamowite dzieła powstają w Kronikach Elary dzięki talentom naszych członków! Masz coś swojego? <a href="submit-fanart.html" class="text-accent hover:underline font-semibold">Zgłoś pracę!</a>
                     </p>
                 </div>
-                <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
-                    <div class="gallery-item card-bg rounded-lg overflow-hidden aspect-square reveal">
-                        <img src="https://placehold.co/400x400/1E293B/a78bfa?text=Fanart+1" alt="Przykładowy fanart 1" class="w-full h-full object-cover" onerror="this.onerror=null;this.src='https://placehold.co/400x400/0F172A/94A3B8?text=Art';">
-                    </div>
-                    <div class="gallery-item card-bg rounded-lg overflow-hidden aspect-square reveal" style="transition-delay: 0.05s;">
-                        <img src="https://placehold.co/400x400/1E293B/8B5CF6?text=Cosplay" alt="Przykładowy cosplay" class="w-full h-full object-cover" onerror="this.onerror=null;this.src='https://placehold.co/400x400/0F172A/94A3B8?text=Art';">
-                    </div>
-                    <div class="gallery-item card-bg rounded-lg overflow-hidden aspect-square reveal" style="transition-delay: 0.1s;">
-                        <img src="https://placehold.co/400x400/1E293B/7C3AED?text=Fanart+2" alt="Przykładowy fanart 2" class="w-full h-full object-cover" onerror="this.onerror=null;this.src='https://placehold.co/400x400/0F172A/94A3B8?text=Art';">
-                    </div>
-                    <div class="gallery-item card-bg rounded-lg overflow-hidden aspect-square reveal" style="transition-delay: 0.15s;">
-                        <img src="https://placehold.co/400x400/1E293B/A78BFA?text=Scenka+RP" alt="Przykładowa scenka RP" class="w-full h-full object-cover" onerror="this.onerror=null;this.src='https://placehold.co/400x400/0F172A/94A3B8?text=Art';">
-                    </div>
+                <div id="fanart-gallery-grid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
+                    {/* Static items removed, will be populated by JS */}
+                </div>
+                <div id="fanart-gallery-loading" class="text-center py-10 text-secondary hidden">
+                    <div class="animate-spin rounded-full h-10 w-10 border-t-2 border-b-2 loading-spinner mx-auto mb-3"></div>
+                    Ładowanie galerii...
+                </div>
+                <div id="fanart-gallery-error" class="hidden text-center py-10 text-red-400 bg-red-900/50 p-4 rounded-md">Nie udało się załadować prac. Spróbuj ponownie później.</div>
+                <div id="fanart-gallery-empty" class="hidden text-center py-10 text-secondary">
+                    Brak prac w galerii. Bądź pierwszym, który coś doda!
                 </div>
                  <div class="text-center mt-12 sm:mt-16">
-                    <a href="#" class="btn-primary font-semibold py-3 px-6 text-md">Zobacz Więcej Prac</a>
+                    {/* This button could link to a dedicated gallery page in the future */}
+                    <a href="submit-fanart.html" class="btn-primary font-semibold py-3 px-6 text-md">Zgłoś Swój Fan Art</a>
                 </div>
             </div>
         </section>
 
         <section id="kalendarz-wydarzen" class="py-16 sm:py-24 section-bg reveal">
-            <div class="container mx-auto px-4 sm:px-6">
-                <div class="text-center mb-12 sm:mb-16">
-                    <h2 class="text-3xl sm:text-4xl font-bold text-primary mb-4">Kalendarz <span class="text-accent">Wydarzeń</span></h2>
-                    <p class="text-lg text-secondary max-w-2xl mx-auto">
-                        Nie przegap żadnego magicznego momentu! Sprawdź, co planujemy w najbliższym czasie.
-                    </p>
-                </div>
-                <div class="bg-bg-card p-6 sm:p-8 rounded-2xl shadow-xl">
-                    <div class="event-item flex flex-col sm:flex-row items-start sm:items-center space-y-3 sm:space-y-0 sm:space-x-6">
-                        <div class="bg-accent/10 text-accent p-4 rounded-lg text-center w-full sm:w-auto">
-                            <div class="text-3xl font-bold">01</div>
-                            <div class="text-sm uppercase">Cze</div>
-                        </div>
-                        <div class="flex-grow">
-                            <h4 class="text-xl font-semibold text-primary">Wieczór Filmowy: Klasyka Anime</h4>
-                            <p class="text-sm text-secondary">Godzina: 20:00 | Kanał: #🎬-sala-kinowa</p>
-                            <p class="text-xs text-secondary mt-1">Wspólne oglądanie kultowego filmu anime wybranego przez społeczność.</p>
-                        </div>
-                        <a href="#" class="btn-secondary text-sm py-2 px-4 whitespace-nowrap">Szczegóły</a>
-                    </div>
-                    <div class="event-item flex flex-col sm:flex-row items-start sm:items-center space-y-3 sm:space-y-0 sm:space-x-6 pt-6">
-                        <div class="bg-amber-400/10 text-amber-400 p-4 rounded-lg text-center w-full sm:w-auto">
-                            <div class="text-3xl font-bold">15</div>
-                            <div class="text-sm uppercase">Cze</div>
-                        </div>
-                        <div class="flex-grow">
-                            <h4 class="text-xl font-semibold text-primary">Konkurs Wiedzy o Manga</h4>
-                            <p class="text-sm text-secondary">Godzina: 18:00 | Kanał: #🎉-arena-igraszek</p>
-                            <p class="text-xs text-secondary mt-1">Sprawdź swoją wiedzę i wygraj Gwiezdne Dukaty! Pytania z różnych gatunków mangi.</p>
-                        </div>
-                        <a href="#" class="btn-secondary text-sm py-2 px-4 whitespace-nowrap">Dołącz do Zabawy</a>
-                    </div>
-                     <div class="event-item flex flex-col sm:flex-row items-start sm:items-center space-y-3 sm:space-y-0 sm:space-x-6 pt-6">
-                        <div class="bg-cyan-400/10 text-cyan-400 p-4 rounded-lg text-center w-full sm:w-auto">
-                            <div class="text-3xl font-bold">28</div>
-                            <div class="text-sm uppercase">Cze</div>
-                        </div>
-                        <div class="flex-grow">
-                            <h4 class="text-xl font-semibold text-primary">Sesja Q&A z Administracją</h4>
-                            <p class="text-sm text-secondary">Godzina: 19:00 | Kanał: #🗣️-głos-ludu</p>
-                            <p class="text-xs text-secondary mt-1">Masz pytania do Strażników? To idealna okazja, aby je zadać!</p>
-                        </div>
-                        <a href="#" class="btn-secondary text-sm py-2 px-4 whitespace-nowrap">Szczegóły</a>
-                    </div>
-                </div>
-            </div>
+            {/* ... existing content ... */}
         </section>
 
         <section id="statystyki-serwera" class="py-16 sm:py-24 reveal">
-            <div class="container mx-auto px-4 sm:px-6">
-                <div class="text-center mb-12 sm:mb-16">
-                    <h2 class="text-3xl sm:text-4xl font-bold text-primary mb-4">Nasze Kroniki w <span class="text-accent">Liczbach</span></h2>
-                    <p class="text-lg text-secondary max-w-2xl mx-auto">
-                        Zobacz, jak dynamicznie rozwija się nasza społeczność!
-                    </p>
-                </div>
-                <div id="statsContainer" class="grid grid-cols-2 md:grid-cols-4 gap-6">
-                    <div class="text-center py-6 col-span-full">
-                        <div class="animate-spin rounded-full h-10 w-10 border-t-2 border-b-2 loading-spinner mx-auto mb-2"></div>
-                        <p class="text-secondary">Ładowanie statystyk...</p>
-                    </div>
-                </div>
-                <div id="statsLoadingError" class="hidden text-red-400 bg-red-900/50 p-3 rounded-md mt-4"></div>
-            </div>
+            {/* ... existing content ... */}
         </section>
         
         <section id="dolacz-skrot" class="py-16 sm:py-24 section-bg reveal">
-            <div class="container mx-auto px-4 sm:px-6 text-center">
-                <h2 class="text-3xl sm:text-4xl font-bold text-primary mb-6">Gotów Rozpocząć Przygodę?</h2>
-                <p class="text-lg text-secondary mb-10 max-w-xl mx-auto">
-                    Dołącz do naszej rosnącej społeczności na Discordzie. Czekają na Ciebie niezapomniane dyskusje, nowi przyjaciele i magiczny świat Kronik Elary!
-                </p>
-                <a href="https://discord.gg/TWOJLINKZAPROSZENIOWY" target="_blank" rel="noopener noreferrer" class="btn-discord font-semibold py-4 px-10 text-lg inline-flex items-center shadow-xl">
-                    <svg class="w-6 h-6 mr-3" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20.297 0H3.703C1.658 0 0 1.658 0 3.703V20.297C0 22.342 1.658 24 3.703 24H20.297C22.342 24 24 22.342 24 20.297V3.703C24 1.658 22.342 0 20.297 0ZM8.107 15.232C7.089 15.232 6.241 14.384 6.241 13.366C6.241 12.348 7.089 11.5 8.107 11.5C9.125 11.5 9.973 12.348 9.973 13.366C9.973 14.384 9.125 15.232 8.107 15.232ZM12.000 11.071C10.982 11.071 10.134 10.223 10.134 9.205C10.134 8.188 10.982 7.339 12.000 7.339C13.018 7.339 13.866 8.188 13.866 9.205C13.866 10.223 13.018 11.071 12.000 11.071ZM15.893 15.232C14.875 15.232 14.027 14.384 14.027 13.366C14.027 12.348 14.875 11.5 15.893 11.5C16.911 11.5 17.759 12.348 17.759 13.366C17.759 14.384 16.911 15.232 15.893 15.232Z"/></svg>
-                    Wejdź do Królestwa Kronik
-                </a>
-            </div>
+           {/* ... existing content ... */}
         </section>
     </main>
 
     <footer class="py-12 text-center" style="background-color: var(--bg-header);">
-        <div class="container mx-auto px-4 sm:px-6">
-            <div class="flex justify-center space-x-6 mb-6">
-                <a href="#" class="text-secondary hover:text-accent transition-colors duration-200" aria-label="Placeholder Twitter">
-                    <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M22.46 6c-.77.35-1.6.58-2.46.67.9-.53 1.59-1.37 1.92-2.38-.84.5-1.78.86-2.79 1.07C18.28 4.42 17.03 4 15.64 4c-2.94 0-5.32 2.38-5.32 5.32 0 .42.05.83.14 1.22-4.42-.22-8.33-2.34-10.96-5.55-.46.79-.72 1.7-.72 2.67 0 1.84.94 3.47 2.37 4.42-.87-.03-1.69-.27-2.41-.66v.07c0 2.57 1.83 4.72 4.25 5.21-.44.12-.91.18-1.39.18-.34 0-.67-.03-1-.1 0 .67.65 1.37 1.77 1.84-.7.55-1.59.88-2.58.88-.39 0-.77-.02-1.14-.07.91.59 2 1.02 3.19 1.02 3.83 0 5.93-3.18 5.93-5.93 0-.09 0-.18-.01-.27.41-.3.76-.68 1.04-1.09z"/></svg>
-                </a>
-                 <a href="#" class="text-secondary hover:text-accent transition-colors duration-200" aria-label="Placeholder Instagram">
-                    <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 1.17.053 1.805.248 2.227.415.562.217.96.477 1.382.896.419.42.679.819.896 1.381.167.422.362 1.056.415 2.227.058 1.266.07 1.646.07 4.85s-.012 3.584-.07 4.85c-.053 1.17-.248 1.805-.415 2.227a3.48 3.48 0 01-.896 1.382c-.42.419-.82.679-1.382.896-.422.167-1.056.362-2.227.415-1.266.058-1.646.07-4.85.07s-3.584-.012-4.85-.07c-1.17-.053-1.805-.248-2.227-.415a3.492 3.492 0 01-1.381-.896 3.492 3.492 0 01-.896-1.381c-.167-.422-.362-1.056-.415-2.227-.058-1.266-.07-1.646-.07-4.85s.012-3.584.07-4.85c.053-1.17.248-1.805.415-2.227.218-.562.477-.96.896-1.381.419-.42.819-.679 1.381-.896.422-.167 1.056-.362 2.227-.415C8.416 2.175 8.796 2.163 12 2.163zm0 1.802c-3.143 0-3.505.012-4.725.068-1.09.05-1.647.235-1.98.378a1.69 1.69 0 00-.755.755c-.143.333-.328.89-.378 1.98C4.082 8.495 4.07 8.857 4.07 12s.012 3.505.068 4.725c.05 1.09.235 1.647.378 1.98.16.373.397.637.755.755.333.143.89.328 1.98.378 1.22.056 1.582.068 4.725.068s3.505-.012 4.725-.068c1.09-.05 1.647.235 1.98-.378.373-.16.637-.397.755-.755.143-.333.328.89.378-1.98.056-1.22.068-1.582.068-4.725s-.012-3.505-.068-4.725c-.05-1.09-.235-1.647-.378-1.98a1.69 1.69 0 00-.755-.755c-.333-.143-.89-.328-1.98-.378C15.505 3.977 15.143 3.965 12 3.965zm0 3.273a4.762 4.762 0 100 9.524 4.762 4.762 0 000-9.524zm0 7.722a3.06 3.06 0 110-6.12 3.06 3.06 0 010 6.12zm4.758-7.868a1.128 1.128 0 100-2.255 1.128 1.128 0 000 2.255z"/></svg>
-                </a>
-                 <a href="polityka-prywatnosci.html" class="text-secondary hover:text-accent transition-colors duration-200" aria-label="Polityka Prywatności">
-                    Polityka Prywatności
-                </a>
-            </div>
-            <p class="text-secondary text-sm">
-                &copy; <span id="currentYear">2024</span> Kroniki Elary. Wszelkie prawa zastrzeżone.
-            </p>
-            <p class="text-xs mt-2.5" style="color: var(--text-secondary-light, #94A3B8);">
-                Stworzone z pasji do anime i mangi przez Arcadiusa i jego Strażników.
-            </p>
-        </div>
+        {/* ... existing content ... */}
     </footer>
 
     <div id="eventModal" class="fixed inset-0 z-[60] items-center justify-center hidden p-4 modal">
-        </div>
+    </div>
     <script src="js/main.js" defer></script>
 </body>
 </html>

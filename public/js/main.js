@@ -410,8 +410,11 @@ async function initializeCommonScripts() {
     if (document.getElementById('statsContainer')) {
         loadServerStats();
     }
-    if (document.getElementById('featured-articles-container')) { // Check for the new container
+    if (document.getElementById('featured-articles-container')) {
         loadFeaturedArticlesHomepage();
+    }
+    if (document.getElementById('fanart-gallery-grid')) { // Check for fan art gallery grid
+        loadPublicFanArtGallery();
     }
 }
 
@@ -474,3 +477,77 @@ async function loadFeaturedArticlesHomepage() {
 
 // Run initializations after DOM is fully loaded
 document.addEventListener('DOMContentLoaded', initializeCommonScripts);
+
+async function loadPublicFanArtGallery() {
+    const grid = document.getElementById('fanart-gallery-grid');
+    const loadingDiv = document.getElementById('fanart-gallery-loading');
+    const errorDiv = document.getElementById('fanart-gallery-error');
+    const emptyDiv = document.getElementById('fanart-gallery-empty');
+
+    if (!grid || !loadingDiv || !errorDiv || !emptyDiv) {
+        // console.warn("Fan art gallery elements not found on this page.");
+        return;
+    }
+
+    loadingDiv.classList.remove('hidden');
+    errorDiv.classList.add('hidden');
+    emptyDiv.classList.add('hidden');
+    grid.innerHTML = ''; // Clear previous items
+
+    try {
+        const response = await fetch('/api/gallery/images?limit=8&page=1'); // Fetch up to 8 for homepage
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        const data = await response.json(); // Assuming API returns { images: [], ... } or just []
+
+        // Adjust based on actual API response structure. Assuming data is an array of fanart items.
+        // If API returns object like { images: [] }, then use data.images
+        const fanArts = Array.isArray(data) ? data : (data.images || []);
+
+
+        if (fanArts.length > 0) {
+            fanArts.forEach(item => {
+                const galleryItemHTML = `
+                    <div class="gallery-item card-bg rounded-lg overflow-hidden aspect-square reveal">
+                        <a href="${item.imageUrl}" target="_blank" title="Zobacz w pełnym rozmiarze: ${item.title || 'Fan Art'}">
+                            <img src="${item.imageUrl}" alt="${item.title || 'Fan Art'}" class="w-full h-full object-cover transition-transform duration-300 hover:scale-105" onerror="this.onerror=null;this.src='https://placehold.co/400x400/0F172A/94A3B8?text=Art';">
+                        </a>
+                        {/*
+                        // Optional more detailed card structure:
+                        <div class="p-3">
+                            <h4 class="text-sm font-semibold text-primary truncate" title="${item.title}">${item.title}</h4>
+                            <p class="text-xs text-secondary">Autor: ${item.discordUserName}</p>
+                        </div>
+                        */}
+                    </div>
+                `;
+                grid.insertAdjacentHTML('beforeend', galleryItemHTML);
+            });
+            // Re-initialize reveal animations for newly added items if your setupRevealAnimations is global
+            // or make it re-run on specific selectors.
+            // If reveal animations depend on IntersectionObserver, new elements need to be observed.
+            // For simplicity, if reveal items are added, they should just pick up the animation if the main observer is general.
+            // Or, call a function here to explicitly observe these new items.
+             if (typeof setupRevealAnimations === 'function') { // Check if function exists
+                document.querySelectorAll('#fanart-gallery-grid .reveal').forEach(el => {
+                    // Assuming setupRevealAnimations makes elements initially hidden if they have .reveal
+                    // and the IntersectionObserver adds .visible.
+                    // If elements are added after initial observation, they might need to be explicitly observed.
+                    // For now, we rely on the initial setupRevealAnimations to catch them if it's general enough,
+                    // or that reveal logic simply applies on class presence.
+                });
+            }
+
+
+        } else {
+            emptyDiv.classList.remove('hidden');
+        }
+    } catch (error) {
+        console.error('Błąd ładowania galerii fan art:', error);
+        errorDiv.textContent = 'Nie udało się załadować prac. Spróbuj ponownie później.';
+        errorDiv.classList.remove('hidden');
+    } finally {
+        loadingDiv.classList.add('hidden');
+    }
+}

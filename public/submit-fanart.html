@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="pl" class="scroll-smooth dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Zgłoś swój fan art do galerii Kronik Elary. Podziel się swoją twórczością z naszą społecznością!">
+    <meta name="keywords" content="kroniki elary, fan art, galeria, zgłoś pracę, twórczość, społeczność, discord, anime, manga">
+    <meta name="author" content="Arcadius & Strażnicy Kronik Elary">
+    <title>Zgłoś Fan Art - Kroniki Elary</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-primary: #0F172A;
+            --bg-secondary: #1E293B;
+            --bg-card: #111827;
+            --bg-header: rgba(15, 23, 42, 0.92);
+            --text-primary: #E2E8F0;
+            --text-secondary: #94A3B8;
+            --text-accent: #A78BFA;
+            --text-accent-hover: #8B5CF6;
+            --border-accent: #8B5CF6;
+            --border-card: rgba(167, 139, 250, 0.15);
+            --btn-primary-bg: #8B5CF6;
+            --btn-primary-hover-bg: #7C3AED;
+            --form-input-bg: var(--bg-secondary);
+        }
+        html.light {
+            --bg-primary: #F9FAFB;
+            --bg-secondary: #F3F4F6;
+            --bg-card: #FFFFFF;
+            --bg-header: rgba(255, 255, 255, 0.95);
+            --text-primary: #1F2937;
+            --text-secondary: #4B5563;
+            --text-accent: #7C3AED;
+            --text-accent-hover: #6D28D9;
+            --border-accent: #7C3AED;
+            --border-card: rgba(124, 58, 237, 0.1);
+            --btn-primary-bg: #7C3AED;
+            --btn-primary-hover-bg: #6D28D9;
+            --form-input-bg: #FFFFFF;
+        }
+        body { font-family: 'Inter', sans-serif; background-color: var(--bg-primary); color: var(--text-primary); }
+        h1, h2, h3 { font-family: 'Lora', serif; font-weight: 600; }
+        .form-input, .form-select, .form-textarea { background-color: var(--form-input-bg); border: 1px solid var(--border-card); color: var(--text-primary); border-radius: 0.375rem; padding: 0.75rem 1rem; width: 100%; transition: border-color 0.2s ease, box-shadow 0.2s ease; }
+        .form-input:focus, .form-select:focus, .form-textarea:focus { outline: none; border-color: var(--border-accent); box-shadow: 0 0 0 3px rgba(var(--rgb-accent),0.3); }
+        .form-label { color: var(--text-secondary); margin-bottom: 0.5rem; display: block; font-weight: 500; }
+        .btn-primary { background-color: var(--btn-primary-bg); color: white; padding: 0.75rem 1.5rem; border-radius: 0.5rem; font-weight: 600; transition: background-color 0.2s ease; display: inline-flex; align-items: center; justify-content: center; }
+        .btn-primary:hover { background-color: var(--btn-primary-hover-bg); }
+        .loading-spinner { border: 3px solid rgba(255,255,255,0.3); border-top-color: #FFF; border-radius: 50%; width: 1.25rem; height: 1.25rem; animation: spin 0.8s linear infinite; display: inline-block; }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+        .file-input-styled { color: var(--text-secondary); }
+        .file-input-styled::-webkit-file-upload-button { visibility: hidden; }
+        .file-input-styled::before {
+            content: 'Wybierz plik';
+            display: inline-block;
+            background: var(--btn-primary-bg);
+            color: white;
+            border: none;
+            border-radius: 0.375rem;
+            padding: 0.5rem 1rem;
+            margin-right: 0.75rem;
+            outline: none;
+            white-space: nowrap;
+            cursor: pointer;
+            font-weight: 500;
+            font-size: 0.875rem;
+            transition: background-color 0.2s ease;
+        }
+        .file-input-styled:hover::before { background-color: var(--btn-primary-hover-bg); }
+    </style>
+</head>
+<body class="antialiased">
+
+    <header id="navbar" class="fixed top-0 left-0 right-0 z-50 py-3">
+        </header>
+
+    <main class="pt-24 sm:pt-28 pb-16">
+        <div class="container mx-auto px-4 sm:px-6 max-w-2xl">
+            <h1 class="text-3xl sm:text-4xl font-bold text-primary mb-8 text-center">Zgłoś Swój Fan Art</h1>
+
+            <div id="fanArtLoginPrompt" class="bg-bg-card p-6 rounded-lg shadow-xl text-center" style="display: none;">
+                <p class="text-secondary mb-4">Musisz być <a href="/auth/discord/login?redirect=/submit-fanart.html" class="text-accent hover:underline font-semibold">zalogowany</a>, aby zgłosić fan art.</p>
+            </div>
+
+            <div id="fanArtFormContainer" style="display: none;">
+                <form id="submitFanArtForm" class="space-y-6 bg-bg-card p-6 sm:p-8 rounded-lg shadow-xl">
+                    <div>
+                        <label for="fanArtTitle" class="form-label">Tytuł Pracy:</label>
+                        <input type="text" id="fanArtTitle" name="title" class="form-input" required>
+                    </div>
+                    <div>
+                        <label for="fanArtDescription" class="form-label">Opis (opcjonalnie):</label>
+                        <textarea id="fanArtDescription" name="description" class="form-textarea" rows="4" placeholder="Krótki opis Twojej pracy, inspiracje, itp."></textarea>
+                    </div>
+                    <div>
+                        <label for="fanArtImage" class="form-label">Plik Obrazka (max 5MB, JPG/PNG/GIF):</label>
+                        <input type="file" id="fanArtImage" name="fanArtImage" class="form-input file-input-styled" accept="image/jpeg,image/png,image/gif" required>
+                        <p class="text-xs text-secondary mt-1">Upewnij się, że praca jest Twojego autorstwa i zgodna z regulaminem serwisu.</p>
+                    </div>
+                    <div class="pt-2">
+                        <button type="submit" id="submitFanArtButton" class="btn-primary w-full">
+                            <span class="button-text">Wyślij do Akceptacji</span>
+                            <span class="loading-spinner hidden"></span>
+                        </button>
+                    </div>
+                </form>
+                <div id="fanArtSubmissionStatus" class="mt-4 text-sm text-center"></div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="py-12 text-center" style="background-color: var(--bg-header);">
+       </footer>
+
+    <div id="eventModal" class="fixed inset-0 z-[60] items-center justify-center hidden p-4 modal"></div>
+
+    <script src="js/main.js" defer></script>
+    <script>
+        const fanArtFormContainer = document.getElementById('fanArtFormContainer');
+        const fanArtLoginPrompt = document.getElementById('fanArtLoginPrompt');
+        const submitFanArtForm = document.getElementById('submitFanArtForm');
+        const fanArtTitleInput = document.getElementById('fanArtTitle');
+        const fanArtDescriptionInput = document.getElementById('fanArtDescription');
+        const fanArtImageInput = document.getElementById('fanArtImage');
+        const fanArtSubmissionStatus = document.getElementById('fanArtSubmissionStatus');
+        const submitFanArtButton = document.getElementById('submitFanArtButton');
+
+        async function initializeFanArtSubmissionPage() {
+            await checkUserLoginStatusForFanArt();
+        }
+
+        async function checkUserLoginStatusForFanArt() {
+            try {
+                const response = await fetch('/api/me');
+                if (response.ok) {
+                    fanArtFormContainer.style.display = 'block';
+                    fanArtLoginPrompt.style.display = 'none';
+                } else {
+                    fanArtFormContainer.style.display = 'none';
+                    fanArtLoginPrompt.style.display = 'block';
+                    const loginLink = fanArtLoginPrompt.querySelector('a');
+                    if (loginLink) {
+                        loginLink.href = `/auth/discord/login?redirect=${encodeURIComponent(window.location.pathname)}`;
+                    }
+                }
+            } catch (error) {
+                console.error('Error checking login status:', error);
+                fanArtFormContainer.style.display = 'none';
+                fanArtLoginPrompt.innerHTML = '<p class="text-red-400">Nie udało się sprawdzić statusu logowania. Spróbuj odświeżyć stronę.</p>';
+                fanArtLoginPrompt.style.display = 'block';
+            }
+        }
+
+        if (submitFanArtForm) {
+            submitFanArtForm.addEventListener('submit', async function(event) {
+                event.preventDefault();
+                fanArtSubmissionStatus.textContent = '';
+                fanArtSubmissionStatus.className = 'mt-4 text-sm text-center';
+
+                const title = fanArtTitleInput.value.trim();
+                const description = fanArtDescriptionInput.value.trim();
+                const imageFile = fanArtImageInput.files[0];
+
+                // Client-side Validation
+                if (!title) {
+                    fanArtSubmissionStatus.textContent = 'Tytuł pracy jest wymagany.';
+                    fanArtSubmissionStatus.classList.add('text-red-400');
+                    return;
+                }
+                if (!imageFile) {
+                    fanArtSubmissionStatus.textContent = 'Musisz wybrać plik obrazka.';
+                    fanArtSubmissionStatus.classList.add('text-red-400');
+                    return;
+                }
+                if (imageFile.size > 5 * 1024 * 1024) { // 5MB
+                    fanArtSubmissionStatus.textContent = 'Plik jest za duży. Maksymalny rozmiar to 5MB.';
+                    fanArtSubmissionStatus.classList.add('text-red-400');
+                    return;
+                }
+                const allowedTypes = ['image/jpeg', 'image/png', 'image/gif'];
+                if (!allowedTypes.includes(imageFile.type)) {
+                    fanArtSubmissionStatus.textContent = 'Nieprawidłowy typ pliku. Dozwolone są JPG, PNG, GIF.';
+                    fanArtSubmissionStatus.classList.add('text-red-400');
+                    return;
+                }
+
+                const formData = new FormData();
+                formData.append('title', title);
+                formData.append('description', description);
+                formData.append('fanArtImage', imageFile);
+
+                const buttonText = submitFanArtButton.querySelector('.button-text');
+                const spinner = submitFanArtButton.querySelector('.loading-spinner');
+                if(buttonText) buttonText.style.display = 'none';
+                if(spinner) spinner.classList.remove('hidden');
+                submitFanArtButton.disabled = true;
+
+                try {
+                    const response = await fetch('/api/gallery/submit', {
+                        method: 'POST',
+                        body: formData // Multer handles FormData, no need for Content-Type header manually
+                    });
+                    const result = await response.json();
+
+                    if (response.ok) {
+                        fanArtSubmissionStatus.textContent = 'Twoja praca została pomyślnie zgłoszona i oczekuje na akceptację! Dziękujemy.';
+                        fanArtSubmissionStatus.classList.add('text-green-400');
+                        submitFanArtForm.reset();
+                    } else {
+                        fanArtSubmissionStatus.textContent = `Błąd: ${result.error || 'Nie udało się zgłosić pracy.'}`;
+                        fanArtSubmissionStatus.classList.add('text-red-400');
+                    }
+                } catch (error) {
+                    console.error('Błąd zgłaszania fan artu:', error);
+                    fanArtSubmissionStatus.textContent = 'Wystąpił błąd sieciowy. Spróbuj ponownie.';
+                    fanArtSubmissionStatus.classList.add('text-red-400');
+                } finally {
+                    if(buttonText) buttonText.style.display = 'inline-block';
+                    if(spinner) spinner.classList.add('hidden');
+                    submitFanArtButton.disabled = false;
+                    setTimeout(() => { fanArtSubmissionStatus.textContent = ''; fanArtSubmissionStatus.className = 'mt-4 text-sm text-center'; }, 7000);
+                }
+            });
+        }
+
+        document.addEventListener('DOMContentLoaded', initializeFanArtSubmissionPage);
+    </script>
+</body>
+</html>

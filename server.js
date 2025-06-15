@@ -30,6 +30,7 @@
     const UserProfile = require('./models/UserProfile'); // Import UserProfile model
     const WikiPage = require('./models/WikiPage'); // Import WikiPage model
     const WikiCategory = require('./models/WikiCategory'); // Import WikiCategory model
+    const FanArt = require('./models/FanArt'); // Import FanArt model
     const sequelize = require('./config/database');
 
 
