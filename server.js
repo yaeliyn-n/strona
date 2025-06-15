@@ -28,6 +28,7 @@
     const Comment = require('./models/Comment'); // Import Comment model
     const User = require('./models/User'); // Import User model
     const UserProfile = require('./models/UserProfile'); // Import UserProfile model
+    const WikiPage = require('./models/WikiPage'); // Import WikiPage model
     const sequelize = require('./config/database');
 
 
@@ -131,6 +132,35 @@
 
     async function generateUniqueCategorySlug(name, currentId = null) {
       // ... (istniejąca implementacja)
+    }
+
+    async function generateUniqueWikiPageSlug(title, currentId = null) {
+        let slug = title.toLowerCase()
+            .replace(/[^\w\s-]/g, '') // Remove non-word characters (excluding hyphens and spaces)
+            .replace(/\s+/g, '-')    // Replace spaces with hyphens
+            .replace(/--+/g, '-')     // Replace multiple hyphens with single hyphen
+            .trim();                  // Trim leading/trailing hyphens/spaces
+
+        if (!slug) { // If slug becomes empty after sanitization (e.g., title was all symbols)
+            slug = 'strona'; // Default slug prefix
+        }
+
+        let count = 0;
+        let uniqueSlug = slug;
+
+        // Check for uniqueness and append number if necessary
+        // Op.ne is "not equal"
+        const whereClause = { slug: uniqueSlug };
+        if (currentId) { // If updating, exclude the current item itself from the check
+            whereClause.id = { [Op.ne]: currentId };
+        }
+
+        while (await WikiPage.findOne({ where: whereClause })) {
+            count++;
+            uniqueSlug = `${slug}-${count}`;
+            whereClause.slug = uniqueSlug; // Update slug in whereClause for next check
+        }
+        return uniqueSlug;
     }
 
     // --- API Artykułów (Publiczne) ---
@@ -991,6 +1021,165 @@
         proxyToBotApi(req, res, `/api/config/${req.params.guildId}/other`, 'PUT', req.body);
     });
 
+    // --- API Stron Wiki (Publiczne) ---
+    app.get('/api/wiki/pages', async (req, res) => {
+        try {
+            const pages = await WikiPage.findAll({
+                attributes: ['title', 'slug', 'updatedAt', 'authorName', 'lastEditorName'],
+                order: [['updatedAt', 'DESC']]
+            });
+            res.json(pages);
+        } catch (error) {
+            console.error('Błąd podczas pobierania stron wiki:', error);
+            res.status(500).json({ error: 'Błąd serwera podczas pobierania stron wiki.' });
+        }
+    });
+
+    app.get('/api/wiki/pages/:slug', async (req, res) => {
+        try {
+            const page = await WikiPage.findOne({
+                where: { slug: req.params.slug },
+                attributes: ['title', 'slug', 'content', 'authorName', 'lastEditorName', 'updatedAt', 'createdAt']
+            });
+            if (!page) {
+                return res.status(404).json({ error: 'Strona wiki nie została znaleziona.' });
+            }
+            res.json(page);
+        } catch (error) {
+            console.error(`Błąd podczas pobierania strony wiki o slugu ${req.params.slug}:`, error);
+            res.status(500).json({ error: 'Błąd serwera podczas pobierania strony wiki.' });
+        }
+    });
+
+    // --- API Stron Wiki (Admin) ---
+    app.post('/api/admin/wiki/pages', async (req, res) => {
+        if (!isAdmin(req)) return res.status(403).json({ error: 'Forbidden' });
+        if (!req.session.user) return res.status(401).json({ error: 'Unauthorized - Sesja nieprawidłowa' });
+
+        const { title, content, slug: providedSlug } = req.body;
+        if (!title || !content) {
+            return res.status(400).json({ error: 'Tytuł i treść są wymagane.' });
+        }
+
+        try {
+            let slug = providedSlug ? await generateUniqueWikiPageSlug(providedSlug) : await generateUniqueWikiPageSlug(title);
+             if (providedSlug && providedSlug !== slug) {
+                console.warn(`Podany slug strony wiki "${providedSlug}" nie był unikalny. Zmieniono na "${slug}".`);
+            }
+
+            const newPage = await WikiPage.create({
+                title,
+                slug,
+                content,
+                authorId: req.session.user.id,
+                authorName: req.session.user.username
+            });
+            res.status(201).json(newPage);
+        } catch (error) {
+            console.error('Błąd podczas tworzenia strony wiki:', error);
+            if (error.name === 'SequelizeValidationError' || error.name === 'SequelizeUniqueConstraintError') {
+                return res.status(400).json({ error: 'Błąd walidacji: ' + error.errors.map(e => e.message).join(', ') });
+            }
+            res.status(500).json({ error: 'Błąd serwera podczas tworzenia strony wiki.' });
+        }
+    });
+
+    app.get('/api/admin/wiki/pages', async (req, res) => {
+        if (!isAdmin(req)) return res.status(403).json({ error: 'Forbidden' });
+        const page = parseInt(req.query.page, 10) || 1;
+        const limit = parseInt(req.query.limit, 10) || 15;
+        const offset = (page - 1) * limit;
+
+        try {
+            const { count, rows } = await WikiPage.findAndCountAll({
+                attributes: ['id', 'title', 'slug', 'authorName', 'lastEditorName', 'updatedAt', 'createdAt'],
+                order: [['updatedAt', 'DESC']],
+                limit: limit,
+                offset: offset
+            });
+            res.json({
+                totalPages: Math.ceil(count / limit),
+                currentPage: page,
+                totalEntries: count, // Renamed from totalArticles for clarity
+                entries: rows // Renamed from articles for clarity
+            });
+        } catch (error) {
+            console.error('Błąd podczas pobierania stron wiki dla admina:', error);
+            res.status(500).json({ error: 'Błąd serwera.' });
+        }
+    });
+
+    app.get('/api/admin/wiki/pages/:id', async (req, res) => {
+        if (!isAdmin(req)) return res.status(403).json({ error: 'Forbidden' });
+        try {
+            const page = await WikiPage.findByPk(req.params.id);
+            if (!page) {
+                return res.status(404).json({ error: 'Strona wiki nie została znaleziona.' });
+            }
+            res.json(page);
+        } catch (error) {
+            console.error(`Błąd podczas pobierania strony wiki ID ${req.params.id} dla admina:`, error);
+            res.status(500).json({ error: 'Błąd serwera.' });
+        }
+    });
+
+    app.put('/api/admin/wiki/pages/:id', async (req, res) => {
+        if (!isAdmin(req)) return res.status(403).json({ error: 'Forbidden' });
+        if (!req.session.user) return res.status(401).json({ error: 'Unauthorized - Sesja nieprawidłowa' });
+
+        const { id } = req.params;
+        const { title, content, slug: newSlug } = req.body;
+
+        if (!title && !content && !newSlug) {
+            return res.status(400).json({ error: 'Brak danych do aktualizacji. Podaj tytuł, treść lub slug.' });
+        }
+
+        try {
+            const page = await WikiPage.findByPk(id);
+            if (!page) {
+                return res.status(404).json({ error: 'Strona wiki nie została znaleziona.' });
+            }
+
+            if (title) page.title = title;
+            if (content) page.content = content;
+
+            if (newSlug && newSlug !== page.slug) {
+                page.slug = await generateUniqueWikiPageSlug(newSlug, page.id);
+            } else if (title && title !== page.title && !newSlug) {
+                // If title changed and no new slug was provided, regenerate slug based on new title
+                page.slug = await generateUniqueWikiPageSlug(title, page.id);
+            }
+
+            page.lastEditorId = req.session.user.id;
+            page.lastEditorName = req.session.user.username;
+            // updatedAt will be handled automatically by Sequelize due to timestamps: true and model.save()
+
+            await page.save();
+            res.json(page);
+        } catch (error) {
+            console.error(`Błąd aktualizacji strony wiki ID ${id}:`, error);
+            if (error.name === 'SequelizeValidationError' || error.name === 'SequelizeUniqueConstraintError') {
+                return res.status(400).json({ error: 'Błąd walidacji: ' + error.errors.map(e => e.message).join(', ') });
+            }
+            res.status(500).json({ error: 'Błąd serwera.' });
+        }
+    });
+
+    app.delete('/api/admin/wiki/pages/:id', async (req, res) => {
+        if (!isAdmin(req)) return res.status(403).json({ error: 'Forbidden' });
+        const { id } = req.params;
+        try {
+            const page = await WikiPage.findByPk(id);
+            if (!page) {
+                return res.status(404).json({ error: 'Strona wiki nie została znaleziona.' });
+            }
+            await page.destroy();
+            res.status(200).json({ message: 'Strona wiki została usunięta.' }); // Or 204
+        } catch (error) {
+            console.error(`Błąd podczas usuwania strony wiki ID ${id}:`, error);
+            res.status(500).json({ error: 'Błąd serwera.' });
+        }
+    });
 
     // --- Obsługa stron statycznych i React App ---
     // ... (istniejąca implementacja)

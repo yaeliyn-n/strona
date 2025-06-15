@@ -114,6 +114,7 @@
             <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
                 <button data-tab="contentManagement" class="tab-button block w-full text-left py-2.5 px-3 text-base font-medium">Zarządzanie Treścią</button>
                 <button data-tab="articleManagement" class="tab-button block w-full text-left py-2.5 px-3 text-base font-medium">Zarządzanie Artykułami</button>
+                <button data-tab="wikiManagement" class="tab-button block w-full text-left py-2.5 px-3 text-base font-medium">Zarządzanie Wiki</button>
                 <button data-tab="supportManagement" class="tab-button block w-full text-left py-2.5 px-3 text-base font-medium">Zarządzanie Wsparciem</button>
                 <button data-tab="shopManagement" class="tab-button block w-full text-left py-2.5 px-3 text-base font-medium">Zarządzanie Sklepem</button>
                 <button data-tab="warningsManagement" class="tab-button block w-full text-left py-2.5 px-3 text-base font-medium">Zarządzanie Ostrzeżeniami</button>
@@ -129,6 +130,7 @@
                 <nav class="flex -mb-px space-x-1 flex-wrap" aria-label="Tabs">
                     <button data-tab="contentManagement" class="tab-button active">Zarządzanie Treścią</button>
                     <button data-tab="articleManagement" class="tab-button">Zarządzanie Artykułami</button>
+                    <button data-tab="wikiManagement" class="tab-button">Zarządzanie Wiki</button>
                     <button data-tab="supportManagement" class="tab-button">Zarządzanie Wsparciem</button>
                     <button data-tab="shopManagement" class="tab-button">Zarządzanie Sklepem</button>
                     <button data-tab="warningsManagement" class="tab-button">Zarządzanie Ostrzeżeniami</button>
@@ -136,7 +138,7 @@
                 </nav>
             </div>
 
-            <div id="admin-login-prompt" class="text-center py-12">
+            <div id="admin-login-prompt" class="text-center py-12" style="display:none;">
                 <h2 class="text-2xl font-semibold text-primary mb-4">Dostęp Wymaga Uwierzytelnienia</h2>
                 <p class="text-secondary mb-6">Musisz być zalogowany jako administrator, aby uzyskać dostęp do tego panelu.</p>
                 <a href="/auth/discord/login?redirect=/admin.html" class="btn-discord !text-white px-6 py-3 rounded-lg text-md inline-flex items-center">
@@ -147,7 +149,7 @@
 
             <div id="contentManagement" class="tab-content">
                 <h1 class="text-3xl font-bold text-primary mb-8 text-center">Panel Zarządzania Treścią Strony</h1>
-                {/* ... (istniejąca zawartość contentManagement) ... */}
+                {/* ... (existing contentManagement content) ... */}
             </div>
 
             <div id="articleManagement" class="tab-content">
@@ -240,20 +242,67 @@
                 </div>
             </div>
 
+            <div id="wikiManagement" class="tab-content">
+                <h1 class="text-3xl font-bold text-primary mb-8 text-center">Panel Zarządzania Stronami Wiki</h1>
+                <div id="adminWikiPageListContainer" class="bg-bg-card p-6 sm:p-8 rounded-xl shadow-xl">
+                    <div class="flex justify-between items-center mb-6">
+                        <h2 class="text-2xl font-semibold text-accent">Lista Stron Wiki</h2>
+                        <button id="showCreateWikiPageFormButton" class="btn btn-success">Utwórz Nową Stronę Wiki</button>
+                    </div>
+                    <div id="wikiPagesTableContainer" class="overflow-x-auto"></div>
+                    <div id="wikiPageListPaginationControls" class="mt-6 flex justify-center items-center space-x-3"></div>
+                    <div id="wikiPageListLoading" class="text-center py-6 text-secondary hidden"><span class="loading-spinner !w-8 !h-8"></span> Ładowanie stron wiki...</div>
+                    <div id="wikiPageListError" class="text-center py-6 text-red-400 hidden"></div>
+                    <div id="wikiPageListEmpty" class="text-center py-6 text-secondary hidden">Brak stron wiki do wyświetlenia.</div>
+                </div>
+
+                <div id="adminWikiPageFormContainer" style="display:none;" class="bg-bg-card p-6 sm:p-8 rounded-xl shadow-xl mt-8">
+                    <h2 id="wikiPageFormTitle" class="text-2xl font-semibold text-accent mb-6">Utwórz Nową Stronę Wiki</h2>
+                    <form id="adminWikiPageForm" class="space-y-6">
+                        <div>
+                            <label for="wikiPageTitle" class="form-label">Tytuł Strony:</label>
+                            <input type="text" id="wikiPageTitle" name="title" class="form-input" required>
+                        </div>
+                        <div>
+                            <label for="wikiPageSlug" class="form-label">Slug (URL):</label>
+                            <input type="text" id="wikiPageSlug" name="slug" class="form-input" placeholder="Pozostaw puste, aby wygenerować automatycznie">
+                            <p class="text-xs text-secondary mt-1">Unikalny identyfikator w URL, np. 'moja-strona-wiki'.</p>
+                        </div>
+                        <div>
+                            <label for="wikiPageContent" class="form-label">Treść Strony (Markdown):</label>
+                            <textarea id="wikiPageContent" name="content" rows="15" class="form-textarea" placeholder="Wpisz treść strony używając składni Markdown..."></textarea>
+                            <div class="mt-2 text-xs text-secondary">
+                                Podgląd (uproszczony):
+                                <button type="button" id="toggleWikiPreviewButton" class="ml-2 text-accent text-xs underline">Pokaż/Ukryj Podgląd</button>
+                            </div>
+                            <div id="wikiPagePreview" class="mt-2 p-4 border border-[var(--border-card)] rounded-md bg-[var(--bg-primary)] min-h-[100px] prose prose-sm max-w-none hidden"></div>
+                        </div>
+                        <div class="flex flex-col sm:flex-row justify-end space-y-3 sm:space-y-0 sm:space-x-4">
+                            <button type="button" id="backToWikiPageListButton" class="btn btn-secondary w-full sm:w-auto">Wróć do Listy</button>
+                            <button type="submit" id="saveWikiPageButton" class="btn btn-primary w-full sm:w-auto">
+                                <span class="button-text">Utwórz Stronę Wiki</span>
+                                <span class="loading-spinner hidden"></span>
+                            </button>
+                        </div>
+                    </form>
+                    <div id="wikiPageUpdateStatus" class="text-sm mt-3"></div>
+                </div>
+            </div>
+
             <div id="supportManagement" class="tab-content">
-                 {/* ... (istniejąca zawartość supportManagement) ... */}
+                 {/* ... (existing supportManagement content) ... */}
             </div>
 
             <div id="shopManagement" class="tab-content">
-                {/* ... (istniejąca zawartość shopManagement) ... */}
+                {/* ... (existing shopManagement content) ... */}
             </div>
 
             <div id="warningsManagement" class="tab-content">
-                {/* ... (istniejąca zawartość warningsManagement) ... */}
+                {/* ... (existing warningsManagement content) ... */}
             </div>
 
             <div id="botConfigManagement" class="tab-content">
-                {/* ... (istniejąca zawartość botConfigManagement) ... */}
+                {/* ... (existing botConfigManagement content) ... */}
             </div>
 
             <div id="adminMessage" class="hidden mt-6"></div>
@@ -268,7 +317,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/marked/9.1.5/marked.min.js" integrity="sha512-Q3K7ZgbB5KzEh0F9S4vN2QGg/1/6gL8bZj7n3D0l5PjBwW03R/0Bf1u/EIsHjk6WlT4fNlP7LXZgA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script>
         // --- Global Admin Panel Logic & Auth ---
-        // (Istniejące funkcje setActiveTab, updateAuthDisplay, setupMobileMenu, setupDropdownDismiss, displayAdminMessage, toggleButtonLoadingState)
+        // (Existing functions setActiveTab, updateAuthDisplay, setupMobileMenu, setupDropdownDismiss, displayAdminMessage, toggleButtonLoadingState)
         // ...
         function setActiveTab(tabName) {
             document.querySelectorAll('.tab-button').forEach(button => {
@@ -283,34 +332,38 @@
         }
 
         async function updateAuthDisplay() {
-            // ... (istniejąca implementacja, upewnij się, że GUILD_ID jest poprawnie zdefiniowane/pobierane jeśli jest używane)
+            // ... (existing implementation, ensure GUILD_ID is correctly defined/fetched if used)
         }
 
-        function setupMobileMenu() { /* ... (istniejąca implementacja) ... */ }
-        function setupDropdownDismiss() { /* ... (istniejąca implementacja) ... */ }
-        function displayAdminMessage(message, type = 'info', duration = 5000) { /* ... (istniejąca implementacja) ... */ }
-        function toggleButtonLoadingState(button, isLoading) { /* ... (istniejąca implementacja) ... */ }
+        function setupMobileMenu() { /* ... (existing implementation) ... */ }
+        function setupDropdownDismiss() { /* ... (existing implementation) ... */ }
+        function displayAdminMessage(message, type = 'info', duration = 5000) { /* ... (existing implementation) ... */ }
+        function toggleButtonLoadingState(button, isLoading) { /* ... (existing implementation) ... */ }
 
         // --- Content Management Logic ---
-        // (Istniejące funkcje fetchContentKeys, loadContent, event listeners dla content management)
+        // (Existing functions fetchContentKeys, loadContent, event listeners for content management)
         // ...
 
         // --- Shop Management Logic ---
-        // (Istniejące funkcje fetchShopItems, renderShopItemsTable, populateShopItemForm, addEventListenersToShopItemButtons, event listeners dla shop management)
+        // (Existing functions fetchShopItems, renderShopItemsTable, populateShopItemForm, addEventListenersToShopItemButtons, event listeners for shop management)
         // ...
 
         // --- Warnings Management Logic ---
-        // (Istniejące funkcje addWarning, removeWarning, searchWarnings, event listeners dla warnings management)
+        // (Existing functions addWarning, removeWarning, searchWarnings, event listeners for warnings management)
         // ...
 
         // --- Bot Config Management Logic ---
-        // (Istniejące funkcje loadBotConfig, saveXpConfig, saveChannelXpConfig, removeChannelXpConfig, saveOtherConfig, event listeners dla bot config)
+        // (Existing functions loadBotConfig, saveXpConfig, saveChannelXpConfig, removeChannelXpConfig, saveOtherConfig, event listeners for bot config)
         // ...
 
         // --- Article Management Specific Logic ---
         let currentAdminArticlePage = 1;
         let editingArticleId = null;
         let editingCategoryId = null;
+        // Wiki Management State
+        let currentAdminWikiPage = 1;
+        let editingWikiPageId = null;
+
 
         const adminArticleListContainer = document.getElementById('adminArticleListContainer');
         const adminArticleFormContainer = document.getElementById('adminArticleFormContainer');
@@ -348,6 +401,26 @@
         const categoryListError = document.getElementById('categoryListError');
         const categoryListEmpty = document.getElementById('categoryListEmpty');
 
+        // Wiki Management Elements
+        const adminWikiPageListContainer = document.getElementById('adminWikiPageListContainer');
+        const adminWikiPageFormContainer = document.getElementById('adminWikiPageFormContainer');
+        const wikiPagesTableContainer = document.getElementById('wikiPagesTableContainer');
+        const wikiPageListPaginationControls = document.getElementById('wikiPageListPaginationControls');
+        const wikiPageListLoading = document.getElementById('wikiPageListLoading');
+        const wikiPageListError = document.getElementById('wikiPageListError');
+        const wikiPageListEmpty = document.getElementById('wikiPageListEmpty');
+        const showCreateWikiPageFormButton = document.getElementById('showCreateWikiPageFormButton');
+        const wikiPageFormTitle = document.getElementById('wikiPageFormTitle');
+        const adminWikiPageForm = document.getElementById('adminWikiPageForm');
+        const wikiPageTitleInput = document.getElementById('wikiPageTitle');
+        const wikiPageSlugInput = document.getElementById('wikiPageSlug');
+        const wikiPageContentInput = document.getElementById('wikiPageContent');
+        const saveWikiPageButton = document.getElementById('saveWikiPageButton');
+        const backToWikiPageListButton = document.getElementById('backToWikiPageListButton');
+        const toggleWikiPreviewButton = document.getElementById('toggleWikiPreviewButton');
+        const wikiPagePreview = document.getElementById('wikiPagePreview');
+        const wikiPageUpdateStatus = document.getElementById('wikiPageUpdateStatus');
+
 
         if (togglePreviewButton && articleContentInput && articlePreview) {
             togglePreviewButton.addEventListener('click', () => {
@@ -362,6 +435,21 @@
                 }
             });
         }
+
+        if (toggleWikiPreviewButton && wikiPageContentInput && wikiPagePreview) {
+            toggleWikiPreviewButton.addEventListener('click', () => {
+                wikiPagePreview.classList.toggle('hidden');
+                if (!wikiPagePreview.classList.contains('hidden') && typeof marked !== 'undefined' && typeof DOMPurify !== 'undefined') {
+                    wikiPagePreview.innerHTML = DOMPurify.sanitize(marked.parse(wikiPageContentInput.value));
+                }
+            });
+            wikiPageContentInput.addEventListener('input', () => {
+                if (!wikiPagePreview.classList.contains('hidden') && typeof marked !== 'undefined' && typeof DOMPurify !== 'undefined') {
+                    wikiPagePreview.innerHTML = DOMPurify.sanitize(marked.parse(wikiPageContentInput.value));
+                }
+            });
+        }
+
 
         function showArticleListScreen() {
             if(adminArticleFormContainer) adminArticleFormContainer.style.display = 'none';
@@ -698,8 +786,184 @@
             originalSetActiveTab(tabName);
             if (tabName === 'articleManagement') {
                 showArticleListScreen();
+            } else if (tabName === 'wikiManagement') {
+                showWikiPageListScreen();
             }
+            // Add other else if for new tabs as needed
         };
+
+        // --- Wiki Management Specific Logic ---
+        function showWikiPageListScreen() {
+            if(adminWikiPageFormContainer) adminWikiPageFormContainer.style.display = 'none';
+            if(adminWikiPageListContainer) adminWikiPageListContainer.style.display = 'block';
+            editingWikiPageId = null;
+            fetchAdminWikiPages(currentAdminWikiPage);
+            if (wikiPagePreview && !wikiPagePreview.classList.contains('hidden')) {
+                wikiPagePreview.classList.add('hidden');
+            }
+        }
+
+        async function showWikiPageFormScreen(pageId = null) {
+            if(adminWikiPageListContainer) adminWikiPageListContainer.style.display = 'none';
+            if(adminWikiPageFormContainer) adminWikiPageFormContainer.style.display = 'block';
+            if(adminWikiPageForm) adminWikiPageForm.reset();
+            editingWikiPageId = pageId;
+
+            const formTitleEl = document.getElementById('wikiPageFormTitle');
+            const saveBtnText = saveWikiPageButton.querySelector('.button-text');
+
+            if (pageId) {
+                if(formTitleEl) formTitleEl.textContent = 'Edytuj Stronę Wiki';
+                if(saveBtnText) saveBtnText.textContent = 'Zaktualizuj Stronę Wiki';
+                toggleButtonLoadingState(saveWikiPageButton, true);
+                try {
+                    const response = await fetch(new URL(`/api/admin/wiki/pages/${pageId}`, window.location.href).href);
+                    if (!response.ok) throw new Error(`Błąd ładowania strony wiki: ${response.status}`);
+                    const pageData = await response.json();
+                    if(wikiPageTitleInput) wikiPageTitleInput.value = pageData.title;
+                    if(wikiPageSlugInput) wikiPageSlugInput.value = pageData.slug;
+                    if(wikiPageContentInput) wikiPageContentInput.value = pageData.content;
+                    if (wikiPagePreview && !wikiPagePreview.classList.contains('hidden') && typeof marked !== 'undefined' && typeof DOMPurify !== 'undefined') {
+                        wikiPagePreview.innerHTML = DOMPurify.sanitize(marked.parse(pageData.content));
+                    }
+                } catch (error) {
+                    console.error("Błąd ładowania strony wiki do edycji:", error);
+                    displayAdminMessage(`Nie udało się załadować strony wiki: ${error.message}`, 'error');
+                    showWikiPageListScreen();
+                } finally {
+                    toggleButtonLoadingState(saveWikiPageButton, false);
+                }
+            } else {
+                if(formTitleEl) formTitleEl.textContent = 'Utwórz Nową Stronę Wiki';
+                if(saveBtnText) saveBtnText.textContent = 'Utwórz Stronę Wiki';
+                if (wikiPagePreview && !wikiPagePreview.classList.contains('hidden')) {
+                    wikiPagePreview.classList.add('hidden');
+                }
+            }
+        }
+
+        async function fetchAdminWikiPages(page = 1) {
+            currentAdminWikiPage = page;
+            if (!wikiPagesTableContainer || !wikiPageListLoading || !wikiPageListError || !wikiPageListEmpty || !wikiPageListPaginationControls) return;
+            wikiPageListLoading.classList.remove('hidden');
+            wikiPagesTableContainer.innerHTML = '';
+            wikiPageListError.classList.add('hidden');
+            wikiPageListEmpty.classList.add('hidden');
+            wikiPageListPaginationControls.innerHTML = '';
+            try {
+                const response = await fetch(new URL(`/api/admin/wiki/pages?page=${page}&limit=10`, window.location.href).href);
+                if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+                const data = await response.json();
+                if (data.entries && data.entries.length > 0) {
+                    const table = document.createElement('table');
+                    table.className = 'admin-table w-full';
+                    table.innerHTML = `
+                        <thead>
+                            <tr>
+                                <th>ID</th><th>Tytuł</th><th>Slug</th><th>Autor</th><th>Ost. Edytor</th><th>Ost. Aktualizacja</th><th>Akcje</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            ${data.entries.map(p => `
+                                <tr>
+                                    <td>${p.id}</td>
+                                    <td class="font-medium text-primary">${p.title}</td>
+                                    <td>${p.slug}</td>
+                                    <td>${p.authorName}</td>
+                                    <td>${p.lastEditorName || '-'}</td>
+                                    <td>${new Date(p.updatedAt).toLocaleString('pl-PL')}</td>
+                                    <td class="whitespace-nowrap">
+                                        <button class="btn btn-secondary btn-action-sm edit-wikipage-btn" data-id="${p.id}">Edytuj</button>
+                                        <button class="btn btn-danger btn-action-sm delete-wikipage-btn" data-id="${p.id}" data-title="${p.title}">Usuń</button>
+                                    </td>
+                                </tr>
+                            `).join('')}
+                        </tbody>
+                    `;
+                    wikiPagesTableContainer.appendChild(table);
+                    renderWikiPagePaginationControls(data.totalPages, data.currentPage);
+                    document.querySelectorAll('.edit-wikipage-btn').forEach(btn => btn.addEventListener('click', () => showWikiPageFormScreen(btn.dataset.id)));
+                    document.querySelectorAll('.delete-wikipage-btn').forEach(btn => btn.addEventListener('click', () => deleteWikiPage(btn.dataset.id, btn.dataset.title)));
+                } else {
+                    wikiPageListEmpty.classList.remove('hidden');
+                }
+            } catch (error) {
+                console.error('Błąd ładowania listy stron wiki:', error);
+                wikiPageListError.textContent = `Nie udało się załadować listy stron wiki: ${error.message}`;
+                wikiPageListError.classList.remove('hidden');
+            } finally {
+                wikiPageListLoading.classList.add('hidden');
+            }
+        }
+
+        function renderWikiPagePaginationControls(totalPages, page) {
+            if (totalPages <= 1) { wikiPageListPaginationControls.innerHTML = ''; return; }
+            let paginationHTML = '';
+            paginationHTML += `<button class="btn btn-secondary btn-action-sm ${page === 1 ? 'opacity-50 cursor-not-allowed' : ''}" ${page === 1 ? 'disabled' : ''} onclick="changeAdminWikiPage(${page - 1})">Poprzednia</button>`;
+            paginationHTML += `<span class="text-sm text-secondary">Strona ${page} z ${totalPages}</span>`;
+            paginationHTML += `<button class="btn btn-secondary btn-action-sm ${page === totalPages ? 'opacity-50 cursor-not-allowed' : ''}" ${page === totalPages ? 'disabled' : ''} onclick="changeAdminWikiPage(${page + 1})">Następna</button>`;
+            wikiPageListPaginationControls.innerHTML = paginationHTML;
+        }
+        window.changeAdminWikiPage = (newPage) => { fetchAdminWikiPages(newPage); };
+
+        async function handleWikiPageFormSubmit(event) {
+            event.preventDefault();
+            if (!saveWikiPageButton) return;
+            toggleButtonLoadingState(saveWikiPageButton, true);
+            const wikiPageData = {
+                title: wikiPageTitleInput.value,
+                content: wikiPageContentInput.value,
+                slug: wikiPageSlugInput.value.trim() === '' ? null : wikiPageSlugInput.value.trim(),
+            };
+            let url, method;
+            if (editingWikiPageId) {
+                url = new URL(`/api/admin/wiki/pages/${editingWikiPageId}`, window.location.href).href;
+                method = 'PUT';
+            } else {
+                url = new URL('/api/admin/wiki/pages', window.location.href).href;
+                method = 'POST';
+            }
+            try {
+                const response = await fetch(url, { method: method, headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(wikiPageData) });
+                const result = await response.json();
+                if (response.ok) {
+                    displayAdminMessage(`Strona wiki "${result.title}" ${editingWikiPageId ? 'zaktualizowana' : 'utworzona'} pomyślnie!`, 'success');
+                    showWikiPageListScreen();
+                } else {
+                    displayAdminMessage(`Błąd: ${result.error || 'Nieznany błąd serwera'}`, 'error');
+                }
+            } catch (error) {
+                console.error('Błąd zapisu strony wiki:', error);
+                displayAdminMessage(`Błąd sieci: ${error.message}`, 'error');
+            } finally {
+                toggleButtonLoadingState(saveWikiPageButton, false);
+            }
+        }
+
+        async function deleteWikiPage(pageId, pageTitle) {
+            if (!confirm(`Czy na pewno chcesz usunąć stronę wiki "${pageTitle}" (ID: ${pageId})? Tej operacji nie można cofnąć.`)) return;
+            const deleteButton = document.querySelector(`.delete-wikipage-btn[data-id="${pageId}"]`);
+            if(deleteButton) toggleButtonLoadingState(deleteButton, true);
+            try {
+                const response = await fetch(new URL(`/api/admin/wiki/pages/${pageId}`, window.location.href).href, { method: 'DELETE' });
+                if (response.ok) {
+                    displayAdminMessage(`Strona wiki "${pageTitle}" usunięta pomyślnie.`, 'success');
+                    fetchAdminWikiPages(currentAdminWikiPage);
+                } else {
+                    const result = await response.json().catch(() => ({error: 'Nieznany błąd serwera'}));
+                    displayAdminMessage(`Błąd usuwania strony wiki: ${result.error || response.status}`, 'error');
+                }
+            } catch (error) {
+                console.error('Błąd sieci podczas usuwania strony wiki:', error);
+                displayAdminMessage(`Błąd sieci: ${error.message}`, 'error');
+            } finally {
+                 if(deleteButton) toggleButtonLoadingState(deleteButton, false);
+            }
+        }
+
+        if(showCreateWikiPageFormButton) showCreateWikiPageFormButton.addEventListener('click', () => showWikiPageFormScreen());
+        if(backToWikiPageListButton) backToWikiPageListButton.addEventListener('click', showWikiPageListScreen);
+        if(adminWikiPageForm) adminWikiPageForm.addEventListener('submit', handleWikiPageFormSubmit);
 
         // --- Document Ready ---
         document.addEventListener('DOMContentLoaded', async function() {

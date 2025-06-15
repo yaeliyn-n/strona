@@ -43,7 +43,7 @@ function setActiveNavLink() {
 
         if (linkPage === currentPage) {
             link.classList.add('active');
-        } else if (linkPage === 'wikipedia.html' && wikipediaSubPages.includes(currentPage)) {
+        } else if (linkPage === 'wikipedia.html' && (wikipediaSubPages.includes(currentPage) || currentPage === 'wiki-page-view.html')) {
             link.classList.add('active');
         } else if (linkPage === 'blog.html' && (currentPage === 'blog.html' || currentPage === 'article-view.html')) {
             link.classList.add('active');
