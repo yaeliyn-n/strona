@@ -223,6 +223,31 @@
             </div>
         </section>
 
+        <section id="featured-articles-section" class="py-16 sm:py-24 section-bg reveal">
+            <div class="container mx-auto px-4 sm:px-6">
+                <div class="text-center mb-12 sm:mb-16">
+                    <h2 class="text-3xl sm:text-4xl font-bold text-primary mb-4">Polecane <span class="text-accent">Artykuły</span></h2>
+                    <p class="text-lg text-secondary max-w-2xl mx-auto">
+                        Najciekawsze wpisy i historie, które warto przeczytać.
+                    </p>
+                </div>
+                <div id="featured-articles-container" class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    {/* Featured articles will be loaded here */}
+                </div>
+                <div id="featured-articles-loading" class="text-center py-10 text-secondary hidden">
+                    <div class="animate-spin rounded-full h-10 w-10 border-t-2 border-b-2 loading-spinner mx-auto mb-3"></div>
+                    Ładowanie polecanych artykułów...
+                </div>
+                <div id="featured-articles-error" class="hidden text-center py-10 text-red-400 bg-red-900/50 p-4 rounded-md"></div>
+                <div id="featured-articles-empty" class="hidden text-center py-10 text-secondary">
+                    Obecnie brak polecanych artykułów.
+                </div>
+                 <div class="text-center mt-12 sm:mt-16">
+                    <a href="blog.html" class="btn-primary font-semibold py-3 px-6 text-md">Zobacz Wszystkie Artykuły</a>
+                </div>
+            </div>
+        </section>
+
         <section id="aktualnosci" class="py-16 sm:py-24 section-bg reveal">
             <div class="container mx-auto px-4 sm:px-6">
                 <div class="text-center mb-12 sm:mb-16">

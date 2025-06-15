@@ -410,7 +410,67 @@ async function initializeCommonScripts() {
     if (document.getElementById('statsContainer')) {
         loadServerStats();
     }
+    if (document.getElementById('featured-articles-container')) { // Check for the new container
+        loadFeaturedArticlesHomepage();
+    }
 }
+
+async function loadFeaturedArticlesHomepage() {
+    const container = document.getElementById('featured-articles-container');
+    const loading = document.getElementById('featured-articles-loading');
+    const errorMsg = document.getElementById('featured-articles-error');
+    const emptyMsg = document.getElementById('featured-articles-empty');
+
+    if (!container || !loading || !errorMsg || !emptyMsg) return;
+
+    loading.classList.remove('hidden');
+    errorMsg.classList.add('hidden');
+    emptyMsg.classList.add('hidden');
+    container.innerHTML = '';
+
+    try {
+        const response = await fetch('/api/articles?featured=true&limit=3&page=1');
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        const data = await response.json();
+
+        if (data.articles && data.articles.length > 0) {
+            data.articles.forEach(article => {
+                let categoriesHTML = '';
+                if (article.Categories && article.Categories.length > 0) {
+                    categoriesHTML = `<div class="mt-2 mb-1 text-xs">Kategorie: ${article.Categories.map(cat => `<a href="blog.html?category=${cat.slug}" class="text-accent hover:underline mr-1.5">${cat.name}</a>`).join(', ')}</div>`;
+                }
+                 const articleCard = `
+                    <div class="card-bg p-6 rounded-xl flex flex-col relative">
+                        ${article.isFeatured ? '<span class="absolute top-3 right-3 bg-accent text-white text-xs font-semibold px-2.5 py-1 rounded-full shadow-md z-10">Polecany ★</span>' : ''}
+                        <img src="https://placehold.co/600x350/101A2B/A78BFA?text=${encodeURIComponent(article.title.substring(0,20))}" alt="Miniatura artykułu: ${article.title}" class="rounded-lg mb-4 w-full h-48 object-cover" onerror="this.onerror=null;this.src='https://placehold.co/600x350/0F172A/94A3B8?text=Brak+obrazka';">
+                        <h3 class="text-xl font-semibold text-primary mb-1">
+                            <a href="article-view.html?slug=${article.slug}" class="hover:text-accent transition-colors">${article.title}</a>
+                        </h3>
+                        <p class="text-xs text-secondary mb-1">Autor: ${article.authorName}</p>
+                        <p class="text-xs text-secondary">Opublikowano: ${new Date(article.publishedAt).toLocaleDateString('pl-PL', { year: 'numeric', month: 'long', day: 'numeric' })}</p>
+                        ${categoriesHTML}
+                        <div class="text-sm text-secondary mt-2 mb-4 flex-grow article-card-content overflow-hidden" style="max-height: 80px;">
+                            ${article.snippet}
+                        </div>
+                        <a href="article-view.html?slug=${article.slug}" class="text-accent hover:text-accent-hover font-semibold text-sm self-start mt-auto pt-2">Czytaj więcej &rarr;</a>
+                    </div>
+                `;
+                container.insertAdjacentHTML('beforeend', articleCard);
+            });
+        } else {
+            emptyMsg.classList.remove('hidden');
+        }
+    } catch (error) {
+        console.error('Błąd ładowania polecanych artykułów:', error);
+        errorMsg.textContent = 'Nie udało się załadować polecanych artykułów.';
+        errorMsg.classList.remove('hidden');
+    } finally {
+        loading.classList.add('hidden');
+    }
+}
+
 
 // Run initializations after DOM is fully loaded
 document.addEventListener('DOMContentLoaded', initializeCommonScripts);

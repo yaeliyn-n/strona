@@ -290,7 +290,8 @@
                         }
 
                         const articleCard = `
-                            <div class="card-bg p-6 rounded-xl flex flex-col">
+                            <div class="card-bg p-6 rounded-xl flex flex-col relative"> {/* Added relative positioning for badge */}
+                                ${article.isFeatured ? '<span class="absolute top-3 right-3 bg-accent text-white text-xs font-semibold px-2.5 py-1 rounded-full shadow-md z-10">Polecany ★</span>' : ''}
                                 <img src="https://placehold.co/600x350/101A2B/A78BFA?text=${encodeURIComponent(article.title.substring(0,20))}" alt="Miniatura artykułu: ${article.title}" class="rounded-lg mb-4 w-full h-48 object-cover" onerror="this.onerror=null;this.src='https://placehold.co/600x350/0F172A/94A3B8?text=Brak+obrazka';">
                                 <h3 class="text-xl font-semibold text-primary mb-1">
                                     <a href="article-view.html?slug=${article.slug}" class="hover:text-accent transition-colors">${article.title}</a>

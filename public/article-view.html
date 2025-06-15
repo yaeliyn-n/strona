@@ -115,6 +115,35 @@
              <div class="mt-10 text-center">
                 <a href="blog.html" class="text-accent hover:text-accent-hover font-semibold text-sm">&larr; Powrót do listy artykułów</a>
             </div>
+
+            <section id="comments-section" class="mt-10 pt-8 border-t border-[var(--border-card)]">
+                <h2 class="text-2xl sm:text-3xl font-semibold text-primary mb-6">Komentarze (<span id="commentCount">0</span>)</h2>
+
+                <div id="post-comment-form-container" class="mb-8" style="display: none;">
+                    <form id="postCommentForm">
+                        <div>
+                            <label for="commentContent" class="form-label text-sm block mb-1 text-secondary">Napisz komentarz:</label>
+                            <textarea id="commentContent" name="content" rows="4" class="form-textarea w-full bg-[var(--bg-secondary)] border-[var(--border-card)] focus:border-accent focus:ring-accent rounded-md shadow-sm" required placeholder="Twoje przemyślenia..."></textarea>
+                        </div>
+                        <div class="mt-3 flex justify-end">
+                            <button type="submit" class="btn-primary px-5 py-2 text-sm rounded-md">Opublikuj Komentarz</button>
+                        </div>
+                    </form>
+                    <div id="commentPostStatus" class="text-sm mt-3"></div>
+                </div>
+                <div id="comment-login-prompt" class="mb-8 p-4 bg-[var(--bg-card)] rounded-md text-center text-secondary" style="display: none;">
+                    Musisz być <a href="/auth/discord/login" class="text-accent hover:underline">zalogowany</a>, aby dodać komentarz.
+                </div>
+
+                <div id="comments-list-container">
+                    {/* Comments will be loaded here */}
+                </div>
+                <div id="comments-loading" class="text-center py-6 text-secondary">Ładowanie komentarzy...</div>
+                <div id="comments-error" class="text-red-400 text-center py-4 hidden"></div>
+                <div id="comments-empty" class="text-secondary text-center py-4 hidden">Brak komentarzy. Bądź pierwszy!</div>
+                <div id="comments-pagination" class="mt-6 flex justify-center items-center space-x-3"></div>
+            </section>
+
         </div>
     </main>
 
@@ -138,6 +167,211 @@
         const articleContainer = document.getElementById('article-container');
         const loadingMessageArticle = document.getElementById('loading-message-article');
         const errorMessageArticle = document.getElementById('error-message-article');
+
+        // Comment section elements
+        const commentsSection = document.getElementById('comments-section');
+        const commentCountSpan = document.getElementById('commentCount');
+        const postCommentFormContainer = document.getElementById('post-comment-form-container');
+        const postCommentForm = document.getElementById('postCommentForm');
+        const commentContentTextarea = document.getElementById('commentContent');
+        const commentPostStatus = document.getElementById('commentPostStatus');
+        const commentLoginPrompt = document.getElementById('comment-login-prompt');
+        const commentsListContainer = document.getElementById('comments-list-container');
+        const commentsLoading = document.getElementById('comments-loading');
+        const commentsError = document.getElementById('comments-error');
+        const commentsEmpty = document.getElementById('comments-empty');
+        const commentsPagination = document.getElementById('comments-pagination');
+
+        let currentCommentsPage = 1;
+        let loggedInUser = null;
+        let articleDataForComments = null;
+        const commentsLimit = 5;
+
+
+        async function checkUserLoginStatusForComments() {
+            try {
+                const response = await fetch('/api/me');
+                if (response.ok) {
+                    loggedInUser = await response.json();
+                    if (postCommentFormContainer) postCommentFormContainer.style.display = 'block';
+                    if (commentLoginPrompt) commentLoginPrompt.style.display = 'none';
+                    // Update the href for the login link in the comment prompt dynamically
+                    const loginLink = commentLoginPrompt.querySelector('a');
+                    if (loginLink) {
+                        loginLink.href = `/auth/discord/login?redirect=${encodeURIComponent(window.location.pathname + window.location.search)}`;
+                    }
+                } else {
+                    loggedInUser = null;
+                    if (postCommentFormContainer) postCommentFormContainer.style.display = 'none';
+                    if (commentLoginPrompt) commentLoginPrompt.style.display = 'block';
+                }
+            } catch (error) {
+                console.error('Error checking login status:', error);
+                loggedInUser = null;
+                if (postCommentFormContainer) postCommentFormContainer.style.display = 'none';
+                if (commentLoginPrompt) {
+                    commentLoginPrompt.textContent = 'Nie udało się sprawdzić statusu logowania. Odśwież stronę.';
+                    commentLoginPrompt.style.display = 'block';
+                }
+            }
+        }
+
+
+        async function fetchComments(articleSlug, page = 1) {
+            if (!commentsSection) return; // Do nothing if comments section elements are not on this page
+            currentCommentsPage = page;
+            commentsLoading.style.display = 'block';
+            commentsError.style.display = 'none';
+            commentsEmpty.style.display = 'none';
+            commentsListContainer.innerHTML = '';
+            commentsPagination.innerHTML = '';
+
+            try {
+                const response = await fetch(`/api/articles/${articleSlug}/comments?page=${page}&limit=${commentsLimit}`);
+                if (!response.ok) {
+                    if (response.status === 404 && commentsError) { // Article not found for comments
+                         commentsError.textContent = 'Nie można załadować komentarzy, artykuł nie istnieje.';
+                         commentsError.style.display = 'block';
+                         return; // Stop further processing for comments if article itself is not found
+                    }
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                const data = await response.json();
+
+                if(commentCountSpan) commentCountSpan.textContent = data.totalComments || 0;
+
+                if (data.comments && data.comments.length > 0) {
+                    data.comments.forEach(comment => {
+                        const commentDiv = document.createElement('div');
+                        commentDiv.className = 'comment-item p-4 mb-4 bg-[var(--bg-primary)] border border-[var(--border-card)] rounded-lg shadow-sm';
+
+                        let adminDeleteButton = '';
+                        if (loggedInUser && loggedInUser.id === ADMIN_DISCORD_ID_CACHE) { // ADMIN_DISCORD_ID_CACHE from main.js
+                            adminDeleteButton = `<button class="text-xs text-red-400 hover:text-red-600 transition-colors delete-comment-btn" data-comment-id="${comment.id}">Usuń</button>`;
+                        }
+
+                        commentDiv.innerHTML = `
+                            <div class="flex justify-between items-center mb-1">
+                                <p class="text-sm font-semibold text-accent">${comment.discordUsername}</p>
+                                <div class="flex items-center">
+                                    <p class="text-xs text-secondary mr-2">${new Date(comment.createdAt).toLocaleString('pl-PL')}</p>
+                                    ${adminDeleteButton}
+                                </div>
+                            </div>
+                            <p class="text-sm text-text-primary whitespace-pre-wrap">${comment.content}</p>
+                        `;
+                        commentsListContainer.appendChild(commentDiv);
+                    });
+
+                    document.querySelectorAll('.delete-comment-btn').forEach(button => {
+                        button.addEventListener('click', () => deleteComment(button.dataset.commentId));
+                    });
+
+                    renderCommentsPagination(data.totalPages, data.currentPage, articleSlug);
+                } else {
+                    commentsEmpty.style.display = 'block';
+                }
+            } catch (error) {
+                console.error('Błąd ładowania komentarzy:', error);
+                if(commentsError) {
+                    commentsError.textContent = 'Nie udało się załadować komentarzy.';
+                    commentsError.style.display = 'block';
+                }
+            } finally {
+                if(commentsLoading) commentsLoading.style.display = 'none';
+            }
+        }
+
+        function renderCommentsPagination(totalPages, page, articleSlug) {
+            if (!commentsPagination || totalPages <= 1) {
+                if(commentsPagination) commentsPagination.innerHTML = '';
+                return;
+            }
+            let paginationHTML = '';
+            paginationHTML += `<button class="btn-secondary text-xs px-3 py-1 ${page === 1 ? 'opacity-50 cursor-not-allowed' : ''}" ${page === 1 ? 'disabled' : ''} onclick="changeCommentsPage(${page - 1}, '${articleSlug}')">Poprzednia</button>`;
+            paginationHTML += `<span class="text-sm text-secondary">Strona ${page} z ${totalPages}</span>`;
+            paginationHTML += `<button class="btn-secondary text-xs px-3 py-1 ${page === totalPages ? 'opacity-50 cursor-not-allowed' : ''}" ${page === totalPages ? 'disabled' : ''} onclick="changeCommentsPage(${page + 1}, '${articleSlug}')">Następna</button>`;
+            commentsPagination.innerHTML = paginationHTML;
+        }
+
+        window.changeCommentsPage = (page, articleSlug) => { // Make it global for inline onclick
+            if (page < 1) return;
+            const totalPagesElement = commentsPagination.querySelector('span');
+            if (!totalPagesElement) return;
+            const totalPagesMatch = totalPagesElement.textContent.match(/z (\d+)/);
+            if (!totalPagesMatch || totalPagesMatch.length < 2) return;
+            const totalPages = parseInt(totalPagesMatch[1], 10);
+            if (page > totalPages) return;
+
+            fetchComments(articleSlug, page);
+            commentsSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        };
+
+        async function handlePostComment(event) {
+            event.preventDefault();
+            if (!articleDataForComments || !commentContentTextarea || !commentPostStatus) return;
+
+            const content = commentContentTextarea.value.trim();
+            if (!content) {
+                commentPostStatus.textContent = 'Treść komentarza nie może być pusta.';
+                commentPostStatus.className = 'text-sm mt-3 text-red-400';
+                return;
+            }
+
+            commentPostStatus.textContent = 'Publikowanie komentarza...';
+            commentPostStatus.className = 'text-sm mt-3 text-secondary';
+            const submitButton = postCommentForm.querySelector('button[type="submit"]');
+            if(submitButton) submitButton.disabled = true;
+
+            try {
+                const response = await fetch(`/api/articles/${articleDataForComments.slug}/comments`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ content })
+                });
+                const result = await response.json();
+                if (response.ok) {
+                    commentPostStatus.textContent = 'Komentarz opublikowany!';
+                    commentPostStatus.className = 'text-sm mt-3 text-green-400';
+                    commentContentTextarea.value = '';
+                    fetchComments(articleDataForComments.slug, 1); // Refresh and go to first page
+                } else {
+                    commentPostStatus.textContent = result.error || 'Nie udało się opublikować komentarza.';
+                    commentPostStatus.className = 'text-sm mt-3 text-red-400';
+                }
+            } catch (error) {
+                console.error("Błąd publikowania komentarza:", error);
+                commentPostStatus.textContent = 'Błąd sieci. Spróbuj ponownie.';
+                commentPostStatus.className = 'text-sm mt-3 text-red-400';
+            } finally {
+                if(submitButton) submitButton.disabled = false;
+                setTimeout(() => { if(commentPostStatus) commentPostStatus.textContent = ''; }, 5000);
+            }
+        }
+
+        async function deleteComment(commentId) {
+            if (!confirm('Czy na pewno chcesz usunąć ten komentarz?')) return;
+
+            // Można dodać wizualny wskaźnik ładowania przy przycisku usuwania, jeśli chcemy
+            try {
+                const response = await fetch(`/api/admin/comments/${commentId}`, { method: 'DELETE' });
+                if (response.ok) { // 204 No Content
+                    displayAdminMessage('Komentarz usunięty pomyślnie.', 'success'); // Funkcja z admin.html, może nie być tu dostępna
+                                                                             // Lepsza byłaby lokalna funkcja do powiadomień
+                    console.log("Komentarz usunięty, odświeżam listę.");
+                    fetchComments(articleDataForComments.slug, currentCommentsPage);
+                } else {
+                    const result = await response.json().catch(() => ({ error: 'Nieznany błąd serwera' }));
+                    // displayAdminMessage(`Błąd usuwania komentarza: ${result.error || response.status}`, 'error');
+                    alert(`Błąd usuwania komentarza: ${result.error || response.status}`);
+                }
+            } catch (error) {
+                console.error("Błąd sieci podczas usuwania komentarza:", error);
+                // displayAdminMessage('Błąd sieci podczas usuwania komentarza.', 'error');
+                alert('Błąd sieci podczas usuwania komentarza.');
+            }
+        }
+
 
         async function fetchArticle() {
             const params = new URLSearchParams(window.location.search);

@@ -1,41 +1,33 @@
 const { DataTypes, Sequelize } = require('sequelize');
 const sequelize = require('../config/database');
+// No need to import Article model here for the foreign key if we use string 'Articles'
 
-const Article = sequelize.define('Article', {
+const Comment = sequelize.define('Comment', {
   id: {
     type: DataTypes.INTEGER,
     primaryKey: true,
     autoIncrement: true,
   },
-  title: {
+  articleId: {
+    type: DataTypes.INTEGER,
+    allowNull: false,
+    references: {
+      model: 'Articles', // Referencing the table name directly
+      key: 'id',
+    },
+    onDelete: 'CASCADE',
+  },
+  discordUserId: {
     type: DataTypes.STRING,
     allowNull: false,
   },
-  slug: {
+  discordUsername: {
     type: DataTypes.STRING,
     allowNull: false,
-    unique: true,
   },
   content: {
     type: DataTypes.TEXT,
     allowNull: false,
-  },
-  authorId: {
-    type: DataTypes.STRING,
-    allowNull: false,
-  },
-  authorName: {
-    type: DataTypes.STRING,
-    allowNull: false,
-  },
-  status: {
-    type: DataTypes.ENUM('draft', 'published'),
-    defaultValue: 'draft',
-    allowNull: false,
-  },
-  publishedAt: {
-    type: DataTypes.DATE,
-    allowNull: true,
   },
   createdAt: {
     type: DataTypes.DATE,
@@ -47,11 +39,6 @@ const Article = sequelize.define('Article', {
     allowNull: false,
     defaultValue: Sequelize.NOW,
   },
-  isFeatured: {
-    type: DataTypes.BOOLEAN,
-    defaultValue: false,
-    allowNull: false,
-  },
 });
 
-module.exports = Article;
+module.exports = Comment;
