@@ -423,7 +423,7 @@
                     ${categoriesHTML}
                     <hr class="border-t border-[var(--border-card)] my-6 sm:my-8">
                     <div class="article-content prose prose-invert max-w-none text-lg leading-relaxed">
-                        ${ DOMPurify.sanitize(marked.parse(article.content)) }
+                        ${ DOMPurify.sanitize(article.content) }
                     </div>
                 `;
                 articleContainer.innerHTML = articleHTML;

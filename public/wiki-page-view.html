@@ -179,11 +179,11 @@
                 }
                 metaEl.innerHTML = metaParts.join(' | '); // Use innerHTML because of the link
 
-                if (typeof marked !== 'undefined' && typeof DOMPurify !== 'undefined') {
-                    contentEl.innerHTML = DOMPurify.sanitize(marked.parse(page.content));
+                if (typeof DOMPurify !== 'undefined') { // Marked.js is no longer needed here for main content
+                    contentEl.innerHTML = DOMPurify.sanitize(page.content);
                 } else {
-                    console.warn('Marked.js or DOMPurify not loaded. Displaying raw content.');
-                    contentEl.textContent = page.content; // Fallback to raw text
+                    console.warn('DOMPurify not loaded. Displaying raw content, this might be unsafe.');
+                    contentEl.innerHTML = page.content; // Fallback to raw HTML, less safe
                 }
 
                 loadingDiv.classList.add('hidden');
