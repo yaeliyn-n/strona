@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Sprawdź rankingi i statystyki graczy na serwerze Kroniki Elary. Zobacz, kto prowadzi w zdobywaniu XP, walut i aktywności.">
-    <meta name="keywords" content="rankingi, statystyki, kroniki elary, discord, gracze, xp, waluta, aktywność, top graczy">
+    <meta name="description" content="Rankingi i statystyki serwera Kroniki Elary. Sprawdź, kto prowadzi w zdobywaniu doświadczenia, waluty i aktywności na naszym serwerze Discord.">
+    <meta name="keywords" content="rankingi, statystyki, kroniki elary, discord, xp, waluta, aktywność, gracze">
     <meta name="author" content="Arcadius & Strażnicy Kronik Elary">
     <title>Rankingi i Statystyki - Kroniki Elary</title>
     <script src="https://cdn.tailwindcss.com"></script>
@@ -32,14 +32,6 @@
             --shadow-strong-color: rgba(167, 139, 250, 0.3); 
             --modal-backdrop: rgba(15, 23, 42, 0.85);
             --rgb-accent: 167, 139, 250;
-            --rgb-purple-400: 167, 139, 250; 
-            --rgb-stone-400: 168, 162, 158; 
-            --rgb-amber-400: 251, 191, 36; 
-            --rgb-cyan-400: 34, 211, 238; 
-            --text-purple-400: #A78BFA;
-            --text-stone-400: #A8A29E;
-            --text-amber-400: #FBBF24;
-            --text-cyan-400: #22D3EE;
         }
         html.light {
             --bg-primary: #F9FAFB; 
@@ -63,33 +55,17 @@
             --shadow-strong-color: rgba(124, 58, 237, 0.15);
             --modal-backdrop: rgba(249, 250, 251, 0.85);
             --rgb-accent: 124, 58, 237;
-            --rgb-purple-400: 124, 58, 237;
-            --rgb-stone-400: 120, 113, 108;
-            --rgb-amber-400: 217, 119, 6;
-            --rgb-cyan-400: 8, 145, 178;
-            --text-purple-400: #7C3AED;
-            --text-stone-400: #78716C;
-            --text-amber-400: #D97706;
-            --text-cyan-400: #0891B2;
         }
         body { font-family: 'Inter', sans-serif; background-color: var(--bg-primary); color: var(--text-primary); transition: background-color 0.3s ease, color 0.3s ease; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; line-height: 1.75; }
         h1, h2, h3, h4, h5 { font-family: 'Lora', serif; font-weight: 600; line-height: 1.35; }
         h1 { letter-spacing: -0.025em; font-weight: 700; } h2 { letter-spacing: -0.02em; font-weight: 700; } h3 { font-weight: 600; }
-        .hero-ranking-bg { background: linear-gradient(rgba(15, 23, 42, 0.88), rgba(15, 23, 42, 0.98)), url('https://placehold.co/1920x500/0a0f1e/A78BFA?text=Rankingi+Serwera') center/cover no-repeat; }
+        .hero-ranking-bg { background: linear-gradient(rgba(15, 23, 42, 0.88), rgba(15, 23, 42, 0.98)), url('https://placehold.co/1920x500/0a0f1e/a78bfa?text=Rankingi+i+Statystyki') center/cover no-repeat; }
         .section-bg { background-color: var(--bg-secondary); }
         .card-bg { background-color: var(--bg-card); transition: transform 0.3s cubic-bezier(0.25, 0.1, 0.25, 1), box-shadow 0.3s cubic-bezier(0.25, 0.1, 0.25, 1), background-color 0.3s ease; border: 1px solid var(--border-card); box-shadow: 0 6px 12px -3px var(--shadow-color); overflow: hidden; }
         .card-bg:hover { transform: translateY(-8px) scale(1.02); box-shadow: 0 12px 24px -4px var(--shadow-strong-color); }
-        .btn-primary, .btn-discord, .btn-secondary { color: #FFFFFF; transition: background-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease; box-shadow: 0 4px 8px -2px var(--shadow-color); font-weight: 600; letter-spacing: 0.03em; padding-top: 0.8rem; padding-bottom: 0.8rem; border-radius: 0.375rem; } 
-        .btn-primary { background-color: var(--btn-primary-bg); } .btn-primary:hover { background-color: var(--btn-primary-hover-bg); transform: scale(1.04) translateY(-2px); box-shadow: 0 10px 18px -4px var(--shadow-strong-color); }
-        .btn-discord { background-color: var(--btn-discord-bg); } .btn-discord:hover { background-color: var(--btn-discord-hover-bg); transform: scale(1.04) translateY(-2px); box-shadow: 0 10px 18px -4px rgba(88, 101, 242, 0.35); }
-        .btn-secondary { background-color: transparent; border: 2px solid var(--border-accent); color: var(--text-accent); padding: calc(0.8rem - 2px) calc(1.5rem - 2px); }
-        .btn-secondary:hover { background-color: var(--border-accent); color: white; transform: scale(1.04) translateY(-2px); box-shadow: 0 6px 12px -2px var(--shadow-color); }
         .text-accent { color: var(--text-accent); }
         .reveal { opacity: 0; transform: translateY(50px); transition: opacity 0.8s cubic-bezier(0.645, 0.045, 0.355, 1), transform 0.8s cubic-bezier(0.645, 0.045, 0.355, 1); }
         .reveal.visible { opacity: 1; transform: translateY(0); }
-        ::-webkit-scrollbar { width: 12px; } ::-webkit-scrollbar-track { background: var(--bg-primary); }
-        ::-webkit-scrollbar-thumb { background: var(--scrollbar-thumb-bg); border-radius: 6px; border: 3px solid var(--bg-primary); }
-        ::-webkit-scrollbar-thumb:hover { background: var(--scrollbar-thumb-hover-bg); }
         header#navbar { background-color: var(--bg-header); backdrop-filter: blur(16px); transition: background-color 0.3s ease, box-shadow 0.3s ease; box-shadow: 0 4px 10px -3px rgba(15,23,42,0.15); }
         .nav-link { position: relative; color: var(--text-secondary); transition: color 0.2s ease, background-color 0.2s ease, transform 0.2s ease; padding: 0.6rem 1rem; border-radius: 0.375rem; font-weight: 500; }
         .nav-link:hover { transform: translateY(-1px); }
@@ -99,25 +75,19 @@
         #mobileMenu { transition: transform 0.3s cubic-bezier(0.25, 0.8, 0.25, 1), opacity 0.3s cubic-bezier(0.25, 0.8, 0.25, 1); transform: translateY(-100%); opacity: 0; pointer-events: none; }
         #mobileMenu.open { transform: translateY(0); opacity: 1; pointer-events: auto; }
         html.dark .text-shadow-custom { text-shadow: 1px 1px 3px rgba(0,0,0,0.5); }
-        .user-avatar { width: 32px; height: 32px; border-radius: 50%; border: 2px solid var(--border-accent); cursor: pointer; transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out; }
-        .user-avatar:hover { transform: scale(1.1); box-shadow: 0 0 8px var(--shadow-strong-color); }
-        .dropdown-menu { position: absolute; top: calc(100% + 0.5rem); right: 0; background-color: var(--bg-card); border: 1px solid var(--border-card); border-radius: 0.375rem; box-shadow: 0 8px 20px -4px var(--shadow-strong-color), 0 6px 8px -5px var(--shadow-color); z-index: 50; min-width: 220px; opacity: 0; visibility: hidden; transform: translateY(-8px); transition: opacity 0.15s ease, transform 0.15s ease, visibility 0s linear 0.15s; }
-        .dropdown-menu.open { opacity: 1; visibility: visible; transform: translateY(0); transition: opacity 0.15s ease, transform 0.15s ease; }
-        .dropdown-menu a, .dropdown-menu button { display: block; width: 100%; text-align: left; padding: 0.7rem 1rem; font-size: 0.875rem; color: var(--text-secondary); transition: background-color 0.1s ease, color 0.1s ease; }
-        .dropdown-menu a:hover, .dropdown-menu button:hover { background-color: rgba(var(--rgb-accent), 0.08); color: var(--text-accent); }
-        .dropdown-menu form { margin: 0; } 
-        .modal { background-color: var(--modal-backdrop); backdrop-filter: blur(6px); }
-        .modal-content { background-color: var(--bg-card); max-height: 90vh; }
-        .ranking-table th, .ranking-table td { padding: 0.75rem 1rem; text-align: left; border-bottom: 1px solid var(--border-card); }
-        .ranking-table th { font-weight: 600; color: var(--text-accent); }
-        .ranking-table tbody tr:hover { background-color: rgba(var(--rgb-accent), 0.05); }
-        .ranking-table .rank-avatar { width: 2.5rem; height: 2.5rem; border-radius: 50%; margin-right: 0.75rem; }
-        .ranking-table .rank-position { font-weight: bold; color: var(--text-accent); min-width: 2.5rem; text-align: center; }
-         .tab-button { padding: 0.75rem 1.5rem; margin: 0 0.25rem; border-radius: 0.375rem 0.375rem 0 0; background-color: transparent; color: var(--text-secondary); font-weight: 500; transition: background-color 0.2s ease, color 0.2s ease; border-bottom: 2px solid transparent; }
-        .tab-button.active { background-color: var(--bg-card); color: var(--text-accent); border-bottom-color: var(--text-accent); }
-        .tab-button:hover:not(.active) { background-color: rgba(var(--rgb-accent), 0.05); color: var(--text-accent-hover); }
-        .tab-content { display: none; }
-        .tab-content.active { display: block; }
+        .loading-spinner { border-color: var(--text-accent) transparent var(--text-accent) transparent; }
+        .ranking-table { width: 100%; border-collapse: separate; border-spacing: 0 0.5rem; }
+        .ranking-table th { text-align: left; padding: 0.75rem 1rem; color: var(--text-accent); font-weight: 600; font-size: 0.875rem; text-transform: uppercase; letter-spacing: 0.05em; }
+        .ranking-table td { background-color: var(--bg-secondary); padding: 1rem; font-size: 0.95rem; }
+        .ranking-table tr:hover td { background-color: rgba(var(--rgb-accent), 0.1); }
+        .ranking-table td:first-child { border-top-left-radius: 0.5rem; border-bottom-left-radius: 0.5rem; }
+        .ranking-table td:last-child { border-top-right-radius: 0.5rem; border-bottom-right-radius: 0.5rem; }
+        .ranking-table .rank-position { font-weight: bold; color: var(--text-accent); width: 3rem; text-align: center; }
+        .ranking-table .user-avatar-sm { width: 28px; height: 28px; border-radius: 50%; margin-right: 0.75rem; vertical-align: middle; }
+        .ranking-table .username { color: var(--text-primary); font-weight: 500; }
+        .tab-button-ranking { padding: 0.5rem 1rem; font-size: 0.875rem; font-weight: 500; border-radius: 0.375rem; color: var(--text-secondary); background-color: transparent; transition: background-color 0.2s ease, color 0.2s ease; border: 1px solid var(--border-card); }
+        .tab-button-ranking:hover { background-color: rgba(var(--rgb-accent), 0.1); color: var(--text-accent); }
+        .tab-button-ranking.active { background-color: var(--text-accent); color: white; border-color: var(--text-accent); }
     </style>
 </head>
 <body class="antialiased">
@@ -130,15 +100,15 @@
             <nav class="hidden md:flex items-center space-x-1 lg:space-x-2">
                 <a href="index.html" class="nav-link">Strona Główna</a>
                 <a href="prezentacja.html" class="nav-link">Prezentacja Serwera</a>
-                <a href="wikipedia.html" class="nav-link">Wikipedia Kronik</a> 
-                <a href="ranking-stats.html" class="nav-link">Rankingi</a>
+                <a href="wikipedia.html" class="nav-link">Wikipedia Kronik</a>
+                <a href="blog.html" class="nav-link">Blog</a>
+                <a href="gallery.html" class="nav-link">Galeria</a>
+                <a href="ranking-stats.html" class="nav-link active">Rankingi</a>
                 <a href="dom-aukcyjny.html" class="nav-link">Dom Aukcyjny</a>
-                <div id="auth-section-nav" class="ml-4 relative">
-                    </div>
+                <div id="auth-section-nav" class="ml-4 relative"></div>
             </nav>
             <div class="md:hidden flex items-center">
-                 <div id="auth-section-mobile-nav" class="mr-2 relative">
-                    </div>
+                <div id="auth-section-mobile-nav" class="mr-2 relative"></div>
                 <button id="mobileMenuButton" class="p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-[var(--bg-header)] focus:ring-[var(--text-accent)]" aria-expanded="false" aria-controls="mobileMenu" aria-label="Otwórz menu nawigacyjne">
                     <svg class="w-6 h-6" fill="none" stroke="var(--svg-icon-fill)" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
                 </button>
@@ -149,426 +119,157 @@
                 <a href="index.html" class="block py-2.5 px-3 nav-link text-base font-medium">Strona Główna</a>
                 <a href="prezentacja.html" class="block py-2.5 px-3 nav-link text-base font-medium">Prezentacja Serwera</a>
                 <a href="wikipedia.html" class="block py-2.5 px-3 nav-link text-base font-medium">Wikipedia Kronik</a>
-                <a href="ranking-stats.html" class="block py-2.5 px-3 nav-link text-base font-medium">Rankingi</a>
+                <a href="blog.html" class="block py-2.5 px-3 nav-link text-base font-medium">Blog</a>
+                <a href="gallery.html" class="block py-2.5 px-3 nav-link text-base font-medium">Galeria</a>
+                <a href="ranking-stats.html" class="block py-2.5 px-3 nav-link text-base font-medium active">Rankingi</a>
                 <a href="dom-aukcyjny.html" class="block py-2.5 px-3 nav-link text-base font-medium">Dom Aukcyjny</a>
                 <a href="https://discord.gg/TWOJLINKZAPROSZENIOWY" target="_blank" rel="noopener noreferrer" class="block mt-2 py-2.5 px-3 text-base font-medium text-white bg-purple-600 hover:bg-purple-700 rounded-md text-center">Dołącz do Discorda</a>
-                 </div>
+            </div>
         </div>
     </header>
 
-    <main>
-        <section class="hero-ranking-bg pt-32 pb-16 sm:pt-40 sm:pb-24 text-center reveal">
+    <main class="pt-20">
+        <section class="hero-ranking-bg pt-24 pb-12 sm:pt-32 sm:pb-20 text-center reveal">
             <div class="container mx-auto px-4 sm:px-6">
-                <h1 class="text-4xl sm:text-5xl md:text-6xl font-bold text-white mb-6 leading-tight text-shadow-custom">
-                    Rankingi i Statystyki <span class="text-accent">Kronik Elary</span>
+                <h1 class="text-4xl sm:text-5xl md:text-6xl font-bold text-white mb-4 leading-tight text-shadow-custom">
+                    Rankingi i <span class="text-accent">Statystyki</span> Serwera
                 </h1>
-                <p class="text-lg md:text-xl text-slate-200 mb-10 max-w-3xl mx-auto text-shadow-custom">
-                    Zobacz, kto wiedzie prym w naszym świecie! Sprawdź rankingi aktywności, zdobytych Gwiezdnych Dukatów, Kryształów Elary i wiele więcej.
+                <p class="text-lg md:text-xl text-slate-200 max-w-3xl mx-auto text-shadow-custom">
+                    Zobacz, kto dominuje w Aethelgardzie! Sprawdź rankingi doświadczenia, waluty, aktywności i wiele więcej.
                 </p>
             </div>
         </section>
 
-        <section id="wprowadzenie-rankingi" class="py-16 sm:py-20 section-bg reveal">
+        <section id="ranking-section" class="py-12 sm:py-16 section-bg reveal">
             <div class="container mx-auto px-4 sm:px-6">
-                <div class="text-center mb-14 sm:mb-18">
-                    <h2 class="text-3xl sm:text-4xl font-bold text-primary mb-4">Tablice Chwały Aethelgardu</h2>
-                    <p class="text-lg text-secondary max-w-3xl mx-auto">
-                        W Kronikach Elary doceniamy zaangażowanie i osiągnięcia naszych Kronikarzy. Poniższe rankingi są odzwierciedleniem Waszej aktywności, zaradności i poświęcenia. Pamiętajcie, że dane są aktualizowane regularnie!
-                    </p>
-                </div>
-            </div>
-        </section>
-
-        <section id="rankingi-lista" class="py-16 sm:py-20 reveal">
-            <div class="container mx-auto px-4 sm:px-6">
-                <div class="mb-8 flex flex-wrap justify-center border-b border-border-card">
-                    <button class="tab-button active" data-tab="xp">Ranking XP</button>
-                    <button class="tab-button" data-tab="currency">Dukaty</button>
-                    <button class="tab-button" data-tab="premium_currency">Kryształy</button>
-                    <button class="tab-button" data-tab="messages">Wiadomości</button>
-                    <button class="tab-button" data-tab="voicetime">Czas Głosowy</button>
+                <div class="flex justify-center mb-8 space-x-2 sm:space-x-3">
+                    <button data-ranking="xp" class="tab-button-ranking active">XP</button>
+                    <button data-ranking="currency" class="tab-button-ranking">Dukaty</button>
+                    <button data-ranking="premium_currency" class="tab-button-ranking">Kryształy</button>
+                    <button data-ranking="messages" class="tab-button-ranking">Wiadomości</button>
+                    <button data-ranking="voicetime" class="tab-button-ranking">Czas Głosowy</button>
                 </div>
 
-                <div id="rankingContent" class="card-bg p-4 sm:p-6 rounded-lg shadow-xl">
-                    <div class="text-center py-10">
-                        <p class="text-secondary text-lg">Ładowanie danych rankingowych...</p>
-                        <div class="mt-4 animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-accent mx-auto"></div>
+                <div id="ranking-table-container" class="card-bg p-4 sm:p-6 rounded-xl shadow-xl overflow-x-auto">
+                    <div id="ranking-loading" class="text-center py-10 text-secondary">
+                        <div class="animate-spin rounded-full h-10 w-10 border-t-2 border-b-2 loading-spinner mx-auto mb-3"></div>
+                        Ładowanie rankingu...
                     </div>
+                    <div id="ranking-error" class="text-red-400 text-center py-10 hidden"></div>
+                    <table id="ranking-table-content" class="ranking-table hidden">
+                        <thead>
+                            <tr>
+                                <th class="w-16">#</th>
+                                <th>Użytkownik</th>
+                                <th id="ranking-value-header">Wartość</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {/* Dane rankingu będą tutaj wstawiane */}
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </section>
-        
     </main>
 
     <footer class="py-12 text-center" style="background-color: var(--bg-header);">
         <div class="container mx-auto px-4 sm:px-6">
-            <div class="flex justify-center space-x-6 mb-6">
-                <a href="#" class="text-secondary hover:text-accent transition-colors duration-200" aria-label="Placeholder Twitter">
-                    <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M22.46 6c-.77.35-1.6.58-2.46.67.9-.53 1.59-1.37 1.92-2.38-.84.5-1.78.86-2.79 1.07C18.28 4.42 17.03 4 15.64 4c-2.94 0-5.32 2.38-5.32 5.32 0 .42.05.83.14 1.22-4.42-.22-8.33-2.34-10.96-5.55-.46.79-.72 1.7-.72 2.67 0 1.84.94 3.47 2.37 4.42-.87-.03-1.69-.27-2.41-.66v.07c0 2.57 1.83 4.72 4.25 5.21-.44.12-.91.18-1.39.18-.34 0-.67-.03-1-.1 0 .67.65 1.37 1.77 1.84-.7.55-1.59.88-2.58.88-.39 0-.77-.02-1.14-.07.91.59 2 1.02 3.19 1.02 3.83 0 5.93-3.18 5.93-5.93 0-.09 0-.18-.01-.27.41-.3.76-.68 1.04-1.09z"/></svg>
-                </a>
-                 <a href="#" class="text-secondary hover:text-accent transition-colors duration-200" aria-label="Placeholder Instagram">
-                    <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 1.17.053 1.805.248 2.227.415.562.217.96.477 1.382.896.419.42.679.819.896 1.381.167.422.362 1.056.415 2.227.058 1.266.07 1.646.07 4.85s-.012 3.584-.07 4.85c-.053 1.17-.248 1.805-.415 2.227a3.48 3.48 0 01-.896 1.382c-.42.419-.82.679-1.382.896-.422.167-1.056.362-2.227.415-1.266.058-1.646.07-4.85.07s-3.584-.012-4.85-.07c-1.17-.053-1.805-.248-2.227-.415a3.492 3.492 0 01-1.381-.896 3.492 3.492 0 01-.896-1.381c-.167-.422-.362-1.056-.415-2.227-.058-1.266-.07-1.646-.07-4.85s.012-3.584.07-4.85c.053-1.17.248-1.805.415-2.227.218-.562.477-.96.896-1.381.419-.42.819-.679 1.381-.896.422-.167 1.056-.362 2.227-.415C8.416 2.175 8.796 2.163 12 2.163zm0 1.802c-3.143 0-3.505.012-4.725.068-1.09.05-1.647.235-1.98.378a1.69 1.69 0 00-.755.755c-.143.333-.328.89-.378 1.98C4.082 8.495 4.07 8.857 4.07 12s.012 3.505.068 4.725c.05 1.09.235 1.647.378 1.98.16.373.397.637.755.755.333.143.89.328 1.98.378 1.22.056 1.582.068 4.725.068s3.505-.012 4.725-.068c1.09-.05 1.647.235 1.98-.378.373-.16.637-.397.755-.755.143-.333.328.89.378-1.98.056-1.22.068-1.582.068-4.725s-.012-3.505-.068-4.725c-.05-1.09-.235-1.647-.378-1.98a1.69 1.69 0 00-.755-.755c-.333-.143-.89-.328-1.98-.378C15.505 3.977 15.143 3.965 12 3.965zm0 3.273a4.762 4.762 0 100 9.524 4.762 4.762 0 000-9.524zm0 7.722a3.06 3.06 0 110-6.12 3.06 3.06 0 010 6.12zm4.758-7.868a1.128 1.128 0 100-2.255 1.128 1.128 0 000 2.255z"/></svg>
-                </a>
+             <div class="flex justify-center space-x-6 mb-6">
                  <a href="polityka-prywatnosci.html" class="text-secondary hover:text-accent transition-colors duration-200" aria-label="Polityka Prywatności">
                     Polityka Prywatności
                 </a>
             </div>
             <p class="text-secondary text-sm">
-                &copy; <span id="currentYear">2024</span> Kroniki Elary. Wszelkie prawa zastrzeżone.
-            </p>
-            <p class="text-xs mt-2.5" style="color: var(--text-secondary-light, #94A3B8);">
-                Stworzone z pasji do anime i mangi przez Arcadiusa i jego Strażników.
+                &copy; <span id="currentYear"></span> Kroniki Elary. Wszelkie prawa zastrzeżone.
             </p>
         </div>
     </footer>
 
-    <div id="eventModal" class="fixed inset-0 z-[60] items-center justify-center hidden p-4 modal">
-        </div>
-
+    <script src="js/main.js" defer></script>
     <script>
-        // Funkcja do obsługi aktywnego linku w nawigacji
-        function setActiveNavLink() {
-            const currentPage = window.location.pathname.split("/").pop() || "index.html";
-            const navLinks = document.querySelectorAll('header nav > a.nav-link, #mobileMenu > div > a.nav-link');
-            const wikipediaSubPages = ["lore-postaci.html", "systemy-botow.html", "rangi-i-role.html", "lore-aethelgard.html", "komendy.html"];
+        const rankingTableContainer = document.getElementById('ranking-table-container');
+        const rankingTableContent = document.getElementById('ranking-table-content');
+        const rankingLoading = document.getElementById('ranking-loading');
+        const rankingError = document.getElementById('ranking-error');
+        const rankingValueHeader = document.getElementById('ranking-value-header');
+        const rankingButtons = document.querySelectorAll('.tab-button-ranking');
 
-            navLinks.forEach(link => {
-                link.classList.remove('active');
-                const linkPage = link.getAttribute('href').split("/").pop() || "index.html";
-                
-                if (linkPage === currentPage) {
-                    link.classList.add('active');
-                } else if (linkPage === 'wikipedia.html' && wikipediaSubPages.includes(currentPage)) {
-                    link.classList.add('active');
+        let currentRankingType = 'xp'; // Domyślny ranking
+
+        const rankingHeaders = {
+            xp: 'Doświadczenie (XP)',
+            currency: 'Gwiezdne Dukaty',
+            premium_currency: 'Kryształy Elary',
+            messages: 'Liczba Wiadomości',
+            voicetime: 'Czas na Kanałach Głosowych (minuty)'
+        };
+
+        async function fetchRanking(type = 'xp') {
+            rankingLoading.classList.remove('hidden');
+            rankingTableContent.classList.add('hidden');
+            rankingError.classList.add('hidden');
+            rankingError.textContent = '';
+            currentRankingType = type;
+
+            rankingButtons.forEach(btn => {
+                btn.classList.remove('active');
+                if (btn.dataset.ranking === type) {
+                    btn.classList.add('active');
                 }
             });
-        }
-
-        async function updateAuthDisplay() {
-            const authSectionNav = document.getElementById('auth-section-nav');
-            const authSectionMobileNav = document.getElementById('auth-section-mobile-nav');
-            const mobileMenuLinksContainer = document.querySelector('#mobileMenu > div'); 
-            const ADMIN_DISCORD_ID = "1238814802357387285"; 
-
-            function createLoginButton(isMobile = false) {
-                const loginButton = document.createElement('a');
-                loginButton.href = '/auth/discord/login'; 
-                loginButton.id = isMobile ? 'discordLoginButtonMobileNav' : 'discordLoginButtonNav';
-                loginButton.className = 'btn-discord !text-white px-4 py-2.5 rounded-md text-sm flex items-center' + (isMobile ? ' w-full justify-center mt-2' : '');
-                loginButton.innerHTML = `<svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 24 24"><path d="M20.297 0H3.703C1.658 0 0 1.658 0 3.703V20.297C0 22.342 1.658 24 3.703 24H20.297C22.342 24 24 22.342 24 20.297V3.703C24 1.658 22.342 0 20.297 0ZM8.107 15.232C7.089 15.232 6.241 14.384 6.241 13.366C6.241 12.348 7.089 11.5 8.107 11.5C9.125 11.5 9.973 12.348 9.973 13.366C9.973 14.384 9.125 15.232 8.107 15.232ZM12.000 11.071C10.982 11.071 10.134 10.223 10.134 9.205C10.134 8.188 10.982 7.339 12.000 7.339C13.018 7.339 13.866 8.188 13.866 9.205C13.866 10.223 13.018 11.071 12.000 11.071ZM15.893 15.232C14.875 15.232 14.027 14.384 14.027 13.366C14.027 12.348 14.875 11.5 15.893 11.5C16.911 11.5 17.759 12.348 17.759 13.366C17.759 14.384 16.911 15.232 15.893 15.232Z"/></svg> Zaloguj przez Discord`;
-                return loginButton;
-            }
-
-            function createAvatarDropdown(user, isMobile = false) {
-                const containerId = isMobile ? 'userDropdownContainerMobile' : 'userDropdownContainerNav';
-                const dropdownId = isMobile ? 'userDropdownMobile' : 'userDropdownNav';
-
-                const container = document.createElement('div');
-                container.id = containerId;
-                container.className = 'relative';
-
-                const avatarImg = document.createElement('img');
-                avatarImg.src = user.avatar ? `https://cdn.discordapp.com/avatars/${user.id}/${user.avatar}.png?size=32` : 'https://placehold.co/32x32/A78BFA/FFFFFF?text=U';
-                avatarImg.alt = 'Awatar użytkownika';
-                avatarImg.className = 'user-avatar';
-                avatarImg.onerror = () => { avatarImg.src = 'https://placehold.co/32x32/A78BFA/FFFFFF?text=U'; };
-                avatarImg.onclick = (event) => {
-                    event.stopPropagation(); 
-                    const dropdown = document.getElementById(dropdownId);
-                    if (dropdown) dropdown.classList.toggle('open');
-                };
-                container.appendChild(avatarImg);
-
-                const dropdownMenu = document.createElement('div');
-                dropdownMenu.id = dropdownId;
-                dropdownMenu.className = 'dropdown-menu';
-                
-                const profileLink = document.createElement('a');
-                profileLink.href = 'profil.html';
-                profileLink.textContent = 'Mój Profil';
-                dropdownMenu.appendChild(profileLink);
-
-                const auctionHouseLink = document.createElement('a');
-                auctionHouseLink.href = 'dom-aukcyjny.html';
-                auctionHouseLink.textContent = 'Dom Aukcyjny';
-                dropdownMenu.appendChild(auctionHouseLink);
-
-                const botShopLink = document.createElement('a');
-                botShopLink.href = '/sklep-bota'; 
-                botShopLink.textContent = 'Sklep Bota (Dukaty)';
-                dropdownMenu.appendChild(botShopLink);
-                
-                const premiumShopLink = document.createElement('a');
-                premiumShopLink.href = 'sklep-premium.html';
-                premiumShopLink.textContent = 'Sklep Premium (Kryształy)';
-                dropdownMenu.appendChild(premiumShopLink);
-
-                const supportTicketsLink = document.createElement('a');
-                supportTicketsLink.href = 'support.html'; 
-                supportTicketsLink.textContent = 'Centrum Wsparcia';
-                dropdownMenu.appendChild(supportTicketsLink);
-
-                if (user.id === ADMIN_DISCORD_ID) {
-                    const adminLinkElement = document.createElement('a'); 
-                    adminLinkElement.href = 'admin.html'; 
-                    adminLinkElement.textContent = 'Panel Admina';
-                    dropdownMenu.appendChild(adminLinkElement);
-                }
-                
-                const logoutForm = document.createElement('form');
-                logoutForm.action = '/auth/logout'; 
-                logoutForm.method = 'POST';
-                const logoutButton = document.createElement('button');
-                logoutButton.type = 'submit';
-                logoutButton.textContent = 'Wyloguj';
-                logoutForm.appendChild(logoutButton);
-                dropdownMenu.appendChild(logoutForm);
-
-                container.appendChild(dropdownMenu);
-                return container;
-            }
             
-            if (mobileMenuLinksContainer) {
-                const existingMobileAuthElements = mobileMenuLinksContainer.querySelectorAll('#discordLoginButtonMobileNav, #userDropdownContainerMobileMenu, .mobile-auth-item');
-                existingMobileAuthElements.forEach(el => el.remove());
-            }
+            if(rankingValueHeader) rankingValueHeader.textContent = rankingHeaders[type] || 'Wartość';
 
             try {
-                const response = await fetch('/api/me'); 
-                if (response.ok) {
-                    const user = await response.json();
-                    if (authSectionNav) {
-                        authSectionNav.innerHTML = ''; 
-                        authSectionNav.appendChild(createAvatarDropdown(user, false));
-                    }
-                    if (authSectionMobileNav) { 
-                        authSectionMobileNav.innerHTML = ''; 
-                        authSectionMobileNav.appendChild(createAvatarDropdown(user, true));
-                    }
-                     if (mobileMenuLinksContainer) {
-                        const mobileDropdownContainer = createAvatarDropdown(user, true); 
-                        mobileDropdownContainer.id = 'userDropdownContainerMobileMenu';
-                        mobileDropdownContainer.classList.add('mt-2', 'border-t', 'border-[var(--border-card)]', 'pt-2', 'mobile-auth-item');
-                        
-                        const mobileAvatar = mobileDropdownContainer.querySelector('.user-avatar');
-                        const mobileDropdown = mobileDropdownContainer.querySelector('.dropdown-menu');
-                        
-                        if (mobileAvatar) mobileAvatar.classList.add('hidden'); 
-                        if (mobileDropdown) {
-                            mobileDropdown.classList.remove('absolute', 'top-full', 'right-0', 'dropdown-menu'); 
-                            mobileDropdown.classList.add('space-y-1');
-                            Array.from(mobileDropdown.children).forEach(child => {
-                                child.classList.add('block', 'py-2', 'px-3', 'text-base', 'font-medium', 'rounded-md', 'hover:bg-[rgba(var(--rgb-accent),0.1)]', 'hover:text-[var(--text-accent)]');
-                                mobileMenuLinksContainer.appendChild(child);
-                            });
-                        }
-                    }
+                const response = await fetch(`/api/web/ranking/${type}`);
+                if (!response.ok) {
+                    const errorData = await response.json().catch(() => null);
+                    throw new Error(errorData?.error || `Błąd serwera: ${response.status}`);
+                }
+                const data = await response.json();
 
+                const tbody = rankingTableContent.querySelector('tbody');
+                tbody.innerHTML = ''; // Wyczyść poprzednie dane
+
+                if (data && data.length > 0) {
+                    data.forEach((entry, index) => {
+                        const row = tbody.insertRow();
+                        row.innerHTML = `
+                            <td class="rank-position">${index + 1}</td>
+                            <td>
+                                <img src="${entry.avatar_url || 'https://placehold.co/32x32/1E293B/94A3B8?text=?'}" alt="Awatar ${entry.username}" class="user-avatar-sm" onerror="this.onerror=null;this.src='https://placehold.co/32x32/1E293B/94A3B8?text=?';">
+                                <span class="username">${entry.username}</span>
+                            </td>
+                            <td>${entry.value.toLocaleString('pl-PL')} ${type === 'voicetime' ? ' minut' : ''}</td>
+                        `;
+                    });
+                    rankingTableContent.classList.remove('hidden');
                 } else {
-                     if (authSectionNav) {
-                        authSectionNav.innerHTML = '';
-                        authSectionNav.appendChild(createLoginButton(false));
-                    }
-                    if (authSectionMobileNav) { 
-                        authSectionMobileNav.innerHTML = '';
-                        authSectionMobileNav.appendChild(createLoginButton(true)); 
-                    }
-                    if (mobileMenuLinksContainer) {
-                        const mobileLoginButton = createLoginButton(true); 
-                        mobileLoginButton.classList.add('mt-2', 'border-t', 'border-[var(--border-card)]', 'pt-2', 'mobile-auth-item');
-                        mobileMenuLinksContainer.appendChild(mobileLoginButton);
-                    }
+                    rankingError.textContent = 'Brak danych w rankingu lub ranking jest pusty.';
+                    rankingError.classList.remove('hidden');
                 }
             } catch (error) {
-                console.error('Błąd aktualizacji UI logowania:', error);
-                 if (authSectionNav) {
-                    authSectionNav.innerHTML = '';
-                    authSectionNav.appendChild(createLoginButton(false));
-                }
-                if (authSectionMobileNav) {
-                    authSectionMobileNav.innerHTML = '';
-                    authSectionMobileNav.appendChild(createLoginButton(true));
-                }
-                if (mobileMenuLinksContainer) {
-                    const mobileLoginButton = createLoginButton(true);
-                    mobileLoginButton.classList.add('mt-2', 'border-t', 'border-[var(--border-card)]', 'pt-2', 'mobile-auth-item');
-                    mobileMenuLinksContainer.appendChild(mobileLoginButton);
-                }
-            }
-        }
-        
-        function setupMobileMenu() {
-            const mobileMenuButton = document.getElementById('mobileMenuButton');
-            const mobileMenu = document.getElementById('mobileMenu');
-            
-            if (mobileMenuButton && mobileMenu) {
-                mobileMenuButton.addEventListener('click', () => {
-                    const isExpanded = mobileMenuButton.getAttribute('aria-expanded') === 'true' || false;
-                    mobileMenuButton.setAttribute('aria-expanded', String(!isExpanded));
-                    mobileMenu.classList.toggle('open');
-                });
-                mobileMenu.querySelectorAll('a').forEach(link => { 
-                    link.addEventListener('click', () => {
-                        mobileMenuButton.setAttribute('aria-expanded', 'false');
-                        mobileMenu.classList.remove('open');
-                    });
-                });
+                console.error(`Błąd ładowania rankingu ${type}:`, error);
+                rankingError.textContent = `Nie udało się załadować rankingu: ${error.message}. Spróbuj ponownie później.`;
+                rankingError.classList.remove('hidden');
+            } finally {
+                rankingLoading.classList.add('hidden');
             }
         }
 
-        function setupRevealAnimations() {
-            const revealObserver = new IntersectionObserver((entries, observer) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        entry.target.classList.add('visible');
-                        observer.unobserve(entry.target);
-                    }
-                });
-            }, { threshold: 0.1 });
-
-            document.querySelectorAll('.reveal').forEach(el => {
-                revealObserver.observe(el);
+        rankingButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                const rankingType = button.dataset.ranking;
+                fetchRanking(rankingType);
             });
-        }
+        });
 
-        function setupDropdownDismiss() {
-            window.addEventListener('click', function(e) {
-                const desktopDropdownContainer = document.getElementById('userDropdownContainerNav');
-                const mobileDropdownContainer = document.getElementById('userDropdownContainerMobile'); 
-                const desktopDropdown = document.getElementById('userDropdownNav');
-                const mobileDropdown = document.getElementById('userDropdownMobile'); 
-
-                if (desktopDropdownContainer && !desktopDropdownContainer.contains(e.target) && desktopDropdown && desktopDropdown.classList.contains('open')) {
-                    desktopDropdown.classList.remove('open');
-                }
-                if (mobileDropdownContainer && !mobileDropdownContainer.contains(e.target) && mobileDropdown && mobileDropdown.classList.contains('open')) {
-                     mobileDropdown.classList.remove('open');
-                }
-            });
-        }
-        
-        // Obsługa zakładek rankingu
-        function setupRankingTabs() {
-            const tabButtons = document.querySelectorAll('.tab-button');
-            const rankingContent = document.getElementById('rankingContent');
-            const API_BASE_URL = '/api/web/ranking'; // Zakładając, że to jest bazowy URL dla API rankingów
-
-            async function fetchAndDisplayRanking(type) {
-                rankingContent.innerHTML = `
-                    <div class="text-center py-10">
-                        <p class="text-secondary text-lg">Ładowanie rankingu ${type.replace('_', ' ')}...</p>
-                        <div class="mt-4 animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-accent mx-auto"></div>
-                    </div>`;
-
-                try {
-                    const response = await fetch(`${API_BASE_URL}/${type}`);
-                    if (!response.ok) {
-                        throw new Error(`HTTP error! status: ${response.status}`);
-                    }
-                    const data = await response.json();
-
-                    if (data && data.length > 0) {
-                        let tableHTML = `
-                            <div class="overflow-x-auto">
-                                <table class="min-w-full ranking-table">
-                                    <thead>
-                                        <tr>
-                                            <th class="w-16">Pozycja</th>
-                                            <th>Użytkownik</th>
-                                            <th>Wynik</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>`;
-                        
-                        data.forEach((entry, index) => {
-                            const avatarUrl = entry.avatar_url || `https://placehold.co/40x40/1E293B/E2E8F0?text=${entry.username.charAt(0)}`;
-                            let score = entry.xp_total !== undefined ? entry.xp_total :
-                                        entry.currency_balance !== undefined ? entry.currency_balance :
-                                        entry.premium_currency_balance !== undefined ? entry.premium_currency_balance :
-                                        entry.message_count !== undefined ? entry.message_count :
-                                        entry.voice_time_seconds !== undefined ? formatDuration(entry.voice_time_seconds) : 'N/A';
-
-                            // Dodaj symbol waluty dla odpowiednich rankingów
-                            if (type === 'currency' && entry.currency_balance !== undefined) score += ' ✨';
-                            if (type === 'premium_currency' && entry.premium_currency_balance !== undefined) score += ' 💠';
-
-
-                            tableHTML += `
-                                <tr>
-                                    <td class="rank-position">${index + 1}</td>
-                                    <td class="flex items-center">
-                                        <img src="${avatarUrl}" alt="Avatar gracza ${entry.username}" class="rank-avatar" onerror="this.onerror=null;this.src='https://placehold.co/40x40/1E293B/E2E8F0?text=${entry.username.charAt(0)}';">
-                                        <span class="font-medium text-primary">${entry.username}</span>
-                                    </td>
-                                    <td class="font-semibold text-accent">${score}</td>
-                                </tr>`;
-                        });
-
-                        tableHTML += `
-                                    </tbody>
-                                </table>
-                            </div>`;
-                        rankingContent.innerHTML = tableHTML;
-                    } else {
-                        rankingContent.innerHTML = `<p class="text-center text-secondary py-10">Brak danych do wyświetlenia dla tego rankingu.</p>`;
-                    }
-                } catch (error) {
-                    console.error('Błąd podczas ładowania rankingu:', error);
-                    rankingContent.innerHTML = `<p class="text-center text-red-400 py-10">Wystąpił błąd podczas ładowania danych rankingu. Spróbuj ponownie później.</p>`;
-                }
-            }
-
-            tabButtons.forEach(button => {
-                button.addEventListener('click', () => {
-                    tabButtons.forEach(btn => btn.classList.remove('active'));
-                    button.classList.add('active');
-                    const tabType = button.dataset.tab;
-                    fetchAndDisplayRanking(tabType);
-                });
-            });
-
-            // Załaduj domyślny ranking (np. XP) przy pierwszym otwarciu strony
-            fetchAndDisplayRanking('xp');
-        }
-
-        // Helper to format duration (copied from profil.html, can be a common utility)
-        function formatDuration(seconds) {
-            if (seconds === null || seconds === undefined) return 'N/A';
-            if (seconds < 0) seconds = 0;
-
-            const days = Math.floor(seconds / (3600 * 24));
-            seconds %= (3600 * 24);
-            const hours = Math.floor(seconds / 3600);
-            seconds %= 3600;
-            const minutes = Math.floor(seconds / 60);
-            const remainingSeconds = seconds % 60;
-
-            let parts = [];
-            if (days > 0) parts.push(`${days}d`);
-            if (hours > 0) parts.push(`${hours}h`);
-            if (minutes > 0) parts.push(`${minutes}m`);
-            if (remainingSeconds > 0 || parts.length === 0) parts.push(`${remainingSeconds}s`);
-
-            return parts.join(' ');
-        }
-
-
-        document.addEventListener('DOMContentLoaded', function() {
-            document.getElementById('currentYear').textContent = new Date().getFullYear();
-            
-            if (!document.documentElement.classList.contains('light') && !document.documentElement.classList.contains('dark')) {
-                 document.documentElement.classList.add('dark');
-            }
-
-            setActiveNavLink();
-            updateAuthDisplay();
-            setupMobileMenu();
-            setupRevealAnimations();
-            setupDropdownDismiss();
-            if (document.getElementById('rankingContent')) { // Upewnij się, że element istnieje
-                setupRankingTabs();
-            }
+        document.addEventListener('DOMContentLoaded', () => {
+            fetchRanking(currentRankingType); // Załaduj domyślny ranking
         });
     </script>
 </body>
 </html>
+
+[end of public/ranking-stats.html]

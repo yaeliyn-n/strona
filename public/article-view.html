@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="pl" class="scroll-smooth dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Zobacz artykuł na blogu Kronik Elary.">
+    <meta name="author" content="Arcadius & Strażnicy Kronik Elary">
+    <title>Artykuł - Kroniki Elary</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-primary: #0F172A; --bg-secondary: rgba(30, 41, 59, 0.8); --bg-card: #1E293B; --bg-header: rgba(15, 23, 42, 0.92);
+            --text-primary: #E2E8F0; --text-secondary: #94A3B8; --text-accent: #A78BFA; --text-accent-hover: #8B5CF6;
+            --border-accent: #8B5CF6; --border-card: rgba(167, 139, 250, 0.25);
+            --btn-primary-bg: #8B5CF6; --btn-primary-hover-bg: #7C3AED; --btn-discord-bg: #5865F2; --btn-discord-hover-bg: #4752C4;
+            --scrollbar-thumb-bg: #8B5CF6; --scrollbar-thumb-hover-bg: #7C3AED; --svg-icon-fill: #E2E8F0;
+            --shadow-color: rgba(167, 139, 250, 0.25); --shadow-strong-color: rgba(167, 139, 250, 0.4);
+            --modal-backdrop: rgba(15, 23, 42, 0.85); --rgb-accent: 167, 139, 250;
+        }
+        html.light {
+            --bg-primary: #F9FAFB; --bg-secondary: rgba(243, 244, 246, 0.9); --bg-card: #FFFFFF; --bg-header: rgba(255, 255, 255, 0.95);
+            --text-primary: #1F2937; --text-secondary: #4B5563; --text-accent: #7C3AED; --text-accent-hover: #6D28D9;
+            --border-accent: #7C3AED; --border-card: rgba(124, 58, 237, 0.1);
+            --btn-primary-bg: #7C3AED; --btn-primary-hover-bg: #6D28D9; --btn-discord-bg: #5865F2; --btn-discord-hover-bg: #4752C4;
+            --scrollbar-thumb-bg: #A78BFA; --scrollbar-thumb-hover-bg: #8B5CF6; --svg-icon-fill: #374151;
+            --shadow-color: rgba(124, 58, 237, 0.08); --shadow-strong-color: rgba(124, 58, 237, 0.15);
+            --modal-backdrop: rgba(249, 250, 251, 0.85); --rgb-accent: 124, 58, 237;
+        }
+        body { font-family: 'Inter', sans-serif; background-color: var(--bg-primary); color: var(--text-primary); transition: background-color 0.3s ease, color 0.3s ease; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; line-height: 1.75; }
+        h1, h2, h3, h4, h5 { font-family: 'Lora', serif; font-weight: 600; line-height: 1.35; }
+        h1 { letter-spacing: -0.025em; font-weight: 700; } h2 { letter-spacing: -0.02em; font-weight: 700; } h3 { font-weight: 600; }
+        .text-accent { color: var(--text-accent); }
+        header#navbar { background-color: var(--bg-header); backdrop-filter: blur(18px); transition: background-color 0.3s ease, box-shadow 0.3s ease; box-shadow: 0 5px 15px -4px rgba(15,23,42,0.2); }
+        /* Styles for nav-link, mobileMenu, user-avatar, dropdown-menu are in js/main.js or inherited */
+        .loading-spinner { border-color: var(--text-accent) transparent var(--text-accent) transparent; }
+        .article-content { line-height: 1.75; }
+        .article-content h2 { font-size: 1.75rem; margin-top: 2rem; margin-bottom: 1rem; color: var(--text-primary); }
+        .article-content h3 { font-size: 1.5rem; margin-top: 1.75rem; margin-bottom: 0.75rem; color: var(--text-primary); }
+        .article-content p { margin-bottom: 1.25rem; font-size: 1.05rem; line-height: 1.8; color: var(--text-secondary); }
+        .article-content ul, .article-content ol { margin-left: 1.5rem; margin-bottom: 1.25rem; color: var(--text-secondary); }
+        .article-content li { margin-bottom: 0.5rem; }
+        .article-content a { color: var(--text-accent); text-decoration: underline; transition: color 0.2s ease; }
+        .article-content a:hover { color: var(--text-accent-hover); }
+        .article-content blockquote { border-left: 4px solid var(--border-accent); padding-left: 1rem; margin: 1.5rem 0; font-style: italic; color: var(--text-secondary); }
+        .article-content pre { background-color: rgba(var(--rgb-accent), 0.05); padding: 1rem; border-radius: 0.5rem; overflow-x: auto; margin-bottom: 1.25rem; font-family: 'Courier New', Courier, monospace; font-size: 0.9rem; }
+        .article-content code { background-color: rgba(var(--rgb-accent), 0.1); padding: 0.2em 0.4em; margin: 0 0.1em; border-radius: 0.25rem; font-family: 'Courier New', Courier, monospace; font-size: 0.9em; }
+        .article-content pre code { background-color: transparent; padding: 0; margin: 0; }
+        .article-content img { max-width: 100%; height: auto; border-radius: 0.5rem; margin: 1.5rem 0; box-shadow: 0 4px 12px var(--shadow-color); }
+        .article-content hr { border-top: 1px solid var(--border-card); margin: 2.5rem 0; }
+        .prose { color: var(--text-secondary); }
+        .prose h1, .prose h2, .prose h3, .prose h4, .prose h5, .prose h6 { color: var(--text-primary); }
+        .prose a { color: var(--text-accent); } .prose strong { color: var(--text-primary); }
+        .prose code { background-color: var(--bg-secondary); color: var(--text-accent); }
+        .prose blockquote { border-left-color: var(--border-accent); color: var(--text-secondary); }
+        html.dark .prose-invert { /* Tailwind typically handles this, but we can add specifics if needed */ }
+
+    </style>
+</head>
+<body class="antialiased">
+
+    <header id="navbar" class="fixed top-0 left-0 right-0 z-50 py-3">
+        <div class="container mx-auto px-4 sm:px-6 flex justify-between items-center">
+            <a href="index.html" class="text-3xl font-bold" aria-label="Strona główna Kronik Elary">
+                <span class="text-accent">Kroniki</span> <span class="text-primary">Elary</span>
+            </a>
+            <nav class="hidden md:flex items-center space-x-1 lg:space-x-2">
+                <a href="index.html" class="nav-link">Strona Główna</a>
+                <a href="prezentacja.html" class="nav-link">Prezentacja Serwera</a>
+                <a href="wikipedia.html" class="nav-link">Wikipedia Kronik</a>
+                <a href="blog.html" class="nav-link active">Blog</a>
+                <a href="gallery.html" class="nav-link">Galeria</a>
+                <a href="ranking-stats.html" class="nav-link">Rankingi</a>
+                <a href="dom-aukcyjny.html" class="nav-link">Dom Aukcyjny</a>
+                <div id="auth-section-nav" class="ml-4 relative"></div>
+            </nav>
+            <div class="md:hidden flex items-center">
+                <div id="auth-section-mobile-nav" class="mr-2 relative"></div>
+                <button id="mobileMenuButton" class="p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-[var(--bg-header)] focus:ring-[var(--text-accent)]" aria-expanded="false" aria-controls="mobileMenu" aria-label="Otwórz menu nawigacyjne">
+                    <svg class="w-6 h-6" fill="none" stroke="var(--svg-icon-fill)" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
+                </button>
+            </div>
+        </div>
+        <div id="mobileMenu" class="absolute top-full left-0 right-0 md:hidden shadow-lg" style="background-color: var(--bg-header);">
+            <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+                <a href="index.html" class="block py-2.5 px-3 nav-link text-base font-medium">Strona Główna</a>
+                <a href="prezentacja.html" class="block py-2.5 px-3 nav-link text-base font-medium">Prezentacja Serwera</a>
+                <a href="wikipedia.html" class="block py-2.5 px-3 nav-link text-base font-medium">Wikipedia Kronik</a>
+                <a href="blog.html" class="block py-2.5 px-3 nav-link text-base font-medium active">Blog</a>
+                <a href="gallery.html" class="block py-2.5 px-3 nav-link text-base font-medium">Galeria</a>
+                <a href="ranking-stats.html" class="block py-2.5 px-3 nav-link text-base font-medium">Rankingi</a>
+                <a href="dom-aukcyjny.html" class="block py-2.5 px-3 nav-link text-base font-medium">Dom Aukcyjny</a>
+                <a href="https://discord.gg/TWOJLINKZAPROSZENIOWY" target="_blank" rel="noopener noreferrer" class="block mt-2 py-2.5 px-3 text-base font-medium text-white bg-purple-600 hover:bg-purple-700 rounded-md text-center">Dołącz do Discorda</a>
+            </div>
+        </div>
+    </header>
+
+    <main class="pt-24 sm:pt-28 pb-16">
+        <div class="container mx-auto px-4 sm:px-6 max-w-4xl">
+            <div id="article-container" class="bg-bg-card p-6 sm:p-8 md:p-10 rounded-xl shadow-xl">
+                {/* Artykuł będzie tutaj wstawiany przez JavaScript */}
+            </div>
+            <div id="loading-message-article" class="text-center py-20 text-secondary">
+                <div class="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 loading-spinner mx-auto mb-4"></div>
+                Ładowanie artykułu...
+            </div>
+            <div id="error-message-article" class="hidden text-center py-20">
+                <h2 class="text-2xl font-semibold text-red-400 mb-4">Błąd</h2>
+                <p class="text-secondary mb-6">Nie udało się załadować artykułu lub artykuł nie istnieje. Spróbuj ponownie później lub wróć do listy artykułów.</p>
+                <a href="blog.html" class="inline-block bg-accent hover:bg-accent-hover text-white font-semibold py-2 px-5 rounded-md transition-colors">Powrót do Bloga</a>
+            </div>
+             <div class="mt-10 text-center">
+                <a href="blog.html" class="text-accent hover:text-accent-hover font-semibold text-sm">&larr; Powrót do listy artykułów</a>
+            </div>
+
+            <section id="comments-section" class="mt-10 pt-8 border-t border-[var(--border-card)]">
+                <h2 class="text-2xl sm:text-3xl font-semibold text-primary mb-6">Komentarze (<span id="commentCount">0</span>)</h2>
+
+                <div id="post-comment-form-container" class="mb-8" style="display: none;">
+                    <form id="postCommentForm">
+                        <div>
+                            <label for="commentContent" class="form-label text-sm block mb-1 text-secondary">Napisz komentarz:</label>
+                            <textarea id="commentContent" name="content" rows="4" class="form-textarea w-full bg-[var(--bg-secondary)] border-[var(--border-card)] focus:border-accent focus:ring-accent rounded-md shadow-sm" required placeholder="Twoje przemyślenia..."></textarea>
+                        </div>
+                        <div class="mt-3 flex justify-end">
+                            <button type="submit" class="btn-primary px-5 py-2 text-sm rounded-md">Opublikuj Komentarz</button>
+                        </div>
+                    </form>
+                    <div id="commentPostStatus" class="text-sm mt-3"></div>
+                </div>
+                <div id="comment-login-prompt" class="mb-8 p-4 bg-[var(--bg-card)] rounded-md text-center text-secondary" style="display: none;">
+                    Musisz być <a href="/auth/discord/login" class="text-accent hover:underline">zalogowany</a>, aby dodać komentarz.
+                </div>
+
+                <div id="comments-list-container">
+                    {/* Comments will be loaded here */}
+                </div>
+                <div id="comments-loading" class="text-center py-6 text-secondary">Ładowanie komentarzy...</div>
+                <div id="comments-error" class="text-red-400 text-center py-4 hidden"></div>
+                <div id="comments-empty" class="text-secondary text-center py-4 hidden">Brak komentarzy. Bądź pierwszy!</div>
+                <div id="comments-pagination" class="mt-6 flex justify-center items-center space-x-3"></div>
+            </section>
+
+        </div>
+    </main>
+
+    <footer class="py-12 text-center" style="background-color: var(--bg-header);">
+        <div class="container mx-auto px-4 sm:px-6">
+            <div class="flex justify-center space-x-6 mb-6">
+                 <a href="polityka-prywatnosci.html" class="text-secondary hover:text-accent transition-colors duration-200" aria-label="Polityka Prywatności">
+                    Polityka Prywatności
+                </a>
+            </div>
+            <p class="text-secondary text-sm">
+                &copy; <span id="currentYear"></span> Kroniki Elary. Wszelkie prawa zastrzeżone.
+            </p>
+        </div>
+    </footer>
+    <script src="js/main.js" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/dompurify/3.0.8/purify.min.js" integrity="sha512-H+rglffZ6f5JvnrFnbqwkdnKOBK6I99CfA6EED2PYG0i2XfHPDhOBW9JWW2NfW9pdUqCwhKSoLgImY1hD/x77g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/marked/9.1.5/marked.min.js" integrity="sha512-Q3K7ZgbB5KzEh0F9S4vN2QGg/1/6gL8bZj7n3D0l5PjBwW03R/0Bf1u/EIsHjk6WlT4fNlP7LXZgA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script>
+        // Specific script for article-view.html
+        const articleContainer = document.getElementById('article-container');
+        const loadingMessageArticle = document.getElementById('loading-message-article');
+        const errorMessageArticle = document.getElementById('error-message-article');
+
+        // Comment section elements
+        const commentsSection = document.getElementById('comments-section');
+        const commentCountSpan = document.getElementById('commentCount');
+        const postCommentFormContainer = document.getElementById('post-comment-form-container');
+        const postCommentForm = document.getElementById('postCommentForm');
+        const commentContentTextarea = document.getElementById('commentContent');
+        const commentPostStatus = document.getElementById('commentPostStatus');
+        const commentLoginPrompt = document.getElementById('comment-login-prompt');
+        const commentsListContainer = document.getElementById('comments-list-container');
+        const commentsLoading = document.getElementById('comments-loading');
+        const commentsError = document.getElementById('comments-error');
+        const commentsEmpty = document.getElementById('comments-empty');
+        const commentsPagination = document.getElementById('comments-pagination');
+
+        let currentCommentsPage = 1;
+        let loggedInUser = null;
+        let articleDataForComments = null;
+        const commentsLimit = 5;
+
+
+        async function checkUserLoginStatusForComments() {
+            try {
+                const response = await fetch('/api/me');
+                if (response.ok) {
+                    loggedInUser = await response.json();
+                    if (postCommentFormContainer) postCommentFormContainer.style.display = 'block';
+                    if (commentLoginPrompt) commentLoginPrompt.style.display = 'none';
+                } else {
+                    loggedInUser = null;
+                    if (postCommentFormContainer) postCommentFormContainer.style.display = 'none';
+                    if (commentLoginPrompt) commentLoginPrompt.style.display = 'block';
+                     // Update the href for the login link in the comment prompt dynamically
+                    const loginLink = commentLoginPrompt.querySelector('a');
+                    if (loginLink) {
+                        loginLink.href = `/auth/discord/login?redirect=${encodeURIComponent(window.location.pathname + window.location.search)}`;
+                    }
+                }
+            } catch (error) {
+                console.error('Error checking login status:', error);
+                loggedInUser = null;
+                if (postCommentFormContainer) postCommentFormContainer.style.display = 'none';
+                if (commentLoginPrompt) {
+                    commentLoginPrompt.textContent = 'Nie udało się sprawdzić statusu logowania. Odśwież stronę.';
+                    commentLoginPrompt.style.display = 'block';
+                }
+            }
+        }
+
+
+        async function fetchComments(articleSlug, page = 1) {
+            if (!commentsSection) return;
+            currentCommentsPage = page;
+            commentsLoading.style.display = 'block';
+            commentsError.style.display = 'none';
+            commentsEmpty.style.display = 'none';
+            commentsListContainer.innerHTML = '';
+            commentsPagination.innerHTML = '';
+
+            try {
+                const response = await fetch(`/api/articles/${articleSlug}/comments?page=${page}&limit=${commentsLimit}`);
+                if (!response.ok) {
+                    if (response.status === 404 && commentsError) {
+                         commentsError.textContent = 'Nie można załadować komentarzy, artykuł nie istnieje.';
+                         commentsError.style.display = 'block';
+                         return;
+                    }
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                const data = await response.json();
+
+                if(commentCountSpan) commentCountSpan.textContent = data.totalComments || 0;
+
+                if (data.comments && data.comments.length > 0) {
+                    data.comments.forEach(comment => {
+                        const commentDiv = document.createElement('div');
+                        commentDiv.className = 'comment-item p-4 mb-4 bg-[var(--bg-primary)] border border-[var(--border-card)] rounded-lg shadow-sm';
+
+                        let adminDeleteButton = '';
+                        if (loggedInUser && loggedInUser.id === ADMIN_DISCORD_ID_CACHE) {
+                            adminDeleteButton = `<button class="text-xs text-red-400 hover:text-red-600 transition-colors delete-comment-btn" data-comment-id="${comment.id}">Usuń</button>`;
+                        }
+
+                        commentDiv.innerHTML = `
+                            <div class="flex justify-between items-center mb-1">
+                                <p class="text-sm font-semibold text-accent">${comment.discordUsername}</p>
+                                <div class="flex items-center">
+                                    <p class="text-xs text-secondary mr-2">${new Date(comment.createdAt).toLocaleString('pl-PL')}</p>
+                                    ${adminDeleteButton}
+                                </div>
+                            </div>
+                            <p class="text-sm text-text-primary whitespace-pre-wrap">${DOMPurify.sanitize(comment.content)}</p>
+                        `;
+                        commentsListContainer.appendChild(commentDiv);
+                    });
+
+                    document.querySelectorAll('.delete-comment-btn').forEach(button => {
+                        button.addEventListener('click', () => deleteComment(button.dataset.commentId));
+                    });
+
+                    renderCommentsPagination(data.totalPages, data.currentPage, articleSlug);
+                } else {
+                    commentsEmpty.style.display = 'block';
+                }
+            } catch (error) {
+                console.error('Błąd ładowania komentarzy:', error);
+                if(commentsError) {
+                    commentsError.textContent = 'Nie udało się załadować komentarzy.';
+                    commentsError.style.display = 'block';
+                }
+            } finally {
+                if(commentsLoading) commentsLoading.style.display = 'none';
+            }
+        }
+
+        function renderCommentsPagination(totalPages, page, articleSlug) {
+            if (!commentsPagination || totalPages <= 1) {
+                if(commentsPagination) commentsPagination.innerHTML = '';
+                return;
+            }
+            let paginationHTML = '';
+            paginationHTML += `<button class="btn-secondary text-xs px-3 py-1 ${page === 1 ? 'opacity-50 cursor-not-allowed' : ''}" ${page === 1 ? 'disabled' : ''} onclick="changeCommentsPage(${page - 1}, '${articleSlug}')">Poprzednia</button>`;
+            paginationHTML += `<span class="text-sm text-secondary">Strona ${page} z ${totalPages}</span>`;
+            paginationHTML += `<button class="btn-secondary text-xs px-3 py-1 ${page === totalPages ? 'opacity-50 cursor-not-allowed' : ''}" ${page === totalPages ? 'disabled' : ''} onclick="changeCommentsPage(${page + 1}, '${articleSlug}')">Następna</button>`;
+            commentsPagination.innerHTML = paginationHTML;
+        }
+
+        window.changeCommentsPage = (page, articleSlug) => {
+            if (page < 1) return;
+            const totalPagesElement = commentsPagination.querySelector('span');
+            if (!totalPagesElement) return;
+
+            const totalPagesMatch = totalPagesElement.textContent.match(/z (\d+)/);
+            if (!totalPagesMatch || totalPagesMatch.length < 2) return;
+
+            const totalPages = parseInt(totalPagesMatch[1], 10);
+            if (page > totalPages) return;
+
+            fetchComments(articleSlug, page);
+            commentsSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        };
+
+        async function handlePostComment(event) {
+            event.preventDefault();
+            if (!articleDataForComments || !commentContentTextarea || !commentPostStatus) return;
+
+            const content = commentContentTextarea.value.trim();
+            if (!content) {
+                commentPostStatus.textContent = 'Treść komentarza nie może być pusta.';
+                commentPostStatus.className = 'text-sm mt-3 text-red-400';
+                return;
+            }
+
+            commentPostStatus.textContent = 'Publikowanie komentarza...';
+            commentPostStatus.className = 'text-sm mt-3 text-secondary';
+            const submitButton = postCommentForm.querySelector('button[type="submit"]');
+            if(submitButton) submitButton.disabled = true;
+
+            try {
+                const response = await fetch(`/api/articles/${articleDataForComments.slug}/comments`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ content })
+                });
+                const result = await response.json();
+                if (response.ok) {
+                    commentPostStatus.textContent = 'Komentarz opublikowany!';
+                    commentPostStatus.className = 'text-sm mt-3 text-green-400';
+                    commentContentTextarea.value = '';
+                    fetchComments(articleDataForComments.slug, 1);
+                } else {
+                    commentPostStatus.textContent = result.error || 'Nie udało się opublikować komentarza.';
+                    commentPostStatus.className = 'text-sm mt-3 text-red-400';
+                }
+            } catch (error) {
+                console.error("Błąd publikowania komentarza:", error);
+                commentPostStatus.textContent = 'Błąd sieci. Spróbuj ponownie.';
+                commentPostStatus.className = 'text-sm mt-3 text-red-400';
+            } finally {
+                if(submitButton) submitButton.disabled = false;
+                setTimeout(() => { if(commentPostStatus) commentPostStatus.textContent = ''; }, 5000);
+            }
+        }
+
+        async function deleteComment(commentId) {
+            if (!confirm('Czy na pewno chcesz usunąć ten komentarz?')) return;
+
+            try {
+                const response = await fetch(`/api/admin/comments/${commentId}`, { method: 'DELETE' });
+                if (response.ok) {
+                    // displayAdminMessage('Komentarz usunięty pomyślnie.', 'success'); // This would be ideal if admin page had this global func
+                    alert('Komentarz usunięty pomyślnie.'); // Simple alert for now
+                    fetchComments(articleDataForComments.slug, currentCommentsPage);
+                } else {
+                    const result = await response.json().catch(() => ({ error: 'Nieznany błąd serwera' }));
+                    alert(`Błąd usuwania komentarza: ${result.error || response.status}`);
+                }
+            } catch (error) {
+                console.error("Błąd sieci podczas usuwania komentarza:", error);
+                alert('Błąd sieci podczas usuwania komentarza.');
+            }
+        }
+
+
+        async function fetchArticle() {
+            const params = new URLSearchParams(window.location.search);
+            const slug = params.get('slug');
+
+            if (!slug) {
+                loadingMessageArticle.style.display = 'none';
+                errorMessageArticle.querySelector('p').textContent = 'Brak identyfikatora artykułu (slug) w adresie URL.';
+                errorMessageArticle.style.display = 'block';
+                commentsSection.style.display = 'none';
+                return;
+            }
+
+            loadingMessageArticle.style.display = 'block';
+            errorMessageArticle.style.display = 'none';
+            articleContainer.innerHTML = '';
+
+            try {
+                const response = await fetch(`/api/articles/${slug}`);
+                if (!response.ok) {
+                    if (response.status === 404) {
+                        throw new Error('ArticleNotFound');
+                    }
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                articleDataForComments = await response.json(); // Store for comment submission
+
+                loadingMessageArticle.style.display = 'none';
+                document.title = `${articleDataForComments.title} - Kroniki Elary`;
+                const metaDesc = document.querySelector('meta[name="description"]');
+                if (metaDesc) {
+                    // For HTML content, stripping tags for meta description
+                    const tempDiv = document.createElement('div');
+                    tempDiv.innerHTML = articleDataForComments.content;
+                    const textContentForMeta = tempDiv.textContent || tempDiv.innerText || "";
+                    metaDesc.setAttribute('content', textContentForMeta.substring(0, 160) + (textContentForMeta.length > 160 ? '...' : ''));
+                }
+
+                let categoriesHTML = '';
+                if (articleDataForComments.Categories && articleDataForComments.Categories.length > 0) {
+                    categoriesHTML = `
+                        <div class="mb-4 text-sm">
+                            <strong>Kategorie:</strong>
+                            ${articleDataForComments.Categories.map(cat => `<a href="blog.html?category=${cat.slug}" class="text-accent hover:underline mr-2">${cat.name}</a>`).join('')}
+                        </div>
+                    `;
+                }
+
+                const articleHTML = `
+                    <img src="https://placehold.co/800x400/101A2B/A78BFA?text=${encodeURIComponent(articleDataForComments.title.substring(0,30))}" alt="Baner artykułu: ${articleDataForComments.title}" class="rounded-lg mb-6 sm:mb-8 w-full max-h-[400px] object-cover" onerror="this.onerror=null;this.src='https://placehold.co/800x400/0F172A/94A3B8?text=Brak+obrazka';">
+                    <h1 class="text-3xl sm:text-4xl md:text-5xl font-bold text-primary mb-3">${articleDataForComments.title}</h1>
+                    <p class="text-sm text-secondary mb-1">Autor: <span class="font-medium text-accent">${articleDataForComments.authorName}</span></p>
+                    <p class="text-sm text-secondary mb-2">Opublikowano: ${new Date(articleDataForComments.publishedAt || articleDataForComments.createdAt).toLocaleDateString('pl-PL', { year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit' })}</p>
+                    ${categoriesHTML}
+                    <hr class="border-t border-[var(--border-card)] my-6 sm:my-8">
+                    <div class="article-content prose prose-invert max-w-none text-lg leading-relaxed">
+                        ${ DOMPurify.sanitize(articleDataForComments.content) }
+                    </div>
+                `;
+                articleContainer.innerHTML = articleHTML;
+                commentsSection.style.display = 'block';
+                fetchComments(slug, 1); // Load comments for the current article
+
+            } catch (error) {
+                console.error('Błąd podczas pobierania artykułu:', error);
+                loadingMessageArticle.style.display = 'none';
+                if (error.message === 'ArticleNotFound') {
+                    errorMessageArticle.querySelector('p').textContent = 'Artykuł o podanym adresie nie został znaleziony lub nie jest jeszcze opublikowany.';
+                } else {
+                    errorMessageArticle.querySelector('p').textContent = 'Wystąpił błąd podczas ładowania artykułu. Spróbuj ponownie później.';
+                }
+                errorMessageArticle.style.display = 'block';
+                commentsSection.style.display = 'none';
+                document.title = "Nie znaleziono artykułu - Kroniki Elary";
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', async function() {
+             if (typeof DOMPurify === 'undefined' || typeof marked === 'undefined') {
+                // DOMPurify is essential, Marked might be used by other parts of main.js or for comments if they were MD
+                console.warn("DOMPurify or Marked.js not loaded from CDN. Content rendering might be unsafe or incorrect.");
+                window.DOMPurify = window.DOMPurify || { sanitize: (html) => html };
+                // window.marked = window.marked || { parse: (markdown) => markdown }; // Not strictly needed for article content here
+            }
+            await fetchAdminDiscordId(); // Ensure ADMIN_DISCORD_ID_CACHE is populated for comment deletion logic
+            await checkUserLoginStatusForComments(); // Check login status for comment form
+            fetchArticle(); // Fetch article content
+
+            if(postCommentForm) {
+                postCommentForm.addEventListener('submit', handlePostComment);
+            }
+        });
+    </script>
+</body>
+</html>
+
+[end of public/article-view.html]

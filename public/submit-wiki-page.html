@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="pl" class="scroll-smooth dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Zaproponuj nową stronę do Wikipedii Kronik Elary.">
+    <meta name="keywords" content="kroniki elary, wikipedia, dodaj stronę, community, wkład, przewodniki">
+    <meta name="author" content="Arcadius & Strażnicy Kronik Elary">
+    <title>Zaproponuj Stronę Wiki - Kroniki Elary</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600&display=swap" rel="stylesheet">
+    <script src="https://cdn.tiny.cloud/1/no-api-key/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
+    <!-- DOMPurify and Marked.js might not be strictly needed for this page if only TinyMCE is used for input,
+         but including them if main.js or other components expect them. -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/dompurify/3.0.8/purify.min.js" integrity="sha512-H+rglffZ6f5JvnrFnbqwkdnKOBK6I99CfA6EED2PYG0i2XfHPDhOBW9JWW2NfW9pdUqCwhKSoLgImY1hD/x77g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/marked/9.1.5/marked.min.js" integrity="sha512-Q3K7ZgbB5KzEh0F9S4vN2QGg/1/6gL8bZj7n3D0l5PjBwW03R/0Bf1u/EIsHjk6WlT4fNlP7LXZgA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <style>
+        :root {
+            --bg-primary: #0F172A;
+            --bg-secondary: #1E293B;
+            --bg-card: #111827;
+            --bg-header: rgba(15, 23, 42, 0.92);
+            --text-primary: #E2E8F0;
+            --text-secondary: #94A3B8;
+            --text-accent: #A78BFA;
+            --text-accent-hover: #8B5CF6;
+            --border-accent: #8B5CF6;
+            --border-card: rgba(167, 139, 250, 0.15);
+            --btn-primary-bg: #8B5CF6;
+            --btn-primary-hover-bg: #7C3AED;
+            --form-input-bg: var(--bg-secondary);
+        }
+        html.light {
+            --bg-primary: #F9FAFB;
+            --bg-secondary: #F3F4F6;
+            --bg-card: #FFFFFF;
+            --bg-header: rgba(255, 255, 255, 0.95);
+            --text-primary: #1F2937;
+            --text-secondary: #4B5563;
+            --text-accent: #7C3AED;
+            --text-accent-hover: #6D28D9;
+            --border-accent: #7C3AED;
+            --border-card: rgba(124, 58, 237, 0.1);
+            --btn-primary-bg: #7C3AED;
+            --btn-primary-hover-bg: #6D28D9;
+            --form-input-bg: #FFFFFF;
+        }
+        body { font-family: 'Inter', sans-serif; background-color: var(--bg-primary); color: var(--text-primary); }
+        h1, h2, h3 { font-family: 'Lora', serif; font-weight: 600; }
+        .form-input, .form-select, .form-textarea { background-color: var(--form-input-bg); border: 1px solid var(--border-card); color: var(--text-primary); border-radius: 0.375rem; padding: 0.75rem 1rem; width: 100%; transition: border-color 0.2s ease, box-shadow 0.2s ease; }
+        .form-input:focus, .form-select:focus, .form-textarea:focus { outline: none; border-color: var(--border-accent); box-shadow: 0 0 0 3px rgba(var(--rgb-accent),0.3); }
+        .form-label { color: var(--text-secondary); margin-bottom: 0.5rem; display: block; font-weight: 500; }
+        .btn-primary { background-color: var(--btn-primary-bg); color: white; padding: 0.75rem 1.5rem; border-radius: 0.5rem; font-weight: 600; transition: background-color 0.2s ease; }
+        .btn-primary:hover { background-color: var(--btn-primary-hover-bg); }
+        .loading-spinner { border-color: var(--text-accent) transparent var(--text-accent) transparent; }
+        .tox .tox-edit-area__iframe { background-color: var(--form-input-bg) !important; }
+        .tox .tox-edit-area__iframe body { color: var(--text-primary) !important; }
+    </style>
+</head>
+<body class="antialiased">
+
+    <header id="navbar" class="fixed top-0 left-0 right-0 z-50 py-3">
+        </header>
+
+    <main class="pt-24 sm:pt-28 pb-16">
+        <div class="container mx-auto px-4 sm:px-6 max-w-3xl">
+            <h1 class="text-3xl sm:text-4xl font-bold text-primary mb-8 text-center">Zaproponuj Nową Stronę Wiki</h1>
+
+            <div id="submissionNotLoggedIn" class="bg-bg-card p-6 rounded-lg shadow-md text-center" style="display: none;">
+                <p class="text-secondary mb-4">Musisz być zalogowany, aby móc proponować nowe strony do Wikipedii.</p>
+                <a href="/auth/discord/login?redirect=/submit-wiki-page.html" class="text-accent hover:underline font-semibold">Zaloguj się przez Discord</a>
+            </div>
+
+            <div id="submissionFormContainer" style="display: none;">
+                <form id="submitWikiPageForm" class="space-y-6 bg-bg-card p-6 sm:p-8 rounded-lg shadow-md">
+                    <div>
+                        <label for="newWikiPageTitle" class="form-label">Tytuł Strony:</label>
+                        <input type="text" id="newWikiPageTitle" class="form-input" required>
+                    </div>
+                    <div>
+                        <label for="newWikiPageCategoryIdSelect" class="form-label">Kategoria Wiki (opcjonalnie):</label>
+                        <select id="newWikiPageCategoryIdSelect" class="form-select">
+                            <option value="">-- Wybierz Kategorię --</option>
+                            {/* Kategorie będą ładowane dynamicznie */}
+                        </select>
+                        <div id="wikiCategorySelectLoading" class="text-sm text-secondary mt-1 hidden">Ładowanie kategorii...</div>
+                    </div>
+                    <div>
+                        <label for="newWikiPageContent" class="form-label">Treść Strony:</label>
+                        <textarea id="newWikiPageContent" rows="15"></textarea>
+                        <p class="text-xs text-secondary mt-1">Prosimy o używanie edytora do formatowania treści. Strona zostanie przesłana do akceptacji przez administratora.</p>
+                    </div>
+                    <div class="flex justify-end">
+                        <button type="submit" id="submitWikiPageButton" class="btn-primary">
+                            <span class="button-text">Zgłoś Stronę do Akceptacji</span>
+                            <span class="loading-spinner hidden"></span>
+                        </button>
+                    </div>
+                </form>
+                <div id="submissionStatus" class="mt-4 text-sm"></div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="py-12 text-center" style="background-color: var(--bg-header);">
+       </footer>
+
+    <div id="eventModal" class="fixed inset-0 z-[60] items-center justify-center hidden p-4 modal"></div>
+
+    <script src="js/main.js" defer></script>
+    <script>
+        const submissionFormContainer = document.getElementById('submissionFormContainer');
+        const submissionNotLoggedIn = document.getElementById('submissionNotLoggedIn');
+        const submitWikiPageForm = document.getElementById('submitWikiPageForm');
+        const newWikiPageTitleInput = document.getElementById('newWikiPageTitle');
+        const newWikiPageCategoryIdSelect = document.getElementById('newWikiPageCategoryIdSelect');
+        const newWikiPageContentTextarea = document.getElementById('newWikiPageContent'); // Textarea for TinyMCE
+        const submissionStatus = document.getElementById('submissionStatus');
+        const submitWikiPageButton = document.getElementById('submitWikiPageButton');
+        const wikiCategorySelectLoading = document.getElementById('wikiCategorySelectLoading');
+
+        let tinymceEditorInitialized = false;
+
+        async function initializeSubmissionPage() {
+            await checkUserLoginStatusForSubmission();
+            await populateWikiCategorySelectForSubmission();
+            // TinyMCE initialization will be triggered by checkUserLoginStatusForSubmission if user is logged in
+        }
+
+        async function checkUserLoginStatusForSubmission() {
+            try {
+                const response = await fetch('/api/me');
+                if (response.ok) {
+                    submissionFormContainer.style.display = 'block';
+                    submissionNotLoggedIn.style.display = 'none';
+                    initializeTinyMCEForSubmission(); // Initialize editor only if logged in
+                } else {
+                    submissionFormContainer.style.display = 'none';
+                    submissionNotLoggedIn.style.display = 'block';
+                    const loginLink = submissionNotLoggedIn.querySelector('a');
+                    if (loginLink) { // Make sure redirect goes back here
+                        loginLink.href = `/auth/discord/login?redirect=${encodeURIComponent(window.location.pathname)}`;
+                    }
+                }
+            } catch (error) {
+                console.error('Error checking login status:', error);
+                submissionFormContainer.style.display = 'none';
+                submissionNotLoggedIn.innerHTML = '<p class="text-red-400">Nie udało się sprawdzić statusu logowania. Spróbuj odświeżyć stronę.</p>';
+                submissionNotLoggedIn.style.display = 'block';
+            }
+        }
+
+        function initializeTinyMCEForSubmission() {
+            if (tinymceEditorInitialized || !document.getElementById('newWikiPageContent')) return;
+
+            if (typeof tinymce !== 'undefined') {
+                 if (tinymce.get('newWikiPageContent')) { // Remove existing instance if any
+                    tinymce.get('newWikiPageContent').remove();
+                }
+                tinymce.init({
+                    selector: '#newWikiPageContent',
+                    plugins: 'lists link image code help wordcount',
+                    toolbar: 'undo redo | blocks | bold italic underline | bullist numlist | link image | code | help',
+                    height: 450,
+                    skin: (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) ? "oxide-dark" : "oxide",
+                    content_css: (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) ? "dark" : "default",
+                    setup: function(editor) {
+                        editor.on('init', function() {
+                            tinymceEditorInitialized = true;
+                        });
+                    }
+                });
+            } else {
+                console.error("TinyMCE is not loaded. Content will be a plain textarea.");
+            }
+        }
+
+        async function populateWikiCategorySelectForSubmission() {
+            if (!newWikiPageCategoryIdSelect || !wikiCategorySelectLoading) return;
+            wikiCategorySelectLoading.classList.remove('hidden');
+            try {
+                const response = await fetch('/api/wiki/categories');
+                if (!response.ok) throw new Error('Nie udało się załadować kategorii wiki.');
+                const categories = await response.json();
+
+                newWikiPageCategoryIdSelect.innerHTML = '<option value="">-- Wybierz Kategorię (opcjonalnie) --</option>';
+                if (categories && categories.length > 0) {
+                    categories.forEach(cat => {
+                        const option = document.createElement('option');
+                        option.value = cat.id;
+                        option.textContent = cat.name;
+                        newWikiPageCategoryIdSelect.appendChild(option);
+                    });
+                } else {
+                    // No categories available, keep the default "-- Wybierz --" or add a "Brak kategorii"
+                }
+            } catch (error) {
+                console.error("Błąd populowania selektora kategorii wiki:", error);
+                newWikiPageCategoryIdSelect.innerHTML = '<option value="">Błąd ładowania kategorii</option>';
+            } finally {
+                wikiCategorySelectLoading.classList.add('hidden');
+            }
+        }
+
+        if (submitWikiPageForm) {
+            submitWikiPageForm.addEventListener('submit', async function(event) {
+                event.preventDefault();
+                submissionStatus.textContent = '';
+                submissionStatus.className = 'mt-4 text-sm';
+
+                const title = newWikiPageTitleInput.value.trim();
+                const editor = tinymce.get('newWikiPageContent');
+                const content = editor ? editor.getContent() : newWikiPageContentTextarea.value; // Fallback if TinyMCE failed
+                const wikiCategoryId = newWikiPageCategoryIdSelect.value ? parseInt(newWikiPageCategoryIdSelect.value, 10) : null;
+
+                if (!title) {
+                    submissionStatus.textContent = 'Tytuł strony jest wymagany.';
+                    submissionStatus.classList.add('text-red-400');
+                    return;
+                }
+                if (!content) {
+                    submissionStatus.textContent = 'Treść strony jest wymagana.';
+                    submissionStatus.classList.add('text-red-400');
+                    return;
+                }
+
+                const buttonText = submitWikiPageButton.querySelector('.button-text');
+                const spinner = submitWikiPageButton.querySelector('.loading-spinner');
+                if(buttonText) buttonText.style.display = 'none';
+                if(spinner) spinner.style.display = 'inline-block';
+                submitWikiPageButton.disabled = true;
+
+                try {
+                    const response = await fetch('/api/wiki/pages/submit', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ title, content, wikiCategoryId })
+                    });
+                    const result = await response.json();
+
+                    if (response.ok) {
+                        submissionStatus.textContent = 'Strona została pomyślnie zgłoszona do akceptacji! Dziękujemy.';
+                        submissionStatus.classList.add('text-green-400');
+                        submitWikiPageForm.reset(); // Reset form fields
+                        if (editor) editor.setContent(''); // Clear TinyMCE
+                        newWikiPageCategoryIdSelect.value = ""; // Reset select
+                    } else {
+                        submissionStatus.textContent = `Błąd: ${result.error || 'Nie udało się zgłosić strony.'}`;
+                        submissionStatus.classList.add('text-red-400');
+                    }
+                } catch (error) {
+                    console.error('Błąd zgłaszania strony wiki:', error);
+                    submissionStatus.textContent = 'Wystąpił błąd sieciowy. Spróbuj ponownie.';
+                    submissionStatus.classList.add('text-red-400');
+                } finally {
+                    if(buttonText) buttonText.style.display = 'inline-block';
+                    if(spinner) spinner.style.display = 'none';
+                    submitWikiPageButton.disabled = false;
+                }
+            });
+        }
+
+        document.addEventListener('DOMContentLoaded', initializeSubmissionPage);
+    </script>
+</body>
+</html>

@@ -125,8 +125,10 @@
             <nav class="hidden md:flex items-center space-x-1 lg:space-x-2">
                 <a href="index.html" class="nav-link">Strona Główna</a>
                 <a href="prezentacja.html" class="nav-link">Prezentacja Serwera</a>
-                <a href="wikipedia.html" class="nav-link">Wikipedia Kronik</a> 
+                <a href="wikipedia.html" class="nav-link">Wikipedia Kronik</a>
+                <a href="blog.html" class="nav-link">Blog</a> {/* Dodany link */}
                 <a href="ranking-stats.html" class="nav-link">Rankingi</a>
+                {/* <a href="dom-aukcyjny.html" class="nav-link">Dom Aukcyjny</a> */} {/* Opcjonalnie można dodać dla spójności */}
                 <div id="auth-section-nav" class="ml-4 relative">
                     </div>
             </nav>
@@ -143,7 +145,9 @@
                 <a href="index.html" class="block py-2.5 px-3 nav-link text-base font-medium">Strona Główna</a>
                 <a href="prezentacja.html" class="block py-2.5 px-3 nav-link text-base font-medium">Prezentacja Serwera</a>
                 <a href="wikipedia.html" class="block py-2.5 px-3 nav-link text-base font-medium">Wikipedia Kronik</a>
+                <a href="blog.html" class="block py-2.5 px-3 nav-link text-base font-medium">Blog</a> {/* Dodany link */}
                 <a href="ranking-stats.html" class="block py-2.5 px-3 nav-link text-base font-medium">Rankingi</a>
+                {/* <a href="dom-aukcyjny.html" class="block py-2.5 px-3 nav-link text-base font-medium">Dom Aukcyjny</a> */}
                 <a href="https://discord.gg/TWOJLINKZAPROSZENIOWY" target="_blank" rel="noopener noreferrer" class="block mt-2 py-2.5 px-3 text-base font-medium text-white bg-purple-600 hover:bg-purple-700 rounded-md text-center">Dołącz do Discorda</a>
                  </div>
         </div>
@@ -277,237 +281,6 @@
 
     <div id="eventModal" class="fixed inset-0 z-[60] items-center justify-center hidden p-4 modal">
         </div>
-
-    <script>
-        // Funkcja do obsługi aktywnego linku w nawigacji
-        function setActiveNavLink() {
-            const currentPage = window.location.pathname.split("/").pop() || "index.html";
-            const navLinks = document.querySelectorAll('header nav > a.nav-link, #mobileMenu > div > a.nav-link');
-            const wikipediaSubPages = ["lore-postaci.html", "systemy-botow.html", "rangi-i-role.html", "lore-aethelgard.html", "komendy.html"];
-
-            navLinks.forEach(link => {
-                link.classList.remove('active');
-                const linkPage = link.getAttribute('href').split("/").pop() || "index.html";
-                
-                if (linkPage === currentPage) {
-                    link.classList.add('active');
-                } else if (linkPage === 'wikipedia.html' && wikipediaSubPages.includes(currentPage)) {
-                    link.classList.add('active');
-                }
-            });
-        }
-
-        async function updateAuthDisplay() {
-            const authSectionNav = document.getElementById('auth-section-nav');
-            const authSectionMobileNav = document.getElementById('auth-section-mobile-nav');
-            const mobileMenuLinksContainer = document.querySelector('#mobileMenu > div'); 
-            const ADMIN_DISCORD_ID = "1238814802357387285"; 
-
-            function createLoginButton(isMobile = false) {
-                const loginButton = document.createElement('a');
-                loginButton.href = '/auth/discord/login'; 
-                loginButton.id = isMobile ? 'discordLoginButtonMobileNav' : 'discordLoginButtonNav';
-                loginButton.className = 'btn-discord !text-white px-4 py-2.5 rounded-md text-sm flex items-center' + (isMobile ? ' w-full justify-center mt-2' : '');
-                loginButton.innerHTML = `<svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 24 24"><path d="M20.297 0H3.703C1.658 0 0 1.658 0 3.703V20.297C0 22.342 1.658 24 3.703 24H20.297C22.342 24 24 22.342 24 20.297V3.703C24 1.658 22.342 0 20.297 0ZM8.107 15.232C7.089 15.232 6.241 14.384 6.241 13.366C6.241 12.348 7.089 11.5 8.107 11.5C9.125 11.5 9.973 12.348 9.973 13.366C9.973 14.384 9.125 15.232 8.107 15.232ZM12.000 11.071C10.982 11.071 10.134 10.223 10.134 9.205C10.134 8.188 10.982 7.339 12.000 7.339C13.018 7.339 13.866 8.188 13.866 9.205C13.866 10.223 13.018 11.071 12.000 11.071ZM15.893 15.232C14.875 15.232 14.027 14.384 14.027 13.366C14.027 12.348 14.875 11.5 15.893 11.5C16.911 11.5 17.759 12.348 17.759 13.366C17.759 14.384 16.911 15.232 15.893 15.232Z"/></svg> Zaloguj przez Discord`;
-                return loginButton;
-            }
-
-            function createAvatarDropdown(user, isMobile = false) {
-                const containerId = isMobile ? 'userDropdownContainerMobile' : 'userDropdownContainerNav';
-                const dropdownId = isMobile ? 'userDropdownMobile' : 'userDropdownNav';
-
-                const container = document.createElement('div');
-                container.id = containerId;
-                container.className = 'relative';
-
-                const avatarImg = document.createElement('img');
-                avatarImg.src = user.avatar ? `https://cdn.discordapp.com/avatars/${user.id}/${user.avatar}.png?size=32` : 'https://placehold.co/32x32/A78BFA/FFFFFF?text=U';
-                avatarImg.alt = 'Awatar użytkownika';
-                avatarImg.className = 'user-avatar';
-                avatarImg.onerror = () => { avatarImg.src = 'https://placehold.co/32x32/A78BFA/FFFFFF?text=U'; };
-                avatarImg.onclick = (event) => {
-                    event.stopPropagation(); 
-                    const dropdown = document.getElementById(dropdownId);
-                    if (dropdown) dropdown.classList.toggle('open');
-                };
-                container.appendChild(avatarImg);
-
-                const dropdownMenu = document.createElement('div');
-                dropdownMenu.id = dropdownId;
-                dropdownMenu.className = 'dropdown-menu';
-                
-                const profileLink = document.createElement('a');
-                profileLink.href = 'profil.html';
-                profileLink.textContent = 'Mój Profil';
-                dropdownMenu.appendChild(profileLink);
-
-                const botShopLink = document.createElement('a');
-                botShopLink.href = '/sklep-bota'; 
-                botShopLink.textContent = 'Sklep Bota (Dukaty)';
-                dropdownMenu.appendChild(botShopLink);
-                
-                const premiumShopLink = document.createElement('a');
-                premiumShopLink.href = 'sklep-premium.html';
-                premiumShopLink.textContent = 'Sklep Premium (Kryształy)';
-                dropdownMenu.appendChild(premiumShopLink);
-
-                const supportTicketsLink = document.createElement('a');
-                supportTicketsLink.href = 'support.html'; 
-                supportTicketsLink.textContent = 'Centrum Wsparcia';
-                dropdownMenu.appendChild(supportTicketsLink);
-
-                if (user.id === ADMIN_DISCORD_ID) {
-                    const adminLinkElement = document.createElement('a'); 
-                    adminLinkElement.href = 'admin.html'; 
-                    adminLinkElement.textContent = 'Panel Admina';
-                    dropdownMenu.appendChild(adminLinkElement);
-                }
-                
-                const logoutForm = document.createElement('form');
-                logoutForm.action = '/auth/logout'; 
-                logoutForm.method = 'POST';
-                const logoutButton = document.createElement('button');
-                logoutButton.type = 'submit';
-                logoutButton.textContent = 'Wyloguj';
-                logoutForm.appendChild(logoutButton);
-                dropdownMenu.appendChild(logoutForm);
-
-                container.appendChild(dropdownMenu);
-                return container;
-            }
-            
-            if (mobileMenuLinksContainer) {
-                const existingMobileAuthElements = mobileMenuLinksContainer.querySelectorAll('#discordLoginButtonMobileNav, #userDropdownContainerMobileMenu, .mobile-auth-item');
-                existingMobileAuthElements.forEach(el => el.remove());
-            }
-
-            try {
-                const response = await fetch('/api/me'); 
-                if (response.ok) {
-                    const user = await response.json();
-                    if (authSectionNav) {
-                        authSectionNav.innerHTML = ''; 
-                        authSectionNav.appendChild(createAvatarDropdown(user, false));
-                    }
-                    if (authSectionMobileNav) { 
-                        authSectionMobileNav.innerHTML = ''; 
-                        authSectionMobileNav.appendChild(createAvatarDropdown(user, true));
-                    }
-                     if (mobileMenuLinksContainer) {
-                        const mobileDropdownContainer = createAvatarDropdown(user, true); 
-                        mobileDropdownContainer.id = 'userDropdownContainerMobileMenu';
-                        mobileDropdownContainer.classList.add('mt-2', 'border-t', 'border-[var(--border-card)]', 'pt-2', 'mobile-auth-item');
-                        
-                        const mobileAvatar = mobileDropdownContainer.querySelector('.user-avatar');
-                        const mobileDropdown = mobileDropdownContainer.querySelector('.dropdown-menu');
-                        
-                        if (mobileAvatar) mobileAvatar.classList.add('hidden'); 
-                        if (mobileDropdown) {
-                            mobileDropdown.classList.remove('absolute', 'top-full', 'right-0', 'dropdown-menu'); 
-                            mobileDropdown.classList.add('space-y-1');
-                            Array.from(mobileDropdown.children).forEach(child => {
-                                child.classList.add('block', 'py-2', 'px-3', 'text-base', 'font-medium', 'rounded-md', 'hover:bg-[rgba(var(--rgb-accent),0.1)]', 'hover:text-[var(--text-accent)]');
-                                mobileMenuLinksContainer.appendChild(child);
-                            });
-                        }
-                    }
-
-                } else {
-                     if (authSectionNav) {
-                        authSectionNav.innerHTML = '';
-                        authSectionNav.appendChild(createLoginButton(false));
-                    }
-                    if (authSectionMobileNav) { 
-                        authSectionMobileNav.innerHTML = '';
-                        authSectionMobileNav.appendChild(createLoginButton(true)); 
-                    }
-                    if (mobileMenuLinksContainer) {
-                        const mobileLoginButton = createLoginButton(true); 
-                        mobileLoginButton.classList.add('mt-2', 'border-t', 'border-[var(--border-card)]', 'pt-2', 'mobile-auth-item');
-                        mobileMenuLinksContainer.appendChild(mobileLoginButton);
-                    }
-                }
-            } catch (error) {
-                console.error('Błąd aktualizacji UI logowania:', error);
-                 if (authSectionNav) {
-                    authSectionNav.innerHTML = '';
-                    authSectionNav.appendChild(createLoginButton(false));
-                }
-                if (authSectionMobileNav) {
-                    authSectionMobileNav.innerHTML = '';
-                    authSectionMobileNav.appendChild(createLoginButton(true));
-                }
-                if (mobileMenuLinksContainer) {
-                    const mobileLoginButton = createLoginButton(true);
-                    mobileLoginButton.classList.add('mt-2', 'border-t', 'border-[var(--border-card)]', 'pt-2', 'mobile-auth-item');
-                    mobileMenuLinksContainer.appendChild(mobileLoginButton);
-                }
-            }
-        }
-        
-        function setupMobileMenu() {
-            const mobileMenuButton = document.getElementById('mobileMenuButton');
-            const mobileMenu = document.getElementById('mobileMenu');
-            
-            if (mobileMenuButton && mobileMenu) {
-                mobileMenuButton.addEventListener('click', () => {
-                    const isExpanded = mobileMenuButton.getAttribute('aria-expanded') === 'true' || false;
-                    mobileMenuButton.setAttribute('aria-expanded', String(!isExpanded));
-                    mobileMenu.classList.toggle('open');
-                });
-                mobileMenu.querySelectorAll('a').forEach(link => { 
-                    link.addEventListener('click', () => {
-                        mobileMenuButton.setAttribute('aria-expanded', 'false');
-                        mobileMenu.classList.remove('open');
-                    });
-                });
-            }
-        }
-
-        function setupRevealAnimations() {
-            const revealObserver = new IntersectionObserver((entries, observer) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        entry.target.classList.add('visible');
-                        observer.unobserve(entry.target);
-                    }
-                });
-            }, { threshold: 0.1 });
-
-            document.querySelectorAll('.reveal').forEach(el => {
-                revealObserver.observe(el);
-            });
-        }
-
-        function setupDropdownDismiss() {
-            window.addEventListener('click', function(e) {
-                const desktopDropdownContainer = document.getElementById('userDropdownContainerNav');
-                const mobileDropdownContainer = document.getElementById('userDropdownContainerMobile'); 
-                const desktopDropdown = document.getElementById('userDropdownNav');
-                const mobileDropdown = document.getElementById('userDropdownMobile'); 
-
-                if (desktopDropdownContainer && !desktopDropdownContainer.contains(e.target) && desktopDropdown && desktopDropdown.classList.contains('open')) {
-                    desktopDropdown.classList.remove('open');
-                }
-                if (mobileDropdownContainer && !mobileDropdownContainer.contains(e.target) && mobileDropdown && mobileDropdown.classList.contains('open')) {
-                     mobileDropdown.classList.remove('open');
-                }
-            });
-        }
-
-        document.addEventListener('DOMContentLoaded', function() {
-            document.getElementById('currentYear').textContent = new Date().getFullYear();
-            
-            if (!document.documentElement.classList.contains('light') && !document.documentElement.classList.contains('dark')) {
-                 document.documentElement.classList.add('dark');
-            }
-
-            setActiveNavLink();
-            updateAuthDisplay();
-            setupMobileMenu();
-            setupRevealAnimations();
-            setupDropdownDismiss();
-        });
-    </script>
+   <script src="js/main.js" defer></script>
 </body>
 </html>

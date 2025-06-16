@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Encyklopedia wiedzy o świecie Kronik Elary. Odkryj lore, postacie, systemy i mechaniki naszego serwera Discord.">
-    <meta name="keywords" content="kroniki elary, wikipedia, lore, aethelgard, postacie, systemy rpg, boty, discord, anime, manga">
+    <meta name="keywords" content="kroniki elary, wikipedia, lore, aethelgard, postacie, systemy rpg, boty, discord, anime, manga, przewodniki, kategorie">
     <meta name="author" content="Arcadius & Strażnicy Kronik Elary">
     <title>Wikipedia Kronik Elary</title>
     <script src="https://cdn.tailwindcss.com"></script>
@@ -32,14 +32,6 @@
             --shadow-strong-color: rgba(167, 139, 250, 0.3); 
             --modal-backdrop: rgba(15, 23, 42, 0.85);
             --rgb-accent: 167, 139, 250;
-            --rgb-purple-400: 167, 139, 250; 
-            --rgb-stone-400: 168, 162, 158; 
-            --rgb-amber-400: 251, 191, 36; 
-            --rgb-cyan-400: 34, 211, 238; 
-            --text-purple-400: #A78BFA;
-            --text-stone-400: #A8A29E;
-            --text-amber-400: #FBBF24;
-            --text-cyan-400: #22D3EE;
         }
         html.light {
             --bg-primary: #F9FAFB; 
@@ -63,14 +55,6 @@
             --shadow-strong-color: rgba(124, 58, 237, 0.15);
             --modal-backdrop: rgba(249, 250, 251, 0.85);
             --rgb-accent: 124, 58, 237;
-            --rgb-purple-400: 124, 58, 237;
-            --rgb-stone-400: 120, 113, 108;
-            --rgb-amber-400: 217, 119, 6;
-            --rgb-cyan-400: 8, 145, 178;
-            --text-purple-400: #7C3AED;
-            --text-stone-400: #78716C;
-            --text-amber-400: #D97706;
-            --text-cyan-400: #0891B2;
         }
         body { font-family: 'Inter', sans-serif; background-color: var(--bg-primary); color: var(--text-primary); transition: background-color 0.3s ease, color 0.3s ease; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; line-height: 1.75; }
         h1, h2, h3, h4, h5 { font-family: 'Lora', serif; font-weight: 600; line-height: 1.35; }
@@ -79,74 +63,17 @@
         .section-bg { background-color: var(--bg-secondary); }
         .card-bg { background-color: var(--bg-card); transition: transform 0.3s cubic-bezier(0.25, 0.1, 0.25, 1), box-shadow 0.3s cubic-bezier(0.25, 0.1, 0.25, 1), background-color 0.3s ease; border: 1px solid var(--border-card); box-shadow: 0 6px 12px -3px var(--shadow-color); overflow: hidden; }
         .card-bg:hover { transform: translateY(-8px) scale(1.02); box-shadow: 0 12px 24px -4px var(--shadow-strong-color); }
-        .btn-primary, .btn-discord, .btn-secondary { color: #FFFFFF; transition: background-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease; box-shadow: 0 4px 8px -2px var(--shadow-color); font-weight: 600; letter-spacing: 0.03em; padding-top: 0.8rem; padding-bottom: 0.8rem; border-radius: 0.375rem; } 
-        .btn-primary { background-color: var(--btn-primary-bg); } .btn-primary:hover { background-color: var(--btn-primary-hover-bg); transform: scale(1.04) translateY(-2px); box-shadow: 0 10px 18px -4px var(--shadow-strong-color); }
-        .btn-discord { background-color: var(--btn-discord-bg); } .btn-discord:hover { background-color: var(--btn-discord-hover-bg); transform: scale(1.04) translateY(-2px); box-shadow: 0 10px 18px -4px rgba(88, 101, 242, 0.35); }
-        .btn-secondary { background-color: transparent; border: 2px solid var(--border-accent); color: var(--text-accent); padding: calc(0.8rem - 2px) calc(1.5rem - 2px); }
-        .btn-secondary:hover { background-color: var(--border-accent); color: white; transform: scale(1.04) translateY(-2px); box-shadow: 0 6px 12px -2px var(--shadow-color); }
         .text-accent { color: var(--text-accent); }
         .reveal { opacity: 0; transform: translateY(50px); transition: opacity 0.8s cubic-bezier(0.645, 0.045, 0.355, 1), transform 0.8s cubic-bezier(0.645, 0.045, 0.355, 1); }
         .reveal.visible { opacity: 1; transform: translateY(0); }
-        ::-webkit-scrollbar { width: 12px; } ::-webkit-scrollbar-track { background: var(--bg-primary); }
-        ::-webkit-scrollbar-thumb { background: var(--scrollbar-thumb-bg); border-radius: 6px; border: 3px solid var(--bg-primary); }
-        ::-webkit-scrollbar-thumb:hover { background: var(--scrollbar-thumb-hover-bg); }
-        header#navbar { background-color: var(--bg-header); backdrop-filter: blur(16px); transition: background-color 0.3s ease, box-shadow 0.3s ease; box-shadow: 0 4px 10px -3px rgba(15,23,42,0.15); }
-        .nav-link { position: relative; color: var(--text-secondary); transition: color 0.2s ease, background-color 0.2s ease, transform 0.2s ease; padding: 0.6rem 1rem; border-radius: 0.375rem; font-weight: 500; }
-        .nav-link:hover { transform: translateY(-1px); }
-        .nav-link::after { content: ''; position: absolute; width: 0; height: 2px; bottom: 4px; left: 50%; transform: translateX(-50%); background-color: var(--text-accent); transition: width 0.3s cubic-bezier(0.25, 0.8, 0.25, 1); border-radius: 1px; }
-        .nav-link:hover, .nav-link.active { color: var(--text-accent); background-color: rgba(var(--rgb-accent), 0.1); }
-        .nav-link:hover::after, .nav-link.active::after { width: 50%; }
-        #mobileMenu { transition: transform 0.3s cubic-bezier(0.25, 0.8, 0.25, 1), opacity 0.3s cubic-bezier(0.25, 0.8, 0.25, 1); transform: translateY(-100%); opacity: 0; pointer-events: none; }
-        #mobileMenu.open { transform: translateY(0); opacity: 1; pointer-events: auto; }
-        html.dark .text-shadow-custom { text-shadow: 1px 1px 3px rgba(0,0,0,0.5); }
-        .user-avatar { width: 32px; height: 32px; border-radius: 50%; border: 2px solid var(--border-accent); cursor: pointer; transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out; }
-        .user-avatar:hover { transform: scale(1.1); box-shadow: 0 0 8px var(--shadow-strong-color); }
-        .dropdown-menu { position: absolute; top: calc(100% + 0.5rem); right: 0; background-color: var(--bg-card); border: 1px solid var(--border-card); border-radius: 0.375rem; box-shadow: 0 8px 20px -4px var(--shadow-strong-color), 0 6px 8px -5px var(--shadow-color); z-index: 50; min-width: 220px; opacity: 0; visibility: hidden; transform: translateY(-8px); transition: opacity 0.15s ease, transform 0.15s ease, visibility 0s linear 0.15s; }
-        .dropdown-menu.open { opacity: 1; visibility: visible; transform: translateY(0); transition: opacity 0.15s ease, transform 0.15s ease; }
-        .dropdown-menu a, .dropdown-menu button { display: block; width: 100%; text-align: left; padding: 0.7rem 1rem; font-size: 0.875rem; color: var(--text-secondary); transition: background-color 0.1s ease, color 0.1s ease; }
-        .dropdown-menu a:hover, .dropdown-menu button:hover { background-color: rgba(var(--rgb-accent), 0.08); color: var(--text-accent); }
-        .dropdown-menu form { margin: 0; } 
-        .modal { background-color: var(--modal-backdrop); backdrop-filter: blur(6px); }
-        .modal-content { background-color: var(--bg-card); max-height: 90vh; }
-        .wiki-card-icon { color: var(--text-accent); margin-bottom: 0.75rem; transition: transform 0.3s ease; }
-        .card-bg:hover .wiki-card-icon { transform: scale(1.15) rotate(-5deg); }
+        .loading-spinner { border-color: var(--text-accent) transparent var(--text-accent) transparent; }
+        .category-link.active { font-weight: bold; color: var(--text-accent); }
     </style>
 </head>
 <body class="antialiased">
 
     <header id="navbar" class="fixed top-0 left-0 right-0 z-50 py-3">
-        <div class="container mx-auto px-4 sm:px-6 flex justify-between items-center">
-            <a href="index.html" class="text-3xl font-bold" aria-label="Strona główna Kronik Elary">
-                <span class="text-accent">Kroniki</span> <span class="text-primary">Elary</span>
-            </a>
-            <nav class="hidden md:flex items-center space-x-1 lg:space-x-2">
-                <a href="index.html" class="nav-link">Strona Główna</a>
-                <a href="prezentacja.html" class="nav-link">Prezentacja Serwera</a>
-                <a href="wikipedia.html" class="nav-link">Wikipedia Kronik</a> 
-                <a href="ranking-stats.html" class="nav-link">Rankingi</a>
-                <a href="dom-aukcyjny.html" class="nav-link">Dom Aukcyjny</a>
-                <div id="auth-section-nav" class="ml-4 relative">
-                    </div>
-            </nav>
-            <div class="md:hidden flex items-center">
-                 <div id="auth-section-mobile-nav" class="mr-2 relative">
-                    </div>
-                <button id="mobileMenuButton" class="p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-[var(--bg-header)] focus:ring-[var(--text-accent)]" aria-expanded="false" aria-controls="mobileMenu" aria-label="Otwórz menu nawigacyjne">
-                    <svg class="w-6 h-6" fill="none" stroke="var(--svg-icon-fill)" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
-                </button>
-            </div>
-        </div>
-        <div id="mobileMenu" class="absolute top-full left-0 right-0 md:hidden shadow-lg" style="background-color: var(--bg-header);">
-            <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
-                <a href="index.html" class="block py-2.5 px-3 nav-link text-base font-medium">Strona Główna</a>
-                <a href="prezentacja.html" class="block py-2.5 px-3 nav-link text-base font-medium">Prezentacja Serwera</a>
-                <a href="wikipedia.html" class="block py-2.5 px-3 nav-link text-base font-medium">Wikipedia Kronik</a>
-                <a href="ranking-stats.html" class="block py-2.5 px-3 nav-link text-base font-medium">Rankingi</a>
-                <a href="dom-aukcyjny.html" class="block py-2.5 px-3 nav-link text-base font-medium">Dom Aukcyjny</a>
-                <a href="https://discord.gg/TWOJLINKZAPROSZENIOWY" target="_blank" rel="noopener noreferrer" class="block mt-2 py-2.5 px-3 text-base font-medium text-white bg-purple-600 hover:bg-purple-700 rounded-md text-center">Dołącz do Discorda</a>
-                 </div>
-        </div>
-    </header>
+        </header>
 
     <main>
         <section class="hero-wikipedia-bg pt-32 pb-16 sm:pt-40 sm:pb-24 text-center reveal">
@@ -155,79 +82,46 @@
                     Wikipedia <span class="text-accent">Kronik Elary</span>
                 </h1>
                 <p class="text-lg md:text-xl text-slate-200 mb-10 max-w-3xl mx-auto text-shadow-custom">
-                    Twoje kompendium wiedzy o magicznym świecie Aethelgardu, jego mieszkańcach, systemach i historiach.
+                    Twoje kompendium wiedzy o magicznym świecie Aethelgardu. Przeglądaj oficjalne strony i przewodniki tworzone przez społeczność.
                 </p>
             </div>
         </section>
 
-        <section id="wprowadzenie-wiki" class="py-16 sm:py-20 section-bg reveal">
+        <section id="dynamic-wiki-content" class="py-16 sm:py-20 section-bg reveal">
             <div class="container mx-auto px-4 sm:px-6">
-                <div class="text-center mb-14 sm:mb-18">
-                    <h2 class="text-3xl sm:text-4xl font-bold text-primary mb-4">Witaj w Skarbnicy Wiedzy</h2>
-                    <p class="text-lg text-secondary max-w-3xl mx-auto">
-                        Ta Wikipedia jest żywym dokumentem, stale rozwijanym przez Strażników i społeczność Kronik Elary. Znajdziesz tu szczegółowe informacje o naszym uniwersum fabularnym, postaciach, systemach gry, botach i wielu innych aspektach serwera.
-                    </p>
-                </div>
-            </div>
-        </section>
+                <div class="flex flex-col lg:flex-row gap-8">
+                    <aside class="lg:w-1/4">
+                        <div id="wiki-category-filter-container" class="p-6 bg-bg-card rounded-lg shadow-lg sticky top-28">
+                            <h3 class="text-xl font-semibold text-accent mb-4">Kategorie Wiki</h3>
+                            <div id="wiki-category-list-loading" class="text-center py-4 text-secondary">
+                                <div class="animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 loading-spinner mx-auto mb-2"></div>
+                                Ładowanie kategorii...
+                            </div>
+                            <div id="wiki-category-list-error" class="text-red-400 hidden">Nie udało się załadować kategorii.</div>
+                            <nav id="wiki-category-links" class="space-y-2"></nav>
+                        </div>
+                    </aside>
+                    <div class="lg:w-3/4">
+                        <div class="text-center mb-10">
+                            <h2 id="wiki-list-main-title" class="text-3xl sm:text-4xl font-bold text-primary mb-3">Wszystkie Strony Wiki</h2>
+                            <p id="wiki-list-subtitle" class="text-lg text-secondary max-w-2xl mx-auto">
+                                Poniżej znajdziesz listę wszystkich dostępnych stron informacyjnych i przewodników. Kliknij tytuł, aby przeczytać więcej.
+                            </p>
+                        </div>
 
-        <section id="kategorie-wiki" class="py-16 sm:py-20 reveal">
-            <div class="container mx-auto px-4 sm:px-6">
-                <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-                    <a href="lore-aethelgard.html" class="card-bg p-7 rounded-lg text-center block reveal hover:no-underline">
-                        <div class="wiki-card-icon text-5xl">📜</div>
-                        <h3 class="text-2xl font-semibold text-primary mb-3">Lore Aethelgardu</h3>
-                        <p class="text-secondary text-sm">Odkryj historię, geografię, mitologię i kultury świata Aethelgard. Poznaj pradawne artefakty, magiczne istoty i zapomniane legendy.</p>
-                    </a>
-                    <a href="lore-postaci.html" class="card-bg p-7 rounded-lg text-center block reveal hover:no-underline" style="transition-delay: 0.1s;">
-                        <div class="wiki-card-icon text-5xl">👤</div>
-                        <h3 class="text-2xl font-semibold text-primary mb-3">Postacie Kluczowe</h3>
-                        <p class="text-secondary text-sm">Poznaj biografie Strażników Kronik, ważnych postaci niezależnych (NPC) i bohaterów, którzy kształtują losy Aethelgardu.</p>
-                    </a>
-                    <a href="systemy-botow.html" class="card-bg p-7 rounded-lg text-center block reveal hover:no-underline" style="transition-delay: 0.2s;">
-                        <div class="wiki-card-icon text-5xl">⚙️</div>
-                        <h3 class="text-2xl font-semibold text-primary mb-3">Systemy Serwerowe i Boty</h3>
-                        <p class="text-secondary text-sm">Dowiedz się, jak działają nasze autorskie boty (Lyra, Runa), systemy ekonomii, rankingów, zdobywania ról i inne mechaniki serwera.</p>
-                    </a>
-                    <a href="rangi-i-role.html" class="card-bg p-7 rounded-lg text-center block reveal hover:no-underline" style="transition-delay: 0.3s;">
-                        <div class="wiki-card-icon text-5xl">🌟</div>
-                        <h3 class="text-2xl font-semibold text-primary mb-3">Rangi i Role</h3>
-                        <p class="text-secondary text-sm">Poznaj system rang na serwerze, sposób ich zdobywania oraz specjalne role, które możesz uzyskać za aktywność i osiągnięcia.</p>
-                    </a>
-                    <a href="komendy.html" class="card-bg p-7 rounded-lg text-center block reveal hover:no-underline" style="transition-delay: 0.4s;">
-                        <div class="wiki-card-icon text-5xl">⌨️</div>
-                        <h3 class="text-2xl font-semibold text-primary mb-3">Komendy Botów</h3>
-                        <p class="text-secondary text-sm">Kompletna lista komend dla naszych botów, wraz z opisem ich działania i przykładami użycia. Niezbędnik każdego Kronikarza!</p>
-                    </a>
-                    <div class="card-bg p-7 rounded-lg text-center reveal" style="transition-delay: 0.5s;">
-                        <div class="wiki-card-icon text-5xl">📖</div>
-                        <h3 class="text-2xl font-semibold text-primary mb-3">Słowniczek Pojęć (Wkrótce)</h3>
-                        <p class="text-secondary text-sm">Wyjaśnienie terminów specyficznych dla uniwersum Aethelgardu i naszego serwera. Pomocne dla nowych i powracających graczy.</p>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <section id="jak-korzystac" class="py-16 sm:py-20 section-bg reveal">
-            <div class="container mx-auto px-4 sm:px-6">
-                <div class="text-center mb-14 sm:mb-18">
-                    <h2 class="text-3xl sm:text-4xl font-bold text-primary mb-4">Jak Korzystać z Wikipedii?</h2>
-                    <p class="text-lg text-secondary max-w-2xl mx-auto">
-                        Nawiguj po kategoriach, używaj wyszukiwarki (funkcja wkrótce!) lub po prostu eksploruj artykuły, aby pogłębić swoją wiedzę o Kronikach Elary.
-                    </p>
-                </div>
-                <div class="grid md:grid-cols-2 gap-8 items-center">
-                    <div class="reveal">
-                        <img src="https://placehold.co/600x400/111827/7C3AED?text=Eksploracja+Wiedzy" alt="Eksploracja wiedzy" class="rounded-lg shadow-xl w-full" onerror="this.onerror=null;this.src='https://placehold.co/600x400/0F172A/94A3B8?text=Obraz+Wiki';">
-                    </div>
-                    <div class="reveal">
-                        <h3 class="text-2xl font-semibold text-primary mb-4">Twoje Źródło Informacji</h3>
-                        <p class="text-secondary mb-3">
-                            Staramy się, aby nasza Wikipedia była jak najbardziej kompletna i aktualna. Jeśli zauważysz jakieś braki lub masz sugestie dotyczące nowych artykułów, skontaktuj się z jednym ze Strażników na Discordzie.
-                        </p>
-                        <p class="text-secondary">
-                            Pamiętaj, że świat Aethelgardu ciągle się rozwija, a nowe historie są pisane każdego dnia. Ta Wikipedia rośnie razem z nami!
-                        </p>
+                        <div id="wiki-pages-list-container" class="grid md:grid-cols-2 gap-6">
+                            {/* Dynamic content will be injected here */}
+                        </div>
+                        <div id="wiki-list-loading" class="text-center py-10 text-secondary">
+                            <div class="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 loading-spinner mx-auto mb-3"></div>
+                            Ładowanie stron wiki...
+                        </div>
+                        <div id="wiki-list-error" class="text-center py-10 text-red-400 hidden">
+                            Nie udało się załadować spisu stron. Spróbuj ponownie później.
+                        </div>
+                        <div id="wiki-list-empty" class="text-center py-10 text-secondary hidden">
+                            Brak dostępnych stron wiki lub przewodników w tej kategorii.
+                        </div>
                     </div>
                 </div>
             </div>
@@ -237,7 +131,7 @@
             <div class="container mx-auto px-4 sm:px-6 text-center">
                 <h2 class="text-3xl sm:text-4xl font-bold text-primary mb-6">Masz Pytania lub Chcesz Coś Dodać?</h2>
                 <p class="text-lg text-secondary mb-10 max-w-xl mx-auto">
-                    Nasza społeczność i Strażnicy są zawsze gotowi pomóc. Dołącz do dyskusji na Discordzie!
+                    Nasza społeczność i Strażnicy są zawsze gotowi pomóc. Dołącz do dyskusji na Discordzie! Możesz także <a href="submit-wiki-page.html" class="text-accent hover:underline font-semibold">zaproponować własną stronę</a> do Wikipedii.
                 </p>
                 <a href="https://discord.gg/TWOJLINKZAPROSZENIOWY" target="_blank" rel="noopener noreferrer" class="btn-discord font-semibold py-3.5 px-8 text-lg inline-flex items-center shadow-xl">
                     <svg class="w-6 h-6 mr-3" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20.297 0H3.703C1.658 0 0 1.658 0 3.703V20.297C0 22.342 1.658 24 3.703 24H20.297C22.342 24 24 22.342 24 20.297V3.703C24 1.658 22.342 0 20.297 0ZM8.107 15.232C7.089 15.232 6.241 14.384 6.241 13.366C6.241 12.348 7.089 11.5 8.107 11.5C9.125 11.5 9.973 12.348 9.973 13.366C9.973 14.384 9.125 15.232 8.107 15.232ZM12.000 11.071C10.982 11.071 10.134 10.223 10.134 9.205C10.134 8.188 10.982 7.339 12.000 7.339C13.018 7.339 13.866 8.188 13.866 9.205C13.866 10.223 13.018 11.071 12.000 11.071ZM15.893 15.232C14.875 15.232 14.027 14.384 14.027 13.366C14.027 12.348 14.875 11.5 15.893 11.5C16.911 11.5 17.759 12.348 17.759 13.366C17.759 14.384 16.911 15.232 15.893 15.232Z"/></svg>
@@ -248,265 +142,149 @@
     </main>
 
     <footer class="py-12 text-center" style="background-color: var(--bg-header);">
-        <div class="container mx-auto px-4 sm:px-6">
-            <div class="flex justify-center space-x-6 mb-6">
-                <a href="#" class="text-secondary hover:text-accent transition-colors duration-200" aria-label="Placeholder Twitter">
-                    <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M22.46 6c-.77.35-1.6.58-2.46.67.9-.53 1.59-1.37 1.92-2.38-.84.5-1.78.86-2.79 1.07C18.28 4.42 17.03 4 15.64 4c-2.94 0-5.32 2.38-5.32 5.32 0 .42.05.83.14 1.22-4.42-.22-8.33-2.34-10.96-5.55-.46.79-.72 1.7-.72 2.67 0 1.84.94 3.47 2.37 4.42-.87-.03-1.69-.27-2.41-.66v.07c0 2.57 1.83 4.72 4.25 5.21-.44.12-.91.18-1.39.18-.34 0-.67-.03-1-.1 0 .67.65 1.37 1.77 1.84-.7.55-1.59.88-2.58.88-.39 0-.77-.02-1.14-.07.91.59 2 1.02 3.19 1.02 3.83 0 5.93-3.18 5.93-5.93 0-.09 0-.18-.01-.27.41-.3.76-.68 1.04-1.09z"/></svg>
-                </a>
-                 <a href="#" class="text-secondary hover:text-accent transition-colors duration-200" aria-label="Placeholder Instagram">
-                    <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 1.17.053 1.805.248 2.227.415.562.217.96.477 1.382.896.419.42.679.819.896 1.381.167.422.362 1.056.415 2.227.058 1.266.07 1.646.07 4.85s-.012 3.584-.07 4.85c-.053 1.17-.248 1.805-.415 2.227a3.48 3.48 0 01-.896 1.382c-.42.419-.82.679-1.382.896-.422.167-1.056.362-2.227.415-1.266.058-1.646.07-4.85.07s-3.584-.012-4.85-.07c-1.17-.053-1.805-.248-2.227-.415a3.492 3.492 0 01-1.381-.896 3.492 3.492 0 01-.896-1.381c-.167-.422-.362-1.056-.415-2.227-.058-1.266-.07-1.646-.07-4.85s.012-3.584.07-4.85c.053-1.17.248-1.805.415-2.227.218-.562.477-.96.896-1.381.419-.42.819-.679 1.381-.896.422-.167 1.056-.362 2.227-.415C8.416 2.175 8.796 2.163 12 2.163zm0 1.802c-3.143 0-3.505.012-4.725.068-1.09.05-1.647.235-1.98.378a1.69 1.69 0 00-.755.755c-.143.333-.328.89-.378 1.98C4.082 8.495 4.07 8.857 4.07 12s.012 3.505.068 4.725c.05 1.09.235 1.647.378 1.98.16.373.397.637.755.755.333.143.89.328 1.98.378 1.22.056 1.582.068 4.725.068s3.505-.012 4.725-.068c1.09-.05 1.647.235 1.98-.378.373-.16.637-.397.755-.755.143-.333.328.89.378-1.98.056-1.22.068-1.582.068-4.725s-.012-3.505-.068-4.725c-.05-1.09-.235-1.647-.378-1.98a1.69 1.69 0 00-.755-.755c-.333-.143-.89-.328-1.98-.378C15.505 3.977 15.143 3.965 12 3.965zm0 3.273a4.762 4.762 0 100 9.524 4.762 4.762 0 000-9.524zm0 7.722a3.06 3.06 0 110-6.12 3.06 3.06 0 010 6.12zm4.758-7.868a1.128 1.128 0 100-2.255 1.128 1.128 0 000 2.255z"/></svg>
-                </a>
-                 <a href="polityka-prywatnosci.html" class="text-secondary hover:text-accent transition-colors duration-200" aria-label="Polityka Prywatności">
-                    Polityka Prywatności
-                </a>
-            </div>
-            <p class="text-secondary text-sm">
-                &copy; <span id="currentYear">2024</span> Kroniki Elary. Wszelkie prawa zastrzeżone.
-            </p>
-            <p class="text-xs mt-2.5" style="color: var(--text-secondary-light, #94A3B8);">
-                Stworzone z pasji do anime i mangi przez Arcadiusa i jego Strażników.
-            </p>
-        </div>
-    </footer>
+       </footer>
 
-    <div id="eventModal" class="fixed inset-0 z-[60] items-center justify-center hidden p-4 modal">
-        </div>
+    <div id="eventModal" class="fixed inset-0 z-[60] items-center justify-center hidden p-4 modal"></div>
 
+    <script src="js/main.js" defer></script>
     <script>
-        // Funkcja do obsługi aktywnego linku w nawigacji
-        function setActiveNavLink() {
-            const currentPage = window.location.pathname.split("/").pop() || "index.html";
-            const navLinks = document.querySelectorAll('header nav > a.nav-link, #mobileMenu > div > a.nav-link');
-            const wikipediaSubPages = ["lore-postaci.html", "systemy-botow.html", "rangi-i-role.html", "lore-aethelgard.html", "komendy.html"];
+        let allWikiCategories = []; // Cache for category names
 
-            navLinks.forEach(link => {
-                link.classList.remove('active');
-                const linkPage = link.getAttribute('href').split("/").pop() || "index.html";
-                
-                if (linkPage === currentPage) {
-                    link.classList.add('active');
-                } else if (linkPage === 'wikipedia.html' && wikipediaSubPages.includes(currentPage)) {
-                    link.classList.add('active');
-                }
-            });
+        async function fetchAllWikiCategories() {
+            if (allWikiCategories.length > 0) return allWikiCategories;
+            try {
+                const response = await fetch('/api/wiki/categories');
+                if (!response.ok) throw new Error('Nie udało się pobrać kategorii wiki.');
+                allWikiCategories = await response.json();
+                return allWikiCategories;
+            } catch (error) {
+                console.error("Błąd pobierania wszystkich kategorii wiki:", error);
+                return []; // Return empty on error
+            }
         }
 
-        async function updateAuthDisplay() {
-            const authSectionNav = document.getElementById('auth-section-nav');
-            const authSectionMobileNav = document.getElementById('auth-section-mobile-nav');
-            const mobileMenuLinksContainer = document.querySelector('#mobileMenu > div'); 
-            const ADMIN_DISCORD_ID = "1238814802357387285"; 
+        async function fetchAndDisplayWikiCategoriesFilterList() {
+            const container = document.getElementById('wiki-category-links');
+            const loadingDiv = document.getElementById('wiki-category-list-loading');
+            const errorDiv = document.getElementById('wiki-category-list-error');
 
-            function createLoginButton(isMobile = false) {
-                const loginButton = document.createElement('a');
-                loginButton.href = '/auth/discord/login'; 
-                loginButton.id = isMobile ? 'discordLoginButtonMobileNav' : 'discordLoginButtonNav';
-                loginButton.className = 'btn-discord !text-white px-4 py-2.5 rounded-md text-sm flex items-center' + (isMobile ? ' w-full justify-center mt-2' : '');
-                loginButton.innerHTML = `<svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 24 24"><path d="M20.297 0H3.703C1.658 0 0 1.658 0 3.703V20.297C0 22.342 1.658 24 3.703 24H20.297C22.342 24 24 22.342 24 20.297V3.703C24 1.658 22.342 0 20.297 0ZM8.107 15.232C7.089 15.232 6.241 14.384 6.241 13.366C6.241 12.348 7.089 11.5 8.107 11.5C9.125 11.5 9.973 12.348 9.973 13.366C9.973 14.384 9.125 15.232 8.107 15.232ZM12.000 11.071C10.982 11.071 10.134 10.223 10.134 9.205C10.134 8.188 10.982 7.339 12.000 7.339C13.018 7.339 13.866 8.188 13.866 9.205C13.866 10.223 13.018 11.071 12.000 11.071ZM15.893 15.232C14.875 15.232 14.027 14.384 14.027 13.366C14.027 12.348 14.875 11.5 15.893 11.5C16.911 11.5 17.759 12.348 17.759 13.366C17.759 14.384 16.911 15.232 15.893 15.232Z"/></svg> Zaloguj przez Discord`;
-                return loginButton;
-            }
+            if (!container || !loadingDiv || !errorDiv) return;
 
-            function createAvatarDropdown(user, isMobile = false) {
-                const containerId = isMobile ? 'userDropdownContainerMobile' : 'userDropdownContainerNav';
-                const dropdownId = isMobile ? 'userDropdownMobile' : 'userDropdownNav';
+            loadingDiv.classList.remove('hidden');
+            errorDiv.classList.add('hidden');
+            container.innerHTML = '';
 
-                const container = document.createElement('div');
-                container.id = containerId;
-                container.className = 'relative';
-
-                const avatarImg = document.createElement('img');
-                avatarImg.src = user.avatar ? `https://cdn.discordapp.com/avatars/${user.id}/${user.avatar}.png?size=32` : 'https://placehold.co/32x32/A78BFA/FFFFFF?text=U';
-                avatarImg.alt = 'Awatar użytkownika';
-                avatarImg.className = 'user-avatar';
-                avatarImg.onerror = () => { avatarImg.src = 'https://placehold.co/32x32/A78BFA/FFFFFF?text=U'; };
-                avatarImg.onclick = (event) => {
-                    event.stopPropagation(); 
-                    const dropdown = document.getElementById(dropdownId);
-                    if (dropdown) dropdown.classList.toggle('open');
-                };
-                container.appendChild(avatarImg);
-
-                const dropdownMenu = document.createElement('div');
-                dropdownMenu.id = dropdownId;
-                dropdownMenu.className = 'dropdown-menu';
-                
-                const profileLink = document.createElement('a');
-                profileLink.href = 'profil.html'; 
-                profileLink.textContent = 'Mój Profil';
-                dropdownMenu.appendChild(profileLink);
-
-                const auctionHouseLink = document.createElement('a');
-                auctionHouseLink.href = 'dom-aukcyjny.html';
-                auctionHouseLink.textContent = 'Dom Aukcyjny';
-                dropdownMenu.appendChild(auctionHouseLink);
-
-                const botShopLink = document.createElement('a');
-                botShopLink.href = '/sklep-bota'; 
-                botShopLink.textContent = 'Sklep Bota (Dukaty)';
-                dropdownMenu.appendChild(botShopLink);
-                
-                const premiumShopLink = document.createElement('a');
-                premiumShopLink.href = 'sklep-premium.html';
-                premiumShopLink.textContent = 'Sklep Premium (Kryształy)';
-                dropdownMenu.appendChild(premiumShopLink);
-
-                const supportTicketsLink = document.createElement('a');
-                supportTicketsLink.href = 'support.html'; 
-                supportTicketsLink.textContent = 'Centrum Wsparcia';
-                dropdownMenu.appendChild(supportTicketsLink);
-
-                if (user.id === ADMIN_DISCORD_ID) {
-                    const adminLinkElement = document.createElement('a'); 
-                    adminLinkElement.href = 'admin.html'; 
-                    adminLinkElement.textContent = 'Panel Admina';
-                    dropdownMenu.appendChild(adminLinkElement);
-                }
-                
-                const logoutForm = document.createElement('form');
-                logoutForm.action = '/auth/logout'; 
-                logoutForm.method = 'POST';
-                const logoutButton = document.createElement('button');
-                logoutButton.type = 'submit';
-                logoutButton.textContent = 'Wyloguj';
-                logoutForm.appendChild(logoutButton);
-                dropdownMenu.appendChild(logoutForm);
-
-                container.appendChild(dropdownMenu);
-                return container;
-            }
-            
-            if (mobileMenuLinksContainer) {
-                const existingMobileAuthElements = mobileMenuLinksContainer.querySelectorAll('#discordLoginButtonMobileNav, #userDropdownContainerMobileMenu, .mobile-auth-item');
-                existingMobileAuthElements.forEach(el => el.remove());
-            }
+            const params = new URLSearchParams(window.location.search);
+            const currentCategorySlug = params.get('category');
 
             try {
-                const response = await fetch('/api/me'); 
-                if (response.ok) {
-                    const user = await response.json();
-                    if (authSectionNav) {
-                        authSectionNav.innerHTML = ''; 
-                        authSectionNav.appendChild(createAvatarDropdown(user, false));
-                    }
-                    if (authSectionMobileNav) { 
-                        authSectionMobileNav.innerHTML = ''; 
-                        authSectionMobileNav.appendChild(createAvatarDropdown(user, true));
-                    }
-                     if (mobileMenuLinksContainer) {
-                        const mobileDropdownContainer = createAvatarDropdown(user, true); 
-                        mobileDropdownContainer.id = 'userDropdownContainerMobileMenu';
-                        mobileDropdownContainer.classList.add('mt-2', 'border-t', 'border-[var(--border-card)]', 'pt-2', 'mobile-auth-item');
-                        
-                        const mobileAvatar = mobileDropdownContainer.querySelector('.user-avatar');
-                        const mobileDropdown = mobileDropdownContainer.querySelector('.dropdown-menu');
-                        
-                        if (mobileAvatar) mobileAvatar.classList.add('hidden'); 
-                        if (mobileDropdown) {
-                            mobileDropdown.classList.remove('absolute', 'top-full', 'right-0', 'dropdown-menu'); 
-                            mobileDropdown.classList.add('space-y-1');
-                            Array.from(mobileDropdown.children).forEach(child => {
-                                child.classList.add('block', 'py-2', 'px-3', 'text-base', 'font-medium', 'rounded-md', 'hover:bg-[rgba(var(--rgb-accent),0.1)]', 'hover:text-[var(--text-accent)]');
-                                mobileMenuLinksContainer.appendChild(child);
-                            });
-                        }
-                    }
+                const categories = await fetchAllWikiCategories(); // Use cached or fetch
+                loadingDiv.classList.add('hidden');
 
+                let listHtml = `<a href="wikipedia.html" class="block py-1.5 text-secondary hover:text-accent category-link ${!currentCategorySlug ? 'active' : ''}">Wszystkie Strony</a>`;
+                if (categories && categories.length > 0) {
+                    categories.forEach(cat => {
+                        listHtml += `<a href="wikipedia.html?category=${cat.slug}" class="block py-1.5 text-secondary hover:text-accent category-link ${currentCategorySlug === cat.slug ? 'active' : ''}">${cat.name}</a>`;
+                    });
                 } else {
-                     if (authSectionNav) {
-                        authSectionNav.innerHTML = '';
-                        authSectionNav.appendChild(createLoginButton(false));
-                    }
-                    if (authSectionMobileNav) { 
-                        authSectionMobileNav.innerHTML = '';
-                        authSectionMobileNav.appendChild(createLoginButton(true)); 
-                    }
-                    if (mobileMenuLinksContainer) {
-                        const mobileLoginButton = createLoginButton(true); 
-                        mobileLoginButton.classList.add('mt-2', 'border-t', 'border-[var(--border-card)]', 'pt-2', 'mobile-auth-item');
-                        mobileMenuLinksContainer.appendChild(mobileLoginButton);
-                    }
+                    listHtml += '<p class="text-sm text-secondary">Brak kategorii.</p>';
+                }
+                container.innerHTML = listHtml;
+            } catch (error) {
+                console.error('Error fetching wiki categories for filter list:', error);
+                loadingDiv.classList.add('hidden');
+                errorDiv.classList.remove('hidden');
+                errorDiv.textContent = error.message;
+            }
+        }
+
+        async function fetchAndDisplayWikiPages() {
+            const container = document.getElementById('wiki-pages-list-container');
+            const loadingDiv = document.getElementById('wiki-list-loading');
+            const errorDiv = document.getElementById('wiki-list-error');
+            const emptyDiv = document.getElementById('wiki-list-empty');
+            const mainTitleEl = document.getElementById('wiki-list-main-title');
+            const subtitleEl = document.getElementById('wiki-list-subtitle');
+
+            if (!container || !loadingDiv || !errorDiv || !emptyDiv || !mainTitleEl || !subtitleEl) {
+                console.error('Missing required elements for wiki page display.');
+                return;
+            }
+
+            loadingDiv.classList.remove('hidden');
+            errorDiv.classList.add('hidden');
+            emptyDiv.classList.add('hidden');
+            container.innerHTML = '';
+
+            const params = new URLSearchParams(window.location.search);
+            const categorySlug = params.get('category');
+
+            let apiUrl = '/api/wiki/pages';
+            if (categorySlug) {
+                apiUrl += `?category=${categorySlug}`;
+                await fetchAllWikiCategories();
+                const currentCategory = allWikiCategories.find(c => c.slug === categorySlug);
+                if (currentCategory) {
+                    mainTitleEl.textContent = `Kategoria Wiki: ${currentCategory.name}`;
+                    subtitleEl.textContent = `Strony i przewodniki w kategorii "${currentCategory.name}".`;
+                } else {
+                    mainTitleEl.textContent = 'Nieznana Kategoria';
+                    subtitleEl.textContent = `Strony dla kategorii o slugu "${categorySlug}".`;
+                }
+            } else {
+                mainTitleEl.textContent = 'Wszystkie Strony Wiki i Przewodniki';
+                subtitleEl.textContent = 'Poniżej znajdziesz listę wszystkich dostępnych stron informacyjnych i przewodników.';
+            }
+
+
+            try {
+                const response = await fetch(apiUrl);
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                const pages = await response.json();
+
+                loadingDiv.classList.add('hidden');
+
+                if (pages && pages.length > 0) {
+                    pages.forEach(page => {
+                        let categoryLinkHTML = '';
+                        if (page.wikiCategory && page.wikiCategory.name && page.wikiCategory.slug) {
+                            categoryLinkHTML = `<p class="text-sm text-secondary mt-1">Kategoria: <a href="wikipedia.html?category=${page.wikiCategory.slug}" class="text-accent hover:underline">${page.wikiCategory.name}</a></p>`;
+                        }
+
+                        const pageCard = `
+                            <a href="wiki-page-view.html?slug=${page.slug}" class="card-bg block p-6 rounded-lg hover:no-underline focus:outline-none focus:ring-2 focus:ring-[var(--border-accent)]">
+                                <h3 class="text-xl font-semibold text-accent mb-2">${page.title}</h3>
+                                <p class="text-sm text-secondary mb-1">Autor: ${page.authorName}</p>
+                                ${page.lastEditorName && page.lastEditorName !== page.authorName ? `<p class="text-sm text-secondary mb-1">Ostatnia edycja: ${page.lastEditorName}</p>` : ''}
+                                ${categoryLinkHTML}
+                                <p class="text-xs text-secondary mt-2">Ostatnia aktualizacja: ${new Date(page.updatedAt).toLocaleDateString('pl-PL', { year: 'numeric', month: 'long', day: 'numeric' })}</p>
+                            </a>
+                        `;
+                        container.innerHTML += pageCard;
+                    });
+                } else {
+                    emptyDiv.classList.remove('hidden');
                 }
             } catch (error) {
-                console.error('Błąd aktualizacji UI logowania:', error);
-                 if (authSectionNav) {
-                    authSectionNav.innerHTML = '';
-                    authSectionNav.appendChild(createLoginButton(false));
-                }
-                if (authSectionMobileNav) {
-                    authSectionMobileNav.innerHTML = '';
-                    authSectionMobileNav.appendChild(createLoginButton(true));
-                }
-                if (mobileMenuLinksContainer) {
-                    const mobileLoginButton = createLoginButton(true);
-                    mobileLoginButton.classList.add('mt-2', 'border-t', 'border-[var(--border-card)]', 'pt-2', 'mobile-auth-item');
-                    mobileMenuLinksContainer.appendChild(mobileLoginButton);
-                }
-            }
-        }
-        
-        function setupMobileMenu() {
-            const mobileMenuButton = document.getElementById('mobileMenuButton');
-            const mobileMenu = document.getElementById('mobileMenu');
-            
-            if (mobileMenuButton && mobileMenu) {
-                mobileMenuButton.addEventListener('click', () => {
-                    const isExpanded = mobileMenuButton.getAttribute('aria-expanded') === 'true' || false;
-                    mobileMenuButton.setAttribute('aria-expanded', String(!isExpanded));
-                    mobileMenu.classList.toggle('open');
-                });
-                mobileMenu.querySelectorAll('a').forEach(link => { 
-                    link.addEventListener('click', () => {
-                        mobileMenuButton.setAttribute('aria-expanded', 'false');
-                        mobileMenu.classList.remove('open');
-                    });
-                });
+                console.error('Error fetching wiki pages:', error);
+                loadingDiv.classList.add('hidden');
+                errorDiv.classList.remove('hidden');
             }
         }
 
-        function setupRevealAnimations() {
-            const revealObserver = new IntersectionObserver((entries, observer) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        entry.target.classList.add('visible');
-                        observer.unobserve(entry.target);
-                    }
-                });
-            }, { threshold: 0.1 });
-
-            document.querySelectorAll('.reveal').forEach(el => {
-                revealObserver.observe(el);
-            });
+        function handleStateChange() {
+            fetchAndDisplayWikiPages();
+            fetchAndDisplayWikiCategoriesFilterList();
         }
 
-        function setupDropdownDismiss() {
-            window.addEventListener('click', function(e) {
-                const desktopDropdownContainer = document.getElementById('userDropdownContainerNav');
-                const mobileDropdownContainer = document.getElementById('userDropdownContainerMobile'); 
-                const desktopDropdown = document.getElementById('userDropdownNav');
-                const mobileDropdown = document.getElementById('userDropdownMobile'); 
-
-                if (desktopDropdownContainer && !desktopDropdownContainer.contains(e.target) && desktopDropdown && desktopDropdown.classList.contains('open')) {
-                    desktopDropdown.classList.remove('open');
-                }
-                if (mobileDropdownContainer && !mobileDropdownContainer.contains(e.target) && mobileDropdown && mobileDropdown.classList.contains('open')) {
-                     mobileDropdown.classList.remove('open');
-                }
-            });
-        }
-
-        document.addEventListener('DOMContentLoaded', function() {
-            document.getElementById('currentYear').textContent = new Date().getFullYear();
-            
-            if (!document.documentElement.classList.contains('light') && !document.documentElement.classList.contains('dark')) {
-                 document.documentElement.classList.add('dark');
-            }
-
-            setActiveNavLink();
-            updateAuthDisplay();
-            setupMobileMenu();
-            setupRevealAnimations();
-            setupDropdownDismiss();
+        document.addEventListener('DOMContentLoaded', () => {
+            handleStateChange();
         });
+
+        window.addEventListener('popstate', handleStateChange);
+
     </script>
 </body>
 </html>

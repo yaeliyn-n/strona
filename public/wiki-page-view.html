@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="pl" class="scroll-smooth dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Strona Wiki Kronik Elary">
+    <meta name="keywords" content="kroniki elary, wikipedia, lore, aethelgard, postacie, systemy rpg, boty, discord, anime, manga, przewodnik">
+    <meta name="author" content="Arcadius & Strażnicy Kronik Elary">
+    <title>Strona Wiki - Kroniki Elary</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-primary: #0F172A;
+            --bg-secondary: #1E293B;
+            --bg-card: #111827;
+            --bg-header: rgba(15, 23, 42, 0.92);
+            --text-primary: #E2E8F0;
+            --text-secondary: #94A3B8;
+            --text-accent: #A78BFA;
+            --text-accent-hover: #8B5CF6;
+            --border-accent: #8B5CF6;
+            --border-card: rgba(167, 139, 250, 0.15);
+            --btn-primary-bg: #8B5CF6;
+            --btn-primary-hover-bg: #7C3AED;
+            --btn-discord-bg: #5865F2;
+            --btn-discord-hover-bg: #4752C4;
+            --scrollbar-thumb-bg: #8B5CF6;
+            --scrollbar-thumb-hover-bg: #7C3AED;
+            --svg-icon-fill: #E2E8F0;
+            --shadow-color: rgba(167, 139, 250, 0.15);
+            --shadow-strong-color: rgba(167, 139, 250, 0.3);
+            --modal-backdrop: rgba(15, 23, 42, 0.85);
+            --rgb-accent: 167, 139, 250;
+        }
+        html.light {
+            --bg-primary: #F9FAFB;
+            --bg-secondary: #F3F4F6;
+            --bg-card: #FFFFFF;
+            --bg-header: rgba(255, 255, 255, 0.95);
+            --text-primary: #1F2937;
+            --text-secondary: #4B5563;
+            --text-accent: #7C3AED;
+            --text-accent-hover: #6D28D9;
+            --border-accent: #7C3AED;
+            --border-card: rgba(124, 58, 237, 0.1);
+            --btn-primary-bg: #7C3AED;
+            --btn-primary-hover-bg: #6D28D9;
+            --btn-discord-bg: #5865F2;
+            --btn-discord-hover-bg: #4752C4;
+            --scrollbar-thumb-bg: #A78BFA;
+            --scrollbar-thumb-hover-bg: #8B5CF6;
+            --svg-icon-fill: #374151;
+            --shadow-color: rgba(124, 58, 237, 0.08);
+            --shadow-strong-color: rgba(124, 58, 237, 0.15);
+            --modal-backdrop: rgba(249, 250, 251, 0.85);
+            --rgb-accent: 124, 58, 237;
+        }
+        body { font-family: 'Inter', sans-serif; background-color: var(--bg-primary); color: var(--text-primary); transition: background-color 0.3s ease, color 0.3s ease; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; line-height: 1.75; }
+        h1, h2, h3, h4, h5 { font-family: 'Lora', serif; font-weight: 600; line-height: 1.35; }
+        h1 { letter-spacing: -0.025em; font-weight: 700; } h2 { letter-spacing: -0.02em; font-weight: 700; } h3 { font-weight: 600; }
+        .section-bg { background-color: var(--bg-secondary); }
+        .text-accent { color: var(--text-accent); }
+        .reveal { opacity: 0; transform: translateY(50px); transition: opacity 0.8s cubic-bezier(0.645, 0.045, 0.355, 1), transform 0.8s cubic-bezier(0.645, 0.045, 0.355, 1); }
+        .reveal.visible { opacity: 1; transform: translateY(0); }
+        .loading-spinner { border-color: var(--text-accent) transparent var(--text-accent) transparent; }
+        .article-content { line-height: 1.75; }
+        .prose { color: var(--text-secondary); }
+        .prose h1, .prose h2, .prose h3, .prose h4, .prose h5, .prose h6 { color: var(--text-primary); margin-top: 1.5em; margin-bottom: 0.75em; font-family: 'Lora', serif; }
+        .prose p { margin-bottom: 1.25em; }
+        .prose ul, .prose ol { margin-left: 1.75em; margin-bottom: 1.25em; }
+        .prose li { margin-bottom: 0.5em; }
+        .prose a { color: var(--text-accent); text-decoration: underline; } .prose a:hover { color: var(--text-accent-hover); }
+        .prose strong { color: var(--text-primary); }
+        .prose code { background-color: var(--bg-secondary); color: var(--text-accent); padding: 0.2em 0.4em; border-radius: 0.25rem; font-size: 0.875em; }
+        .prose pre { background-color: var(--bg-secondary); padding: 1em; border-radius: 0.375rem; overflow-x: auto; font-size: 0.875em; }
+        .prose blockquote { border-left: 0.25rem solid var(--border-accent); padding-left: 1em; margin-left: 0; font-style: italic; color: var(--text-secondary); }
+        .prose img { max-width: 100%; height: auto; border-radius: 0.375rem; margin-top: 1.5em; margin-bottom: 1.5em; }
+        html.dark .prose-invert { /* Custom dark mode for prose if needed, Tailwind's might be good enough */ }
+    </style>
+</head>
+<body class="antialiased">
+
+    <header id="navbar" class="fixed top-0 left-0 right-0 z-50 py-3">
+        </header>
+
+    <main class="pt-24 sm:pt-28">
+        <div class="container mx-auto px-4 sm:px-6 py-8 sm:py-12">
+            <div id="wiki-page-loading" class="text-center py-20 text-secondary">
+                <div class="animate-spin rounded-full h-16 w-16 border-t-2 border-b-2 loading-spinner mx-auto mb-4"></div>
+                Ładowanie strony wiki...
+            </div>
+            <div id="wiki-page-error" class="text-center py-20 text-red-400 hidden">
+                <h2 class="text-2xl font-semibold mb-4">Wystąpił Błąd</h2>
+                <p id="wiki-page-error-message">Nie udało się załadować strony. Spróbuj ponownie później.</p>
+                <a href="wikipedia.html" class="mt-6 inline-block px-6 py-2.5 text-sm font-medium text-white bg-accent rounded-md hover:bg-accent-hover transition-colors">Wróć do spisu Wiki</a>
+            </div>
+
+            <article id="wiki-page-container" class="hidden">
+                <header class="mb-8 text-center">
+                    <h1 id="wikiPageTitle" class="text-3xl sm:text-4xl md:text-5xl font-bold text-primary mb-3"></h1>
+                    <p id="wikiPageMeta" class="text-sm text-secondary"></p>
+                </header>
+
+                <div id="wikiPageContent" class="article-content prose prose-invert max-w-none mx-auto bg-bg-card p-6 sm:p-8 rounded-lg shadow-lg">
+                    {/* Content will be injected here */}
+                </div>
+
+                <div class="mt-12 text-center">
+                    <a href="wikipedia.html" class="text-accent hover:text-accent-hover transition-colors font-medium">&laquo; Wróć do spisu Wiki</a>
+                </div>
+            </article>
+        </div>
+    </main>
+
+    <footer class="py-12 text-center" style="background-color: var(--bg-header);">
+       </footer>
+
+    <div id="eventModal" class="fixed inset-0 z-[60] items-center justify-center hidden p-4 modal"></div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/dompurify/3.0.8/purify.min.js" integrity="sha512-H+rglffZ6f5JvnrFnbqwkdnKOBK6I99CfA6EED2PYG0i2XfHPDhOBW9JWW2NfW9pdUqCwhKSoLgImY1hD/x77g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/marked/9.1.5/marked.min.js" integrity="sha512-Q3K7ZgbB5KzEh0F9S4vN2QGg/1/6gL8bZj7n3D0l5PjBwW03R/0Bf1u/EIsHjk6WlT4fNlP7LXZgA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="js/main.js" defer></script>
+    <script>
+        async function fetchAndDisplaySingleWikiPage() {
+            const loadingDiv = document.getElementById('wiki-page-loading');
+            const errorDiv = document.getElementById('wiki-page-error');
+            const errorMessageEl = document.getElementById('wiki-page-error-message');
+            const container = document.getElementById('wiki-page-container');
+
+            const titleEl = document.getElementById('wikiPageTitle');
+            const metaEl = document.getElementById('wikiPageMeta');
+            const contentEl = document.getElementById('wikiPageContent');
+
+            if (!loadingDiv || !errorDiv || !container || !titleEl || !metaEl || !contentEl || !errorMessageEl) {
+                console.error('Missing required elements for wiki page view.');
+                if(loadingDiv) loadingDiv.classList.add('hidden');
+                if(errorDiv) {
+                    errorDiv.classList.remove('hidden');
+                    if(errorMessageEl) errorMessageEl.textContent = "Błąd inicjalizacji strony. Brakuje kluczowych elementów.";
+                }
+                return;
+            }
+
+            const params = new URLSearchParams(window.location.search);
+            const slug = params.get('slug');
+
+            if (!slug) {
+                loadingDiv.classList.add('hidden');
+                errorDiv.classList.remove('hidden');
+                errorMessageEl.textContent = "Nie określono strony wiki do wyświetlenia (brak slugu w URL).";
+                return;
+            }
+
+            try {
+                const response = await fetch(`/api/wiki/pages/${slug}`);
+                if (!response.ok) {
+                    if (response.status === 404) {
+                        throw new Error(`Strona wiki o slugu "${slug}" nie została znaleziona.`);
+                    }
+                    const errorData = await response.json().catch(() => ({ message: 'Nieznany błąd serwera' }));
+                    throw new Error(`Błąd serwera: ${response.status} - ${errorData.message || errorData.error || 'Nie udało się pobrać strony.'}`);
+                }
+                const page = await response.json();
+
+                document.title = `${page.title} - Wikipedia Kronik Elary`;
+                titleEl.textContent = page.title;
+
+                let metaParts = [];
+                metaParts.push(`Autor: ${page.authorName || page.submittedByUserName || 'Nieznany'}`); // Prioritize official author
+                if (page.lastEditorName && page.lastEditorName !== (page.authorName || page.submittedByUserName)) {
+                    metaParts.push(`Ostatnia edycja: ${page.lastEditorName}`);
+                }
+                metaParts.push(`Zaktualizowano: ${new Date(page.updatedAt).toLocaleDateString('pl-PL', { day: 'numeric', month: 'long', year: 'numeric' })}`);
+
+                if (page.wikiCategory && page.wikiCategory.name && page.wikiCategory.slug) {
+                    metaParts.push(`Kategoria: <a href="wikipedia.html?category=${page.wikiCategory.slug}" class="text-accent hover:underline">${page.wikiCategory.name}</a>`);
+                }
+                metaEl.innerHTML = metaParts.join(' | ');
+
+                if (typeof DOMPurify !== 'undefined') {
+                    contentEl.innerHTML = DOMPurify.sanitize(page.content); // Assuming page.content is HTML from TinyMCE
+                } else {
+                    console.warn('DOMPurify not loaded. Displaying raw content, this might be unsafe.');
+                    contentEl.innerHTML = page.content;
+                }
+
+                loadingDiv.classList.add('hidden');
+                container.classList.remove('hidden');
+
+            } catch (error) {
+                console.error('Error fetching wiki page:', error);
+                loadingDiv.classList.add('hidden');
+                errorMessageEl.textContent = error.message;
+                errorDiv.classList.remove('hidden');
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            fetchAndDisplaySingleWikiPage();
+        });
+    </script>
+</body>
+</html>
